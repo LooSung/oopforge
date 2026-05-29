@@ -18,4 +18,4 @@
 | Cursor | `.cursor-plugin/` | TODO |
 | OpenCode | `.opencode/` | TODO |
 
-참고 구조: [obra/superpowers](https://github.com/obra/superpowers)
+Multi-harness packaging follows OOPforge's own portable layout (`.claude-plugin/`, `.codex-plugin/`, `.cursor-plugin/`).

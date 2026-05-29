@@ -102,6 +102,17 @@ check_json_file "$PACK_DIR/.cursor-plugin/plugin.json"
 cyan "--- AGENTS.md skill references"
 check_agents_skill_refs
 
+cyan "--- Skill path convention"
+while IFS= read -r -d '' file; do
+  if grep -q 'skills/oopforge/' "$file"; then
+    fail "legacy path skills/oopforge/ in ${file#"$PACK_DIR"/}"
+  fi
+done < <(find "$PACK_DIR/commands" "$PACK_DIR/agents" -name '*.md' -print0)
+
+if [ "$FAILED" -eq 0 ]; then
+  green "OK   no legacy skills/oopforge/ paths in commands/agents"
+fi
+
 if [ "$FAILED" -eq 0 ]; then
   green "==> lint complete: no issues"
 else

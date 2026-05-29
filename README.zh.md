@@ -10,16 +10,17 @@
 
 ## 为什么是 OOPforge
 
-已经有 [obra/superpowers](https://github.com/obra/superpowers) 和 [SuperClaude](https://github.com/SuperClaude-Org/SuperClaude_Framework) 这样的优秀通用 workflow pack。OOPforge 不是竞争者，而是**补充**。
+OOPforge 是 **DDD / OOP 专用的 AI 工程 pack**，不是通用 agent framework。
 
-| | obra/superpowers | SuperClaude | **OOPforge** |
-|---|---|---|---|
-| **Focus** | Workflow · TDD | Full platform · slash commands | **DDD · Hexagonal · OOP domain modeling** |
-| **Language** | General | General | **Java + Python** |
-| **UI Language** | EN | EN, ZH, JA | **EN-first + KO/JA/ZH** |
-| **Rules** | Guidelines | Behavioral modes | **Concrete metrics** |
+| 原则 | 含义 |
+|---|---|
+| **Small** | 一个 skill 一个概念，200 行以内 |
+| **Measurable** | 300 行/文件，20 行/方法 |
+| **Workflow-first** | Discovery → Test，保留 human checkpoint |
+| **Proof over philosophy** | 可运行的 Java/Python 示例 |
+| **Domain-first** | domain layer 零 framework import |
 
-简而言之：OOPforge 是给认真使用 DDD 的开发者准备的 **superpowers**。
+简而言之：**让结构成为默认**，避免 God Service。
 
 ---
 

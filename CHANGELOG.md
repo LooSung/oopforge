@@ -5,6 +5,11 @@
 ## [Unreleased]
 
 ### Added
+- `scripts/smoke-test.sh` — isolated HOME install/doctor/update/uninstall verification.
+- CI: `bash -n`, smoke test step in lint workflow.
+- README CI badge, Troubleshooting section.
+- `scripts/path-convention.md` — unified skill path rules.
+- Lint check: fail on legacy `skills/oopforge/` paths in commands/agents.
 - README Before/After section (EN/KO) with God Service vs OOPforge structure comparison.
 - `examples/order-java/` — runnable Spring hexagonal place-order reference with domain tests.
 - `examples/order-python/` — runnable FastAPI hexagonal place-order reference (mirrors Java).
@@ -19,6 +24,9 @@
 - Explicit Cursor status: Not yet (Phase 2), no installer, no ETA.
 
 ### Changed
+- Commands and `ddd-architect` use `{pack}/skills/...` paths (`$OOPFORGE_HOME` → `~/.oopforge` → repo root).
+- README Why/Inspiration: OOPforge-only philosophy; removed superpowers/SuperClaude references (all locales).
+- Plugin READMEs: removed external pack references.
 - `bootstrap.sh` runs `install.sh update` instead of plain `install.sh`.
 - `doctor.sh` warns that Cursor has manifest only (no install target).
 - Cursor README table status changed from "Prepared" to "Not yet (Phase 2)" across all README locales.

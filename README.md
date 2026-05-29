@@ -1,8 +1,13 @@
 # OOPforge
 
+![CI](https://github.com/LooSung/oopforge/actions/workflows/lint.yml/badge.svg)
+![License](https://img.shields.io/github/license/LooSung/oopforge)
+
 > **Forge small. Compose forever.**
 >
 > *A portable OOP/DDD methodology pack for AI coding agents.*
+
+OOPforge helps AI coding agents design software around **domain models**, **aggregates**, **ports**, **adapters**, and **testable use cases** before implementation.
 
 OOPforge gives Claude Code, Codex CLI, Cursor, and compatible coding agents a clear way to model software with **DDD**, **hexagonal architecture**, and **clean domain boundaries**.
 
@@ -39,18 +44,17 @@ For Claude Code slash commands:
 
 ## **Why OOPforge**
 
-General-purpose methodology packs already exist. OOPforge is narrower on purpose: it focuses on **object-oriented domain modeling** for teams that care about long-lived architecture.
+OOPforge is a **DDD / OOP specialized AI engineering pack** — not a general agent framework.
 
-| | obra/superpowers | SuperClaude | **OOPforge** |
-|---|---|---|---|
-| **Focus** | Workflow · TDD | Full platform · slash commands | **DDD · Hexagonal · OOP domain modeling** |
-| **Scope** | General | General | **Domain modeling discipline** |
-| **Languages** | General | General | **Java + Python first** |
-| **Rules** | Guidelines | Behavioral modes | **Concrete metrics and boundaries** |
+| Principle | What it means |
+|---|---|
+| **Small** | One skill, one concept; 200 lines per skill |
+| **Measurable** | 300 lines/file, 20 lines/method — reviewable units |
+| **Workflow-first** | Discovery → Test with human checkpoints |
+| **Proof over philosophy** | Runnable Java/Python examples, not slides |
+| **Domain-first** | Framework import 0 in the domain layer |
 
-In short: **OOPforge is a DDD-focused companion pack**, not a replacement for broader workflow systems.
-
-**Recommended stack:** [Superpowers](https://github.com/obra/superpowers) (general workflow) + **OOPforge** (domain modeling) + your agent (Claude Code, Cursor, Codex).
+In short: **structure is the default**, so agents stop generating God Services.
 
 ---
 
@@ -139,6 +143,54 @@ cd ~/.oopforge && git pull && ./install.sh update
 **Cursor today:** copy or reference `AGENTS.md` in your project. See [docs/cursor.md](./docs/cursor.md). Marketplace packaging is planned for Phase 2 with no ETA yet.
 
 **Claude Code:** [docs/claude-code.md](./docs/claude-code.md) · **OpenCode (experimental):** [docs/opencode.md](./docs/opencode.md)
+
+---
+
+## **Troubleshooting**
+
+### Check installation
+
+```bash
+./doctor.sh
+```
+
+### Reinstall (refresh symlinks)
+
+```bash
+./uninstall.sh
+./install.sh
+```
+
+Or after `git pull`:
+
+```bash
+cd ~/.oopforge && git pull && ./install.sh update
+```
+
+### Dry run (see planned actions)
+
+```bash
+./install.sh --dry-run
+INSTALL_CLAUDE=1 ./install.sh --dry-run
+```
+
+### Force replace existing symlinks
+
+```bash
+./install.sh --force
+```
+
+### Remove installation
+
+```bash
+./uninstall.sh
+```
+
+### Run smoke test locally
+
+```bash
+./scripts/smoke-test.sh
+```
 
 ---
 
@@ -234,6 +286,7 @@ oopforge/
 ├── doctor.sh            installation checker
 ├── install.sh           symlink installer
 ├── scripts/lint-skills.sh  skill frontmatter and repo lint
+├── scripts/smoke-test.sh   install/doctor smoke test
 ├── uninstall.sh         symlink remover
 └── .github/workflows/lint.yml  CI validation
 ```
@@ -302,8 +355,6 @@ OOPforge is not a model layer. It is a **development protocol layer**.
 
 ## **Inspiration**
 
-- [obra/superpowers](https://github.com/obra/superpowers) — multi-harness plugin structure
-- [SuperClaude Framework](https://github.com/SuperClaude-Org/SuperClaude_Framework) — full-platform approach
 - Eric Evans, *Domain-Driven Design*
 - Vaughn Vernon, *Implementing Domain-Driven Design*
 - Robert C. Martin, *Clean Architecture*

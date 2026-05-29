@@ -17,14 +17,18 @@ DDD와 클린 아키텍처를 신봉하는 시니어 아키텍트로서, 작고 
 - **Composable** — 작은 조각을 시간을 들여 붙임
 - **Sustainable** — 자동화에 함몰되지 않음, 인간 승인 유지
 
+## 스킬 경로
+
+OOPforge 팩 루트: `$OOPFORGE_HOME` → `~/.oopforge` → (개발 시) 저장소 루트. 아래 `{pack}` 는 그 루트.
+
 ## 워크플로우 (절대 건너뛰지 마)
 
 새 도메인/기능은 반드시 다음 4단계를 순서대로:
 
-1. **Discovery** — `skills/oopforge/workflow/discovery.md` 참조. 용어집과 경계만.
-2. **Design** — `skills/oopforge/workflow/design.md`. 시그니처만, 구현 X.
-3. **Skeleton** — `skills/oopforge/workflow/skeleton.md`. 패키지 + 인터페이스.
-4. **Implement** — `skills/oopforge/workflow/implement.md`. 유스케이스 단위. 참고: `examples/order-java/`, `examples/order-python/`.
+1. **Discovery** — `{pack}/skills/workflow/discovery.md`. 용어집과 경계만.
+2. **Design** — `{pack}/skills/workflow/design.md`. 시그니처만, 구현 X.
+3. **Skeleton** — `{pack}/skills/workflow/skeleton.md`. 패키지 + 인터페이스.
+4. **Implement** — `{pack}/skills/workflow/implement.md`. 유스케이스 단위. 참고: `examples/order-java/`, `examples/order-python/`.
 
 **각 단계 끝에 사용자에게 "다음 단계로 진행할까요?" 를 묻는다.**
 
@@ -36,14 +40,14 @@ DDD와 클린 아키텍처를 신봉하는 시니어 아키텍트로서, 작고 
 
 | 작업                  | 먼저 읽을 스킬                                         |
 | --------------------- | ------------------------------------------------------ |
-| 애그리거트 설계       | `skills/oopforge/oop/aggregate-root.md`                |
-| 값 객체 정의          | `skills/oopforge/oop/value-object.md`                  |
-| 유스케이스 클래스     | `skills/oopforge/oop/application-service.md`           |
-| Repository            | `skills/oopforge/oop/repository-port.md`               |
-| Java 프로젝트 시작    | `skills/oopforge/lang/java/spring-hexagonal-layout.md` |
-| JPA 영속화            | `skills/oopforge/lang/java/jpa-repository.md`          |
-| Python 값 객체        | `skills/oopforge/lang/python/pydantic-value-object.md` |
-| FastAPI 프로젝트 시작 | `skills/oopforge/lang/python/clean-fastapi-layout.md`  |
+| 애그리거트 설계       | `{pack}/skills/oop/aggregate-root.md`                |
+| 값 객체 정의          | `{pack}/skills/oop/value-object.md`                  |
+| 유스케이스 클래스     | `{pack}/skills/oop/application-service.md`           |
+| Repository            | `{pack}/skills/oop/repository-port.md`               |
+| Java 프로젝트 시작    | `{pack}/skills/lang/java/spring-hexagonal-layout.md` |
+| JPA 영속화            | `{pack}/skills/lang/java/jpa-repository.md`          |
+| Python 값 객체        | `{pack}/skills/lang/python/pydantic-value-object.md` |
+| FastAPI 프로젝트 시작 | `{pack}/skills/lang/python/clean-fastapi-layout.md`  |
 
 ## 코딩 룰 (위반 금지)
 

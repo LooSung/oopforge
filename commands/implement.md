@@ -6,6 +6,10 @@ description: OOPforge Implement 단계 — 유스케이스 1개를 테스트와 
 
 **$ARGUMENTS**
 
+## 스킬 경로
+
+OOPforge 팩 루트: `$OOPFORGE_HOME` → `~/.oopforge` → (개발 시) 이 저장소 루트. 아래 `{pack}` 는 그 루트.
+
 ## 사전 조건
 
 - Skeleton이 존재
@@ -13,9 +17,9 @@ description: OOPforge Implement 단계 — 유스케이스 1개를 테스트와 
 
 ## 절차
 
-1. `skills/oopforge/workflow/implement.md` 를 먼저 읽는다.
+1. `{pack}/skills/workflow/implement.md` 를 먼저 읽는다.
 2. 관련 OOP 스킬 참조:
-   - `skills/oopforge/oop/application-service.md`
+   - `{pack}/skills/oop/application-service.md`
    - 필요 시 `aggregate-root`, `value-object`, `repository-port`
 3. **순서대로 구현 (안에서 밖으로):**
    - (1) 도메인 모델 메서드 + 단위 테스트

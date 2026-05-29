@@ -6,6 +6,10 @@ description: OOPforge Refactor 단계 — 기존/외부 소스를 동작 보존 
 
 **$ARGUMENTS**
 
+## 스킬 경로
+
+OOPforge 팩 루트: `$OOPFORGE_HOME` → `~/.oopforge` → (개발 시) 이 저장소 루트. 아래 `{pack}` 는 그 루트.
+
 ## 사전 조건
 
 - 보존해야 할 동작이나 계약을 먼저 식별한다.
@@ -13,7 +17,7 @@ description: OOPforge Refactor 단계 — 기존/외부 소스를 동작 보존 
 
 ## 절차
 
-1. `skills/oopforge/workflow/refactor.md` 를 먼저 읽는다.
+1. `{pack}/skills/workflow/refactor.md` 를 먼저 읽는다.
 2. In-scope / Out-of-scope를 명시한다.
 3. 기존 동작을 테스트 또는 재현 시나리오로 고정한다.
 4. 작은 단위로 책임 분리, 이름 정리, 중복 제거를 수행한다.

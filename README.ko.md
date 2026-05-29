@@ -1,5 +1,8 @@
 # OOPforge
 
+![CI](https://github.com/LooSung/oopforge/actions/workflows/lint.yml/badge.svg)
+![License](https://img.shields.io/github/license/LooSung/oopforge)
+
 > **Forge small. Compose forever.**
 >
 > OOP 철학을 도구로 벼린다. Claude Code · Codex CLI · Cursor 등 AI 코딩 에이전트에 주입 가능한 skills + workflow 묶음.
@@ -8,21 +11,19 @@
 
 ---
 
-## 왜 OOPforge인가 — 다른 방법론 팩과 무엇이 다른가
+## 왜 OOPforge인가
 
-이미 [obra/superpowers](https://github.com/obra/superpowers) 같은 훌륭한 범용 워크플로우 팩이 있다. OOPforge는 그것들과 **경쟁이 아니라 보완** 한다:
+OOPforge는 **DDD / OOP 전문 AI 엔지니어링 팩**이다. 범용 에이전트 프레임워크가 아니다.
 
-| | obra/superpowers | SuperClaude | **OOPforge** |
-|---|---|---|---|
-| **초점** | 워크플로우 · TDD | 풀 플랫폼 · 슬래시 커맨드 | **DDD · 헥사고날 · OOP 도메인 모델링** |
-| **언어** | 범용 | 범용 | **Java + Python 양손잡이** |
-| **언어 (UI)** | 영어 | 영중일 | **영어 1차 + 한국어/일본어/중국어** |
-| **룰 표현** | 가이드라인 | 행동 모드 | **300줄, 한 책임 — 명확한 메트릭** |
+| 원칙 | 의미 |
+|---|---|
+| **Small** | 한 스킬 = 한 개념, 스킬 200줄 이하 |
+| **Measurable** | 파일 300줄, 메서드 20줄 — 리뷰 가능 단위 |
+| **Workflow-first** | Discovery → Test, 사람 승인 유지 |
+| **Proof over philosophy** | 실행 가능한 Java/Python 예제 |
+| **Domain-first** | 도메인 레이어 프레임워크 import 0 |
 
-요약: **DDD를 진지하게 하는 한국어권 OOP 개발자를 위한 superpowers.**
-범용 도구 옆에 같이 깔아도 충돌 없음.
-
-**추천 조합:** [Superpowers](https://github.com/obra/superpowers) (범용 워크플로) + **OOPforge** (도메인 모델링) + 사용 중인 에이전트 (Claude Code, Cursor, Codex)
+요약: **구조가 기본값**이 되도록 해서 God Service 생성을 막는다.
 
 ---
 
@@ -127,6 +128,19 @@ cd ~/.oopforge && git pull && ./install.sh update
 **Cursor 현재 사용법:** 프로젝트에 `AGENTS.md` 를 복사하거나 참조한다. [docs/cursor.md](./docs/cursor.md) 참고. 마켓플레이스 패키징은 Phase 2 예정 (ETA 없음).
 
 **Claude Code:** [docs/claude-code.md](./docs/claude-code.md) · **OpenCode (실험):** [docs/opencode.md](./docs/opencode.md)
+
+---
+
+## 문제 해결 (Troubleshooting)
+
+```bash
+./doctor.sh                              # 설치 상태 확인
+./uninstall.sh && ./install.sh           # 재설치
+cd ~/.oopforge && git pull && ./install.sh update   # 업데이트 후 symlink 갱신
+./install.sh --dry-run                   # 실행 계획만 보기
+./install.sh --force                     # 기존 symlink 교체
+./scripts/smoke-test.sh                  # 로컬 smoke test
+```
 
 ---
 
@@ -246,8 +260,6 @@ Phase 1을 충분히 사용한 다음에야 Phase 2로 간다.
 
 ## 영감 / 참고
 
-- [obra/superpowers](https://github.com/obra/superpowers) — 멀티 하네스 플러그인 구조 영감
-- [SuperClaude Framework](https://github.com/SuperClaude-Org/SuperClaude_Framework) — 풀 플랫폼 접근 참고
 - *Domain-Driven Design* — Eric Evans
 - *Implementing DDD* — Vaughn Vernon
 - *Clean Architecture* — Robert C. Martin

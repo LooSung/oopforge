@@ -10,16 +10,17 @@
 
 ## なぜ OOPforge か
 
-[obra/superpowers](https://github.com/obra/superpowers) や [SuperClaude](https://github.com/SuperClaude-Org/SuperClaude_Framework) のような優れた汎用ワークフローパックはすでに存在します。OOPforge はそれらと競合するのではなく、**補完**します。
+OOPforge は **DDD / OOP 専門の AI エンジニアリング pack** です。汎用 agent framework ではありません。
 
-| | obra/superpowers | SuperClaude | **OOPforge** |
-|---|---|---|---|
-| **Focus** | Workflow · TDD | Full platform · slash commands | **DDD · Hexagonal · OOP domain modeling** |
-| **Language** | General | General | **Java + Python** |
-| **UI Language** | EN | EN, ZH, JA | **EN-first + KO/JA/ZH** |
-| **Rules** | Guidelines | Behavioral modes | **Concrete metrics** |
+| 原則 | 意味 |
+|---|---|
+| **Small** | 1 skill = 1 concept、200 行以下 |
+| **Measurable** | 300 行/ファイル、20 行/メソッド |
+| **Workflow-first** | Discovery → Test、human checkpoint |
+| **Proof over philosophy** | 実行可能な Java/Python 例 |
+| **Domain-first** | domain layer に framework import 0 |
 
-要するに、OOPforge は **DDD を真剣に扱う開発者のための superpowers** です。
+要約: **構造をデフォルト**にして God Service 生成を防ぐ。
 
 ---
 

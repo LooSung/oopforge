@@ -20,6 +20,12 @@ For new domains or large features, do not jump straight to code.
 
 Ask for human approval before moving from one stage to the next.
 
+## Skill Path Convention
+
+Resolve the OOPforge pack root in order: `$OOPFORGE_HOME` → `~/.oopforge` → repository root (when developing this pack).
+
+Skill files live at `{pack}/skills/...`. Do **not** use legacy `skills/oopforge/...` paths. See `scripts/path-convention.md`.
+
 ## Skill Routing
 
 Use this table to decide **which skill to read first**. Workflow stage always wins over ad-hoc coding.
