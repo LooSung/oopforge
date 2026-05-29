@@ -62,12 +62,24 @@ chmod +x install.sh uninstall.sh doctor.sh
 
 `install.sh` 는 감지된 Claude Code / Codex CLI 설정 디렉토리에 OOPforge 폴더를 심볼릭 링크한다:
 
-- Claude Code → `~/.claude/skills/oopforge`, `~/.claude/agents/oopforge`, `~/.claude/commands/oopforge`
-- Codex CLI → `~/.codex/skills/oopforge`
-- Cursor → `.cursor-plugin/` 매니페스트 준비 (Phase 2 플러그인 등록용)
-- OpenCode → experimental. 기본 제외, 필요할 때만 `INSTALL_OPENCODE=1 ./install.sh`
+| Agent | 상태 | 설치 경로 |
+|---|---|---|
+| **Claude Code** | 지원 | `~/.claude/{skills,agents,commands}/oopforge` |
+| **Codex CLI** | 지원 | `~/.codex/skills/oopforge` |
+| **Cursor** | 미지원 (Phase 2) | 설치 스크립트 없음 — `.cursor-plugin/` 매니페스트만 존재 |
+| **OpenCode** | 실험적 | `INSTALL_OPENCODE=1 ./install.sh` |
 
-심볼릭 링크이므로 **`~/.oopforge` 한 곳만 수정하면 모든 에이전트에 즉시 반영** 된다.
+심볼릭 링크이므로 **`~/.oopforge` 에서 `git pull` 하면 스킬 내용이 즉시 반영** 된다.
+
+설치 경로를 다시 잡아야 할 때 (새 링크 타깃이 추가된 버전 업 등):
+
+```bash
+cd ~/.oopforge && git pull && ./install.sh update
+```
+
+`./install.sh update` 는 `uninstall.sh` 실행 후 symlink를 재설치한다.
+
+**Cursor 현재 사용법:** 프로젝트에 `AGENTS.md` 를 복사하거나 참조한다. 마켓플레이스 패키징은 Phase 2 예정 (ETA 없음).
 
 ---
 
@@ -149,9 +161,9 @@ OOPforge가 강제하는 4단계. 절대 합치지 않는다.
 ## 코딩 룰 (측정 가능한 메트릭으로)
 
 - **도메인 레이어 프레임워크 import: 0개**
-- **한 파일: 300줄 이하**
-- **한 메서드: 20줄 이하 권장**
-- **한 스킬 파일: 200줄 이하**
+- **한 파일: 300줄 이하** — PR 리뷰 가능 단위 (~15분 리뷰)
+- **한 메서드: 20줄 이하 권장** — 단일 책임, 이름으로 의도 표현
+- **한 스킬 파일: 200줄 이하** — 에이전트 컨텍스트 1회 로드 = 한 개념
 - public 메서드는 유스케이스 동사 (CRUD 이름 금지)
 - public setter 금지, 정적 팩토리 메서드 사용
 - 컬렉션은 방어적 복사
@@ -175,7 +187,7 @@ git add . && git commit -m "feat(oop): add <new-skill> skill"
 ## 로드맵
 
 - **Phase 1 (현재)** — Lightweight portable methodology layer (심볼릭 링크 설치)
-- **Phase 2** — Claude Code / Codex / Cursor 플러그인 마켓플레이스 등록
+- **Phase 2** — Claude Code / Codex / Cursor 플러그인 마켓플레이스 등록 (Cursor: ETA 없음, 매니페스트만 존재)
 - **Phase 3** — Standalone CLI (Claude Agent SDK 위)
 
 Phase 1을 충분히 사용한 다음에야 Phase 2로 간다.

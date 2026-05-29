@@ -42,6 +42,12 @@ Before changing behavior, read the relevant skill file:
 
 ## Hard Rules
 
+These limits are intentionally measurable. They come from review focus and agent context size, not arbitrary style:
+
+- **300 lines/file** — a diff a reviewer can hold in working memory (~15-minute review unit)
+- **20 lines/method** — one responsibility, testable and nameable without scrolling
+- **200 lines/skill** — one concept per agent context load; split when a skill teaches two ideas
+
 - Domain layer framework imports: **0**
 - One file: **300 lines or less**
 - One method: **20 lines preferred**
@@ -54,7 +60,7 @@ Before changing behavior, read the relevant skill file:
 
 ## Repository Discipline
 
-- Keep harness packaging portable: Claude, Codex, and Cursor are first-class; OpenCode is experimental/opt-in.
+- Keep harness packaging portable: Claude and Codex are installable today; Cursor has a Phase 2 manifest only (no `install.sh` target yet); OpenCode is experimental/opt-in.
 - Do not add runtime dependencies for installer scripts unless there is no simpler shell-based alternative.
 - Update `CHANGELOG.md` for user-visible changes.
 - When changing install behavior, verify with a clean temporary `HOME`.

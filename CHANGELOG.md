@@ -5,10 +5,19 @@
 ## [Unreleased]
 
 ### Added
+- GitHub Actions lint workflow: shellcheck, skill frontmatter, 200-line limit, plugin JSON, AGENTS.md references.
+- `scripts/lint-skills.sh` for local and CI validation.
+- `install.sh update` subcommand and `--force` flag for symlink refresh after upgrades.
+- README language policy section; shell script messages unified to English.
+- Hard Rules numeric rationale in `AGENTS.md` and README files.
+- Explicit Cursor status: Not yet (Phase 2), no installer, no ETA.
+
+### Changed
+- `bootstrap.sh` runs `install.sh update` instead of plain `install.sh`.
+- `doctor.sh` warns that Cursor has manifest only (no install target).
+- Cursor README table status changed from "Prepared" to "Not yet (Phase 2)" across all README locales.
 - 기본 README 언어를 영어로 전환하고 한국어, 일본어, 중국어 README를 추가.
-- 에이전트 자동 로딩을 위한 루트 지시 파일 `AGENTS.md`, `CLAUDE.md` 추가.
 - 기본 README를 Quickstart, Installation, Basic Workflow, What's Inside, Philosophy 중심으로 재구성.
-- 워크플로우 스킬 `delivery-plan`, `test`, `refactor` 추가.
 - README에 권장 workflow 순서와 단일 명령 사용 예시 추가.
 - Java/Python Skeleton 기본 패키지 구조를 Splearn-style Spring, Clean FastAPI layout으로 정리.
 
@@ -16,8 +25,10 @@
 
 ### Added
 - 초기 구조 (`skills/`, `agents/`, `commands/`)
+- 에이전트 자동 로딩을 위한 루트 지시 파일 `AGENTS.md`, `CLAUDE.md` 추가.
 - 메타 스킬: `skills/_meta/skill-template.md`
 - 워크플로우 스킬: discovery, design, skeleton, implement
+- 워크플로우 스킬 `delivery-plan`, `test`, `refactor` 추가.
 - OOP 스킬: aggregate-root, value-object, application-service, repository-port
 - Java 스킬: spring-hexagonal-layout, jpa-repository
 - Python 스킬: pydantic-value-object, clean-fastapi-layout

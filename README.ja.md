@@ -61,10 +61,14 @@ chmod +x install.sh uninstall.sh doctor.sh
 
 `install.sh` は検出された Claude Code / Codex CLI の設定ディレクトリへ OOPforge を symlink します。
 
-- Claude Code → `~/.claude/{skills,agents,commands}/oopforge`
-- Codex CLI → `~/.codex/skills/oopforge`
-- Cursor → `.cursor-plugin/` manifest prepared for Phase 2
-- OpenCode → experimental。必要な場合のみ `INSTALL_OPENCODE=1 ./install.sh`
+| Agent | Status | Install target |
+|---|---|---|
+| **Claude Code** | Supported | `~/.claude/{skills,agents,commands}/oopforge` |
+| **Codex CLI** | Supported | `~/.codex/skills/oopforge` |
+| **Cursor** | Not yet (Phase 2) | No installer — manifest only at `.cursor-plugin/` |
+| **OpenCode** | Experimental | `INSTALL_OPENCODE=1 ./install.sh` |
+
+Symlink インストールでは `~/.oopforge` で `git pull` するだけでスキル内容が更新されます。リンク先の再作成が必要な場合は `./install.sh update` を実行してください。
 
 ---
 
@@ -104,9 +108,9 @@ CLAUDE.md            Claude Code bootstrap instructions
 ## Hard Rules
 
 - Domain layer framework imports: **0**
-- One file: **≤ 300 lines**
-- One method: **≤ 20 lines preferred**
-- One skill file: **≤ 200 lines**
+- One file: **≤ 300 lines** — reviewable PR diff size
+- One method: **≤ 20 lines preferred** — single responsibility
+- One skill file: **≤ 200 lines** — one concept per agent context load
 - No public setters; use static factory methods
 - Defensive copy collections at boundaries
 - No domain logic without tests
@@ -116,7 +120,7 @@ CLAUDE.md            Claude Code bootstrap instructions
 ## Roadmap
 
 - **Phase 1** — Lightweight portable methodology pack (symlinks)
-- **Phase 2** — Claude Code / Codex / Cursor plugin marketplaces
+- **Phase 2** — Claude Code / Codex / Cursor plugin marketplaces (Cursor: no ETA; manifest only)
 - **Phase 3** — Standalone CLI built on Claude Agent SDK
 
 ---

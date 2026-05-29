@@ -1,27 +1,59 @@
 #!/usr/bin/env bash
 #
 # OOPforge installer
-#   감지된 Claude Code / Codex CLI 설정 디렉토리에 OOPforge를 심볼릭 링크한다.
+#   Symlinks OOPforge into detected Claude Code / Codex CLI config directories.
 #
-# 환경변수로 강제 설치도 가능:
+# Environment overrides:
 #   INSTALL_CLAUDE=1 INSTALL_CODEX=1 ./install.sh
 #
-# OpenCode는 opt-in:
+# OpenCode is opt-in:
 #   INSTALL_OPENCODE=1 ./install.sh
 #
-# 옵션:
-#   --dry-run    실제로 링크하지 않고 무엇을 할지만 출력
+# Usage:
+#   ./install.sh              Install (skip existing links)
+#   ./install.sh update       Remove OOPforge links, then reinstall
+#   ./install.sh --force      Replace existing symlinks only
+#   ./install.sh --dry-run    Print actions without linking
 #
 set -euo pipefail
 
 PACK_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 DRY_RUN=0
-[ "${1:-}" = "--dry-run" ] && DRY_RUN=1
+FORCE=0
+MODE="install"
 
 cyan()  { printf "\033[36m%s\033[0m\n" "$*"; }
 green() { printf "\033[32m%s\033[0m\n" "$*"; }
 yellow(){ printf "\033[33m%s\033[0m\n" "$*"; }
 red()   { printf "\033[31m%s\033[0m\n" "$*"; }
+
+usage() {
+  cat <<EOF
+Usage: ./install.sh [update] [--force] [--dry-run]
+
+  (default)   Install symlinks; skip paths that already exist
+  update      Run uninstall.sh, then install fresh links
+  --force     Replace existing symlinks (non-symlink paths are skipped with a warning)
+  --dry-run   Show planned actions without changing the filesystem
+EOF
+}
+
+parse_args() {
+  while [ $# -gt 0 ]; do
+    case "$1" in
+      --dry-run) DRY_RUN=1 ;;
+      --force)   FORCE=1 ;;
+      update)    MODE="update" ;;
+      -h|--help) usage; exit 0 ;;
+      *)
+        red "Unknown option: $1"
+        usage
+        exit 1
+        ;;
+    esac
+    shift
+  done
+}
 
 link() {
   local src="$1"
@@ -29,13 +61,26 @@ link() {
   local dst_parent
 
   if [ ! -d "$src" ]; then
-    yellow "건너뜀 (소스 없음): $src"
+    yellow "Skip (source missing): $src"
     return
   fi
 
   if [ -e "$dst" ] || [ -L "$dst" ]; then
-    yellow "이미 존재 (수동 정리 필요): $dst"
-    return
+    if [ "$FORCE" -eq 1 ]; then
+      if [ -L "$dst" ]; then
+        if [ "$DRY_RUN" -eq 1 ]; then
+          cyan "[dry-run] remove symlink $dst"
+        else
+          rm "$dst"
+        fi
+      else
+        yellow "Skip (not a symlink): $dst"
+        return
+      fi
+    else
+      yellow "Already exists (run './install.sh update' or use --force'): $dst"
+      return
+    fi
   fi
 
   dst_parent="$(dirname "$dst")"
@@ -44,38 +89,50 @@ link() {
     if [ ! -d "$dst_parent" ]; then
       cyan "[dry-run] mkdir -p $dst_parent"
     fi
-    cyan "[dry-run] link $dst → $src"
+    cyan "[dry-run] link $dst -> $src"
   else
     mkdir -p "$dst_parent"
     ln -s "$src" "$dst"
-    green "링크: $dst → $src"
+    green "Linked: $dst -> $src"
   fi
 }
 
-cyan "==> OOPforge 설치 시작 ($([ "$DRY_RUN" -eq 1 ] && echo dry-run || echo live))"
+do_install() {
+  if [ -d "$HOME/.claude" ] || [ -n "${INSTALL_CLAUDE:-}" ]; then
+    cyan "--- Claude Code detected"
+    link "$PACK_DIR/skills"   "$HOME/.claude/skills/oopforge"
+    link "$PACK_DIR/agents"   "$HOME/.claude/agents/oopforge"
+    link "$PACK_DIR/commands" "$HOME/.claude/commands/oopforge"
+  fi
 
-# ---- Claude Code ----
-if [ -d "$HOME/.claude" ] || [ -n "${INSTALL_CLAUDE:-}" ]; then
-  cyan "--- Claude Code 감지"
-  link "$PACK_DIR/skills"   "$HOME/.claude/skills/oopforge"
-  link "$PACK_DIR/agents"   "$HOME/.claude/agents/oopforge"
-  link "$PACK_DIR/commands" "$HOME/.claude/commands/oopforge"
+  if [ -d "$HOME/.codex" ] || [ -n "${INSTALL_CODEX:-}" ]; then
+    cyan "--- Codex CLI detected"
+    link "$PACK_DIR/skills" "$HOME/.codex/skills/oopforge"
+  fi
+
+  if [ -n "${INSTALL_OPENCODE:-}" ]; then
+    cyan "--- OpenCode opt-in"
+    link "$PACK_DIR/skills" "$HOME/.config/opencode/skills/oopforge"
+  fi
+}
+
+parse_args "$@"
+
+if [ "$MODE" = "update" ]; then
+  cyan "==> OOPforge update ($([ "$DRY_RUN" -eq 1 ] && echo dry-run || echo live))"
+  if [ "$DRY_RUN" -eq 1 ]; then
+    cyan "[dry-run] would run uninstall.sh"
+  else
+    "$PACK_DIR/uninstall.sh"
+  fi
+else
+  cyan "==> OOPforge install ($([ "$DRY_RUN" -eq 1 ] && echo dry-run || echo live))"
 fi
 
-# ---- Codex CLI ----
-if [ -d "$HOME/.codex" ] || [ -n "${INSTALL_CODEX:-}" ]; then
-  cyan "--- Codex CLI 감지"
-  link "$PACK_DIR/skills" "$HOME/.codex/skills/oopforge"
-fi
+do_install
 
-# ---- OpenCode (opt-in) ----
-if [ -n "${INSTALL_OPENCODE:-}" ]; then
-  cyan "--- OpenCode opt-in"
-  link "$PACK_DIR/skills" "$HOME/.config/opencode/skills/oopforge"
-fi
-
-green "==> 완료. 각 에이전트 재시작하면 적용됨."
+green "==> Done. Restart each agent to pick up changes."
 
 if [ "$DRY_RUN" -eq 1 ]; then
-  yellow "실제 설치하려면 --dry-run 없이 다시 실행하세요."
+  yellow "Run again without --dry-run to apply changes."
 fi

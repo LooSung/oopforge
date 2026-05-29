@@ -1,0 +1,24 @@
+name: Lint
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install shellcheck
+        run: sudo apt-get update && sudo apt-get install -y shellcheck
+
+      - name: Shellcheck
+        run: |
+          shellcheck install.sh uninstall.sh doctor.sh bootstrap.sh scripts/lint-skills.sh
+
+      - name: Lint skills and repository
+        run: |
+          chmod +x scripts/lint-skills.sh
+          ./scripts/lint-skills.sh

@@ -1,6 +1,9 @@
 # Cursor Plugin Manifest
 
-Cursor 플러그인 마켓플레이스 등록을 위한 매니페스트다.
+Manifest for future Cursor plugin marketplace registration (Phase 2).
 
-`superpowers`의 Cursor 패키징처럼 `.cursor-plugin/plugin.json`에서
-skills, agents, commands 경로를 선언한다.
+Like [superpowers](https://github.com/obra/superpowers) Cursor packaging, `.cursor-plugin/plugin.json`
+declares skills, agents, and commands paths.
+
+**Status:** Not installable yet. There is no `install.sh` target for Cursor.
+Use `AGENTS.md` in your project until Phase 2 marketplace packaging ships (no ETA).

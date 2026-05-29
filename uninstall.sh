@@ -1,22 +1,22 @@
 #!/usr/bin/env bash
 #
 # OOPforge uninstaller
-#   설치된 심볼릭 링크만 제거한다 (원본 폴더는 건드리지 않음).
+#   Removes installed symlinks only (does not delete the source pack).
 #
 set -euo pipefail
 
-yellow(){ printf "\033[33m%s\033[0m\n" "$*"; }
 green() { printf "\033[32m%s\033[0m\n" "$*"; }
+yellow(){ printf "\033[33m%s\033[0m\n" "$*"; }
 
 rm_link() {
   if [ -L "$1" ]; then
     rm "$1"
-    green "제거: $1"
+    green "Removed: $1"
     return
   fi
 
   if [ -e "$1" ]; then
-    yellow "심링크 아님 (수동 확인): $1"
+    yellow "Not a symlink (manual check needed): $1"
   fi
 }
 
@@ -26,4 +26,4 @@ rm_link "$HOME/.claude/commands/oopforge"
 rm_link "$HOME/.codex/skills/oopforge"
 rm_link "$HOME/.config/opencode/skills/oopforge"
 
-green "==> 제거 완료."
+green "==> Uninstall complete."

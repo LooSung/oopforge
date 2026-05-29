@@ -78,10 +78,20 @@ chmod +x install.sh uninstall.sh doctor.sh
 |---|---|---|
 | **Claude Code** | Supported | `~/.claude/{skills,agents,commands}/oopforge` |
 | **Codex CLI** | Supported | `~/.codex/skills/oopforge` |
-| **Cursor** | Prepared | `.cursor-plugin/` manifest for Phase 2 |
+| **Cursor** | Not yet (Phase 2) | No installer — manifest only at `.cursor-plugin/` |
 | **OpenCode** | Experimental | `INSTALL_OPENCODE=1 ./install.sh` |
 
-Because the install uses symlinks, editing `~/.oopforge` updates every linked agent immediately.
+Because the install uses symlinks, a `git pull` in `~/.oopforge` updates skill content immediately for linked agents.
+
+To refresh install paths (for example after a version adds new link targets), run:
+
+```bash
+cd ~/.oopforge && git pull && ./install.sh update
+```
+
+`./install.sh update` runs `uninstall.sh` then reinstalls all OOPforge symlinks. Use `./install.sh --force` to replace existing symlinks without a full uninstall.
+
+**Cursor today:** copy or reference `AGENTS.md` in your project. Marketplace packaging is planned for Phase 2 with no ETA yet.
 
 ---
 
@@ -169,7 +179,9 @@ oopforge/
 ├── bootstrap.sh         one-line installer
 ├── doctor.sh            installation checker
 ├── install.sh           symlink installer
-└── uninstall.sh         symlink remover
+├── scripts/lint-skills.sh  skill frontmatter and repo lint
+├── uninstall.sh         symlink remover
+└── .github/workflows/lint.yml  CI validation
 ```
 
 ### **Agent instruction files**
@@ -184,15 +196,27 @@ oopforge/
 These are intentionally measurable:
 
 - Domain layer framework imports: **0**
-- One file: **300 lines or less**
-- One method: **20 lines preferred**
-- One skill file: **200 lines or less**
+- One file: **300 lines or less** — fits a reviewable PR diff; beyond this, review quality drops
+- One method: **20 lines preferred** — one responsibility, testable and nameable without scrolling
+- One skill file: **200 lines or less** — one concept per agent context load; split when teaching two ideas
 - Public methods use **use-case verbs**, not CRUD names
 - No public setters; use **factory methods** and intention-revealing behavior
 - Collections crossing boundaries are defensively copied or immutable
 - Other aggregates are referenced by **ID only**
 - No domain logic without tests
 - Comments explain *why*; names explain *what*
+
+---
+
+## **Language Policy**
+
+| Area | Language |
+|---|---|
+| README | English (primary), plus KO / JA / ZH translations |
+| `AGENTS.md`, shell scripts, CI | English |
+| Skill files (`skills/`) | Korean (default); English translations welcome via PR |
+
+Scripts and agent instructions use English so contributors and CI share one vocabulary. Skill content stays Korean-first because the pack was written for Korean-speaking teams. A future `skills/en/` tree is possible if demand grows.
 
 ---
 
@@ -217,7 +241,7 @@ OOPforge is not a model layer. It is a **development protocol layer**.
 ## **Roadmap**
 
 - **Phase 1** — Lightweight portable methodology pack using symlinks
-- **Phase 2** — Claude Code / Codex / Cursor plugin marketplace packaging
+- **Phase 2** — Claude Code / Codex / Cursor plugin marketplace packaging (Cursor: no ETA; manifest exists, installer pending)
 - **Phase 3** — Standalone CLI built on Claude Agent SDK
 
 ---
