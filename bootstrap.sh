@@ -1,18 +1,18 @@
 #!/usr/bin/env bash
 #
 # OOPforge bootstrap installer
-#   Clone or update ~/.oopforge, then run install.sh update.
-#
+# Clone or update ~/.oopforge, then run install.sh update.
+
 set -euo pipefail
 
 REPO_URL="${OOPFORGE_REPO_URL:-https://github.com/LooSung/oopforge.git}"
 INSTALL_DIR="${OOPFORGE_HOME:-$HOME/.oopforge}"
 BRANCH="${OOPFORGE_BRANCH:-main}"
 
-cyan()  { printf "\033[36m%s\033[0m\n" "$*"; }
+cyan() { printf "\033[36m%s\033[0m\n" "$*"; }
 green() { printf "\033[32m%s\033[0m\n" "$*"; }
-yellow(){ printf "\033[33m%s\033[0m\n" "$*"; }
-red()   { printf "\033[31m%s\033[0m\n" "$*"; }
+yellow() { printf "\033[33m%s\033[0m\n" "$*"; }
+red() { printf "\033[31m%s\033[0m\n" "$*"; }
 
 require() {
   if ! command -v "$1" >/dev/null 2>&1; then
@@ -41,8 +41,8 @@ clone_or_update() {
 }
 
 require git
-
 clone_or_update
+
 chmod +x "$INSTALL_DIR/install.sh" "$INSTALL_DIR/uninstall.sh"
 
 cyan "==> Running install.sh update"

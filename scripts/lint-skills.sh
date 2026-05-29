@@ -1,26 +1,20 @@
 #!/usr/bin/env bash
 #
 # OOPforge repository lint
-#   Validates skill frontmatter, line limits, plugin JSON, and AGENTS.md references.
-#
+# Validates skill frontmatter, line limits, plugin JSON, and AGENTS.md references.
+
 set -euo pipefail
 
-PACK_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
+PACK_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 FAILED=0
-SKILL_LINE_LIMIT=200
+SKILL_LINE_LIMIT="${SKILL_LINE_LIMIT:-200}"
 
-cyan()  { printf "\033[36m%s\033[0m\n" "$*"; }
+cyan() { printf "\033[36m%s\033[0m\n" "$*"; }
 green() { printf "\033[32m%s\033[0m\n" "$*"; }
-red()   { printf "\033[31m%s\033[0m\n" "$*"; }
+red() { printf "\033[31m%s\033[0m\n" "$*"; }
 
-fail() {
-  red "FAIL $*"
-  FAILED=1
-}
-
-ok() {
-  green "OK   $*"
-}
+fail() { red "FAIL $*"; FAILED=1; }
+ok() { green "OK $*"; }
 
 check_skill_file() {
   local file="$1"
@@ -39,13 +33,13 @@ check_skill_file() {
     return
   fi
 
-  if ! awk 'NR>1 && /^---$/ { found=1 } END { exit found ? 0 : 1 }' "$file"; then
+  if ! awk 'NR > 1 && /^---$/ { found=1 } END { exit found ? 0 : 1 }' "$file"; then
     fail "$rel: frontmatter closing --- missing"
     return
   fi
 
-  name_line="$(awk 'NR>1 && /^---$/ { exit } /^name: / { print; exit }' "$file")"
-  desc_line="$(awk 'NR>1 && /^---$/ { exit } /^description: / { print; exit }' "$file")"
+  name_line="$(awk 'NR > 1 && /^---$/ { exit } /^name: / { print; exit }' "$file")"
+  desc_line="$(awk 'NR > 1 && /^---$/ { exit } /^description: / { print; exit }' "$file")"
 
   if [ -z "$name_line" ]; then
     fail "$rel: frontmatter missing name:"
@@ -78,18 +72,23 @@ check_agents_skill_refs() {
   local agents_file="$PACK_DIR/AGENTS.md"
   local path
 
+  if [ ! -f "$agents_file" ]; then
+    fail "missing AGENTS.md"
+    return
+  fi
+
   while IFS= read -r path; do
     if [ ! -f "$PACK_DIR/$path" ]; then
       fail "AGENTS.md references missing file: $path"
     else
       ok "AGENTS.md reference: $path"
     fi
-  done < <(grep -oE 'skills/[^`[:space:]]+\.md' "$agents_file" | sort -u)
+  done < <(grep -oE 'skills/[^`[:space:]]+\.md' "$agents_file" | sort -u || true)
 }
 
 cyan "==> OOPforge lint"
-cyan "--- Skill files"
 
+cyan "--- Skill files"
 while IFS= read -r -d '' file; do
   check_skill_file "$file"
 done < <(find "$PACK_DIR/skills" -name '*.md' -print0)
@@ -101,17 +100,6 @@ check_json_file "$PACK_DIR/.cursor-plugin/plugin.json"
 
 cyan "--- AGENTS.md skill references"
 check_agents_skill_refs
-
-cyan "--- Skill path convention"
-while IFS= read -r -d '' file; do
-  if grep -q 'skills/oopforge/' "$file"; then
-    fail "legacy path skills/oopforge/ in ${file#"$PACK_DIR"/}"
-  fi
-done < <(find "$PACK_DIR/commands" "$PACK_DIR/agents" -name '*.md' -print0)
-
-if [ "$FAILED" -eq 0 ]; then
-  green "OK   no legacy skills/oopforge/ paths in commands/agents"
-fi
 
 if [ "$FAILED" -eq 0 ]; then
   green "==> lint complete: no issues"

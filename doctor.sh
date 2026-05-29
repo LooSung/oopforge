@@ -1,30 +1,21 @@
 #!/usr/bin/env bash
 #
 # OOPforge doctor
-#   Validate local pack structure and installed symlinks.
-#
+# Validates local pack structure and installed symlinks.
+
 set -euo pipefail
 
-PACK_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+PACK_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 FAILED=0
 
-cyan()  { printf "\033[36m%s\033[0m\n" "$*"; }
+cyan() { printf "\033[36m%s\033[0m\n" "$*"; }
 green() { printf "\033[32m%s\033[0m\n" "$*"; }
-yellow(){ printf "\033[33m%s\033[0m\n" "$*"; }
-red()   { printf "\033[31m%s\033[0m\n" "$*"; }
+yellow() { printf "\033[33m%s\033[0m\n" "$*"; }
+red() { printf "\033[31m%s\033[0m\n" "$*"; }
 
-ok() {
-  green "OK   $*"
-}
-
-warn() {
-  yellow "WARN $*"
-}
-
-fail() {
-  red "FAIL $*"
-  FAILED=1
-}
+ok() { green "OK $*"; }
+warn() { yellow "WARN $*"; }
+fail() { red "FAIL $*"; FAILED=1; }
 
 check_file() {
   local path="$1"
@@ -61,6 +52,7 @@ check_link() {
 
   local actual
   actual="$(readlink "$dst")"
+
   if [ "$actual" = "$expected" ]; then
     ok "$label link: $dst -> $actual"
   else
@@ -78,6 +70,7 @@ check_command() {
 }
 
 cyan "==> OOPforge doctor"
+
 cyan "--- Pack structure"
 check_dir "skills"
 check_dir "skills/workflow"
@@ -103,9 +96,9 @@ check_command "claude"
 check_command "codex"
 check_command "cursor"
 
-cyan "--- Cursor (Phase 2 — no installer yet)"
-warn "Cursor has no install.sh target; manifest only at .cursor-plugin/ (Phase 2 marketplace)"
-warn "Use AGENTS.md in your project or wait for Phase 2 plugin packaging"
+cyan "--- Cursor"
+warn "Cursor has no install.sh target yet; manifest only at .cursor-plugin/"
+warn "Use AGENTS.md in your project or wait for marketplace-style packaging."
 
 cyan "--- Installed links"
 check_link "Claude skills" "$HOME/.claude/skills/oopforge" "$PACK_DIR/skills"
@@ -118,7 +111,7 @@ if [ -n "${CHECK_OPENCODE:-}" ]; then
   check_command "opencode"
   check_link "OpenCode skills" "$HOME/.config/opencode/skills/oopforge" "$PACK_DIR/skills"
 else
-  warn "OpenCode checks skipped by default (use CHECK_OPENCODE=1 ./doctor.sh)"
+  warn "OpenCode checks skipped by default (use CHECK_OPENCODE=1 ./doctor.sh)."
 fi
 
 if [ "$FAILED" -eq 0 ]; then

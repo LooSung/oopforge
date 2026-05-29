@@ -2,13 +2,19 @@
 description: OOPforge Test 단계 — 단위/통합/E2E 테스트 설계와 실행
 ---
 
-**OOPforge Test** 단계를 수행하라. 대상:
+**OOPforge Test** 단계를 수행하라.
 
-**$ARGUMENTS**
+대상: **$ARGUMENTS**
 
 ## 스킬 경로
 
-OOPforge 팩 루트: `$OOPFORGE_HOME` → `~/.oopforge` → (개발 시) 이 저장소 루트. 아래 `{pack}` 는 그 루트.
+OOPforge 팩 루트는 다음 순서로 찾는다.
+
+1. `$OOPFORGE_HOME`
+2. `~/.oopforge`
+3. 현재 프로젝트에 설치된 OOPforge pack root
+
+아래 `{pack}`은 그 루트를 의미한다.
 
 ## 사전 조건
 
@@ -17,13 +23,15 @@ OOPforge 팩 루트: `$OOPFORGE_HOME` → `~/.oopforge` → (개발 시) 이 저
 
 ## 절차
 
-1. `{pack}/skills/workflow/test.md` 를 먼저 읽는다.
+1. `{pack}/skills/workflow/test.md`를 먼저 읽는다.
 2. 테스트 대상을 읽고 단위/통합/E2E 중 필요한 범위를 정한다.
-3. 도메인 규칙은 단위 테스트로, 유스케이스는 port mock/fake로 검증한다.
-4. 필요한 테스트를 작성하거나 기존 테스트를 보강한다.
-5. 테스트 명령을 실행하고 결과를 기록한다.
-6. 완료 후 사용자에게:
-   - "테스트 결과 검토하고 commit/push 또는 MR 준비로 넘어가도 될까요?"
+3. 도메인 규칙은 단위 테스트로 검증한다.
+4. 유스케이스는 port mock/fake로 검증한다.
+5. 필요한 테스트를 작성하거나 기존 테스트를 보강한다.
+6. 테스트 명령을 실행하고 결과를 기록한다.
+7. 완료 후 사용자에게 다음을 묻는다.
+
+> 테스트 결과 검토하고 commit/push 또는 MR 준비로 넘어가도 될까요?
 
 ## 금지
 

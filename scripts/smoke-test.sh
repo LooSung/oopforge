@@ -1,19 +1,22 @@
 #!/usr/bin/env bash
 #
 # OOPforge smoke test — install and doctor in an isolated HOME.
-#
+
 set -euo pipefail
 
-PACK_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
+PACK_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 TMP_HOME="$(mktemp -d)"
 trap 'rm -rf "$TMP_HOME"' EXIT
 
-cyan()  { printf "\033[36m%s\033[0m\n" "$*"; }
+cyan() { printf "\033[36m%s\033[0m\n" "$*"; }
 green() { printf "\033[32m%s\033[0m\n" "$*"; }
 
-cyan "==> OOPforge smoke test (HOME=$TMP_HOME)"
+cyan "==> OOPforge smoke test"
+cyan "HOME=$TMP_HOME"
 
 export HOME="$TMP_HOME"
+export INSTALL_CLAUDE=1
+
 mkdir -p "$HOME/.claude" "$HOME/.codex"
 
 "$PACK_DIR/install.sh"
@@ -31,10 +34,14 @@ fi
 
 cyan "==> install.sh update"
 "$PACK_DIR/install.sh" update
+
 test -L "$HOME/.claude/skills/oopforge"
 
 cyan "==> uninstall"
 "$PACK_DIR/uninstall.sh"
+
 test ! -e "$HOME/.claude/skills/oopforge"
+test ! -e "$HOME/.claude/agents/oopforge"
+test ! -e "$HOME/.claude/commands/oopforge"
 
 green "==> Smoke test passed"

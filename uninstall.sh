@@ -1,22 +1,24 @@
 #!/usr/bin/env bash
 #
 # OOPforge uninstaller
-#   Removes installed symlinks only (does not delete the source pack).
-#
+# Removes installed symlinks only. It never deletes the source pack.
+
 set -euo pipefail
 
 green() { printf "\033[32m%s\033[0m\n" "$*"; }
-yellow(){ printf "\033[33m%s\033[0m\n" "$*"; }
+yellow() { printf "\033[33m%s\033[0m\n" "$*"; }
 
 rm_link() {
-  if [ -L "$1" ]; then
-    rm "$1"
-    green "Removed: $1"
+  local path="$1"
+
+  if [ -L "$path" ]; then
+    rm "$path"
+    green "Removed: $path"
     return
   fi
 
-  if [ -e "$1" ]; then
-    yellow "Not a symlink (manual check needed): $1"
+  if [ -e "$path" ]; then
+    yellow "Not a symlink; leaving untouched: $path"
   fi
 }
 
