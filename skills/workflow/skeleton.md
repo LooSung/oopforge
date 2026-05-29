@@ -1,6 +1,6 @@
 ---
 name: workflow-skeleton
-description: Design 다음 단계. 패키지 구조와 인터페이스 파일을 생성한다. 비즈니스 로직은 아직 X.
+description: Design/Delivery Plan 다음 단계. 언어별 기본 패키지 구조와 인터페이스 파일을 생성한다. 비즈니스 로직은 아직 X.
 tags: [workflow, ddd]
 stability: stable
 ---
@@ -8,63 +8,44 @@ stability: stable
 # Workflow — Skeleton
 
 ## 언제 쓰나
-Design이 끝났을 때. Implement 이전.
+Design과 Delivery Plan이 끝났을 때. Implement 이전.
 **패키지 구조 + 빈 클래스/인터페이스**만 만든다.
 
 ## 체크리스트
-- [ ] 헥사고날 레이어 폴더 생성 (domain, application, infrastructure, interfaces)
+- [ ] 대상 스택 선택 (`java-spring`, `python-fastapi`)
+- [ ] 언어별 레이아웃 스킬을 먼저 읽음
+  - Java: `skills/lang/java/spring-hexagonal-layout.md`
+  - Python: `skills/lang/python/clean-fastapi-layout.md`
+- [ ] 헥사고날/클린 아키텍처 레이어 폴더 생성
 - [ ] 애그리거트 클래스 골격 생성 (필드 + 빈 메서드)
 - [ ] 값 객체 클래스 골격
 - [ ] 포트 인터페이스 정의 (구현체 X)
 - [ ] 유스케이스 클래스 골격 (빈 execute 메서드)
-- [ ] 빌드 도구 파일 (pom.xml, pyproject.toml) 의존성만
+- [ ] 빌드 도구 파일 (Gradle, pyproject.toml 등) 의존성만
 - [ ] 테스트 폴더 미러링
 
-## 표준 헥사고날 레이아웃
+## 언어별 기본 레이아웃
 
-### Java (Spring)
-```
-src/main/java/com/example/order/
-├── domain/                  ← 프레임워크 import 0
-│   ├── model/               ← Aggregate, Entity, ValueObject
-│   ├── event/               ← Domain events
-│   └── port/                ← Repository 등 outbound port 인터페이스
-├── application/             ← Use case orchestration
-│   └── usecase/
-├── infrastructure/          ← 어댑터 구현
-│   ├── persistence/         ← JPA, MyBatis 등
-│   └── external/            ← HTTP client, MQ 등
-└── interfaces/              ← inbound 어댑터
-    └── rest/                ← Controller
-```
+Skeleton은 직접 레이아웃을 발명하지 않는다. 아래 스킬을 따른다.
 
-### Python (FastAPI)
-```
-src/order/
-├── domain/
-│   ├── model.py
-│   ├── event.py
-│   └── port.py
-├── application/
-│   └── usecase.py
-├── infrastructure/
-│   ├── persistence/
-│   └── external/
-└── interfaces/
-    └── api.py
-```
+| Stack | Layout source | Direction |
+|---|---|---|
+| Java Spring | `skills/lang/java/spring-hexagonal-layout.md` | Splearn-style Spring hexagonal layout |
+| Python FastAPI | `skills/lang/python/clean-fastapi-layout.md` | `app/application/domain/infrastructure/presentation/shared` clean layout |
 
 ## 산출물
 
 - 빈 메서드 시그니처만 있는 파일들
-- 컴파일/실행은 가능 (NotImplementedError 또는 TODO)
+- 컴파일/실행은 가능 (`UnsupportedOperationException`, `NotImplementedError`, TODO)
 - 테스트 폴더 구조 (테스트는 비어 있어도 됨)
+- `docs/skeleton.md` 또는 `docs/<domain>/skeleton.md` 에 생성 구조 기록
 
 ## 금지
 - **메서드 본문 작성 금지** — `throw new UnsupportedOperationException()` 또는 `raise NotImplementedError`
 - **`if`, `for` 등 로직 금지**
 - **데이터베이스 스키마 정의 금지** — Implement 단계로 미룸
 - **레이어 위반 금지** — domain은 다른 어느 레이어도 import 하지 않음
+- **언어별 레이아웃 무시 금지** — Java/Python 기본 구조는 lang 스킬을 우선한다.
 
 ## 다음 단계
 사용자 승인 후 → `workflow-implement` (유스케이스 단위로)

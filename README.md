@@ -29,8 +29,10 @@ For Claude Code slash commands:
 ```text
 /oopforge:discovery order domain
 /oopforge:design place-order use case
+/oopforge:delivery-plan place-order
 /oopforge:skeleton java-spring
 /oopforge:implement place-order
+/oopforge:test place-order
 ```
 
 ---
@@ -85,24 +87,64 @@ Because the install uses symlinks, editing `~/.oopforge` updates every linked ag
 
 ## **The Basic Workflow**
 
-OOPforge uses four stages. *Do not merge them.*
+OOPforge uses a small delivery loop. *Do not merge planning, implementation, and verification.*
+
+### **Recommended order**
+
+For a new domain or feature, use OOPforge in this order:
+
+```text
+Discovery → Design → Delivery Plan → Skeleton → Implement → Test
+```
+
+This keeps the agent from jumping into code before the domain language, boundaries, contracts, and verification plan are clear.
 
 | Stage | Output | Do not do |
 |---|---|---|
 | **1. Discovery** | Glossary, bounded contexts, actors, open questions | Code |
 | **2. Design** | Use-case signatures, aggregate outlines, ports | Implementation |
-| **3. Skeleton** | Packages, interfaces, empty classes | Business logic |
-| **4. Implement** | One use case with tests | Multiple use cases at once |
+| **3. Delivery Plan** | Scope, contract, implementation order, test/release plan | Coding |
+| **4. Skeleton** | Packages, interfaces, empty classes | Business logic |
+| **5. Implement** | One use case at a time | Multiple use cases at once |
+| **6. Test** | Unit, integration, E2E checks | Untested domain logic |
 
 Each stage ends with a human checkpoint before moving on.
 
-### **Example flow**
+### **Command flow**
 
 ```text
 /oopforge:discovery payment domain
 /oopforge:design approve-payment use case
+/oopforge:delivery-plan approve-payment
 /oopforge:skeleton java-spring
 /oopforge:implement approve-payment
+/oopforge:test approve-payment
+```
+
+### **Where to start**
+
+- Start at **Discovery** for a new domain or unclear feature.
+- Start at **Delivery Plan** if Discovery/Design already exist.
+- Start at **Implement** only when the contract and skeleton are already clear.
+- Use **Test** whenever you need TDD, regression coverage, or E2E verification.
+- Use **Refactor** separately when behavior must stay the same.
+
+**Refactor is intentionally outside the default feature flow.** Use it for existing or imported code that needs cleanup without behavior changes.
+
+### **Single-step commands**
+
+```text
+/oopforge:delivery-plan payment approval
+/oopforge:test place-order
+/oopforge:refactor imported billing module
+```
+
+Natural language works too:
+
+```text
+Use OOPforge to create a delivery plan for payment approval.
+Use OOPforge test workflow to add unit and E2E coverage for place-order.
+Use OOPforge refactor workflow to clean up this imported module without changing behavior.
 ```
 
 ---
@@ -112,7 +154,8 @@ Each stage ends with a human checkpoint before moving on.
 ```text
 oopforge/
 ├── skills/
-│   ├── workflow/        Discovery → Design → Skeleton → Implement
+│   ├── workflow/        Discovery → Design → Delivery Plan → Skeleton
+│   │                    → Implement → Test, plus Refactor
 │   ├── oop/             Aggregate Root, Value Object, Repository Port,
 │   │                    Domain Event, Bounded Context, Factory Method,
 │   │                    Specification Pattern
@@ -120,7 +163,7 @@ oopforge/
 │       ├── java/        Spring hexagonal layout, JPA repository
 │       └── python/      Pydantic value objects, clean FastAPI layout
 ├── agents/              ddd-architect subagent
-├── commands/            Claude Code slash commands
+├── commands/            Claude Code slash commands for workflow stages
 ├── AGENTS.md            cross-agent repository instructions
 ├── CLAUDE.md            Claude Code bootstrap instructions
 ├── bootstrap.sh         one-line installer

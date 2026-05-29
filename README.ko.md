@@ -106,7 +106,7 @@ oopforge/
 ├── .opencode/                     ← OpenCode experimental notes
 ├── skills/
 │   ├── _meta/skill-template.md    ← 새 스킬 작성 규칙
-│   ├── workflow/                   ← Discovery → Design → Skeleton → Implement
+│   ├── workflow/                   ← 권장 순서: Discovery → Design → Delivery Plan → Skeleton → Implement → Test
 │   ├── oop/                        ← 언어 무관 OOP/DDD 패턴
 │   │   ├── aggregate-root
 │   │   ├── value-object
@@ -120,7 +120,7 @@ oopforge/
 │       ├── java/                   ← Spring, JPA
 │       └── python/                 ← Pydantic, FastAPI
 ├── agents/                         ← Claude Code subagents
-├── commands/                       ← Claude Code slash commands
+├── commands/                       ← Claude Code workflow slash commands
 ├── AGENTS.md                        ← 공통 에이전트 지시 파일
 ├── CLAUDE.md                        ← Claude Code 진입 지시
 ├── bootstrap.sh

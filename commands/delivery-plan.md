@@ -1,0 +1,32 @@
+---
+description: OOPforge Delivery Plan 단계 — 요구사항, 구현 순서, 테스트, 릴리스 계획 정리
+---
+
+**OOPforge Delivery Plan** 단계를 수행하라. 대상:
+
+**$ARGUMENTS**
+
+## 사전 조건
+
+- `docs/design.md` 가 있으면 먼저 읽는다.
+- 없으면 요구사항을 바탕으로 Problem 1-Pager부터 작성한다.
+
+## 절차
+
+1. `skills/oopforge/workflow/delivery-plan.md` 를 먼저 읽는다.
+2. 필요 시 관련 OOP 스킬을 참조:
+   - `skills/oopforge/oop/aggregate-root.md`
+   - `skills/oopforge/oop/value-object.md`
+   - `skills/oopforge/oop/repository-port.md`
+   - `skills/oopforge/oop/domain-event.md`
+3. 요구사항, 목표/비목표, 계약, 책임 경계, 구현 순서, 테스트 계획을 정리한다.
+4. 산출물을 `docs/delivery-plan.md` 또는 `docs/<domain>/delivery-plan.md` 에 저장한다.
+5. 완료 후 사용자에게:
+   - "Delivery Plan 검토하고 Skeleton 또는 Implement 단계로 넘어가도 될까요?"
+
+## 금지
+
+- 구현 코드 작성
+- 확정되지 않은 계약을 확정처럼 작성
+- 회사/프레임워크 전용 규칙 강제
+- Open Questions 비워두기

@@ -87,14 +87,14 @@ chmod +x install.sh uninstall.sh doctor.sh
 
 ```
 skills/
-├── workflow/        Discovery → Design → Skeleton → Implement
+├── workflow/        Recommended: Discovery → Design → Delivery Plan → Skeleton → Implement → Test
 ├── oop/             Aggregate Root, Value Object, Domain Event, ...
 └── lang/
     ├── java/        Spring hexagonal layout, JPA repository
     └── python/      Pydantic value objects, clean FastAPI layout
 
 agents/              ddd-architect subagent
-commands/            slash commands for each workflow stage
+commands/            Claude Code slash commands for workflow stages
 AGENTS.md            cross-agent repository instructions
 CLAUDE.md            Claude Code bootstrap instructions
 ```
