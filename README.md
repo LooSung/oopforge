@@ -364,3 +364,13 @@ OOPforge is not a model layer. It is a **development protocol layer**.
 ## **License**
 
 MIT
+
+---
+
+## Review and sample outputs
+
+Use these documents when you want to check whether an agent actually followed OOPforge instead of only producing clean-looking code.
+
+- [Reviewer checklist](docs/reviewer-checklist.md)
+- [Sample discovery output](docs/sample-output/discovery-order.md)
+- [Sample design output](docs/sample-output/design-order.md)
