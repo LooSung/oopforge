@@ -24,6 +24,24 @@ OOPforge 是 **DDD / OOP 专用的 AI 工程 pack**，不是通用 agent framewo
 
 ---
 
+## 如何使用 OOPforge
+
+**新手从这里开始:** **[图书馆借阅指南 →](docs/guides/library-loan/README.zh.md)**  
+Discovery → Design → Skeleton → Implement (Java + Python) → Test
+
+指南目录: [EN](docs/guides/library-loan/README.md) · [KO](docs/guides/library-loan/README.ko.md) · [JA](docs/guides/library-loan/README.ja.md) · [ZH](docs/guides/library-loan/README.zh.md)
+
+| 资料 | 用途 |
+|---|---|
+| [图书馆借阅指南](docs/guides/library-loan/README.zh.md) | 完整工作流教程 |
+| [examples/order-java](examples/order-java/) · [order-python](examples/order-python/) | 最小可运行证明 (place-order) |
+| [Discovery 样本 (library)](docs/sample-output/discovery-library.zh.md) | 期望 agent 输出 ([EN](docs/sample-output/discovery-library.md) · [KO](docs/sample-output/discovery-library.ko.md) · [JA](docs/sample-output/discovery-library.ja.md)) |
+| [Design 样本 (library)](docs/sample-output/design-library.zh.md) | 期望 agent 输出 ([EN](docs/sample-output/design-library.md) · [KO](docs/sample-output/design-library.ko.md) · [JA](docs/sample-output/design-library.ja.md)) |
+
+每个工作流阶段结束时有 **人工检查点** — 不要跳过。
+
+---
+
 ## Philosophy
 
 > **Model is replaceable. Workflow is permanent.**

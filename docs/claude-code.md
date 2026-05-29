@@ -23,14 +23,17 @@ Installed paths:
 ## Slash commands
 
 ```text
-/oopforge:discovery order domain
-/oopforge:design place-order use case
-/oopforge:delivery-plan place-order
+/oopforge:discovery library loan domain
+/oopforge:design borrow-book use case
+/oopforge:delivery-plan borrow-book
 /oopforge:skeleton java-spring
-/oopforge:implement place-order
-/oopforge:test place-order
+/oopforge:implement borrow-book
+/oopforge:test borrow-book
 /oopforge:refactor imported billing module
 ```
+
+**First time?** Follow the [library loan walkthrough](../guides/library-loan/README.md) step by step.  
+Localized index: [KO](../guides/library-loan/README.ko.md) · [JA](../guides/library-loan/README.ja.md) · [ZH](../guides/library-loan/README.zh.md)
 
 ## Subagents
 

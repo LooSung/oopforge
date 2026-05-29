@@ -5,7 +5,10 @@
 ## [Unreleased]
 
 ### Added
-- `scripts/smoke-test.sh` — isolated HOME install/doctor/update/uninstall verification.
+- Library loan guide i18n: `docs/guides/library-loan/README.ko.md`, `.ja.md`, `.zh.md`; step files unified to English.
+- Step file i18n: `01-discovery` through `06-layer-rules` in EN/KO/JA/ZH (`.ko.md`, `.ja.md`, `.zh.md`).
+- Sample output i18n: `discovery-library` and `design-library` in EN/KO/JA/ZH.
+- README ja/zh "How to use OOPforge" sections with localized guide links.
 - CI: `bash -n`, smoke test step in lint workflow.
 - README CI badge, Troubleshooting section.
 - `scripts/path-convention.md` — unified skill path rules.

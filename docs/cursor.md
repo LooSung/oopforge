@@ -30,11 +30,9 @@ In Cursor, reference `AGENTS.md` from project rules:
 Example prompts:
 
 ```text
+Follow the OOPforge library loan walkthrough: docs/guides/library-loan/README.md
+(Localized: README.ko.md · README.ja.md · README.zh.md in the same folder.)
 Design an Order aggregate using OOPforge. Start at Discovery — no code yet.
-```
-
-```text
-Follow OOPforge workflow. Implement place-order in Java using examples/order-java as reference.
 ```
 
 ## 4. Recommended flow

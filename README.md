@@ -42,6 +42,27 @@ For Claude Code slash commands:
 
 ---
 
+## **How to use OOPforge**
+
+**New to the workflow?** Follow the step-by-step library loan guide:
+
+**[Library loan walkthrough →](docs/guides/library-loan/README.md)**  
+Discovery → Design → Skeleton → Implement (Java + Python) → Test
+
+Guide index: [EN](docs/guides/library-loan/README.md) · [KO](docs/guides/library-loan/README.ko.md) · [JA](docs/guides/library-loan/README.ja.md) · [ZH](docs/guides/library-loan/README.zh.md)
+
+| Resource | Purpose |
+|---|---|
+| [Library loan guide](docs/guides/library-loan/README.md) | Full tutorial — how to use OOPforge end to end |
+| [examples/order-java](examples/order-java/) · [order-python](examples/order-python/) | Minimal runnable proof (place-order) |
+| [Sample discovery (library)](docs/sample-output/discovery-library.md) | Short expected agent output ([KO](docs/sample-output/discovery-library.ko.md) · [JA](docs/sample-output/discovery-library.ja.md) · [ZH](docs/sample-output/discovery-library.zh.md)) |
+| [Sample design (library)](docs/sample-output/design-library.md) | Short expected agent output ([KO](docs/sample-output/design-library.ko.md) · [JA](docs/sample-output/design-library.ja.md) · [ZH](docs/sample-output/design-library.zh.md)) |
+| [Reviewer checklist](docs/reviewer-checklist.md) | Post-implement rule check |
+
+Each workflow stage ends with a **human checkpoint** — do not skip ahead.
+
+---
+
 ## **Why OOPforge**
 
 OOPforge is a **DDD / OOP specialized AI engineering pack** — not a general agent framework.
@@ -266,6 +287,8 @@ oopforge/
 │   ├── order-java/      Runnable Java Spring hexagonal reference (Order)
 │   └── order-python/    Runnable Python FastAPI hexagonal reference (Order)
 ├── docs/
+│   ├── guides/library-loan/   Step-by-step walkthrough (start here)
+│   ├── sample-output/         Short expected agent outputs
 │   ├── cursor.md        Cursor setup guide
 │   ├── claude-code.md   Claude Code setup guide
 │   └── opencode.md      OpenCode opt-in guide
@@ -378,8 +401,9 @@ MIT
 
 ## Review and sample outputs
 
-Use these documents when you want to check whether an agent actually followed OOPforge instead of only producing clean-looking code.
-
+- [Library loan walkthrough](docs/guides/library-loan/README.md) — **recommended starting point**
 - [Reviewer checklist](docs/reviewer-checklist.md)
-- [Sample discovery output](docs/sample-output/discovery-order.md)
-- [Sample design output](docs/sample-output/design-order.md)
+- [Sample discovery — library](docs/sample-output/discovery-library.md)
+- [Sample design — library](docs/sample-output/design-library.md)
+- [Sample discovery — order](docs/sample-output/discovery-order.md)
+- [Sample design — order](docs/sample-output/design-order.md)
