@@ -1,0 +1,20 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.idea/
+.vscode/
+*.swp
+
+# Local
+.env
+.env.local
+*.log
+
+# Build artifacts
+dist/
+build/
+*.egg-info/
+__pycache__/
+target/
