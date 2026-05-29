@@ -1,0 +1,26 @@
+{
+  "name": "oopforge",
+  "displayName": "OOPforge",
+  "description": "DDD, hexagonal architecture, and OOP domain modeling skills for Cursor.",
+  "version": "0.2.0",
+  "author": {
+    "name": "Mr.Louis",
+    "url": "https://github.com/LooSung"
+  },
+  "homepage": "https://github.com/LooSung/oopforge",
+  "repository": "https://github.com/LooSung/oopforge",
+  "license": "MIT",
+  "keywords": [
+    "ddd",
+    "clean-architecture",
+    "hexagonal",
+    "oop",
+    "java",
+    "python",
+    "korean",
+    "methodology"
+  ],
+  "skills": "./skills/",
+  "agents": "./agents/",
+  "commands": "./commands/"
+}

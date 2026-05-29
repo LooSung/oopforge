@@ -1,0 +1,42 @@
+{
+  "name": "oopforge",
+  "version": "0.2.0",
+  "description": "DDD, hexagonal architecture, and OOP domain modeling skills for Codex.",
+  "author": {
+    "name": "Mr.Louis",
+    "url": "https://github.com/LooSung"
+  },
+  "homepage": "https://github.com/LooSung/oopforge",
+  "repository": "https://github.com/LooSung/oopforge",
+  "license": "MIT",
+  "keywords": [
+    "ddd",
+    "clean-architecture",
+    "hexagonal",
+    "oop",
+    "java",
+    "python",
+    "korean",
+    "methodology"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "OOPforge",
+    "shortDescription": "DDD and OOP workflow discipline for coding agents",
+    "longDescription": "Use OOPforge to guide Codex through Discovery, Design, Skeleton, and Implement workflows with DDD, hexagonal architecture, and framework-free domain modeling rules.",
+    "developerName": "Mr.Louis",
+    "category": "Coding",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Java로 Order 애그리거트를 OOPforge 규칙에 맞춰 설계해줘.",
+      "새 도메인을 Discovery 단계부터 시작해줘."
+    ],
+    "websiteURL": "https://github.com/LooSung/oopforge",
+    "brandColor": "#2563EB",
+    "screenshots": []
+  }
+}

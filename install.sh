@@ -1,10 +1,13 @@
 #!/usr/bin/env bash
 #
 # OOPforge installer
-#   감지된 AI 코딩 에이전트 설정 디렉토리에 OOPforge를 심볼릭 링크한다.
+#   감지된 Claude Code / Codex CLI 설정 디렉토리에 OOPforge를 심볼릭 링크한다.
 #
 # 환경변수로 강제 설치도 가능:
-#   INSTALL_CLAUDE=1 INSTALL_CODEX=1 INSTALL_OPENCODE=1 ./install.sh
+#   INSTALL_CLAUDE=1 INSTALL_CODEX=1 ./install.sh
+#
+# OpenCode는 opt-in:
+#   INSTALL_OPENCODE=1 ./install.sh
 #
 # 옵션:
 #   --dry-run    실제로 링크하지 않고 무엇을 할지만 출력
@@ -23,22 +26,27 @@ red()   { printf "\033[31m%s\033[0m\n" "$*"; }
 link() {
   local src="$1"
   local dst="$2"
+  local dst_parent
 
   if [ ! -d "$src" ]; then
     yellow "건너뜀 (소스 없음): $src"
     return
   fi
 
-  mkdir -p "$(dirname "$dst")"
-
   if [ -e "$dst" ] || [ -L "$dst" ]; then
     yellow "이미 존재 (수동 정리 필요): $dst"
     return
   fi
 
+  dst_parent="$(dirname "$dst")"
+
   if [ "$DRY_RUN" -eq 1 ]; then
+    if [ ! -d "$dst_parent" ]; then
+      cyan "[dry-run] mkdir -p $dst_parent"
+    fi
     cyan "[dry-run] link $dst → $src"
   else
+    mkdir -p "$dst_parent"
     ln -s "$src" "$dst"
     green "링크: $dst → $src"
   fi
@@ -60,9 +68,9 @@ if [ -d "$HOME/.codex" ] || [ -n "${INSTALL_CODEX:-}" ]; then
   link "$PACK_DIR/skills" "$HOME/.codex/skills/oopforge"
 fi
 
-# ---- OpenCode ----
-if [ -d "$HOME/.config/opencode" ] || [ -n "${INSTALL_OPENCODE:-}" ]; then
-  cyan "--- OpenCode 감지"
+# ---- OpenCode (opt-in) ----
+if [ -n "${INSTALL_OPENCODE:-}" ]; then
+  cyan "--- OpenCode opt-in"
   link "$PACK_DIR/skills" "$HOME/.config/opencode/skills/oopforge"
 fi
 

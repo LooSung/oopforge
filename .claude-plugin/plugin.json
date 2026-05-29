@@ -1,0 +1,34 @@
+{
+  "name": "oopforge",
+  "version": "0.2.0",
+  "description": "DDD와 클린 아키텍처를 신봉하는 OOP 개발 방법론 팩. Java + Python 양손잡이.",
+  "author": {
+    "name": "Mr.Louis",
+    "url": "https://github.com/LooSung"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/LooSung/oopforge",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LooSung/oopforge.git"
+  },
+  "keywords": [
+    "ddd",
+    "clean-architecture",
+    "hexagonal",
+    "oop",
+    "java",
+    "python",
+    "korean",
+    "methodology"
+  ],
+  "skills": {
+    "directory": "../skills"
+  },
+  "agents": {
+    "directory": "../agents"
+  },
+  "commands": {
+    "directory": "../commands"
+  }
+}
