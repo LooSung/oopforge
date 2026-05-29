@@ -263,6 +263,7 @@ Phase 1을 충분히 사용한 다음에야 Phase 2로 간다.
 - *Domain-Driven Design* — Eric Evans
 - *Implementing DDD* — Vaughn Vernon
 - *Clean Architecture* — Robert C. Martin
+- *Test-Driven Development: By Example* — Kent Beck
 
 ---
 

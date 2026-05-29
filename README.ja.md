@@ -126,6 +126,15 @@ CLAUDE.md            Claude Code bootstrap instructions
 
 ---
 
+## Inspiration
+
+- Eric Evans, *Domain-Driven Design*
+- Vaughn Vernon, *Implementing Domain-Driven Design*
+- Robert C. Martin, *Clean Architecture*
+- Kent Beck, *Test-Driven Development: By Example*
+
+---
+
 ## Reference
 
 Reference only — packaging and layout ideas, not a dependency.

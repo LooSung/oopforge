@@ -358,6 +358,7 @@ OOPforge is not a model layer. It is a **development protocol layer**.
 - Eric Evans, *Domain-Driven Design*
 - Vaughn Vernon, *Implementing Domain-Driven Design*
 - Robert C. Martin, *Clean Architecture*
+- Kent Beck, *Test-Driven Development: By Example*
 
 ---
 
