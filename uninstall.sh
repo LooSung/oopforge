@@ -12,8 +12,11 @@ rm_link() {
   if [ -L "$1" ]; then
     rm "$1"
     green "제거: $1"
-  else
-    [ -e "$1" ] && yellow "심링크 아님 (수동 확인): $1"
+    return
+  fi
+
+  if [ -e "$1" ]; then
+    yellow "심링크 아님 (수동 확인): $1"
   fi
 }
 
