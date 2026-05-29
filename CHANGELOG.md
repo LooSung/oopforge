@@ -6,6 +6,8 @@
 
 ### Added
 - 기본 README 언어를 영어로 전환하고 한국어, 일본어, 중국어 README를 추가.
+- 에이전트 자동 로딩을 위한 루트 지시 파일 `AGENTS.md`, `CLAUDE.md` 추가.
+- 기본 README를 Quickstart, Installation, Basic Workflow, What's Inside, Philosophy 중심으로 재구성.
 
 ## [0.1.0] - 2026-05-29
 

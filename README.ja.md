@@ -27,7 +27,7 @@
 
 > **Model is replaceable. Workflow is permanent.**
 
-モデルは変わります。Claude、GPT、Gemini、OSS、その次も。
+モデルは変わります。Claude、GPT、OSS、その次も。
 しかし workflow、contracts、architectural discipline は長く残ります。
 
 OOPforge はモデル層ではなく、**development protocol layer** です。
@@ -95,6 +95,8 @@ skills/
 
 agents/              ddd-architect subagent
 commands/            slash commands for each workflow stage
+AGENTS.md            cross-agent repository instructions
+CLAUDE.md            Claude Code bootstrap instructions
 ```
 
 ---

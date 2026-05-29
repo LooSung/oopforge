@@ -2,55 +2,63 @@
 
 > **Forge small. Compose forever.**
 >
-> An OOP/DDD methodology pack that injects clean-architecture discipline into AI coding agents — Claude Code, Codex CLI, Cursor, and friends.
+> *A portable OOP/DDD methodology pack for AI coding agents.*
+
+OOPforge gives Claude Code, Codex CLI, Cursor, and compatible coding agents a clear way to model software with **DDD**, **hexagonal architecture**, and **clean domain boundaries**.
 
 [English](./README.md) · [한국어](./README.ko.md) · [日本語](./README.ja.md) · [中文](./README.zh.md)
 
 ---
 
-## Why OOPforge — what's different
+## **Quickstart**
 
-Great general-purpose workflow packs already exist ([obra/superpowers](https://github.com/obra/superpowers), [SuperClaude](https://github.com/SuperClaude-Org/SuperClaude_Framework)). OOPforge **complements** them, not competes:
-
-| | obra/superpowers | SuperClaude | **OOPforge** |
-|---|---|---|---|
-| **Focus** | Workflow · TDD | Full platform · slash commands | **DDD · Hexagonal · OOP domain modeling** |
-| **Language** | General | General | **Java + Python (dual-handed)** |
-| **UI Language** | EN | EN, ZH, JA | **EN-first + KO/JA/ZH** |
-| **Rules** | Guidelines | Behavioral modes | **Concrete metrics (300-line, single-purpose)** |
-
-In short: **A `superpowers` for developers who take DDD seriously.**
-Install alongside other packs without conflict.
-
----
-
-## Philosophy
-
-> **Model is replaceable. Workflow is permanent.**
-
-Models change — Claude, GPT, Gemini, OSS, whatever comes next.
-But workflow, contracts, and architectural discipline endure.
-
-OOPforge is not a model layer. It's a **development protocol layer**.
-
-### 4 Principles
-
-1. **Small** — One concept per skill. Under 200 lines.
-2. **Clean** — Domain layer free of framework imports. Comments explain "why" only.
-3. **Composable** — Tiny pieces assembled over time.
-4. **Sustainable** — No mega-prompts. Human checkpoints preserved.
-
----
-
-## Install
-
-### Quick
+Install OOPforge into the agents detected on your machine:
 
 ```bash
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/LooSung/oopforge/main/bootstrap.sh)"
 ```
 
-### Manual
+Then restart your coding agent and ask:
+
+```text
+Build an Order aggregate in Java, following OOPforge rules.
+```
+
+For Claude Code slash commands:
+
+```text
+/oopforge:discovery order domain
+/oopforge:design place-order use case
+/oopforge:skeleton java-spring
+/oopforge:implement place-order
+```
+
+---
+
+## **Why OOPforge**
+
+General-purpose methodology packs already exist. OOPforge is narrower on purpose: it focuses on **object-oriented domain modeling** for teams that care about long-lived architecture.
+
+| | obra/superpowers | SuperClaude | **OOPforge** |
+|---|---|---|---|
+| **Focus** | Workflow · TDD | Full platform · slash commands | **DDD · Hexagonal · OOP domain modeling** |
+| **Scope** | General | General | **Domain modeling discipline** |
+| **Languages** | General | General | **Java + Python first** |
+| **Rules** | Guidelines | Behavioral modes | **Concrete metrics and boundaries** |
+
+In short: **OOPforge is a DDD-focused companion pack**, not a replacement for broader workflow systems.
+
+---
+
+## **Installation**
+
+### **Automatic**
+
+```bash
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/LooSung/oopforge/main/bootstrap.sh)"
+```
+
+### **Manual**
 
 ```bash
 git clone https://github.com/LooSung/oopforge ~/.oopforge
@@ -60,80 +68,127 @@ chmod +x install.sh uninstall.sh doctor.sh
 ./doctor.sh
 ```
 
-The installer symlinks the pack into every detected agent's config directory:
-- Claude Code → `~/.claude/{skills,agents,commands}/oopforge`
-- Codex CLI → `~/.codex/skills/oopforge`
-- Cursor → `.cursor-plugin/` manifest is prepared for Phase 2 marketplace packaging
-- OpenCode → experimental, disabled by default; opt in with `INSTALL_OPENCODE=1 ./install.sh`
+### **What gets installed**
 
-Edit once in `~/.oopforge`, every agent sees it immediately.
+`install.sh` symlinks OOPforge into supported agent config directories:
+
+| Agent | Status | Install target |
+|---|---|---|
+| **Claude Code** | Supported | `~/.claude/{skills,agents,commands}/oopforge` |
+| **Codex CLI** | Supported | `~/.codex/skills/oopforge` |
+| **Cursor** | Prepared | `.cursor-plugin/` manifest for Phase 2 |
+| **OpenCode** | Experimental | `INSTALL_OPENCODE=1 ./install.sh` |
+
+Because the install uses symlinks, editing `~/.oopforge` updates every linked agent immediately.
 
 ---
 
-## Use
+## **The Basic Workflow**
+
+OOPforge uses four stages. *Do not merge them.*
+
+| Stage | Output | Do not do |
+|---|---|---|
+| **1. Discovery** | Glossary, bounded contexts, actors, open questions | Code |
+| **2. Design** | Use-case signatures, aggregate outlines, ports | Implementation |
+| **3. Skeleton** | Packages, interfaces, empty classes | Business logic |
+| **4. Implement** | One use case with tests | Multiple use cases at once |
+
+Each stage ends with a human checkpoint before moving on.
+
+### **Example flow**
 
 ```text
-/oopforge:discovery order domain
-/oopforge:design place-order use case
+/oopforge:discovery payment domain
+/oopforge:design approve-payment use case
 /oopforge:skeleton java-spring
-/oopforge:implement place-order
-```
-
-Or just chat:
-> "Build an Order aggregate in Java, following OOPforge rules."
-
----
-
-## What's inside
-
-```
-skills/
-├── workflow/        Discovery → Design → Skeleton → Implement (4-stage)
-├── oop/             Language-agnostic patterns
-│                    aggregate-root, value-object, application-service,
-│                    repository-port, domain-event, bounded-context,
-│                    factory-method, specification-pattern
-└── lang/
-    ├── java/        Spring hexagonal layout, JPA repository
-    └── python/      Pydantic value objects, clean FastAPI layout
-
-agents/              ddd-architect subagent
-commands/            slash commands for each workflow stage
+/oopforge:implement approve-payment
 ```
 
 ---
 
-## Hard Rules (measurable metrics)
+## **What's Inside**
+
+```text
+oopforge/
+├── skills/
+│   ├── workflow/        Discovery → Design → Skeleton → Implement
+│   ├── oop/             Aggregate Root, Value Object, Repository Port,
+│   │                    Domain Event, Bounded Context, Factory Method,
+│   │                    Specification Pattern
+│   └── lang/
+│       ├── java/        Spring hexagonal layout, JPA repository
+│       └── python/      Pydantic value objects, clean FastAPI layout
+├── agents/              ddd-architect subagent
+├── commands/            Claude Code slash commands
+├── AGENTS.md            cross-agent repository instructions
+├── CLAUDE.md            Claude Code bootstrap instructions
+├── bootstrap.sh         one-line installer
+├── doctor.sh            installation checker
+├── install.sh           symlink installer
+└── uninstall.sh         symlink remover
+```
+
+### **Agent instruction files**
+
+- **`AGENTS.md`** is the shared source of truth for Codex, Cursor, OpenCode, and other compatible agents.
+- **`CLAUDE.md`** is a thin Claude Code entry point that imports `AGENTS.md`.
+
+---
+
+## **Hard Rules**
+
+These are intentionally measurable:
 
 - Domain layer framework imports: **0**
-- One file: **≤ 300 lines**
-- One method: **≤ 20 lines preferred**
-- One skill file: **≤ 200 lines**
-- Public methods named as use-case verbs (no CRUD names)
-- No public setters; use static factory methods
-- Defensive copy collections at boundaries
+- One file: **300 lines or less**
+- One method: **20 lines preferred**
+- One skill file: **200 lines or less**
+- Public methods use **use-case verbs**, not CRUD names
+- No public setters; use **factory methods** and intention-revealing behavior
+- Collections crossing boundaries are defensively copied or immutable
+- Other aggregates are referenced by **ID only**
 - No domain logic without tests
+- Comments explain *why*; names explain *what*
 
 ---
 
-## Roadmap
+## **Philosophy**
 
-- **Phase 1 (now)** — Lightweight portable methodology pack (symlinks)
-- **Phase 2** — Claude Code / Codex / Cursor plugin marketplaces
+> **Model is replaceable. Workflow is permanent.**
+
+Models change: Claude, GPT, OSS, and whatever comes next.
+But *workflow*, *contracts*, and *architectural discipline* last longer.
+
+OOPforge is not a model layer. It is a **development protocol layer**.
+
+### **Principles**
+
+1. **Small** — one skill, one concept.
+2. **Clean** — domain code does not know frameworks.
+3. **Composable** — small pieces should combine over time.
+4. **Sustainable** — no mega-prompts; keep human checkpoints.
+
+---
+
+## **Roadmap**
+
+- **Phase 1** — Lightweight portable methodology pack using symlinks
+- **Phase 2** — Claude Code / Codex / Cursor plugin marketplace packaging
 - **Phase 3** — Standalone CLI built on Claude Agent SDK
 
 ---
 
-## Inspiration
+## **Inspiration**
 
-- [obra/superpowers](https://github.com/obra/superpowers) — Multi-harness plugin structure
-- [SuperClaude Framework](https://github.com/SuperClaude-Org/SuperClaude_Framework) — Full platform approach
+- [obra/superpowers](https://github.com/obra/superpowers) — multi-harness plugin structure
+- [SuperClaude Framework](https://github.com/SuperClaude-Org/SuperClaude_Framework) — full-platform approach
 - Eric Evans, *Domain-Driven Design*
-- Vaughn Vernon, *Implementing DDD*
+- Vaughn Vernon, *Implementing Domain-Driven Design*
 - Robert C. Martin, *Clean Architecture*
 
 ---
 
-## License
+## **License**
 
 MIT

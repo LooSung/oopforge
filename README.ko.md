@@ -28,7 +28,7 @@
 
 > **Model is replaceable. Workflow is permanent.**
 
-모델은 계속 바뀐다 — Claude, GPT, Gemini, OSS, 그 다음 무엇이든.
+모델은 계속 바뀐다 — Claude, GPT, OSS, 그 다음 무엇이든.
 하지만 **workflow, contracts, architectural discipline** 은 오래 살아남는다.
 
 OOPforge는 모델 레이어가 아니라 **개발 프로토콜 레이어** 다.
@@ -121,6 +121,8 @@ oopforge/
 │       └── python/                 ← Pydantic, FastAPI
 ├── agents/                         ← Claude Code subagents
 ├── commands/                       ← Claude Code slash commands
+├── AGENTS.md                        ← 공통 에이전트 지시 파일
+├── CLAUDE.md                        ← Claude Code 진입 지시
 ├── bootstrap.sh
 ├── doctor.sh
 ├── install.sh

@@ -17,6 +17,5 @@
 | Codex CLI | `.codex-plugin/` | TODO |
 | Cursor | `.cursor-plugin/` | TODO |
 | OpenCode | `.opencode/` | TODO |
-| Gemini CLI | `gemini-extension.json` | TODO |
 
 참고 구조: [obra/superpowers](https://github.com/obra/superpowers)

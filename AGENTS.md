@@ -1,0 +1,63 @@
+# OOPforge — Agent Instructions
+
+If you are an AI coding agent working in this repository, follow OOPforge itself.
+
+## Mission
+
+OOPforge is a portable OOP/DDD methodology pack for coding agents.
+Protect the core promise: small skills, clean domain models, explicit workflow stages, and human checkpoints.
+
+## Required Workflow
+
+For new domains or large features, do not jump straight to code.
+
+1. **Discovery** — read `skills/workflow/discovery.md`; produce glossary, contexts, actors, open questions.
+2. **Design** — read `skills/workflow/design.md`; produce use-case signatures, aggregate outlines, ports.
+3. **Skeleton** — read `skills/workflow/skeleton.md`; create package structure and empty interfaces/classes only.
+4. **Implement** — read `skills/workflow/implement.md`; implement one use case with tests.
+
+Ask for human approval before moving from one stage to the next.
+
+## Skill Selection
+
+Before changing behavior, read the relevant skill file:
+
+- Aggregate design: `skills/oop/aggregate-root.md`
+- Value objects: `skills/oop/value-object.md`
+- Application services: `skills/oop/application-service.md`
+- Repository ports: `skills/oop/repository-port.md`
+- Domain events: `skills/oop/domain-event.md`
+- Bounded contexts: `skills/oop/bounded-context.md`
+- Factory methods: `skills/oop/factory-method.md`
+- Specification pattern: `skills/oop/specification-pattern.md`
+- Java layout: `skills/lang/java/spring-hexagonal-layout.md`
+- JPA repositories: `skills/lang/java/jpa-repository.md`
+- Python layout: `skills/lang/python/clean-fastapi-layout.md`
+- Pydantic value objects: `skills/lang/python/pydantic-value-object.md`
+
+## Hard Rules
+
+- Domain layer framework imports: **0**
+- One file: **300 lines or less**
+- One method: **20 lines preferred**
+- One skill file: **200 lines or less**
+- No public setters; use factory methods or intention-revealing behavior methods.
+- Collections crossing boundaries must be defensively copied or immutable.
+- Other aggregates are referenced by ID only.
+- Do not commit domain logic without tests.
+- Comments explain "why"; names explain "what".
+
+## Repository Discipline
+
+- Keep harness packaging portable: Claude, Codex, and Cursor are first-class; OpenCode is experimental/opt-in.
+- Do not add runtime dependencies for installer scripts unless there is no simpler shell-based alternative.
+- Update `CHANGELOG.md` for user-visible changes.
+- When changing install behavior, verify with a clean temporary `HOME`.
+- Do not claim a harness integration works until `install.sh`, `doctor.sh`, and a clean-session smoke test prove it.
+
+## What Not To Do
+
+- Do not merge workflow stages to save time.
+- Do not add framework annotations or infrastructure concerns to domain examples.
+- Do not create mega-prompts, mega-skills, or broad abstractions without evidence.
+- Do not make OpenCode part of the default install path unless its integration becomes stable.
