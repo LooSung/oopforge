@@ -4,6 +4,9 @@
 
 ## [Unreleased]
 
+### Added
+- 기본 README 언어를 영어로 전환하고 한국어, 일본어, 중국어 README를 추가.
+
 ## [0.1.0] - 2026-05-29
 
 ### Added
