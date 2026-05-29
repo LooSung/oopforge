@@ -5,7 +5,7 @@
 
 set -euo pipefail
 
-PACK_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+PACK_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 FAILED=0
 SKILL_LINE_LIMIT="${SKILL_LINE_LIMIT:-200}"
 

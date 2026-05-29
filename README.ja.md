@@ -62,10 +62,18 @@ OOPforge はモデル層ではなく、**development protocol layer** です。
 
 ## Install
 
+### Setup commands (from `~/.oopforge` or this repo)
+
+```bash
+./scripts/setup/install.sh          # install symlinks
+./scripts/setup/doctor.sh           # check pack + links
+./scripts/setup/install.sh update   # refresh symlinks after git pull
+```
+
 ### Quick
 
 ```bash
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/LooSung/oopforge/main/bootstrap.sh)"
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/LooSung/oopforge/main/scripts/setup/bootstrap.sh)"
 ```
 
 ### Manual
@@ -73,21 +81,27 @@ bash -c "$(curl -fsSL https://raw.githubusercontent.com/LooSung/oopforge/main/bo
 ```bash
 git clone https://github.com/LooSung/oopforge ~/.oopforge
 cd ~/.oopforge
-chmod +x install.sh uninstall.sh doctor.sh
-./install.sh
-./doctor.sh
+chmod +x scripts/setup/*.sh
+./scripts/setup/install.sh
+./scripts/setup/doctor.sh
 ```
 
-`install.sh` は検出された Claude Code / Codex CLI の設定ディレクトリへ OOPforge を symlink します。
+`scripts/setup/install.sh` は検出された Claude Code / Codex CLI の設定ディレクトリへ OOPforge を symlink します。
 
 | Agent | Status | Install target |
 |---|---|---|
 | **Claude Code** | Supported | `~/.claude/{skills,agents,commands}/oopforge` |
 | **Codex CLI** | Supported | `~/.codex/skills/oopforge` |
 | **Cursor** | Not yet (Phase 2) | No installer — manifest only at `.cursor-plugin/` |
-| **OpenCode** | Experimental | `INSTALL_OPENCODE=1 ./install.sh` |
+| **OpenCode** | Experimental | `INSTALL_OPENCODE=1 ./scripts/setup/install.sh` |
 
-Symlink インストールでは `~/.oopforge` で `git pull` するだけでスキル内容が更新されます。リンク先の再作成が必要な場合は `./install.sh update` を実行してください。
+Symlink インストールでは `~/.oopforge` で `git pull` するだけでスキル内容が更新されます。リンク先の再作成が必要な場合は `./scripts/setup/install.sh update` を実行してください。
+
+### ローカル smoke test
+
+```bash
+./scripts/ci/smoke-test.sh
+```
 
 ---
 
@@ -120,6 +134,10 @@ agents/              ddd-architect subagent
 commands/            Claude Code slash commands for workflow stages
 AGENTS.md            cross-agent repository instructions
 CLAUDE.md            Claude Code bootstrap instructions
+scripts/
+├── setup/           bootstrap, install, uninstall, doctor
+├── ci/              lint-skills, smoke-test
+└── path-convention.md
 ```
 
 ---

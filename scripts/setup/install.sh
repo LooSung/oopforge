@@ -4,35 +4,34 @@
 # Symlinks OOPforge into detected Claude Code / Codex CLI config directories.
 #
 # Environment overrides:
-#   INSTALL_CLAUDE=1 INSTALL_CODEX=1 ./install.sh
+#   INSTALL_CLAUDE=1 INSTALL_CODEX=1 ./scripts/setup/install.sh
 #
 # OpenCode is opt-in:
-#   INSTALL_OPENCODE=1 ./install.sh
+#   INSTALL_OPENCODE=1 ./scripts/setup/install.sh
 #
 # Usage:
-#   ./install.sh             Install (skip existing links)
-#   ./install.sh update      Remove OOPforge links, then reinstall
-#   ./install.sh --force     Replace existing symlinks only
-#   ./install.sh --dry-run   Print actions without linking
+#   ./scripts/setup/install.sh             Install (skip existing links)
+#   ./scripts/setup/install.sh update      Remove OOPforge links, then reinstall
+#   ./scripts/setup/install.sh --force     Replace existing symlinks only
+#   ./scripts/setup/install.sh --dry-run   Print actions without linking
 
 set -euo pipefail
 
-PACK_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SETUP_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck source=scripts/setup/lib/common.sh
+source "$SETUP_DIR/lib/common.sh"
+
+PACK_DIR="$(oopforge_pack_dir "$SETUP_DIR")"
 DRY_RUN=0
 FORCE=0
 MODE="install"
-
-cyan() { printf "\033[36m%s\033[0m\n" "$*"; }
-green() { printf "\033[32m%s\033[0m\n" "$*"; }
-yellow() { printf "\033[33m%s\033[0m\n" "$*"; }
-red() { printf "\033[31m%s\033[0m\n" "$*"; }
 
 usage() {
   cat <<USAGE
 OOPforge installer
 
 Usage:
-  ./install.sh [update] [--force] [--dry-run]
+  ./scripts/setup/install.sh [update] [--force] [--dry-run]
 
 Environment:
   INSTALL_CLAUDE=1    Install Claude Code links even if ~/.claude is missing
@@ -140,9 +139,9 @@ parse_args "$@"
 if [ "$MODE" = "update" ]; then
   cyan "==> OOPforge update ($([ "$DRY_RUN" -eq 1 ] && echo dry-run || echo live))"
   if [ "$DRY_RUN" -eq 1 ]; then
-    cyan "[dry-run] would run uninstall.sh"
+    cyan "[dry-run] would run scripts/setup/uninstall.sh"
   else
-    "$PACK_DIR/uninstall.sh"
+    "$SETUP_DIR/uninstall.sh"
   fi
 else
   cyan "==> OOPforge install ($([ "$DRY_RUN" -eq 1 ] && echo dry-run || echo live))"

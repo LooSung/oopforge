@@ -15,13 +15,13 @@
 
 OOPforge는 **DDD / OOP 전문 AI 엔지니어링 팩**이다. 범용 에이전트 프레임워크가 아니다.
 
-| 원칙 | 의미 |
-|---|---|
-| **Small** | 한 스킬 = 한 개념, 스킬 200줄 이하 |
-| **Measurable** | 파일 300줄, 메서드 20줄 — 리뷰 가능 단위 |
-| **Workflow-first** | Discovery → Test, 사람 승인 유지 |
-| **Proof over philosophy** | 실행 가능한 Java/Python 예제 |
-| **Domain-first** | 도메인 레이어 프레임워크 import 0 |
+| 원칙                      | 의미                                     |
+| ------------------------- | ---------------------------------------- |
+| **Small**                 | 한 스킬 = 한 개념, 스킬 200줄 이하       |
+| **Measurable**            | 파일 300줄, 메서드 20줄 — 리뷰 가능 단위 |
+| **Workflow-first**        | Discovery → Test, 사람 승인 유지         |
+| **Proof over philosophy** | 실행 가능한 Java/Python 예제             |
+| **Domain-first**          | 도메인 레이어 프레임워크 import 0        |
 
 요약: **구조가 기본값**이 되도록 해서 God Service 생성을 막는다.
 
@@ -34,12 +34,12 @@ Discovery → Design → Skeleton → Implement (Java + Python) → Test
 
 가이드 목차: [EN](docs/guides/library-loan/README.md) · [KO](docs/guides/library-loan/README.ko.md) · [JA](docs/guides/library-loan/README.ja.md) · [ZH](docs/guides/library-loan/README.zh.md)
 
-| 자료 | 용도 |
-|---|---|
-| [도서관 대출 가이드](docs/guides/library-loan/README.ko.md) | 전체 워크플로우 튜토리얼 |
-| [examples/order-java](examples/order-java/) · [order-python](examples/order-python/) | 실행 가능한 최소 증명 (place-order) |
-| [Discovery 샘플 (library)](docs/sample-output/discovery-library.ko.md) | 에이전트 기대 출력 ([EN](docs/sample-output/discovery-library.md) · [JA](docs/sample-output/discovery-library.ja.md) · [ZH](docs/sample-output/discovery-library.zh.md)) |
-| [Design 샘플 (library)](docs/sample-output/design-library.ko.md) | 에이전트 기대 출력 ([EN](docs/sample-output/design-library.md) · [JA](docs/sample-output/design-library.ja.md) · [ZH](docs/sample-output/design-library.zh.md)) |
+| 자료                                                                                 | 용도                                                                                                                                                                     |
+| ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [도서관 대출 가이드](docs/guides/library-loan/README.ko.md)                          | 전체 워크플로우 튜토리얼                                                                                                                                                 |
+| [examples/order-java](examples/order-java/) · [order-python](examples/order-python/) | 실행 가능한 최소 증명 (place-order)                                                                                                                                      |
+| [Discovery 샘플 (library)](docs/sample-output/discovery-library.ko.md)               | 에이전트 기대 출력 ([EN](docs/sample-output/discovery-library.md) · [JA](docs/sample-output/discovery-library.ja.md) · [ZH](docs/sample-output/discovery-library.zh.md)) |
+| [Design 샘플 (library)](docs/sample-output/design-library.ko.md)                     | 에이전트 기대 출력 ([EN](docs/sample-output/design-library.md) · [JA](docs/sample-output/design-library.ja.md) · [ZH](docs/sample-output/design-library.zh.md))          |
 
 각 단계 끝에 **사람 승인** — 다음 단계로 건너뛰지 않는다.
 
@@ -108,10 +108,18 @@ OOPforge는 모델 레이어가 아니라 **개발 프로토콜 레이어** 다.
 
 ## 설치
 
+### 자주 쓰는 명령 (`~/.oopforge` 또는 이 repo 루트)
+
+```bash
+./scripts/setup/install.sh          # symlink 설치
+./scripts/setup/doctor.sh           # pack·링크 확인
+./scripts/setup/install.sh update   # git pull 후 symlink 갱신
+```
+
 ### 빠르게 (curl 한 줄)
 
 ```bash
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/LooSung/oopforge/main/bootstrap.sh)"
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/LooSung/oopforge/main/scripts/setup/bootstrap.sh)"
 ```
 
 ### 수동
@@ -119,29 +127,29 @@ bash -c "$(curl -fsSL https://raw.githubusercontent.com/LooSung/oopforge/main/bo
 ```bash
 git clone https://github.com/LooSung/oopforge ~/.oopforge
 cd ~/.oopforge
-chmod +x install.sh uninstall.sh doctor.sh
-./install.sh
-./doctor.sh
+chmod +x scripts/setup/*.sh
+./scripts/setup/install.sh
+./scripts/setup/doctor.sh
 ```
 
-`install.sh` 는 감지된 Claude Code / Codex CLI 설정 디렉토리에 OOPforge 폴더를 심볼릭 링크한다:
+`scripts/setup/install.sh` 는 감지된 Claude Code / Codex CLI 설정 디렉토리에 OOPforge 폴더를 심볼릭 링크한다:
 
-| Agent | 상태 | 설치 경로 |
-|---|---|---|
-| **Claude Code** | 지원 | `~/.claude/{skills,agents,commands}/oopforge` |
-| **Codex CLI** | 지원 | `~/.codex/skills/oopforge` |
-| **Cursor** | 미지원 (Phase 2) | 설치 스크립트 없음 — `.cursor-plugin/` 매니페스트만 존재 |
-| **OpenCode** | 실험적 | `INSTALL_OPENCODE=1 ./install.sh` |
+| Agent           | 상태             | 설치 경로                                                |
+| --------------- | ---------------- | -------------------------------------------------------- |
+| **Claude Code** | 지원             | `~/.claude/{skills,agents,commands}/oopforge`            |
+| **Codex CLI**   | 지원             | `~/.codex/skills/oopforge`                               |
+| **Cursor**      | 미지원 (Phase 2) | 설치 스크립트 없음 — `.cursor-plugin/` 매니페스트만 존재 |
+| **OpenCode**    | 실험적           | `INSTALL_OPENCODE=1 ./scripts/setup/install.sh`          |
 
 심볼릭 링크이므로 **`~/.oopforge` 에서 `git pull` 하면 스킬 내용이 즉시 반영** 된다.
 
 설치 경로를 다시 잡아야 할 때 (새 링크 타깃이 추가된 버전 업 등):
 
 ```bash
-cd ~/.oopforge && git pull && ./install.sh update
+cd ~/.oopforge && git pull && ./scripts/setup/install.sh update
 ```
 
-`./install.sh update` 는 `uninstall.sh` 실행 후 symlink를 재설치한다.
+`./scripts/setup/install.sh update` 는 `scripts/setup/uninstall.sh` 실행 후 symlink를 재설치한다.
 
 **Cursor 현재 사용법:** 프로젝트에 `AGENTS.md` 를 복사하거나 참조한다. [docs/cursor.md](./docs/cursor.md) 참고. 마켓플레이스 패키징은 Phase 2 예정 (ETA 없음).
 
@@ -152,12 +160,12 @@ cd ~/.oopforge && git pull && ./install.sh update
 ## 문제 해결 (Troubleshooting)
 
 ```bash
-./doctor.sh                              # 설치 상태 확인
-./uninstall.sh && ./install.sh           # 재설치
-cd ~/.oopforge && git pull && ./install.sh update   # 업데이트 후 symlink 갱신
-./install.sh --dry-run                   # 실행 계획만 보기
-./install.sh --force                     # 기존 symlink 교체
-./scripts/smoke-test.sh                  # 로컬 smoke test
+./scripts/setup/doctor.sh                              # 설치 상태 확인
+./scripts/setup/uninstall.sh && ./scripts/setup/install.sh           # 재설치
+cd ~/.oopforge && git pull && ./scripts/setup/install.sh update   # 업데이트 후 symlink 갱신
+./scripts/setup/install.sh --dry-run                   # 실행 계획만 보기
+./scripts/setup/install.sh --force                     # 기존 symlink 교체
+./scripts/ci/smoke-test.sh               # 로컬 smoke test
 ```
 
 ---
@@ -206,10 +214,10 @@ oopforge/
 │   │   ├── value-object
 │   │   ├── application-service
 │   │   ├── repository-port
-│   │   ├── domain-event           ★ v0.2
-│   │   ├── bounded-context        ★ v0.2
-│   │   ├── factory-method         ★ v0.2
-│   │   └── specification-pattern  ★ v0.2
+│   │   ├── domain-event           ★ v0.1
+│   │   ├── bounded-context        ★ v0.1
+│   │   ├── factory-method         ★ v0.1
+│   │   └── specification-pattern  ★ v0.1
 │   └── lang/                       ← 언어별 구체화
 │       ├── java/                   ← Spring, JPA
 │       └── python/                 ← Pydantic, FastAPI
@@ -217,10 +225,10 @@ oopforge/
 ├── commands/                       ← Claude Code workflow slash commands
 ├── AGENTS.md                        ← 공통 에이전트 지시 파일
 ├── CLAUDE.md                        ← Claude Code 진입 지시
-├── bootstrap.sh
-├── doctor.sh
-├── install.sh
-└── uninstall.sh
+└── scripts/
+    ├── setup/             bootstrap, install, uninstall, doctor
+    ├── ci/                lint-skills, smoke-test
+    └── path-convention.md
 ```
 
 ---
@@ -229,12 +237,12 @@ oopforge/
 
 OOPforge가 강제하는 4단계. 절대 합치지 않는다.
 
-| 단계 | 산출물 | 금지 |
-|---|---|---|
-| **Discovery** | 용어집, 바운디드 컨텍스트 | 코드 |
-| **Design** | 유스케이스 시그니처, 애그리거트 윤곽 | 구현 |
-| **Skeleton** | 패키지 구조, 인터페이스 | 비즈니스 로직 |
-| **Implement** | 유스케이스 단위 구현 + 테스트 | 다음 유스케이스 동시 작업 |
+| 단계          | 산출물                               | 금지                      |
+| ------------- | ------------------------------------ | ------------------------- |
+| **Discovery** | 용어집, 바운디드 컨텍스트            | 코드                      |
+| **Design**    | 유스케이스 시그니처, 애그리거트 윤곽 | 구현                      |
+| **Skeleton**  | 패키지 구조, 인터페이스              | 비즈니스 로직             |
+| **Implement** | 유스케이스 단위 구현 + 테스트        | 다음 유스케이스 동시 작업 |
 
 각 단계 끝에서 사람의 승인을 묻는다. 자동화의 함정을 피하기 위함.
 
@@ -278,10 +286,10 @@ Phase 1을 충분히 사용한 다음에야 Phase 2로 간다.
 
 ## 영감
 
-- *Domain-Driven Design* — Eric Evans
-- *Implementing DDD* — Vaughn Vernon
-- *Clean Architecture* — Robert C. Martin
-- *Test-Driven Development: By Example* — Kent Beck
+- _Domain-Driven Design_ — Eric Evans
+- _Implementing DDD_ — Vaughn Vernon
+- _Clean Architecture_ — Robert C. Martin
+- _Test-Driven Development: By Example_ — Kent Beck
 
 ---
 

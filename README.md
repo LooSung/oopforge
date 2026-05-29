@@ -20,8 +20,10 @@ OOPforge gives Claude Code, Codex CLI, Cursor, and compatible coding agents a cl
 Install OOPforge into the agents detected on your machine:
 
 ```bash
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/LooSung/oopforge/main/bootstrap.sh)"
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/LooSung/oopforge/main/scripts/setup/bootstrap.sh)"
 ```
+
+Already installed? See [Setup commands](#setup-commands) below.
 
 Then restart your coding agent and ask:
 
@@ -124,10 +126,20 @@ Runnable reference: [`examples/order-java/`](./examples/order-java/) (Java) · [
 
 ## **Installation**
 
+### Setup commands
+
+Run from `~/.oopforge` or this repo root:
+
+```bash
+./scripts/setup/install.sh          # install symlinks
+./scripts/setup/doctor.sh           # check pack + links
+./scripts/setup/install.sh update   # refresh symlinks after git pull
+```
+
 ### **Automatic**
 
 ```bash
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/LooSung/oopforge/main/bootstrap.sh)"
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/LooSung/oopforge/main/scripts/setup/bootstrap.sh)"
 ```
 
 ### **Manual**
@@ -135,31 +147,31 @@ bash -c "$(curl -fsSL https://raw.githubusercontent.com/LooSung/oopforge/main/bo
 ```bash
 git clone https://github.com/LooSung/oopforge ~/.oopforge
 cd ~/.oopforge
-chmod +x install.sh uninstall.sh doctor.sh
-./install.sh
-./doctor.sh
+chmod +x scripts/setup/*.sh
+./scripts/setup/install.sh
+./scripts/setup/doctor.sh
 ```
 
 ### **What gets installed**
 
-`install.sh` symlinks OOPforge into supported agent config directories:
+`scripts/setup/install.sh` symlinks OOPforge into supported agent config directories:
 
 | Agent | Status | Install target |
 |---|---|---|
 | **Claude Code** | Supported | `~/.claude/{skills,agents,commands}/oopforge` |
 | **Codex CLI** | Supported | `~/.codex/skills/oopforge` |
 | **Cursor** | Not yet (Phase 2) | No installer — manifest only at `.cursor-plugin/` |
-| **OpenCode** | Experimental | `INSTALL_OPENCODE=1 ./install.sh` |
+| **OpenCode** | Experimental | `INSTALL_OPENCODE=1 ./scripts/setup/install.sh` |
 
 Because the install uses symlinks, a `git pull` in `~/.oopforge` updates skill content immediately for linked agents.
 
 To refresh install paths (for example after a version adds new link targets), run:
 
 ```bash
-cd ~/.oopforge && git pull && ./install.sh update
+cd ~/.oopforge && git pull && ./scripts/setup/install.sh update
 ```
 
-`./install.sh update` runs `uninstall.sh` then reinstalls all OOPforge symlinks. Use `./install.sh --force` to replace existing symlinks without a full uninstall.
+`./scripts/setup/install.sh update` runs `scripts/setup/uninstall.sh` then reinstalls all OOPforge symlinks. Use `./scripts/setup/install.sh --force` to replace existing symlinks without a full uninstall.
 
 **Cursor today:** copy or reference `AGENTS.md` in your project. See [docs/cursor.md](./docs/cursor.md). Marketplace packaging is planned for Phase 2 with no ETA yet.
 
@@ -172,45 +184,45 @@ cd ~/.oopforge && git pull && ./install.sh update
 ### Check installation
 
 ```bash
-./doctor.sh
+./scripts/setup/doctor.sh
 ```
 
 ### Reinstall (refresh symlinks)
 
 ```bash
-./uninstall.sh
-./install.sh
+./scripts/setup/uninstall.sh
+./scripts/setup/install.sh
 ```
 
 Or after `git pull`:
 
 ```bash
-cd ~/.oopforge && git pull && ./install.sh update
+cd ~/.oopforge && git pull && ./scripts/setup/install.sh update
 ```
 
 ### Dry run (see planned actions)
 
 ```bash
-./install.sh --dry-run
-INSTALL_CLAUDE=1 ./install.sh --dry-run
+./scripts/setup/install.sh --dry-run
+INSTALL_CLAUDE=1 ./scripts/setup/install.sh --dry-run
 ```
 
 ### Force replace existing symlinks
 
 ```bash
-./install.sh --force
+./scripts/setup/install.sh --force
 ```
 
 ### Remove installation
 
 ```bash
-./uninstall.sh
+./scripts/setup/uninstall.sh
 ```
 
 ### Run smoke test locally
 
 ```bash
-./scripts/smoke-test.sh
+./scripts/ci/smoke-test.sh
 ```
 
 ---
@@ -305,12 +317,11 @@ oopforge/
 ├── commands/            Claude Code slash commands for workflow stages
 ├── AGENTS.md            cross-agent repository instructions
 ├── CLAUDE.md            Claude Code bootstrap instructions
-├── bootstrap.sh         one-line installer
-├── doctor.sh            installation checker
-├── install.sh           symlink installer
-├── scripts/lint-skills.sh  skill frontmatter and repo lint
-├── scripts/smoke-test.sh   install/doctor smoke test
-├── uninstall.sh         symlink remover
+├── scripts/
+│   ├── setup/           bootstrap, install, uninstall, doctor
+│   │   └── lib/common.sh
+│   ├── ci/              lint-skills.sh, smoke-test.sh
+│   └── path-convention.md
 └── .github/workflows/lint.yml  CI validation
 ```
 

@@ -5,13 +5,12 @@
 
 set -euo pipefail
 
-PACK_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-FAILED=0
+SETUP_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck source=scripts/setup/lib/common.sh
+source "$SETUP_DIR/lib/common.sh"
 
-cyan() { printf "\033[36m%s\033[0m\n" "$*"; }
-green() { printf "\033[32m%s\033[0m\n" "$*"; }
-yellow() { printf "\033[33m%s\033[0m\n" "$*"; }
-red() { printf "\033[31m%s\033[0m\n" "$*"; }
+PACK_DIR="$(oopforge_pack_dir "$SETUP_DIR")"
+FAILED=0
 
 ok() { green "OK $*"; }
 warn() { yellow "WARN $*"; }
@@ -83,9 +82,15 @@ check_dir ".claude-plugin"
 check_dir ".codex-plugin"
 check_dir ".cursor-plugin"
 check_dir ".opencode"
-check_file "install.sh"
-check_file "uninstall.sh"
-check_file "bootstrap.sh"
+check_dir "scripts/setup"
+check_dir "scripts/ci"
+check_file "scripts/setup/bootstrap.sh"
+check_file "scripts/setup/install.sh"
+check_file "scripts/setup/uninstall.sh"
+check_file "scripts/setup/doctor.sh"
+check_file "scripts/setup/lib/common.sh"
+check_file "scripts/ci/lint-skills.sh"
+check_file "scripts/ci/smoke-test.sh"
 check_file ".claude-plugin/plugin.json"
 check_file ".codex-plugin/plugin.json"
 check_file ".cursor-plugin/plugin.json"
@@ -97,7 +102,7 @@ check_command "codex"
 check_command "cursor"
 
 cyan "--- Cursor"
-warn "Cursor has no install.sh target yet; manifest only at .cursor-plugin/"
+warn "Cursor has no scripts/setup/install.sh target yet; manifest only at .cursor-plugin/"
 warn "Use AGENTS.md in your project or wait for marketplace-style packaging."
 
 cyan "--- Installed links"
@@ -111,7 +116,7 @@ if [ -n "${CHECK_OPENCODE:-}" ]; then
   check_command "opencode"
   check_link "OpenCode skills" "$HOME/.config/opencode/skills/oopforge" "$PACK_DIR/skills"
 else
-  warn "OpenCode checks skipped by default (use CHECK_OPENCODE=1 ./doctor.sh)."
+  warn "OpenCode checks skipped by default (use CHECK_OPENCODE=1 ./scripts/setup/doctor.sh)."
 fi
 
 if [ "$FAILED" -eq 0 ]; then

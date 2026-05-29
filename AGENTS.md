@@ -106,11 +106,11 @@ These limits are intentionally measurable. They come from review focus and agent
 
 ## Repository Discipline
 
-- Keep harness packaging portable: Claude and Codex are installable today; Cursor has a Phase 2 manifest only (no `install.sh` target yet); OpenCode is experimental/opt-in.
+- Keep harness packaging portable: Claude and Codex are installable today; Cursor has a Phase 2 manifest only (no `scripts/setup/install.sh` target yet); OpenCode is experimental/opt-in.
 - Do not add runtime dependencies for installer scripts unless there is no simpler shell-based alternative.
 - Update `CHANGELOG.md` for user-visible changes.
 - When changing install behavior, verify with a clean temporary `HOME`.
-- Do not claim a harness integration works until `install.sh`, `doctor.sh`, and a clean-session smoke test prove it.
+- Do not claim a harness integration works until `scripts/setup/install.sh`, `scripts/setup/doctor.sh`, and a clean-session smoke test prove it.
 
 ## What Not To Do
 

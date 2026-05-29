@@ -5,8 +5,9 @@
 
 set -euo pipefail
 
-green() { printf "\033[32m%s\033[0m\n" "$*"; }
-yellow() { printf "\033[33m%s\033[0m\n" "$*"; }
+SETUP_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck source=scripts/setup/lib/common.sh
+source "$SETUP_DIR/lib/common.sh"
 
 rm_link() {
   local path="$1"

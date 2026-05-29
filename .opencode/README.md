@@ -2,17 +2,17 @@
 
 OpenCode 지원은 experimental / opt-in 으로 둔다.
 
-기본 설치(`./install.sh`)는 Claude Code와 Codex CLI를 우선 대상으로 한다.
+기본 설치(`./scripts/setup/install.sh`)는 Claude Code와 Codex CLI를 우선 대상으로 한다.
 OpenCode까지 설치하려면 명시적으로 실행한다:
 
 ```bash
-INSTALL_OPENCODE=1 ./install.sh
+INSTALL_OPENCODE=1 ./scripts/setup/install.sh
 ```
 
 검사도 opt-in 이다:
 
 ```bash
-CHECK_OPENCODE=1 ./doctor.sh
+CHECK_OPENCODE=1 ./scripts/setup/doctor.sh
 ```
 
 현재 동작은 `skills/` 디렉토리를 `~/.config/opencode/skills/oopforge` 로

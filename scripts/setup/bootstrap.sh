@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
 #
 # OOPforge bootstrap installer
-# Clone or update ~/.oopforge, then run install.sh update.
+# Clone or update ~/.oopforge, then run scripts/setup/install.sh update.
 
 set -euo pipefail
 
 REPO_URL="${OOPFORGE_REPO_URL:-https://github.com/LooSung/oopforge.git}"
 INSTALL_DIR="${OOPFORGE_HOME:-$HOME/.oopforge}"
 BRANCH="${OOPFORGE_BRANCH:-main}"
+SETUP_DIR="$INSTALL_DIR/scripts/setup"
 
 cyan() { printf "\033[36m%s\033[0m\n" "$*"; }
 green() { printf "\033[32m%s\033[0m\n" "$*"; }
@@ -32,7 +33,7 @@ clone_or_update() {
 
   if [ -e "$INSTALL_DIR" ]; then
     red "Install path exists but is not a git repository: $INSTALL_DIR"
-    yellow "Use a different path: OOPFORGE_HOME=/path/to/oopforge ./bootstrap.sh"
+    yellow "Use a different path: OOPFORGE_HOME=/path/to/oopforge bash scripts/setup/bootstrap.sh"
     exit 1
   fi
 
@@ -43,15 +44,12 @@ clone_or_update() {
 require git
 clone_or_update
 
-chmod +x "$INSTALL_DIR/install.sh" "$INSTALL_DIR/uninstall.sh"
+chmod +x "$SETUP_DIR/"*.sh "$INSTALL_DIR/scripts/ci/"*.sh 2>/dev/null || true
 
-cyan "==> Running install.sh update"
-"$INSTALL_DIR/install.sh" update
+cyan "==> Running scripts/setup/install.sh update"
+"$SETUP_DIR/install.sh" update
 
-if [ -f "$INSTALL_DIR/doctor.sh" ]; then
-  cyan "==> Running doctor.sh"
-  chmod +x "$INSTALL_DIR/doctor.sh"
-  "$INSTALL_DIR/doctor.sh"
-fi
+cyan "==> Running scripts/setup/doctor.sh"
+"$SETUP_DIR/doctor.sh"
 
 green "==> OOPforge bootstrap complete"

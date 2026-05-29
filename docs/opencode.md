@@ -5,14 +5,14 @@ OpenCode integration is **opt-in** and not part of the default install path.
 ## Install skills only
 
 ```bash
-INSTALL_OPENCODE=1 ~/.oopforge/install.sh
+INSTALL_OPENCODE=1 ~/.oopforge/scripts/setup/install.sh
 ```
 
 Or from a clone:
 
 ```bash
 git clone https://github.com/LooSung/oopforge ~/.oopforge
-INSTALL_OPENCODE=1 ~/.oopforge/install.sh
+INSTALL_OPENCODE=1 ~/.oopforge/scripts/setup/install.sh
 ```
 
 Target: `~/.config/opencode/skills/oopforge`
@@ -20,7 +20,7 @@ Target: `~/.config/opencode/skills/oopforge`
 ## Verify
 
 ```bash
-CHECK_OPENCODE=1 ~/.oopforge/doctor.sh
+CHECK_OPENCODE=1 ~/.oopforge/scripts/setup/doctor.sh
 ```
 
 ## Usage
@@ -35,7 +35,7 @@ There are no dedicated OpenCode slash commands in this pack today. Use workflow 
 
 ## Stability
 
-OpenCode is experimental. Do not document it as a first-class harness until `install.sh`, `doctor.sh`, and a clean-session smoke test pass consistently.
+OpenCode is experimental. Do not document it as a first-class harness until `scripts/setup/install.sh`, `scripts/setup/doctor.sh`, and a clean-session smoke test pass consistently.
 
 ## Related
 

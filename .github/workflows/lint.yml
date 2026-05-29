@@ -21,23 +21,26 @@ jobs:
 
       - name: Check shell syntax
         run: |
-          bash -n install.sh
-          bash -n uninstall.sh
-          bash -n doctor.sh
-          bash -n bootstrap.sh
-          bash -n scripts/lint-skills.sh
-          bash -n scripts/smoke-test.sh
+          bash -n scripts/setup/bootstrap.sh
+          bash -n scripts/setup/install.sh
+          bash -n scripts/setup/uninstall.sh
+          bash -n scripts/setup/doctor.sh
+          bash -n scripts/setup/lib/common.sh
+          bash -n scripts/ci/lint-skills.sh
+          bash -n scripts/ci/smoke-test.sh
 
       - name: Shellcheck
         run: |
-          shellcheck install.sh uninstall.sh doctor.sh bootstrap.sh scripts/lint-skills.sh scripts/smoke-test.sh
+          shellcheck scripts/setup/bootstrap.sh \
+            scripts/setup/install.sh scripts/setup/uninstall.sh scripts/setup/doctor.sh \
+            scripts/setup/lib/common.sh scripts/ci/lint-skills.sh scripts/ci/smoke-test.sh
 
       - name: Lint skills and repository
         run: |
-          chmod +x scripts/lint-skills.sh
-          ./scripts/lint-skills.sh
+          chmod +x scripts/ci/lint-skills.sh
+          ./scripts/ci/lint-skills.sh
 
       - name: Smoke test
         run: |
-          chmod +x scripts/smoke-test.sh
-          ./scripts/smoke-test.sh
+          chmod +x scripts/ci/smoke-test.sh scripts/setup/*.sh
+          ./scripts/ci/smoke-test.sh

@@ -7,7 +7,7 @@ OOPforge does **not** have a Cursor installer yet (Phase 2). Use project-level r
 If you use Claude Code or Codex too:
 
 ```bash
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/LooSung/oopforge/main/bootstrap.sh)"
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/LooSung/oopforge/main/scripts/setup/bootstrap.sh)"
 ```
 
 For Cursor-only projects, skip this and copy rules into the repo (step 2).

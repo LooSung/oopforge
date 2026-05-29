@@ -4,7 +4,8 @@
 
 set -euo pipefail
 
-PACK_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+PACK_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+SETUP_DIR="$PACK_DIR/scripts/setup"
 TMP_HOME="$(mktemp -d)"
 trap 'rm -rf "$TMP_HOME"' EXIT
 
@@ -19,8 +20,8 @@ export INSTALL_CLAUDE=1
 
 mkdir -p "$HOME/.claude" "$HOME/.codex"
 
-"$PACK_DIR/install.sh"
-"$PACK_DIR/doctor.sh"
+"$SETUP_DIR/install.sh"
+"$SETUP_DIR/doctor.sh"
 
 test -L "$HOME/.claude/skills/oopforge"
 test -L "$HOME/.claude/agents/oopforge"
@@ -32,13 +33,13 @@ if [ "$actual_skills" != "$PACK_DIR/skills" ]; then
   exit 1
 fi
 
-cyan "==> install.sh update"
-"$PACK_DIR/install.sh" update
+cyan "==> scripts/setup/install.sh update"
+"$SETUP_DIR/install.sh" update
 
 test -L "$HOME/.claude/skills/oopforge"
 
-cyan "==> uninstall"
-"$PACK_DIR/uninstall.sh"
+cyan "==> scripts/setup/uninstall.sh"
+"$SETUP_DIR/uninstall.sh"
 
 test ! -e "$HOME/.claude/skills/oopforge"
 test ! -e "$HOME/.claude/agents/oopforge"
