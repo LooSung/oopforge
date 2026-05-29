@@ -5,6 +5,12 @@
 ## [Unreleased]
 
 ### Added
+- README Before/After section (EN/KO) with God Service vs OOPforge structure comparison.
+- `examples/order-java/` — runnable Spring hexagonal place-order reference with domain tests.
+- `examples/order-python/` — runnable FastAPI hexagonal place-order reference (mirrors Java).
+- Harness guides: `docs/cursor.md`, `docs/claude-code.md`, `docs/opencode.md`.
+- `agents/domain-reviewer.md` — God Service, framework leakage, layer violation review.
+- AGENTS.md Skill Routing table (workflow stage → skill → agent).
 - GitHub Actions lint workflow: shellcheck, skill frontmatter, 200-line limit, plugin JSON, AGENTS.md references.
 - `scripts/lint-skills.sh` for local and CI validation.
 - `install.sh update` subcommand and `--force` flag for symlink refresh after upgrades.

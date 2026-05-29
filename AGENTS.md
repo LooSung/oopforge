@@ -20,6 +20,46 @@ For new domains or large features, do not jump straight to code.
 
 Ask for human approval before moving from one stage to the next.
 
+## Skill Routing
+
+Use this table to decide **which skill to read first**. Workflow stage always wins over ad-hoc coding.
+
+| Workflow stage | Goal | Read first | Agent (optional) |
+|---|---|---|---|
+| Discovery | Glossary, contexts, actors | `skills/workflow/discovery.md` | `@ddd-architect` |
+| Design | Use-case signatures, aggregates | `skills/workflow/design.md` + relevant `skills/oop/*` | `@ddd-architect` |
+| Delivery Plan | Scope, order, tests, risks | `skills/workflow/delivery-plan.md` | — |
+| Skeleton | Packages, empty types | `skills/workflow/skeleton.md` + lang layout skill | `@ddd-architect` |
+| Implement | One use case + tests | `skills/workflow/implement.md` + oop/lang skills | `@ddd-architect` |
+| Test | Unit / integration / E2E | `skills/workflow/test.md` | — |
+| Refactor | Behavior-preserving cleanup | `skills/workflow/refactor.md` | `@domain-reviewer` |
+| Code review | Detect rule violations | Hard Rules below + `examples/order-java/` | `@domain-reviewer` |
+
+### Task → skill (within a stage)
+
+| Task | Skill |
+|---|---|
+| Aggregate design | `skills/oop/aggregate-root.md` |
+| Value object | `skills/oop/value-object.md` |
+| Use case / application service | `skills/oop/application-service.md` |
+| Repository port | `skills/oop/repository-port.md` |
+| Domain event | `skills/oop/domain-event.md` |
+| Bounded context | `skills/oop/bounded-context.md` |
+| Java package layout | `skills/lang/java/spring-hexagonal-layout.md` |
+| JPA adapter | `skills/lang/java/jpa-repository.md` |
+| Python layout | `skills/lang/python/clean-fastapi-layout.md` |
+| Pydantic value object | `skills/lang/python/pydantic-value-object.md` |
+
+### Harness setup
+
+| Harness | Guide |
+|---|---|
+| Claude Code | `docs/claude-code.md` |
+| Cursor | `docs/cursor.md` |
+| OpenCode (experimental) | `docs/opencode.md` |
+
+Reference implementation: `examples/order-java/` and `examples/order-python/` (Java Spring / Python FastAPI, same place-order flow).
+
 ## Skill Selection
 
 Before changing behavior, read the relevant skill file:

@@ -50,6 +50,51 @@ General-purpose methodology packs already exist. OOPforge is narrower on purpose
 
 In short: **OOPforge is a DDD-focused companion pack**, not a replacement for broader workflow systems.
 
+**Recommended stack:** [Superpowers](https://github.com/obra/superpowers) (general workflow) + **OOPforge** (domain modeling) + your agent (Claude Code, Cursor, Codex).
+
+---
+
+## **Before / After**
+
+Most teams already know *what* DDD looks like in a diagram. The hard part is stopping the agent (or the team) from collapsing everything into a service class. OOPforge exists to make the **structure** the default.
+
+### Before (typical Spring service)
+
+```java
+@Service
+public class OrderService {
+    public void createOrder(CreateOrderRequest req) {
+        // validation, pricing, persistence, events — all in one class
+        orderRepository.save(toEntity(req));
+        eventPublisher.publish(...);
+    }
+}
+```
+
+**Problems:** God Service · no domain model · business rules scattered · hard to unit test · AI agents copy the same pattern
+
+### After (OOPforge)
+
+```java
+Order order = Order.place(orderId, customerId, lines);   // domain
+placeOrder.handle(command);                            // use case
+orderRepository.save(order);                             // port
+order.popEvents();                                       // OrderPlaced
+```
+
+```text
+order/domain/Order.java              ← Aggregate Root (framework import 0)
+order/application/provided/PlaceOrder.java
+order/application/required/OrderRepository.java
+order/application/service/PlaceOrderService.java
+order/adapter/web/OrderController.java
+order/adapter/persistence/InMemoryOrderRepository.java
+```
+
+**Effects:** domain-first · clear boundaries · domain tests without Spring · easier maintenance · agents follow a repeatable layout
+
+Runnable reference: [`examples/order-java/`](./examples/order-java/) (Java) · [`examples/order-python/`](./examples/order-python/) (Python) — same place-order flow.
+
 ---
 
 ## **Installation**
@@ -91,7 +136,9 @@ cd ~/.oopforge && git pull && ./install.sh update
 
 `./install.sh update` runs `uninstall.sh` then reinstalls all OOPforge symlinks. Use `./install.sh --force` to replace existing symlinks without a full uninstall.
 
-**Cursor today:** copy or reference `AGENTS.md` in your project. Marketplace packaging is planned for Phase 2 with no ETA yet.
+**Cursor today:** copy or reference `AGENTS.md` in your project. See [docs/cursor.md](./docs/cursor.md). Marketplace packaging is planned for Phase 2 with no ETA yet.
+
+**Claude Code:** [docs/claude-code.md](./docs/claude-code.md) · **OpenCode (experimental):** [docs/opencode.md](./docs/opencode.md)
 
 ---
 
@@ -163,6 +210,13 @@ Use OOPforge refactor workflow to clean up this imported module without changing
 
 ```text
 oopforge/
+├── examples/
+│   ├── order-java/      Runnable Java Spring hexagonal reference (Order)
+│   └── order-python/    Runnable Python FastAPI hexagonal reference (Order)
+├── docs/
+│   ├── cursor.md        Cursor setup guide
+│   ├── claude-code.md   Claude Code setup guide
+│   └── opencode.md      OpenCode opt-in guide
 ├── skills/
 │   ├── workflow/        Discovery → Design → Delivery Plan → Skeleton
 │   │                    → Implement → Test, plus Refactor
@@ -172,7 +226,7 @@ oopforge/
 │   └── lang/
 │       ├── java/        Spring hexagonal layout, JPA repository
 │       └── python/      Pydantic value objects, clean FastAPI layout
-├── agents/              ddd-architect subagent
+├── agents/              ddd-architect, domain-reviewer subagents
 ├── commands/            Claude Code slash commands for workflow stages
 ├── AGENTS.md            cross-agent repository instructions
 ├── CLAUDE.md            Claude Code bootstrap instructions

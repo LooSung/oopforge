@@ -22,6 +22,51 @@
 요약: **DDD를 진지하게 하는 한국어권 OOP 개발자를 위한 superpowers.**
 범용 도구 옆에 같이 깔아도 충돌 없음.
 
+**추천 조합:** [Superpowers](https://github.com/obra/superpowers) (범용 워크플로) + **OOPforge** (도메인 모델링) + 사용 중인 에이전트 (Claude Code, Cursor, Codex)
+
+---
+
+## Before / After
+
+팀은 DDD 다이어그램은 알지만, 실제로는 `@Service` 하나에 로직이 몰리는 경우가 많다. OOPforge는 **그 구조를 기본값**으로 만든다.
+
+### Before (흔한 Spring 서비스)
+
+```java
+@Service
+public class OrderService {
+    public void createOrder(CreateOrderRequest req) {
+        // 검증, 가격, 저장, 이벤트 — 한 클래스에 전부
+        orderRepository.save(toEntity(req));
+        eventPublisher.publish(...);
+    }
+}
+```
+
+**문제:** God Service · 도메인 모델 없음 · 비즈니스 규칙 분산 · 단위 테스트 어려움 · AI가 같은 패턴 반복 생성
+
+### After (OOPforge)
+
+```java
+Order order = Order.place(orderId, customerId, lines);   // domain
+placeOrder.handle(command);                            // use case
+orderRepository.save(order);                             // port
+order.popEvents();                                       // OrderPlaced
+```
+
+```text
+order/domain/Order.java
+order/application/provided/PlaceOrder.java
+order/application/required/OrderRepository.java
+order/application/service/PlaceOrderService.java
+order/adapter/web/OrderController.java
+order/adapter/persistence/InMemoryOrderRepository.java
+```
+
+**효과:** 도메인 중심 · 책임 분리 · Spring 없이 도메인 테스트 · 유지보수 용이 · 에이전트가 반복 가능한 레이아웃 따름
+
+실행 가능한 참고 구현: [`examples/order-java/`](./examples/order-java/) (Java) · [`examples/order-python/`](./examples/order-python/) (Python)
+
 ---
 
 ## 철학
@@ -79,7 +124,9 @@ cd ~/.oopforge && git pull && ./install.sh update
 
 `./install.sh update` 는 `uninstall.sh` 실행 후 symlink를 재설치한다.
 
-**Cursor 현재 사용법:** 프로젝트에 `AGENTS.md` 를 복사하거나 참조한다. 마켓플레이스 패키징은 Phase 2 예정 (ETA 없음).
+**Cursor 현재 사용법:** 프로젝트에 `AGENTS.md` 를 복사하거나 참조한다. [docs/cursor.md](./docs/cursor.md) 참고. 마켓플레이스 패키징은 Phase 2 예정 (ETA 없음).
+
+**Claude Code:** [docs/claude-code.md](./docs/claude-code.md) · **OpenCode (실험):** [docs/opencode.md](./docs/opencode.md)
 
 ---
 
@@ -112,6 +159,9 @@ cd ~/.oopforge && git pull && ./install.sh update
 
 ```
 oopforge/
+├── examples/order-java/           ← Java Spring hexagonal 참고 구현
+├── examples/order-python/         ← Python FastAPI hexagonal 참고 구현
+├── docs/                          ← Cursor, Claude Code, OpenCode 가이드
 ├── .claude-plugin/                ← Claude Code 플러그인 매니페스트 (Phase 2)
 ├── .codex-plugin/                 ← Codex 플러그인 매니페스트 (Phase 2)
 ├── .cursor-plugin/                ← Cursor 플러그인 매니페스트 (Phase 2)
@@ -131,7 +181,7 @@ oopforge/
 │   └── lang/                       ← 언어별 구체화
 │       ├── java/                   ← Spring, JPA
 │       └── python/                 ← Pydantic, FastAPI
-├── agents/                         ← Claude Code subagents
+├── agents/                         ← Claude Code subagents (ddd-architect, domain-reviewer)
 ├── commands/                       ← Claude Code workflow slash commands
 ├── AGENTS.md                        ← 공통 에이전트 지시 파일
 ├── CLAUDE.md                        ← Claude Code 진입 지시

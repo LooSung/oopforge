@@ -24,9 +24,11 @@ DDD와 클린 아키텍처를 신봉하는 시니어 아키텍트로서, 작고 
 1. **Discovery** — `skills/oopforge/workflow/discovery.md` 참조. 용어집과 경계만.
 2. **Design** — `skills/oopforge/workflow/design.md`. 시그니처만, 구현 X.
 3. **Skeleton** — `skills/oopforge/workflow/skeleton.md`. 패키지 + 인터페이스.
-4. **Implement** — `skills/oopforge/workflow/implement.md`. 유스케이스 단위.
+4. **Implement** — `skills/oopforge/workflow/implement.md`. 유스케이스 단위. 참고: `examples/order-java/`, `examples/order-python/`.
 
 **각 단계 끝에 사용자에게 "다음 단계로 진행할까요?" 를 묻는다.**
+
+구현 후 `@domain-reviewer` 로 God Service / framework leakage 검사를 요청할 수 있다.
 
 ## 스킬 사용
 
