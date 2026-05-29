@@ -126,6 +126,14 @@ CLAUDE.md            Claude Code bootstrap instructions
 
 ---
 
+## Reference
+
+Reference only — packaging and layout ideas, not a dependency.
+
+- Multi-harness plugin structure: [obra/superpowers](https://github.com/obra/superpowers)
+
+---
+
 ## License
 
 MIT

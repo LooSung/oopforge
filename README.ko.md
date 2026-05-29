@@ -258,11 +258,19 @@ Phase 1을 충분히 사용한 다음에야 Phase 2로 간다.
 
 ---
 
-## 영감 / 참고
+## 영감
 
 - *Domain-Driven Design* — Eric Evans
 - *Implementing DDD* — Vaughn Vernon
 - *Clean Architecture* — Robert C. Martin
+
+---
+
+## 참고 (Reference)
+
+OOPforge와 별개 프로젝트입니다. 패키징·레이아웃 참고용이며, 의존이나 공식 연동을 의미하지 않습니다.
+
+- 참고 구조: [obra/superpowers](https://github.com/obra/superpowers) — 멀티 하네스 플러그인 패키징
 
 ---
 

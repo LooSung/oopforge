@@ -361,6 +361,14 @@ OOPforge is not a model layer. It is a **development protocol layer**.
 
 ---
 
+## **Reference**
+
+Reference only — OOPforge is an independent project; links here are for packaging and layout ideas, not dependencies or endorsements.
+
+- Multi-harness plugin structure: [obra/superpowers](https://github.com/obra/superpowers)
+
+---
+
 ## **License**
 
 MIT

@@ -19,3 +19,5 @@
 | OpenCode | `.opencode/` | TODO |
 
 Multi-harness packaging follows OOPforge's own portable layout (`.claude-plugin/`, `.codex-plugin/`, `.cursor-plugin/`).
+
+Reference (packaging layout): [obra/superpowers](https://github.com/obra/superpowers)
