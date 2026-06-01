@@ -1,0 +1,29 @@
+# GitHub Linguist overrides — make the language bar reflect what OOPforge teaches,
+# not what dominates by file count (shell installers / markdown skills).
+
+# 1) Surface example languages (Java + Python) in the language bar.
+#    By default, files under common "example" paths are marked as vendored
+#    and excluded from stats.
+examples/**                          linguist-vendored=false
+examples/**/*.java                   linguist-detectable=true
+examples/**/*.kt                     linguist-detectable=true
+examples/**/*.py                     linguist-detectable=true
+examples/**/*.kts                    linguist-detectable=true
+
+# 2) Documentation: counted as documentation, not primary language.
+docs/**                              linguist-documentation=true
+*.md                                 linguist-documentation=true
+
+# 3) Shell scripts: useful but not the project's purpose. Don't dominate stats.
+scripts/**                           linguist-vendored=true
+
+# 4) Plugin manifests: treat as data, not primary language.
+.claude-plugin/**                    linguist-generated=true
+.codex-plugin/**                     linguist-generated=true
+.cursor-plugin/**                    linguist-generated=true
+.opencode/**                         linguist-generated=true
+
+# 5) Normalize line endings on text files (cross-platform contributors).
+*                                    text=auto
+*.sh                                 text eol=lf
+*.bat                                text eol=crlf
