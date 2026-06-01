@@ -60,6 +60,7 @@ Use this table to decide **which skill to read first**. Workflow stage always wi
 
 | Harness | Guide |
 |---|---|
+| Codex | `docs/codex.md` |
 | Claude Code | `docs/claude-code.md` |
 | Cursor | `docs/cursor.md` |
 | OpenCode (experimental) | `docs/opencode.md` |

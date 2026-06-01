@@ -58,5 +58,6 @@ Use examples/order-java as the structural reference for place-order.
 
 ## Related
 
+- [Codex setup](./codex.md) (Codex skill entry point and slash-like prompts)
 - [Cursor setup](./cursor.md) (Cursor Agent CLI via `--plugin-dir`)
 - [OpenCode opt-in](./opencode.md)

@@ -6,6 +6,8 @@
 
 ### Changed
 
+- **Codex** — add `skills/SKILL.md` as the Codex skill entry point so `/oopforge:*` slash-like prompts route to OOPforge workflows.
+- **Docs** — add `docs/codex.md` and clarify Codex vs Claude Code command usage.
 - **Cursor** — document Cursor Agent CLI setup via `cursor-agent --plugin-dir ~/.oopforge`; remove project-rules / `.cursor/skills` symlink guidance.
 - **docs/cursor.md** — rewrite for CLI `--plugin-dir` workflow.
 - **doctor.sh** — show `--plugin-dir` load command instead of AGENTS.md project-rules warning.

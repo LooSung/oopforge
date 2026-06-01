@@ -137,7 +137,7 @@ chmod +x scripts/setup/*.sh
 | Agent           | 상태             | 설치 경로                                                |
 | --------------- | ---------------- | -------------------------------------------------------- |
 | **Claude Code** | 지원             | `~/.claude/{skills,agents,commands}/oopforge`            |
-| **Codex CLI**   | 지원             | `~/.codex/skills/oopforge`                               |
+| **Codex CLI**   | 스킬 진입점으로 지원 | `~/.codex/skills/oopforge`                               |
 | **Cursor Agent CLI** | 실험적 | `cursor-agent --plugin-dir ~/.oopforge` |
 | **OpenCode**    | 실험적           | `INSTALL_OPENCODE=1 ./scripts/setup/install.sh`          |
 
@@ -153,7 +153,7 @@ cd ~/.oopforge && git pull && ./scripts/setup/install.sh update
 
 **Cursor Agent CLI:** `cursor-agent --plugin-dir ~/.oopforge`. [docs/cursor.md](./docs/cursor.md) 참고. 마켓플레이스 패키징은 Phase 2 (ETA 없음).
 
-**Claude Code:** [docs/claude-code.md](./docs/claude-code.md) · **OpenCode (실험):** [docs/opencode.md](./docs/opencode.md)
+**Codex:** [docs/codex.md](./docs/codex.md) · **Claude Code:** [docs/claude-code.md](./docs/claude-code.md) · **OpenCode (실험):** [docs/opencode.md](./docs/opencode.md)
 
 ---
 
@@ -171,6 +171,19 @@ cd ~/.oopforge && git pull && ./scripts/setup/install.sh update   # 업데이트
 ---
 
 ## 사용
+
+### Codex 슬래시형 프롬프트
+
+Codex에서는 아래를 일반 프롬프트로 입력한다. `skills/SKILL.md`가 해당 워크플로우 파일로 라우팅한다.
+
+```text
+/oopforge:discovery 주문 도메인
+/oopforge:design 주문 생성 유스케이스
+/oopforge:delivery-plan 주문 생성
+/oopforge:skeleton python-fastapi
+/oopforge:implement 주문 생성
+/oopforge:test 주문 생성
+```
 
 ### Claude Code 슬래시 커맨드
 
@@ -217,6 +230,7 @@ oopforge/
 ├── .cursor-plugin/                ← Cursor Agent CLI manifest (`--plugin-dir`; marketplace Phase 2)
 ├── .opencode/                     ← OpenCode experimental notes
 ├── skills/
+│   ├── SKILL.md                    ← Codex 스킬 진입점
 │   ├── _meta/skill-template.md    ← 새 스킬 작성 규칙
 │   ├── workflow/                   ← 권장 순서: Discovery → Design → Delivery Plan → Skeleton → Implement → Test
 │   ├── oop/                        ← 언어 무관 OOP/DDD 패턴

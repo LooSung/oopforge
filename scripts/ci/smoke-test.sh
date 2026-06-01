@@ -26,6 +26,8 @@ mkdir -p "$HOME/.claude" "$HOME/.codex"
 test -L "$HOME/.claude/skills/oopforge"
 test -L "$HOME/.claude/agents/oopforge"
 test -L "$HOME/.claude/commands/oopforge"
+test -L "$HOME/.codex/skills/oopforge"
+test -f "$HOME/.codex/skills/oopforge/SKILL.md"
 
 actual_skills="$(readlink "$HOME/.claude/skills/oopforge")"
 if [ "$actual_skills" != "$PACK_DIR/skills" ]; then
@@ -37,6 +39,7 @@ cyan "==> scripts/setup/install.sh update"
 "$SETUP_DIR/install.sh" update
 
 test -L "$HOME/.claude/skills/oopforge"
+test -f "$HOME/.codex/skills/oopforge/SKILL.md"
 
 cyan "==> scripts/setup/uninstall.sh"
 "$SETUP_DIR/uninstall.sh"
@@ -44,5 +47,6 @@ cyan "==> scripts/setup/uninstall.sh"
 test ! -e "$HOME/.claude/skills/oopforge"
 test ! -e "$HOME/.claude/agents/oopforge"
 test ! -e "$HOME/.claude/commands/oopforge"
+test ! -e "$HOME/.codex/skills/oopforge"
 
 green "==> Smoke test passed"

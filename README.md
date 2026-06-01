@@ -31,7 +31,18 @@ Then restart your coding agent and ask:
 Build an Order aggregate in Java, following OOPforge rules.
 ```
 
-For Claude Code slash commands:
+For Codex, use slash-like prompts:
+
+```text
+/oopforge:discovery order domain
+/oopforge:design place-order use case
+/oopforge:delivery-plan place-order
+/oopforge:skeleton python-fastapi
+/oopforge:implement place-order
+/oopforge:test place-order
+```
+
+For Claude Code, the same flow is available as slash commands:
 
 ```text
 /oopforge:discovery order domain
@@ -169,7 +180,7 @@ chmod +x scripts/setup/*.sh
 | Agent | Status | Install target |
 |---|---|---|
 | **Claude Code** | Supported | `~/.claude/{skills,agents,commands}/oopforge` |
-| **Codex CLI** | Supported | `~/.codex/skills/oopforge` |
+| **Codex CLI** | Supported via skill entry point | `~/.codex/skills/oopforge` |
 | **Cursor Agent CLI** | Experimental | `cursor-agent --plugin-dir ~/.oopforge` |
 | **OpenCode** | Experimental | `INSTALL_OPENCODE=1 ./scripts/setup/install.sh` |
 
@@ -185,7 +196,7 @@ cd ~/.oopforge && git pull && ./scripts/setup/install.sh update
 
 **Cursor Agent CLI:** `cursor-agent --plugin-dir ~/.oopforge`. See [docs/cursor.md](./docs/cursor.md). Marketplace packaging is Phase 2 (no ETA).
 
-**Claude Code:** [docs/claude-code.md](./docs/claude-code.md) · **OpenCode (experimental):** [docs/opencode.md](./docs/opencode.md)
+**Codex:** [docs/codex.md](./docs/codex.md) · **Claude Code:** [docs/claude-code.md](./docs/claude-code.md) · **OpenCode (experimental):** [docs/opencode.md](./docs/opencode.md)
 
 ---
 
@@ -262,7 +273,7 @@ This keeps the agent from jumping into code before the domain language, boundari
 
 Each stage ends with a human checkpoint before moving on.
 
-### **Command flow**
+### **Codex and Claude Code command flow**
 
 ```text
 /oopforge:discovery payment domain
@@ -311,10 +322,12 @@ oopforge/
 ├── docs/
 │   ├── guides/library-loan/   Step-by-step walkthrough (start here)
 │   ├── sample-output/         Short expected agent outputs
+│   ├── codex.md         Codex setup guide
 │   ├── cursor.md        Cursor setup guide
 │   ├── claude-code.md   Claude Code setup guide
 │   └── opencode.md      OpenCode opt-in guide
 ├── skills/
+│   ├── SKILL.md         Codex skill entry point
 │   ├── workflow/        Discovery → Design → Delivery Plan → Skeleton
 │   │                    → Implement → Test, plus Refactor
 │   ├── oop/             Aggregate Root, Value Object, Repository Port,
