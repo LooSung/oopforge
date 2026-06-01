@@ -74,7 +74,7 @@ Use this table to decide **which skill to read first**. Workflow stage always wi
 | Cursor | `docs/cursor.md` |
 | OpenCode (experimental) | `docs/opencode.md` |
 
-Reference implementation: `examples/order-java/` and `examples/order-python/` (Java Spring / Python FastAPI, same place-order flow).
+Reference implementation: [examples/README.md](examples/README.md) — `order-java`, `order-java-layered`, `order-python`, `order-python-flask` (same place-order flow).
 
 ## Skill Selection
 

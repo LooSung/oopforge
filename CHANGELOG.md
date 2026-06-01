@@ -4,6 +4,21 @@
 
 ## [Unreleased]
 
+## [0.2.1] - 2026-06-01
+
+Layered stack runnable proof — closes README vs examples gap.
+
+### Added
+
+- **`examples/order-java-layered/`** — Spring 3-tier place-order (Controller/Service/Repository), springdoc, domain + OpenAPI contract tests.
+- **`examples/order-python-flask/`** — Flask 3-tier place-order (Blueprint/Service/Repository), flask-smorest, pytest + OpenAPI smoke.
+- **`examples/README.md`** — stack command ↔ folder mapping for all runnable proofs.
+
+### Changed
+
+- **README (EN/KO/JA/ZH)** — examples table links to 4 runnable projects + index.
+- **`docs/roadmap.md`** — Next sprint (v0.2.1) checklist.
+
 ## [0.2.0] - 2026-06-01
 
 3-tier layered support, Python 1급 시민화, OpenAPI 기본 탑재, intent routing.

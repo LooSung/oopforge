@@ -36,7 +36,9 @@ Discovery → Design → Skeleton → Implement (Java + Python) → Test
 | 资料 | 用途 |
 |---|---|
 | [图书馆借阅指南](docs/guides/library-loan/README.zh.md) | 完整工作流教程 |
-| [examples/order-java](examples/order-java/) · [order-python](examples/order-python/) | 最小可运行证明 (place-order) |
+| [Examples index](examples/README.md) | 可运行证明 — 4 种栈，相同 place-order |
+| [order-java](examples/order-java/) · [order-java-layered](examples/order-java-layered/) | Java hexagonal · Java 3-tier |
+| [order-python](examples/order-python/) · [order-python-flask](examples/order-python-flask/) | FastAPI clean · Flask 3-tier |
 | [Discovery 样本 (library)](docs/sample-output/discovery-library.zh.md) | 期望 agent 输出 ([EN](docs/sample-output/discovery-library.md) · [KO](docs/sample-output/discovery-library.ko.md) · [JA](docs/sample-output/discovery-library.ja.md)) |
 | [Design 样本 (library)](docs/sample-output/design-library.zh.md) | 期望 agent 输出 ([EN](docs/sample-output/design-library.md) · [KO](docs/sample-output/design-library.ko.md) · [JA](docs/sample-output/design-library.ja.md)) |
 

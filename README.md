@@ -97,7 +97,9 @@ Guide index: [EN](docs/guides/library-loan/README.md) · [KO](docs/guides/librar
 | Resource | Purpose |
 |---|---|
 | [Library loan guide](docs/guides/library-loan/README.md) | Full tutorial — how to use OOPforge end to end |
-| [examples/order-java](examples/order-java/) · [order-python](examples/order-python/) | Minimal runnable proof (place-order) |
+| [Examples index](examples/README.md) | Runnable proof — 4 stacks, same place-order |
+| [order-java](examples/order-java/) · [order-java-layered](examples/order-java-layered/) | Java hexagonal · Java 3-tier |
+| [order-python](examples/order-python/) · [order-python-flask](examples/order-python-flask/) | FastAPI clean · Flask 3-tier |
 | [Sample discovery (library)](docs/sample-output/discovery-library.md) | Short expected agent output ([KO](docs/sample-output/discovery-library.ko.md) · [JA](docs/sample-output/discovery-library.ja.md) · [ZH](docs/sample-output/discovery-library.zh.md)) |
 | [Sample design (library)](docs/sample-output/design-library.md) | Short expected agent output ([KO](docs/sample-output/design-library.ko.md) · [JA](docs/sample-output/design-library.ja.md) · [ZH](docs/sample-output/design-library.zh.md)) |
 | [Reviewer checklist](docs/reviewer-checklist.md) | Post-implement rule check |
@@ -161,7 +163,7 @@ order/adapter/persistence/InMemoryOrderRepository.java
 
 **Effects:** domain-first · clear boundaries · domain tests without Spring · easier maintenance · agents follow a repeatable layout
 
-Runnable reference: [`examples/order-java/`](./examples/order-java/) (Java) · [`examples/order-python/`](./examples/order-python/) (Python) — same place-order flow.
+Runnable reference: [examples/README.md](examples/README.md) — same place-order flow across hexagonal and layered stacks.
 
 ---
 
@@ -340,8 +342,11 @@ Use OOPforge refactor workflow to clean up this imported module without changing
 ```text
 oopforge/
 ├── examples/
-│   ├── order-java/      Runnable Java Spring hexagonal reference (Order)
-│   └── order-python/    Runnable Python FastAPI hexagonal reference (Order)
+│   ├── README.md        Stack ↔ folder index
+│   ├── order-java/      Java Spring hexagonal
+│   ├── order-java-layered/  Java Spring 3-tier
+│   ├── order-python/    Python FastAPI hexagonal
+│   └── order-python-flask/  Python Flask 3-tier
 ├── docs/
 │   ├── roadmap.md             Direction, priorities, non-goals
 │   ├── guides/library-loan/   Step-by-step walkthrough (start here)
