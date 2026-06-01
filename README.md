@@ -7,6 +7,8 @@
 >
 > *A portable OOP/DDD methodology pack for AI coding agents.*
 
+**OOPforge defines OOP/DDD as a dialect agents follow**, and runs that dialect through skills, workflow, runnable examples, and install — **methodology pack plus agent harness** (not a general agent framework).
+
 OOPforge helps AI coding agents design software around **domain models**, **aggregates**, **ports**, **adapters**, and **testable use cases** before implementation.
 
 OOPforge gives Claude Code, Codex CLI, Cursor, and compatible coding agents a clear way to model software with **DDD**, **layered (3-tier) or hexagonal/clean architecture**, **OpenAPI-first contracts**, and **clean domain boundaries** — for Java (Spring) and Python (FastAPI).
@@ -109,7 +111,7 @@ Each workflow stage ends with a **human checkpoint** — do not skip ahead.
 
 ## **Why OOPforge**
 
-OOPforge is a **DDD / OOP specialized AI engineering pack** — not a general agent framework.
+OOPforge is a **DDD / OOP specialized AI engineering pack** — not a general agent framework. Think of it as **harness engineering for an OOP dialect**: skills encode grammar, hard rules act as lint, examples are reference implementations, and install/commands wire agents to the runtime.
 
 | Principle | What it means |
 |---|---|

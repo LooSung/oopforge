@@ -4,6 +4,8 @@
 >
 > Claude Code、Codex CLI、Cursor などの AI コーディングエージェントに、OOP/DDD とクリーンアーキテクチャの規律を注入する methodology pack。
 >
+> **OOPforge は OOP/DDD をエージェントが従う方言として定義し**、スキル・ワークフロー・実行可能な例・インストールでその方言を動かす **ハーネス**です。方法論パックかつエージェント・ハーネスであり、汎用 agent framework ではありません。
+>
 > Java (Spring) · Python (FastAPI) 対応。**3層 (Controller/Service/Repository)** または **hexagonal/clean** から選択。OpenAPI/Swagger 標準搭載。
 
 [English](./README.md) · [한국어](./README.ko.md) · [日本語](./README.ja.md) · [中文](./README.zh.md)
@@ -12,7 +14,7 @@
 
 ## なぜ OOPforge か
 
-OOPforge は **DDD / OOP 専門の AI エンジニアリング pack** です。汎用 agent framework ではありません。
+OOPforge は **DDD / OOP 専門の AI エンジニアリング pack** です。汎用 agent framework ではありません。**OOP 方言のためのハーネス・エンジニアリング** — スキルは文法、ハードルールはリンター、`examples/` は参照実装、install とコマンドはランタイムです。
 
 | 原則 | 意味 |
 |---|---|

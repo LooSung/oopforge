@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+### Changed
+
+- **README (EN/KO/JA/ZH) + AGENTS.md** — position OOPforge as an OOP/DDD dialect for agents plus agent harness (harness engineering framing).
+
 ## [0.2.2] - 2026-06-02
 
 Layered runnable proofs for all 4 stacks; Python standardized on FastAPI only.

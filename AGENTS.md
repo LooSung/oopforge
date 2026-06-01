@@ -4,8 +4,9 @@ If you are an AI coding agent working in this repository, follow OOPforge itself
 
 ## Mission
 
-OOPforge is a portable OOP/DDD methodology pack for coding agents.
-Protect the core promise: small skills, clean domain models, explicit workflow stages, and human checkpoints.
+OOPforge is a portable OOP/DDD methodology pack for coding agents — **methodology plus agent harness**.
+
+It defines OOP/DDD as a **dialect agents follow** (skills = grammar, hard rules = lint, `examples/` = reference implementations, install/commands = runtime). Protect the core promise: small skills, clean domain models, explicit workflow stages, and human checkpoints.
 
 ## Required Workflow
 

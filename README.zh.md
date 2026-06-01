@@ -4,6 +4,8 @@
 >
 > 一个面向 AI coding agents 的 OOP/DDD 方法论包，为 Claude Code、Codex CLI、Cursor 等工具注入 clean architecture discipline。
 >
+> **OOPforge 将 OOP/DDD 定义为代理遵循的方言语法**，通过技能、工作流、可运行示例与安装脚本运行该方言——**方法论包 + agent harness**，不是通用 agent framework。
+>
 > 支持 Java (Spring) · Python (FastAPI)。**3 层 (Controller/Service/Repository)** 或 **hexagonal/clean** 任选，OpenAPI/Swagger 默认开箱即用。
 
 [English](./README.md) · [한국어](./README.ko.md) · [日本語](./README.ja.md) · [中文](./README.zh.md)
@@ -12,7 +14,7 @@
 
 ## 为什么是 OOPforge
 
-OOPforge 是 **DDD / OOP 专用的 AI 工程 pack**，不是通用 agent framework。
+OOPforge 是 **DDD / OOP 专用的 AI 工程 pack**，不是通用 agent framework。**OOP 方言语法的 harness 工程** — 技能即语法，硬规则即 lint，`examples/` 即参考实现，install 与命令即运行时。
 
 | 原则 | 含义 |
 |---|---|
