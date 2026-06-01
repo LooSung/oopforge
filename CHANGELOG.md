@@ -4,6 +4,12 @@
 
 ## [Unreleased]
 
+### Changed
+
+- **Cursor** — document Cursor Agent CLI setup via `cursor-agent --plugin-dir ~/.oopforge`; remove project-rules / `.cursor/skills` symlink guidance.
+- **docs/cursor.md** — rewrite for CLI `--plugin-dir` workflow.
+- **doctor.sh** — show `--plugin-dir` load command instead of AGENTS.md project-rules warning.
+
 ## [0.1.0] - 2026-05-29
 
 Initial public release — portable OOP/DDD methodology pack for AI coding agents.

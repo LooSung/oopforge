@@ -42,6 +42,16 @@ For Claude Code slash commands:
 /oopforge:test place-order
 ```
 
+For Cursor Agent CLI:
+
+```bash
+cursor-agent --plugin-dir ~/.oopforge
+```
+
+```text
+OOPforge Discovery: order domain. Start at Discovery — no code yet.
+```
+
 ---
 
 ## **How to use OOPforge**
@@ -160,7 +170,7 @@ chmod +x scripts/setup/*.sh
 |---|---|---|
 | **Claude Code** | Supported | `~/.claude/{skills,agents,commands}/oopforge` |
 | **Codex CLI** | Supported | `~/.codex/skills/oopforge` |
-| **Cursor** | Not yet (Phase 2) | No installer — manifest only at `.cursor-plugin/` |
+| **Cursor Agent CLI** | Experimental | `cursor-agent --plugin-dir ~/.oopforge` |
 | **OpenCode** | Experimental | `INSTALL_OPENCODE=1 ./scripts/setup/install.sh` |
 
 Because the install uses symlinks, a `git pull` in `~/.oopforge` updates skill content immediately for linked agents.
@@ -173,7 +183,7 @@ cd ~/.oopforge && git pull && ./scripts/setup/install.sh update
 
 `./scripts/setup/install.sh update` runs `scripts/setup/uninstall.sh` then reinstalls all OOPforge symlinks. Use `./scripts/setup/install.sh --force` to replace existing symlinks without a full uninstall.
 
-**Cursor today:** copy or reference `AGENTS.md` in your project. See [docs/cursor.md](./docs/cursor.md). Marketplace packaging is planned for Phase 2 with no ETA yet.
+**Cursor Agent CLI:** `cursor-agent --plugin-dir ~/.oopforge`. See [docs/cursor.md](./docs/cursor.md). Marketplace packaging is Phase 2 (no ETA).
 
 **Claude Code:** [docs/claude-code.md](./docs/claude-code.md) · **OpenCode (experimental):** [docs/opencode.md](./docs/opencode.md)
 
@@ -382,7 +392,7 @@ OOPforge is not a model layer. It is a **development protocol layer**.
 ## **Roadmap**
 
 - **Phase 1** — Lightweight portable methodology pack using symlinks
-- **Phase 2** — Claude Code / Codex / Cursor plugin marketplace packaging (Cursor: no ETA; manifest exists, installer pending)
+- **Phase 2** — Claude Code / Codex / Cursor plugin marketplace packaging (Cursor CLI works via `--plugin-dir` today; bootstrap symlink + marketplace pending)
 - **Phase 3** — Standalone CLI built on Claude Agent SDK
 
 ---

@@ -138,7 +138,7 @@ chmod +x scripts/setup/*.sh
 | --------------- | ---------------- | -------------------------------------------------------- |
 | **Claude Code** | 지원             | `~/.claude/{skills,agents,commands}/oopforge`            |
 | **Codex CLI**   | 지원             | `~/.codex/skills/oopforge`                               |
-| **Cursor**      | 미지원 (Phase 2) | 설치 스크립트 없음 — `.cursor-plugin/` 매니페스트만 존재 |
+| **Cursor Agent CLI** | 실험적 | `cursor-agent --plugin-dir ~/.oopforge` |
 | **OpenCode**    | 실험적           | `INSTALL_OPENCODE=1 ./scripts/setup/install.sh`          |
 
 심볼릭 링크이므로 **`~/.oopforge` 에서 `git pull` 하면 스킬 내용이 즉시 반영** 된다.
@@ -151,7 +151,7 @@ cd ~/.oopforge && git pull && ./scripts/setup/install.sh update
 
 `./scripts/setup/install.sh update` 는 `scripts/setup/uninstall.sh` 실행 후 symlink를 재설치한다.
 
-**Cursor 현재 사용법:** 프로젝트에 `AGENTS.md` 를 복사하거나 참조한다. [docs/cursor.md](./docs/cursor.md) 참고. 마켓플레이스 패키징은 Phase 2 예정 (ETA 없음).
+**Cursor Agent CLI:** `cursor-agent --plugin-dir ~/.oopforge`. [docs/cursor.md](./docs/cursor.md) 참고. 마켓플레이스 패키징은 Phase 2 (ETA 없음).
 
 **Claude Code:** [docs/claude-code.md](./docs/claude-code.md) · **OpenCode (실험):** [docs/opencode.md](./docs/opencode.md)
 
@@ -187,6 +187,16 @@ cd ~/.oopforge && git pull && ./scripts/setup/install.sh update   # 업데이트
 @ddd-architect 결제 도메인을 모델링해줘
 ```
 
+### Cursor Agent CLI
+
+```bash
+cursor-agent --plugin-dir ~/.oopforge
+```
+
+```text
+OOPforge Discovery: 주문 도메인. Discovery부터 — 코드는 아직 작성하지 마.
+```
+
 ### 다른 에이전트에서
 
 스킬이 자동으로 컨텍스트에 노출된다. 자연스럽게 요청만 하면 됨:
@@ -204,7 +214,7 @@ oopforge/
 ├── docs/                          ← Cursor, Claude Code, OpenCode 가이드
 ├── .claude-plugin/                ← Claude Code 플러그인 매니페스트 (Phase 2)
 ├── .codex-plugin/                 ← Codex 플러그인 매니페스트 (Phase 2)
-├── .cursor-plugin/                ← Cursor 플러그인 매니페스트 (Phase 2)
+├── .cursor-plugin/                ← Cursor Agent CLI manifest (`--plugin-dir`; marketplace Phase 2)
 ├── .opencode/                     ← OpenCode experimental notes
 ├── skills/
 │   ├── _meta/skill-template.md    ← 새 스킬 작성 규칙
@@ -277,7 +287,7 @@ git add . && git commit -m "feat(oop): add <new-skill> skill"
 ## 로드맵
 
 - **Phase 1 (현재)** — Lightweight portable methodology layer (심볼릭 링크 설치)
-- **Phase 2** — Claude Code / Codex / Cursor 플러그인 마켓플레이스 등록 (Cursor: ETA 없음, 매니페스트만 존재)
+- **Phase 2** — Claude Code / Codex / Cursor 플러그인 마켓플레이스 등록 (Cursor CLI는 `--plugin-dir`로 사용 가능; bootstrap symlink + marketplace는 Phase 2)
 - **Phase 3** — Standalone CLI (Claude Agent SDK 위)
 
 Phase 1을 충분히 사용한 다음에야 Phase 2로 간다.

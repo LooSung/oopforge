@@ -58,5 +58,5 @@ Use examples/order-java as the structural reference for place-order.
 
 ## Related
 
-- [Cursor setup](./cursor.md) (project rules, no installer yet)
+- [Cursor setup](./cursor.md) (Cursor Agent CLI via `--plugin-dir`)
 - [OpenCode opt-in](./opencode.md)

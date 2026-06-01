@@ -92,7 +92,7 @@ chmod +x scripts/setup/*.sh
 |---|---|---|
 | **Claude Code** | Supported | `~/.claude/{skills,agents,commands}/oopforge` |
 | **Codex CLI** | Supported | `~/.codex/skills/oopforge` |
-| **Cursor** | Not yet (Phase 2) | No installer — manifest only at `.cursor-plugin/` |
+| **Cursor Agent CLI** | Experimental | `cursor-agent --plugin-dir ~/.oopforge` |
 | **OpenCode** | Experimental | `INSTALL_OPENCODE=1 ./scripts/setup/install.sh` |
 
 Symlink 安装后，在 `~/.oopforge` 执行 `git pull` 即可更新 skill 内容。需要重建链接时运行 `./scripts/setup/install.sh update`。
@@ -157,7 +157,7 @@ scripts/
 ## Roadmap
 
 - **Phase 1** — Lightweight portable methodology pack (symlinks)
-- **Phase 2** — Claude Code / Codex / Cursor plugin marketplaces (Cursor: no ETA; manifest only)
+- **Phase 2** — Claude Code / Codex / Cursor plugin marketplaces (Cursor CLI: `--plugin-dir` today; bootstrap symlink + marketplace pending)
 - **Phase 3** — Standalone CLI built on Claude Agent SDK
 
 ---

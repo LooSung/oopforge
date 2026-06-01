@@ -1,8 +1,19 @@
 # Cursor Plugin Manifest
 
-Manifest for future Cursor plugin marketplace registration (Phase 2).
+`.cursor-plugin/plugin.json` declares skills, agents, and commands paths for Cursor Agent CLI.
 
-`.cursor-plugin/plugin.json` declares skills, agents, and commands paths.
+## Use today (Cursor Agent CLI)
 
-**Status:** Not installable yet. There is no `scripts/setup/install.sh` target for Cursor.
-Use `AGENTS.md` in your project until Phase 2 marketplace packaging ships (no ETA).
+After bootstrap, load the pack at runtime:
+
+```bash
+cursor-agent --plugin-dir ~/.oopforge
+```
+
+Point `--plugin-dir` at the **pack root** (`~/.oopforge`), not this `.cursor-plugin/` directory.
+
+There is no `scripts/setup/install.sh` symlink target for Cursor.
+
+## Phase 2
+
+Marketplace-style packaging and bootstrap integration (no ETA).

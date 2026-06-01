@@ -99,11 +99,15 @@ check_file ".opencode/README.md"
 cyan "--- Harness commands"
 check_command "claude"
 check_command "codex"
-check_command "cursor"
+check_command "cursor-agent"
 
-cyan "--- Cursor"
-warn "Cursor has no scripts/setup/install.sh target yet; manifest only at .cursor-plugin/"
-warn "Use AGENTS.md in your project or wait for marketplace-style packaging."
+cyan "--- Cursor Agent CLI"
+if command -v cursor-agent >/dev/null 2>&1; then
+  ok "load command: cursor-agent --plugin-dir $PACK_DIR"
+else
+  warn "cursor-agent not found (install Cursor CLI to use OOPforge with Cursor)"
+fi
+warn "No scripts/setup/install.sh symlink target; marketplace packaging is Phase 2."
 
 cyan "--- Installed links"
 check_link "Claude skills" "$HOME/.claude/skills/oopforge" "$PACK_DIR/skills"
