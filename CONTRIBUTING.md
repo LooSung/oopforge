@@ -10,7 +10,7 @@ In rough priority order:
 2. **Anti-pattern catalog entries** — `skills/antipatterns/*.md` to teach `@domain-reviewer` what to flag
 3. **Lint/enforcement templates** — ArchUnit (Java), `import-linter` (Python) so the rules are PR-blockable
 4. **Language layouts** — new stacks (Kotlin Spring, NestJS, .NET) following the existing layered + hexagonal pattern
-5. **Example projects** — runnable variants in `examples/` (e.g., `order-java-layered/`, `order-python-flask/`)
+5. **Example projects** — runnable variants in `examples/` (e.g., `order-java-layered/`, `order-python-layered/`)
 6. **Translations** — KO/JA/ZH skill or doc translations
 7. **Bug fixes / typos** — always welcome
 

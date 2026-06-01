@@ -8,7 +8,7 @@ stability: stable
 # API — OpenAPI Conventions
 
 ## 언제 쓰나
-새 백엔드 서비스 스켈레톤을 만들 때. Java Spring / Python FastAPI / Python Flask 어떤 스택이든
+새 백엔드 서비스 스켈레톤을 만들 때. Java Spring / Python FastAPI 어떤 스택이든
 OpenAPI 문서가 비어 있는 채로 출발하지 않게 강제한다.
 
 ## 체크리스트
@@ -93,31 +93,6 @@ router = APIRouter(prefix="/api/v1/orders", tags=["Order"])
     summary="Place a new order",
 )
 def place_order(req: PlaceOrderRequest, ...): ...
-```
-
-### Python Flask (`flask-smorest` 권장)
-
-```python
-# requirements
-flask-smorest>=0.45
-```
-
-```python
-# app/__init__.py
-from flask_smorest import Api
-api = Api(app, spec_kwargs={"title": "Order Service", "version": "1.0.0"})
-```
-
-```python
-# app/presentation/order_blueprint.py
-from flask_smorest import Blueprint
-bp = Blueprint("order", __name__, url_prefix="/api/v1/orders", description="Order ops")
-
-@bp.route("", methods=["POST"])
-@bp.arguments(PlaceOrderSchema)
-@bp.response(201, OrderResponseSchema)
-@bp.alt_response(400, schema=ErrorResponseSchema)
-def place_order(payload): ...
 ```
 
 ## 금지

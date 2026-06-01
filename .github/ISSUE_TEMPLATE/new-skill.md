@@ -13,7 +13,7 @@ Category (pick one):
 
 - [ ] `skills/oop/` — language-agnostic OOP/DDD concept
 - [ ] `skills/lang/java/` — Java/Spring-specific
-- [ ] `skills/lang/python/` — Python (FastAPI/Flask/etc.)
+- [ ] `skills/lang/python/` — Python (FastAPI/etc.)
 - [ ] `skills/lang/api/` — API contract (OpenAPI, gRPC, etc.)
 - [ ] `skills/antipatterns/` — "don't do this" entry
 - [ ] `skills/workflow/` — process stage

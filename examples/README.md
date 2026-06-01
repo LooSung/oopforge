@@ -7,15 +7,13 @@ Runnable **place-order** proof projects. Same use case, different layout stacks.
 | `java-spring-hexagonal` | [order-java](order-java/) | Spring hexagonal (ports/adapters) | springdoc (add in v0.2+) |
 | `java-spring-layered` | [order-java-layered](order-java-layered/) | Spring 3-tier (Controller/Service/Repository) | springdoc `/swagger-ui` |
 | `python-fastapi-clean` | [order-python](order-python/) | FastAPI hexagonal/clean | FastAPI `/docs` |
-| `python-flask-layered` | [order-python-flask](order-python-flask/) | Flask 3-tier (Blueprint/Service/Repository) | flask-smorest `/api/v1/docs` |
-
-> `python-fastapi-layered` uses the same 3-tier idea as Flask; a dedicated FastAPI layered example may follow in a later release.
+| `python-fastapi-layered` | [order-python-layered](order-python-layered/) | FastAPI 3-tier (Router/Service/Repository) | FastAPI `/docs` |
 
 ## Quick verify
 
 ```bash
 cd examples/order-java-layered && ./gradlew test
-cd examples/order-python-flask && pip install -e ".[dev]" && PYTHONPATH=. pytest
+cd examples/order-python-layered && pip install -e ".[dev]" && pytest
 cd examples/order-java && ./gradlew test
 cd examples/order-python && pip install -e ".[dev]" && pytest
 ```

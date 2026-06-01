@@ -1,8 +1,7 @@
 def test_openapi_spec_available(client) -> None:
-    response = client.get("/api/v1/openapi.json")
+    response = client.get("/openapi.json")
     assert response.status_code == 200
-    body = response.get_json()
-    assert body is not None
+    body = response.json()
     assert "openapi" in body
     assert "/api/v1/orders" in body.get("paths", {})
 
@@ -16,4 +15,4 @@ def test_place_order_via_api(client) -> None:
         },
     )
     assert response.status_code == 201
-    assert response.get_json()["order_id"]
+    assert response.json()["order_id"]

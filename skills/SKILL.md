@@ -49,7 +49,6 @@ Layouts — pick by domain complexity (small/MVP → layered, complex → hexago
 - Java Spring hexagonal: `lang/java/spring-hexagonal-layout.md`
 - Python FastAPI 3-tier: `lang/python/fastapi-layered-layout.md`
 - Python FastAPI clean: `lang/python/clean-fastapi-layout.md`
-- Python Flask 3-tier: `lang/python/flask-layered-layout.md`
 
 Python-specific patterns:
 - Python aggregate: `lang/python/python-aggregate.md`

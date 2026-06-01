@@ -4,7 +4,7 @@
 >
 > Claude Code、Codex CLI、Cursor などの AI コーディングエージェントに、OOP/DDD とクリーンアーキテクチャの規律を注入する methodology pack。
 >
-> Java (Spring) · Python (FastAPI / Flask) 対応。**3層 (Controller/Service/Repository)** または **hexagonal/clean** から選択。OpenAPI/Swagger 標準搭載。
+> Java (Spring) · Python (FastAPI) 対応。**3層 (Controller/Service/Repository)** または **hexagonal/clean** から選択。OpenAPI/Swagger 標準搭載。
 
 [English](./README.md) · [한국어](./README.ko.md) · [日本語](./README.ja.md) · [中文](./README.zh.md)
 
@@ -38,7 +38,7 @@ Discovery → Design → Skeleton → Implement (Java + Python) → Test
 | [図書館貸出ガイド](docs/guides/library-loan/README.ja.md) | フルワークフロー チュートリアル |
 | [Examples index](examples/README.md) | 実行可能な証明 — 4 スタック、同一 place-order |
 | [order-java](examples/order-java/) · [order-java-layered](examples/order-java-layered/) | Java hexagonal · Java 3-tier |
-| [order-python](examples/order-python/) · [order-python-flask](examples/order-python-flask/) | FastAPI clean · Flask 3-tier |
+| [order-python](examples/order-python/) · [order-python-layered](examples/order-python-layered/) | FastAPI clean · FastAPI 3-tier |
 | [Discovery サンプル (library)](docs/sample-output/discovery-library.ja.md) | 期待される agent 出力 ([EN](docs/sample-output/discovery-library.md) · [KO](docs/sample-output/discovery-library.ko.md) · [ZH](docs/sample-output/discovery-library.zh.md)) |
 | [Design サンプル (library)](docs/sample-output/design-library.ja.md) | 期待される agent 出力 ([EN](docs/sample-output/design-library.md) · [KO](docs/sample-output/design-library.ko.md) · [ZH](docs/sample-output/design-library.zh.md)) |
 
@@ -129,9 +129,8 @@ Symlink インストールでは `~/.oopforge` で `git pull` するだけでス
 | `java-spring-hexagonal` | Hexagonal | ドメイン複雑 |
 | `python-fastapi-layered` | 3層 (Router/Service/Repository) | 小規模・MVP |
 | `python-fastapi-clean` | Clean | ドメイン複雑 |
-| `python-flask-layered` | 3層 (Blueprint/Service/Repository) | Flask 系 |
 
-すべての backend skeleton は **OpenAPI/Swagger UI を標準で有効化** (springdoc / FastAPI 内蔵 / flask-smorest)。
+すべての backend skeleton は **OpenAPI/Swagger UI を標準で有効化** (springdoc / FastAPI 内蔵)。
 
 ### Full workflow
 
@@ -155,9 +154,9 @@ skills/
 ├── workflow/        Recommended: Discovery → Design → Delivery Plan → Skeleton → Implement → Test
 ├── oop/             Aggregate Root, Value Object, Domain Event, ...
 └── lang/
-    ├── api/         OpenAPI / Swagger conventions (springdoc, FastAPI, flask-smorest)
+    ├── api/         OpenAPI / Swagger conventions (springdoc, FastAPI)
     ├── java/        Spring 3層 (layered) + Spring hexagonal, JPA repository
-    └── python/      FastAPI 3層 + FastAPI clean + Flask 3層,
+    └── python/      FastAPI 3層 + FastAPI clean,
                      Python aggregate, Python domain event, Pydantic VO
 
 agents/              ddd-architect, domain-reviewer subagents

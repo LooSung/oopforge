@@ -9,7 +9,7 @@
 
 OOPforge helps AI coding agents design software around **domain models**, **aggregates**, **ports**, **adapters**, and **testable use cases** before implementation.
 
-OOPforge gives Claude Code, Codex CLI, Cursor, and compatible coding agents a clear way to model software with **DDD**, **layered (3-tier) or hexagonal/clean architecture**, **OpenAPI-first contracts**, and **clean domain boundaries** — for Java (Spring) and Python (FastAPI / Flask).
+OOPforge gives Claude Code, Codex CLI, Cursor, and compatible coding agents a clear way to model software with **DDD**, **layered (3-tier) or hexagonal/clean architecture**, **OpenAPI-first contracts**, and **clean domain boundaries** — for Java (Spring) and Python (FastAPI).
 
 [English](./README.md) · [한국어](./README.ko.md) · [日本語](./README.ja.md) · [中文](./README.zh.md)
 
@@ -45,7 +45,7 @@ For Codex, use slash-like prompts (full workflow for a new domain):
 /oopforge:discovery order domain
 /oopforge:design place-order use case
 /oopforge:delivery-plan place-order
-/oopforge:skeleton python-fastapi-layered     # or python-fastapi-clean, python-flask-layered
+/oopforge:skeleton python-fastapi-layered     # or python-fastapi-clean
 /oopforge:implement place-order
 /oopforge:test place-order
 ```
@@ -69,9 +69,8 @@ For Claude Code, the same flow is available as slash commands:
 | `java-spring-hexagonal` | Hexagonal (domain/application/adapter) | Complex domain, many adapters |
 | `python-fastapi-layered` | 3-tier (Router/Service/Repository) | Small services, MVP |
 | `python-fastapi-clean` | Clean (domain/application/infrastructure/presentation) | Complex domain |
-| `python-flask-layered` | 3-tier (Blueprint/Service/Repository) | Flask-based services |
 
-All backend skeletons ship with **OpenAPI/Swagger UI** enabled by default (springdoc / FastAPI built-in / flask-smorest).
+All backend skeletons ship with **OpenAPI/Swagger UI** enabled by default (springdoc / FastAPI built-in).
 
 For Cursor Agent CLI:
 
@@ -99,7 +98,7 @@ Guide index: [EN](docs/guides/library-loan/README.md) · [KO](docs/guides/librar
 | [Library loan guide](docs/guides/library-loan/README.md) | Full tutorial — how to use OOPforge end to end |
 | [Examples index](examples/README.md) | Runnable proof — 4 stacks, same place-order |
 | [order-java](examples/order-java/) · [order-java-layered](examples/order-java-layered/) | Java hexagonal · Java 3-tier |
-| [order-python](examples/order-python/) · [order-python-flask](examples/order-python-flask/) | FastAPI clean · Flask 3-tier |
+| [order-python](examples/order-python/) · [order-python-layered](examples/order-python-layered/) | FastAPI clean · FastAPI 3-tier |
 | [Sample discovery (library)](docs/sample-output/discovery-library.md) | Short expected agent output ([KO](docs/sample-output/discovery-library.ko.md) · [JA](docs/sample-output/discovery-library.ja.md) · [ZH](docs/sample-output/discovery-library.zh.md)) |
 | [Sample design (library)](docs/sample-output/design-library.md) | Short expected agent output ([KO](docs/sample-output/design-library.ko.md) · [JA](docs/sample-output/design-library.ja.md) · [ZH](docs/sample-output/design-library.zh.md)) |
 | [Reviewer checklist](docs/reviewer-checklist.md) | Post-implement rule check |
@@ -346,7 +345,7 @@ oopforge/
 │   ├── order-java/      Java Spring hexagonal
 │   ├── order-java-layered/  Java Spring 3-tier
 │   ├── order-python/    Python FastAPI hexagonal
-│   └── order-python-flask/  Python Flask 3-tier
+│   └── order-python-layered/  FastAPI 3-tier
 ├── docs/
 │   ├── roadmap.md             Direction, priorities, non-goals
 │   ├── guides/library-loan/   Step-by-step walkthrough (start here)
@@ -364,10 +363,10 @@ oopforge/
 │   │                    Specification Pattern
 │   └── lang/
 │       ├── api/         OpenAPI / Swagger conventions (springdoc,
-│       │                FastAPI built-in, flask-smorest)
+│       │                FastAPI built-in)
 │       ├── java/        Spring 3-tier layered + Spring hexagonal
 │       │                + JPA repository
-│       └── python/      FastAPI 3-tier + FastAPI clean + Flask 3-tier,
+│       └── python/      FastAPI 3-tier + FastAPI clean,
 │                        Python aggregate, Python domain event,
 │                        Pydantic value object
 ├── agents/              ddd-architect, domain-reviewer subagents

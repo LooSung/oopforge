@@ -4,6 +4,13 @@
 
 ## [Unreleased]
 
+## [Unreleased]
+
+### Changed
+
+- **`examples/order-python-flask/` → `examples/order-python-layered/`** — runnable Python 3-tier proof is FastAPI (Router/Service/Repository).
+- **Flask skeleton removed** — `python-flask-layered` stack and `flask-layered-layout.md` deleted. Python stacks are now `python-fastapi-layered` and `python-fastapi-clean` only (4 stacks total).
+
 ## [0.2.1] - 2026-06-01
 
 Layered stack runnable proof — closes README vs examples gap.

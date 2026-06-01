@@ -28,7 +28,7 @@ Python에서 Aggregate는 다음 셋 중 하나로 구현한다.
 - [ ] 컬렉션 노출 시 `tuple()` 또는 복사본 반환 (방어적 복사)
 - [ ] 불변량(invariant)은 생성/변경 메서드에서 검증, 위반 시 도메인 예외
 - [ ] 도메인 이벤트가 있으면 내부 리스트에 append, 외부에서 `pull_events()`로 회수
-- [ ] FastAPI/SQLAlchemy/Flask import 0
+- [ ] FastAPI/SQLAlchemy import 0
 
 ## 템플릿 — dataclass 버전
 

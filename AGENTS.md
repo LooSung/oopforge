@@ -59,7 +59,6 @@ Use this table to decide **which skill to read first**. Workflow stage always wi
 | JPA adapter | `skills/lang/java/jpa-repository.md` |
 | Python layout — FastAPI 3-tier | `skills/lang/python/fastapi-layered-layout.md` |
 | Python layout — FastAPI clean | `skills/lang/python/clean-fastapi-layout.md` |
-| Python layout — Flask 3-tier | `skills/lang/python/flask-layered-layout.md` |
 | Python aggregate | `skills/lang/python/python-aggregate.md` |
 | Python domain event | `skills/lang/python/python-domain-event.md` |
 | Pydantic value object | `skills/lang/python/pydantic-value-object.md` |
@@ -74,7 +73,7 @@ Use this table to decide **which skill to read first**. Workflow stage always wi
 | Cursor | `docs/cursor.md` |
 | OpenCode (experimental) | `docs/opencode.md` |
 
-Reference implementation: [examples/README.md](examples/README.md) — `order-java`, `order-java-layered`, `order-python`, `order-python-flask` (same place-order flow).
+Reference implementation: [examples/README.md](examples/README.md) — `order-java`, `order-java-layered`, `order-python`, `order-python-layered` (same place-order flow).
 
 ## Skill Selection
 
@@ -90,7 +89,7 @@ Before changing behavior, read the relevant skill file:
 - Specification pattern: `skills/oop/specification-pattern.md`
 - Java layouts: `skills/lang/java/spring-layered-layout.md` (3-tier) · `skills/lang/java/spring-hexagonal-layout.md` (hexagonal)
 - JPA repositories: `skills/lang/java/jpa-repository.md`
-- Python layouts: `skills/lang/python/fastapi-layered-layout.md` (FastAPI 3-tier) · `skills/lang/python/clean-fastapi-layout.md` (FastAPI clean) · `skills/lang/python/flask-layered-layout.md` (Flask 3-tier)
+- Python layouts: `skills/lang/python/fastapi-layered-layout.md` (FastAPI 3-tier) · `skills/lang/python/clean-fastapi-layout.md` (FastAPI clean)
 - Python patterns: `skills/lang/python/python-aggregate.md` · `skills/lang/python/python-domain-event.md` · `skills/lang/python/pydantic-value-object.md`
 - API contracts: `skills/lang/api/openapi-conventions.md`
 - Delivery planning: `skills/workflow/delivery-plan.md`
