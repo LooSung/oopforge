@@ -3,6 +3,8 @@
 > **Forge small. Compose forever.**
 >
 > Claude Code、Codex CLI、Cursor などの AI コーディングエージェントに、OOP/DDD とクリーンアーキテクチャの規律を注入する methodology pack。
+>
+> Java (Spring) · Python (FastAPI / Flask) 対応。**3層 (Controller/Service/Repository)** または **hexagonal/clean** から選択。OpenAPI/Swagger 標準搭載。
 
 [English](./README.md) · [한국어](./README.ko.md) · [日本語](./README.ja.md) · [中文](./README.zh.md)
 
@@ -107,10 +109,34 @@ Symlink インストールでは `~/.oopforge` で `git pull` するだけでス
 
 ## Use
 
+### `/oopforge:route` — 何から始めるか分からないとき
+
+ワークフロー全体を強制せず、ユーザーの意図に合った最小単位の skill/command を 1 つだけ推薦します。
+
+```text
+/oopforge:route 既存の payment domain に refund use case を追加したい
+/oopforge:route Email の value object を 1 つだけ作る
+/oopforge:route 新しい membership domain をゼロから
+```
+
+### Stack 識別子 (`/oopforge:skeleton` 用)
+
+| Stack | Architecture | 用途 |
+|---|---|---|
+| `java-spring-layered` | 3層 (Controller/Service/Repository) | 小規模・MVP |
+| `java-spring-hexagonal` | Hexagonal | ドメイン複雑 |
+| `python-fastapi-layered` | 3層 (Router/Service/Repository) | 小規模・MVP |
+| `python-fastapi-clean` | Clean | ドメイン複雑 |
+| `python-flask-layered` | 3層 (Blueprint/Service/Repository) | Flask 系 |
+
+すべての backend skeleton は **OpenAPI/Swagger UI を標準で有効化** (springdoc / FastAPI 内蔵 / flask-smorest)。
+
+### Full workflow
+
 ```text
 /oopforge:discovery order domain
 /oopforge:design place-order use case
-/oopforge:skeleton java-spring
+/oopforge:skeleton java-spring-layered           # または java-spring-hexagonal
 /oopforge:implement place-order
 ```
 
@@ -127,11 +153,14 @@ skills/
 ├── workflow/        Recommended: Discovery → Design → Delivery Plan → Skeleton → Implement → Test
 ├── oop/             Aggregate Root, Value Object, Domain Event, ...
 └── lang/
-    ├── java/        Spring hexagonal layout, JPA repository
-    └── python/      Pydantic value objects, clean FastAPI layout
+    ├── api/         OpenAPI / Swagger conventions (springdoc, FastAPI, flask-smorest)
+    ├── java/        Spring 3層 (layered) + Spring hexagonal, JPA repository
+    └── python/      FastAPI 3層 + FastAPI clean + Flask 3層,
+                     Python aggregate, Python domain event, Pydantic VO
 
-agents/              ddd-architect subagent
-commands/            Claude Code slash commands for workflow stages
+agents/              ddd-architect, domain-reviewer subagents
+commands/            Claude Code slash commands + /oopforge:route
+docs/roadmap.md      方向・優先順位・非ゴール
 AGENTS.md            cross-agent repository instructions
 CLAUDE.md            Claude Code bootstrap instructions
 scripts/
@@ -156,9 +185,13 @@ scripts/
 
 ## Roadmap
 
+Packaging:
+
 - **Phase 1** — Lightweight portable methodology pack (symlinks)
 - **Phase 2** — Claude Code / Codex / Cursor plugin marketplaces (Cursor CLI: `--plugin-dir` today; bootstrap symlink + marketplace pending)
 - **Phase 3** — Standalone CLI built on Claude Agent SDK
+
+方向性・優先順位・非ゴール (短期/中期/長期、言語拡張、lint 強制、anti-pattern カタログ): **[docs/roadmap.md](./docs/roadmap.md)**
 
 ---
 

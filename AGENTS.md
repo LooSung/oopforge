@@ -20,6 +20,8 @@ For new domains or large features, do not jump straight to code.
 
 Ask for human approval before moving from one stage to the next.
 
+**For smaller, focused tasks** (extending an existing domain, adding a single value object, refactoring, code review) — start with `/oopforge:route` (`commands/route.md`). It picks the minimal skill/command instead of forcing the full pipeline.
+
 ## Skill Path Convention
 
 Resolve the OOPforge pack root in order: `$OOPFORGE_HOME` → `~/.oopforge` → repository root (when developing this pack).
@@ -32,6 +34,7 @@ Use this table to decide **which skill to read first**. Workflow stage always wi
 
 | Workflow stage | Goal | Read first | Agent (optional) |
 |---|---|---|---|
+| Route (intent triage) | Pick the smallest skill/command for the user's actual goal | `commands/route.md` | — |
 | Discovery | Glossary, contexts, actors | `skills/workflow/discovery.md` | `@ddd-architect` |
 | Design | Use-case signatures, aggregates | `skills/workflow/design.md` + relevant `skills/oop/*` | `@ddd-architect` |
 | Delivery Plan | Scope, order, tests, risks | `skills/workflow/delivery-plan.md` | — |
@@ -51,10 +54,16 @@ Use this table to decide **which skill to read first**. Workflow stage always wi
 | Repository port | `skills/oop/repository-port.md` |
 | Domain event | `skills/oop/domain-event.md` |
 | Bounded context | `skills/oop/bounded-context.md` |
-| Java package layout | `skills/lang/java/spring-hexagonal-layout.md` |
+| Java package layout — 3-tier | `skills/lang/java/spring-layered-layout.md` |
+| Java package layout — hexagonal | `skills/lang/java/spring-hexagonal-layout.md` |
 | JPA adapter | `skills/lang/java/jpa-repository.md` |
-| Python layout | `skills/lang/python/clean-fastapi-layout.md` |
+| Python layout — FastAPI 3-tier | `skills/lang/python/fastapi-layered-layout.md` |
+| Python layout — FastAPI clean | `skills/lang/python/clean-fastapi-layout.md` |
+| Python layout — Flask 3-tier | `skills/lang/python/flask-layered-layout.md` |
+| Python aggregate | `skills/lang/python/python-aggregate.md` |
+| Python domain event | `skills/lang/python/python-domain-event.md` |
 | Pydantic value object | `skills/lang/python/pydantic-value-object.md` |
+| OpenAPI / Swagger conventions | `skills/lang/api/openapi-conventions.md` |
 
 ### Harness setup
 
@@ -79,13 +88,15 @@ Before changing behavior, read the relevant skill file:
 - Bounded contexts: `skills/oop/bounded-context.md`
 - Factory methods: `skills/oop/factory-method.md`
 - Specification pattern: `skills/oop/specification-pattern.md`
-- Java layout: `skills/lang/java/spring-hexagonal-layout.md`
+- Java layouts: `skills/lang/java/spring-layered-layout.md` (3-tier) · `skills/lang/java/spring-hexagonal-layout.md` (hexagonal)
 - JPA repositories: `skills/lang/java/jpa-repository.md`
-- Python layout: `skills/lang/python/clean-fastapi-layout.md`
-- Pydantic value objects: `skills/lang/python/pydantic-value-object.md`
+- Python layouts: `skills/lang/python/fastapi-layered-layout.md` (FastAPI 3-tier) · `skills/lang/python/clean-fastapi-layout.md` (FastAPI clean) · `skills/lang/python/flask-layered-layout.md` (Flask 3-tier)
+- Python patterns: `skills/lang/python/python-aggregate.md` · `skills/lang/python/python-domain-event.md` · `skills/lang/python/pydantic-value-object.md`
+- API contracts: `skills/lang/api/openapi-conventions.md`
 - Delivery planning: `skills/workflow/delivery-plan.md`
 - Testing: `skills/workflow/test.md`
 - Refactoring existing or external code: `skills/workflow/refactor.md`
+- Roadmap / direction: `docs/roadmap.md`
 
 ## Hard Rules
 

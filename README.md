@@ -9,7 +9,7 @@
 
 OOPforge helps AI coding agents design software around **domain models**, **aggregates**, **ports**, **adapters**, and **testable use cases** before implementation.
 
-OOPforge gives Claude Code, Codex CLI, Cursor, and compatible coding agents a clear way to model software with **DDD**, **hexagonal architecture**, and **clean domain boundaries**.
+OOPforge gives Claude Code, Codex CLI, Cursor, and compatible coding agents a clear way to model software with **DDD**, **layered (3-tier) or hexagonal/clean architecture**, **OpenAPI-first contracts**, and **clean domain boundaries** — for Java (Spring) and Python (FastAPI / Flask).
 
 [English](./README.md) · [한국어](./README.ko.md) · [日本語](./README.ja.md) · [中文](./README.zh.md)
 
@@ -31,13 +31,21 @@ Then restart your coding agent and ask:
 Build an Order aggregate in Java, following OOPforge rules.
 ```
 
-For Codex, use slash-like prompts:
+Not sure where to start? Ask the router — it picks the smallest skill/command for your actual goal instead of forcing the full pipeline:
+
+```text
+/oopforge:route I want to add a refund use case to the existing payment domain
+/oopforge:route Just make a single value object for Email
+/oopforge:route New membership domain from scratch
+```
+
+For Codex, use slash-like prompts (full workflow for a new domain):
 
 ```text
 /oopforge:discovery order domain
 /oopforge:design place-order use case
 /oopforge:delivery-plan place-order
-/oopforge:skeleton python-fastapi
+/oopforge:skeleton python-fastapi-layered     # or python-fastapi-clean, python-flask-layered
 /oopforge:implement place-order
 /oopforge:test place-order
 ```
@@ -48,10 +56,22 @@ For Claude Code, the same flow is available as slash commands:
 /oopforge:discovery order domain
 /oopforge:design place-order use case
 /oopforge:delivery-plan place-order
-/oopforge:skeleton java-spring
+/oopforge:skeleton java-spring-layered        # or java-spring-hexagonal
 /oopforge:implement place-order
 /oopforge:test place-order
 ```
+
+**Stack identifiers** for `/oopforge:skeleton`:
+
+| Stack | Architecture | When |
+|---|---|---|
+| `java-spring-layered` | 3-tier (Controller/Service/Repository) | Small services, MVP |
+| `java-spring-hexagonal` | Hexagonal (domain/application/adapter) | Complex domain, many adapters |
+| `python-fastapi-layered` | 3-tier (Router/Service/Repository) | Small services, MVP |
+| `python-fastapi-clean` | Clean (domain/application/infrastructure/presentation) | Complex domain |
+| `python-flask-layered` | 3-tier (Blueprint/Service/Repository) | Flask-based services |
+
+All backend skeletons ship with **OpenAPI/Swagger UI** enabled by default (springdoc / FastAPI built-in / flask-smorest).
 
 For Cursor Agent CLI:
 
@@ -262,6 +282,8 @@ Discovery → Design → Delivery Plan → Skeleton → Implement → Test
 
 This keeps the agent from jumping into code before the domain language, boundaries, contracts, and verification plan are clear.
 
+**For smaller, focused tasks** (one value object, extending an existing domain, refactoring, code review) — start with `/oopforge:route`. It asks your intent and points to the minimal skill instead of forcing the full pipeline.
+
 | Stage | Output | Do not do |
 |---|---|---|
 | **1. Discovery** | Glossary, bounded contexts, actors, open questions | Code |
@@ -279,13 +301,14 @@ Each stage ends with a human checkpoint before moving on.
 /oopforge:discovery payment domain
 /oopforge:design approve-payment use case
 /oopforge:delivery-plan approve-payment
-/oopforge:skeleton java-spring
+/oopforge:skeleton java-spring-layered           # or java-spring-hexagonal
 /oopforge:implement approve-payment
 /oopforge:test approve-payment
 ```
 
 ### **Where to start**
 
+- **Not sure?** → `/oopforge:route <what you want>` — picks the minimal skill/command.
 - Start at **Discovery** for a new domain or unclear feature.
 - Start at **Delivery Plan** if Discovery/Design already exist.
 - Start at **Implement** only when the contract and skeleton are already clear.
@@ -320,6 +343,7 @@ oopforge/
 │   ├── order-java/      Runnable Java Spring hexagonal reference (Order)
 │   └── order-python/    Runnable Python FastAPI hexagonal reference (Order)
 ├── docs/
+│   ├── roadmap.md             Direction, priorities, non-goals
 │   ├── guides/library-loan/   Step-by-step walkthrough (start here)
 │   ├── sample-output/         Short expected agent outputs
 │   ├── codex.md         Codex setup guide
@@ -334,10 +358,16 @@ oopforge/
 │   │                    Domain Event, Bounded Context, Factory Method,
 │   │                    Specification Pattern
 │   └── lang/
-│       ├── java/        Spring hexagonal layout, JPA repository
-│       └── python/      Pydantic value objects, clean FastAPI layout
+│       ├── api/         OpenAPI / Swagger conventions (springdoc,
+│       │                FastAPI built-in, flask-smorest)
+│       ├── java/        Spring 3-tier layered + Spring hexagonal
+│       │                + JPA repository
+│       └── python/      FastAPI 3-tier + FastAPI clean + Flask 3-tier,
+│                        Python aggregate, Python domain event,
+│                        Pydantic value object
 ├── agents/              ddd-architect, domain-reviewer subagents
 ├── commands/            Claude Code slash commands for workflow stages
+│                        + /oopforge:route (intent triage)
 ├── AGENTS.md            cross-agent repository instructions
 ├── CLAUDE.md            Claude Code bootstrap instructions
 ├── scripts/
@@ -404,9 +434,13 @@ OOPforge is not a model layer. It is a **development protocol layer**.
 
 ## **Roadmap**
 
+Packaging phases:
+
 - **Phase 1** — Lightweight portable methodology pack using symlinks
 - **Phase 2** — Claude Code / Codex / Cursor plugin marketplace packaging (Cursor CLI works via `--plugin-dir` today; bootstrap symlink + marketplace pending)
 - **Phase 3** — Standalone CLI built on Claude Agent SDK
+
+Direction, priorities, and non-goals (short/medium/long term, language expansion, lint enforcement, anti-pattern catalog): **[docs/roadmap.md](./docs/roadmap.md)**
 
 ---
 
