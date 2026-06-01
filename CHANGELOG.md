@@ -4,27 +4,26 @@
 
 ## [Unreleased]
 
-## [Unreleased]
+## [0.2.2] - 2026-06-02
 
-### Changed
-
-- **`examples/order-python-flask/` → `examples/order-python-layered/`** — runnable Python 3-tier proof is FastAPI (Router/Service/Repository).
-- **Flask skeleton removed** — `python-flask-layered` stack and `flask-layered-layout.md` deleted. Python stacks are now `python-fastapi-layered` and `python-fastapi-clean` only (4 stacks total).
-
-## [0.2.1] - 2026-06-01
-
-Layered stack runnable proof — closes README vs examples gap.
+Layered runnable proofs for all 4 stacks; Python standardized on FastAPI only.
 
 ### Added
 
-- **`examples/order-java-layered/`** — Spring 3-tier place-order (Controller/Service/Repository), springdoc, domain + OpenAPI contract tests.
-- **`examples/order-python-flask/`** — Flask 3-tier place-order (Blueprint/Service/Repository), flask-smorest, pytest + OpenAPI smoke.
+- **`examples/order-java-layered/`** — Spring 3-tier place-order, springdoc, domain + OpenAPI contract tests.
+- **`examples/order-python-layered/`** — FastAPI 3-tier place-order (Router/Service/Repository), pytest + OpenAPI smoke.
 - **`examples/README.md`** — stack command ↔ folder mapping for all runnable proofs.
 
 ### Changed
 
 - **README (EN/KO/JA/ZH)** — examples table links to 4 runnable projects + index.
-- **`docs/roadmap.md`** — Next sprint (v0.2.1) checklist.
+- **`docs/roadmap.md`** — proof-gap sprint checklist complete.
+- **Flask removed** — `python-flask-layered` skeleton and `flask-layered-layout.md` deleted. Python stacks are `python-fastapi-layered` and `python-fastapi-clean` only (**4 stacks total**).
+- **OpenAPI / skeleton docs** — Flask references removed from `openapi-conventions.md`, `commands/skeleton.md`, `AGENTS.md`.
+
+## [0.2.1] - 2026-06-01
+
+_Skipped tag — changes folded into [0.2.2]._
 
 ## [0.2.0] - 2026-06-01
 
