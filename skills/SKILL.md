@@ -9,11 +9,21 @@ Use this skill when the user asks for OOPforge, DDD/OOP modeling, clean or hexag
 
 ## Command Routing
 
-Treat this Codex prompt as the OOPforge user entry point:
+Treat **`/oopforge:craft`** as the OOPforge user entry point on **Claude Code** (installed slash command).
+
+On **Codex CLI**, do not type `/oopforge:craft` at the composer — Codex reserves `/` for built-in commands. Use `/skills` or `$oopforge` → **oopforge**, then `craft: …` (no leading `/`).
+
+On **Cursor Agent CLI** (with `--plugin-dir`), use the plugin slash command like Claude: `/oopforge:craft …`.
+
+## Project vs pack (paths)
+
+- **Pack** — `~/.oopforge` or `$OOPFORGE_HOME`: skills, commands, examples. Not where user app code lives.
+- **Target project** — the repo the user is working on; start the agent **from this directory** (`cd your-project && codex`).
+- User file paths (`docs/foo.md`, `@path`, absolute paths) resolve against the **target project**, never against the pack. If missing, ask for an absolute path — do not search only under `~/.oopforge`.
 
 | Prompt | Read first | Output |
 |---|---|---|
-| `/oopforge:craft ...` | `workflow/craft.md` + `principles/oop-discipline.md` | select the smallest OOP path; execute unless advisory only |
+| `/oopforge:craft …` (Claude) or `Use OOPforge craft: …` (Codex/Cursor) | `workflow/craft.md` + `principles/oop-discipline.md` | select the smallest OOP path; execute unless advisory only |
 
 Use `/oopforge:craft` as the single user entry point. For ambiguous or advisory requests, Craft recommends the smallest path without implementation. For execution requests, it performs the smallest coherent OOP change. Do not force the full Discovery→Test pipeline for small, focused tasks.
 

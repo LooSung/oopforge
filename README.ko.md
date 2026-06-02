@@ -38,17 +38,37 @@ cursor-agent --plugin-dir ~/.oopforge
 
 ### 3. Craft 실행
 
+진입점은 모든 하네스에서 **Craft**; **호출 방법만** 다릅니다.
+
+| Harness | 호출 |
+|---|---|
+| **Claude Code** | `/oopforge:craft <요청>` — 슬래시 커맨드 |
+| **Codex CLI** | `/skills` → **oopforge** 선택 후, **`/` 없이** 프롬프트 (Codex는 `/`를 자체 명령으로 처리) |
+| **Cursor Agent CLI** | `--plugin-dir` 후 자연어 ([Cursor 설정](docs/cursor.md)) |
+
+**Claude Code:**
+
 ```text
 /oopforge:craft Email 값 객체 하나 추가해줘
-/oopforge:craft 결제 도메인에 환불 기능 추가해줘
-/oopforge:craft OrderService를 동작 변경 없이 정리해줘
+```
+
+**Codex CLI** (`/skills` → oopforge 이후):
+
+```text
+Use OOPforge craft: Email 값 객체 하나 추가해줘
+```
+
+**Cursor:**
+
+```text
+Use OOPforge craft: Email 값 객체 하나 추가해줘
 ```
 
 ---
 
 ## Advanced Usage
 
-`/oopforge:craft`는 추천만 필요한 요청이면 구현하지 않고 가장 작은 경로만 제안한다.
+`/oopforge:craft`는 추천만 필요한 요청이면 구현하지 않고 가장 작은 경로만 제안한다 (모든 하네스 공통).
 
 고급 사용자는 "Discovery부터 시작", "Delivery Plan 작성", "Test workflow 실행"처럼 특정 workflow stage를 Craft에 직접 요청할 수 있다.
 

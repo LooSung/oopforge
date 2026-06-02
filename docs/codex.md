@@ -1,6 +1,8 @@
 # Codex Setup
 
-OOPforge is supported on Codex through a Codex skill entry point at `skills/SKILL.md`.
+OOPforge is supported on Codex through a skill entry point at `skills/SKILL.md`.
+
+Codex installs **skills only** — not Claude Code `commands/`. The string `/oopforge:craft` is **not** a Codex slash command; Codex reserves `/` for built-ins such as `/skills` and `/model`.
 
 ## Install
 
@@ -25,24 +27,45 @@ Because this path is a symlink to `~/.oopforge/skills`, Codex sees:
 - `~/.codex/skills/oopforge/oop/*.md`
 - `~/.codex/skills/oopforge/lang/*.md`
 
-## Slash-Like Prompts
+Works in **any project directory** — skills are global under `~/.codex/skills/`.
 
-Codex does not need the Claude Code `commands/` directory. Type Craft as a normal prompt:
+**Important:** start Codex **from your target project**, not from `~/.oopforge`:
 
-```text
-/oopforge:craft Start Discovery for the library loan domain. No code yet.
-/oopforge:craft Implement borrow-book in python-fastapi
-/oopforge:craft Refactor imported billing module without changing behavior
+```bash
+cd /path/to/your-backend-project
+codex
 ```
 
-The Codex `oopforge` skill routes Craft requests to the matching workflow files.
+If `pwd` is `~/.oopforge`, relative paths like `docs/integration/foo.md` will be resolved in the **pack**, not your app repo. Use an absolute path or restart Codex after `cd` to your project.
 
-Natural language also works:
+## Run Craft on Codex
+
+1. Start Codex in your backend project: `cd /path/to/your-project && codex`
+2. Type `/skills` and select **oopforge**
+3. Prompt **without** a leading `/`:
 
 ```text
-Use OOPforge Discovery for the payment domain. Do not write code yet.
-Use OOPforge Implement for approve-payment with tests.
+Use OOPforge craft: Start Discovery for the library loan domain. No code yet.
+Use OOPforge craft: Implement borrow-book in python-fastapi
+Use OOPforge craft: Refactor imported billing module without changing behavior
 ```
+
+One-shot (non-interactive):
+
+```bash
+codex exec "Use OOPforge craft: Add a single Email value object"
+```
+
+The `oopforge` skill routes Craft requests to `workflow/craft.md` and the smallest OOP path.
+
+## Why not `/oopforge:craft`?
+
+| Harness | `/oopforge:craft` |
+|---|---|
+| Claude Code | Works — `commands/` is installed |
+| Codex CLI | **Fails** — Codex parses `/…` as its own command menu |
+
+If you see `Unrecognized command '/oopforge:craft'`, you typed a Codex slash command, not an agent prompt. Use `/skills` + natural language instead.
 
 ## Update After Pull
 
@@ -54,5 +77,5 @@ Skill content updates immediately via symlinks; restart Codex when the skill ent
 
 ## Related
 
-- [Claude Code setup](./claude-code.md)
+- [Claude Code setup](./claude-code.md) — slash command `/oopforge:craft`
 - [Cursor setup](./cursor.md) (Cursor Agent CLI via `--plugin-dir`)

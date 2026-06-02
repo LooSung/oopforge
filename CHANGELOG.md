@@ -4,6 +4,18 @@
 
 ## [Unreleased]
 
+## [0.6.2] - 2026-06-02
+
+Codex 호출 방법 문서 정정 및 대상 프로젝트 경로 규칙.
+
+### Changed
+
+- **README Quickstart (EN/KO/JA/ZH)** — Craft 3단계를 하네스별로 분리: Claude/Cursor는 `/oopforge:craft`, Codex는 `$oopforge` + `craft:` (선행 `/` 없음).
+- **`docs/codex.md`** — Codex에서 `/oopforge:craft`가 동작하지 않는 이유, `/skills`/`$oopforge` 호출법, **대상 프로젝트에서 `codex` 시작** 안내.
+- **`docs/cursor.md`** — `/oopforge:craft` 슬래시 커맨드, 대상 프로젝트에서 `--plugin-dir` 실행.
+- **`skills/SKILL.md`** — 하네스별 진입점 + **Project vs pack** 경로 규칙.
+- **`skills/workflow/craft.md`** — 시작 절차에 대상 프로젝트 확인 및 사용자 파일 경로는 팩이 아닌 작업 레포 기준 해석.
+
 ## [0.6.1] - 2026-06-02
 
 연속성 기능 다듬기.

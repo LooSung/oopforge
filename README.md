@@ -38,17 +38,37 @@ cursor-agent --plugin-dir ~/.oopforge
 
 ### **3. Run Craft**
 
+Entry point is **Craft** on every harness; only **how you invoke it** differs:
+
+| Harness | Invoke |
+|---|---|
+| **Claude Code** | `/oopforge:craft <request>` — registered slash command |
+| **Codex CLI** | `/skills` → pick **oopforge**, then prompt **without** a leading `/` (Codex reserves `/` for its own commands) |
+| **Cursor Agent CLI** | After `--plugin-dir`, use natural language (see [Cursor setup](docs/cursor.md)) |
+
+**Claude Code:**
+
 ```text
 /oopforge:craft Add a single Email value object
-/oopforge:craft Add a refund feature to the payment domain
-/oopforge:craft Refactor OrderService without changing behavior
+```
+
+**Codex CLI** (after `/skills` → oopforge):
+
+```text
+Use OOPforge craft: Add a single Email value object
+```
+
+**Cursor:**
+
+```text
+Use OOPforge craft: Add a single Email value object
 ```
 
 ---
 
 ## **Advanced Usage**
 
-For advisory requests, `/oopforge:craft` recommends the smallest path without implementing.
+For advisory requests, Craft recommends the smallest path without implementing (same on every harness).
 
 Advanced users may ask Craft to start at a specific workflow stage such as Discovery, Design, Delivery Plan, Skeleton, Implement, Test, or Refactor.
 

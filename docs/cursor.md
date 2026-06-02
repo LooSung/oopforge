@@ -24,8 +24,22 @@ chmod +x scripts/setup/*.sh
 Point `--plugin-dir` at the **pack root** (`~/.oopforge`), not `.cursor-plugin/`:
 
 ```bash
+cd /path/to/your-backend-project
 cursor-agent --plugin-dir ~/.oopforge
 ```
+
+Start the agent **from your target project** so paths like `docs/foo.md` resolve in your repo, not in `~/.oopforge`.
+
+## 3. Run Craft
+
+Cursor loads `commands/` like Claude Code — use the slash command:
+
+```text
+/oopforge:craft Add a single Email value object
+/oopforge:craft Read docs/integration/image-storage.md and advise only. No implementation.
+```
+
+Natural language also works: `Use OOPforge craft: …`
 
 Planning-only sessions (Discovery, Design, Delivery Plan):
 
@@ -47,7 +61,7 @@ alias cursor-oop='cursor-agent --plugin-dir ~/.oopforge'
 
 After `git pull` in `~/.oopforge`, restart `cursor-agent` to pick up skill changes.
 
-## 3. Example prompts
+## 4. Example prompts
 
 ```text
 Follow the OOPforge library loan walkthrough: docs/guides/library-loan/README.md
@@ -60,7 +74,7 @@ OOPforge Skeleton for place-order. Use skills/skeleton/backend-skeleton.md.
 Domain layer framework imports: 0.
 ```
 
-## 4. Recommended flow
+## 5. Recommended flow
 
 ```text
 Discovery → Design → Delivery Plan → Skeleton → Implement → Test
@@ -68,7 +82,7 @@ Discovery → Design → Delivery Plan → Skeleton → Implement → Test
 
 Do not skip stages for new domains. See [README](../README.md#the-basic-workflow).
 
-## 5. Reference example
+## 6. Reference example
 
 ```text
 Match the structure in examples/order-java/ — domain has zero framework imports.

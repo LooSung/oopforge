@@ -38,17 +38,37 @@ cursor-agent --plugin-dir ~/.oopforge
 
 ### 3. 运行 Craft
 
+各 harness 的入口都是 **Craft**；**调用方式**不同。
+
+| Harness | 调用 |
+|---|---|
+| **Claude Code** | `/oopforge:craft <request>` — 斜杠命令 |
+| **Codex CLI** | `/skills` → 选 **oopforge**，然后**不要**以 `/` 开头 (Codex 把 `/` 留给内置命令) |
+| **Cursor Agent CLI** | `--plugin-dir` 后用自然语言 ([Cursor setup](docs/cursor.md)) |
+
+**Claude Code:**
+
 ```text
 /oopforge:craft 添加一个 Email 值对象
-/oopforge:craft 在支付域添加退款功能
-/oopforge:craft 在不改行为的前提下重构 OrderService
+```
+
+**Codex CLI** (`/skills` → oopforge 之后):
+
+```text
+Use OOPforge craft: 添加一个 Email 值对象
+```
+
+**Cursor:**
+
+```text
+Use OOPforge craft: 添加一个 Email 值对象
 ```
 
 ---
 
 ## Advanced Usage
 
-纯咨询类请求时，`/oopforge:craft` 只推荐最小路径，不直接实现。
+纯咨询类请求时，Craft 只推荐最小路径，不直接实现 (各 harness 相同)。
 
 高级用户可让 Craft 从 Discovery、Design、Delivery Plan、Skeleton、Implement、Test 或 Refactor 等特定 workflow stage 开始。
 

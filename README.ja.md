@@ -38,17 +38,37 @@ cursor-agent --plugin-dir ~/.oopforge
 
 ### 3. Craft を実行
 
+エントリポイントは全ハーネスで **Craft**。**呼び方だけ**が異なります。
+
+| Harness | 呼び方 |
+|---|---|
+| **Claude Code** | `/oopforge:craft <request>` — スラッシュコマンド |
+| **Codex CLI** | `/skills` → **oopforge** を選び、**先頭 `/` なし**でプロンプト (Codex は `/` を自前コマンド用に予約) |
+| **Cursor Agent CLI** | `--plugin-dir` 後に自然言語 ([Cursor setup](docs/cursor.md)) |
+
+**Claude Code:**
+
 ```text
 /oopforge:craft Email 値オブジェクトを 1 つ追加
-/oopforge:craft 決済ドメインに返金機能を追加
-/oopforge:craft OrderService を動作変更なしで整理
+```
+
+**Codex CLI** (`/skills` → oopforge 後):
+
+```text
+Use OOPforge craft: Email 値オブジェクトを 1 つ追加
+```
+
+**Cursor:**
+
+```text
+Use OOPforge craft: Email 値オブジェクトを 1 つ追加
 ```
 
 ---
 
 ## Advanced Usage
 
-アドバイスのみのリクエストでは `/oopforge:craft` は実装せず、最小経路だけ提案する。
+アドバイスのみのリクエストでは Craft は実装せず、最小経路だけ提案する (全ハーネス共通)。
 
 上級ユーザーは Discovery、Design、Delivery Plan、Skeleton、Implement、Test、Refactor など特定の workflow stage から Craft に依頼できる。
 
