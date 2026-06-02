@@ -286,7 +286,8 @@ oopforge/
 │   ├── principles/                 ← OOP 판단 원칙
 │   ├── playbooks/                  ← Craft 작업별 체크리스트
 │   ├── oop/                        ← Domain model + use-case boundary
-│   └── lang/                       ← Java Spring / Python FastAPI backend layout
+│   ├── lang/                       ← 백엔드 스택 선택 (layered vs hexagonal/clean)
+│   └── skeleton/                   ← 선택된 스택별 패키지 구조 + 빈 타입
 ├── commands/                       ← Claude Code slash command entry point + /oopforge:craft
 ├── docs/roadmap.md                 ← 방향·우선순위·비-목표
 ├── AGENTS.md                        ← 공통 에이전트 지시 파일
@@ -324,7 +325,7 @@ OOPforge가 강제하는 단계. 절대 합치지 않는다.
 
 ## 스킬 변경하기
 
-새 파일을 늘리기보다 기존 aggregate skill을 먼저 확장한다. 핵심 OOP 규칙은 `skills/oop/domain-model.md` 또는 `skills/oop/use-case-boundary.md`, 백엔드 구조는 `skills/lang/backend-layout.md`에 모은다.
+새 파일을 늘리기보다 기존 aggregate skill을 먼저 확장한다. 핵심 OOP 규칙은 `skills/oop/domain-model.md` 또는 `skills/oop/use-case-boundary.md`, 스택 선택은 `skills/lang/backend-stack.md`, 백엔드 구조는 `skills/skeleton/backend-skeleton.md`에 모은다.
 
 ---
 

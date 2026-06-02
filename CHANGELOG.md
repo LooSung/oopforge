@@ -4,6 +4,25 @@
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-06-02
+
+스킬 경계 정리 — 스택 선택과 스켈레톤 구조를 분리.
+
+### Added
+
+- **`skills/lang/backend-stack.md`** — 백엔드 스택 선택 (지원 스택, layered vs hexagonal/clean 기준, OpenAPI 기본 방침).
+- **`skills/skeleton/backend-skeleton.md`** — 선택된 스택별 패키지 구조, 빈 타입, 공통 경계 규칙, 스켈레톤 금지사항.
+
+### Changed
+
+- **Stack vs skeleton split** — `skills/lang/backend-layout.md`를 위 두 파일로 분리. Skeleton workflow, AGENTS.md, README/docs/examples 참조를 모두 갱신.
+- **Craft 검증** — `docs/reviewer-checklist.md`를 더 넓은 레이어별 리뷰 단계로 연결.
+- **`doctor.sh`** — `skills/skeleton/` 디렉터리 구조 검사 추가.
+
+### Removed
+
+- **`skills/lang/backend-layout.md`** — 스택 선택과 스켈레톤 구조 책임이 섞여 있어 분리 후 제거.
+
 ## [0.3.1] - 2026-06-02
 
 문서 표면 정리 — Craft 중심 README와 하네스별 적용 방법 보강.

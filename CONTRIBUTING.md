@@ -7,7 +7,7 @@ Thanks for considering a contribution. OOPforge values **small, opinionated, mea
 In rough priority order:
 
 1. **Clarifying existing aggregate skills** — keep OOP rules in `skills/oop/domain-model.md` or `skills/oop/use-case-boundary.md`
-2. **Backend layout improvements** — Java/Python layout guidance in `skills/lang/backend-layout.md`
+2. **Backend stack / skeleton improvements** — stack selection in `skills/lang/backend-stack.md`, package structure in `skills/skeleton/backend-skeleton.md`
 3. **Workflow fixes** — Discovery → Test behavior, Craft routing, or verification clarity
 4. **Example projects** — runnable variants in `examples/`
 5. **Translations** — KO/JA/ZH docs
@@ -50,7 +50,8 @@ Categories:
 | `skills/workflow/` | Stage-level process (Discovery, Design, ...) |
 | `skills/oop/domain-model.md` | Aggregate, Value Object, Domain Event |
 | `skills/oop/use-case-boundary.md` | Application service and Repository port |
-| `skills/lang/backend-layout.md` | Java Spring / Python FastAPI layout |
+| `skills/lang/backend-stack.md` | Backend stack selection |
+| `skills/skeleton/backend-skeleton.md` | Backend package structure / skeleton |
 
 ### 4. Verify locally
 

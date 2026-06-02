@@ -336,7 +336,8 @@ oopforge/
 │   ├── principles/      OOP decision principles
 │   ├── playbooks/       Craft task checklists
 │   ├── oop/             Domain model + use-case boundary
-│   └── lang/            Backend layout for Java Spring and Python FastAPI
+│   ├── lang/            Backend stack selection (layered vs hexagonal/clean)
+│   └── skeleton/        Backend package structure + empty types
 ├── commands/            Claude Code slash command entry point
 │                        + /oopforge:craft
 ├── AGENTS.md            cross-agent repository instructions

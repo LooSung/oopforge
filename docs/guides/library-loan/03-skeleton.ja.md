@@ -6,7 +6,7 @@
 
 スキル: `{pack}/skills/workflow/skeleton.md`
 
-- Java/Python: `{pack}/skills/lang/backend-layout.md`
+- Java/Python: `{pack}/skills/skeleton/backend-skeleton.md` (stack via `{pack}/skills/lang/backend-stack.md`)
 
 ---
 

@@ -49,7 +49,7 @@ Use this table to decide **which skill to read first**. Workflow stage always wi
 | Discovery | Glossary, contexts, actors | `skills/workflow/discovery.md` |
 | Design | Use-case signatures, aggregates | `skills/workflow/design.md` + `skills/oop/domain-model.md` |
 | Delivery Plan | Scope, order, tests, risks | `skills/workflow/delivery-plan.md` |
-| Skeleton | Packages, empty types | `skills/workflow/skeleton.md` + `skills/lang/backend-layout.md` |
+| Skeleton | Packages, empty types | `skills/workflow/skeleton.md` + `skills/skeleton/backend-skeleton.md` (stack via `skills/lang/backend-stack.md`) |
 | Implement | One use case + tests | `skills/workflow/implement.md` + `skills/oop/use-case-boundary.md` |
 | Test | Unit / integration / E2E | `skills/workflow/test.md` |
 | Refactor | Behavior-preserving cleanup | `skills/workflow/refactor.md` |
@@ -61,7 +61,8 @@ Use this table to decide **which skill to read first**. Workflow stage always wi
 |---|---|
 | Aggregate, Value Object, Domain Event | `skills/oop/domain-model.md` |
 | Use case / application service / Repository port | `skills/oop/use-case-boundary.md` |
-| Java/Python backend layout | `skills/lang/backend-layout.md` |
+| Backend stack selection | `skills/lang/backend-stack.md` |
+| Backend package structure / skeleton | `skills/skeleton/backend-skeleton.md` |
 
 ### Harness setup
 
@@ -79,7 +80,8 @@ Before changing behavior, read the relevant skill file:
 
 - Domain model: `skills/oop/domain-model.md`
 - Use-case boundary: `skills/oop/use-case-boundary.md`
-- Backend layout: `skills/lang/backend-layout.md`
+- Backend stack selection: `skills/lang/backend-stack.md`
+- Backend skeleton structure: `skills/skeleton/backend-skeleton.md`
 - Craft execution mode: `skills/workflow/craft.md` + `skills/principles/oop-discipline.md`
 - Craft playbooks: `skills/playbooks/feature.md` · `skills/playbooks/bug-fix.md`
 - Delivery planning: `skills/workflow/delivery-plan.md`

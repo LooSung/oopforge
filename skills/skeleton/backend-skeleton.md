@@ -1,25 +1,17 @@
 ---
-name: backend-layout
-description: Java Spring과 Python FastAPI 백엔드의 layered 또는 hexagonal/clean 패키지 구조를 선택한다.
-tags: [backend, layout, java, python, api]
+name: backend-skeleton
+description: 선택된 백엔드 스택으로 표준 패키지 구조와 빈 타입을 만드는 스켈레톤 규칙.
+tags: [backend, skeleton, java, python]
 stability: stable
 ---
 
-# Backend Layout
+# Backend Skeleton
 
 ## 언제 쓰나
 
-Skeleton 단계에서 백엔드 패키지 구조를 만들 때 사용한다.
-언어별 세부 레이아웃을 새로 발명하지 말고 아래 선택 기준과 표준 구조를 따른다.
-
-## 선택 기준
-
-| 상황 | 선택 |
-|---|---|
-| 작은 서비스, MVP, 도메인 1~2개 | layered |
-| 도메인 규칙이 복잡함 | hexagonal/clean |
-| 외부 adapter가 많음 | hexagonal/clean |
-| 팀이 아직 아키텍처 학습 중 | layered로 시작, 경계 규칙은 유지 |
+Skeleton 단계에서 **이미 선택된 스택**으로 패키지 구조를 만들 때 사용한다.
+스택이 아직 없으면 먼저 `skills/lang/backend-stack.md`로 하나를 고른다.
+언어별 세부 레이아웃을 새로 발명하지 말고 아래 표준 구조를 따른다.
 
 ## 공통 규칙
 
@@ -28,7 +20,6 @@ Skeleton 단계에서 백엔드 패키지 구조를 만들 때 사용한다.
 - [ ] application service는 orchestration과 transaction boundary만 맡는다.
 - [ ] outbound adapter는 repository, external API, messaging 구현만 맡는다.
 - [ ] API DTO, ORM entity, domain object를 같은 클래스로 공유하지 않는다.
-- [ ] OpenAPI/Swagger는 개발 환경에서 바로 확인 가능해야 한다.
 - [ ] 테스트 폴더는 production 구조를 미러링한다.
 
 ## Java Spring
@@ -95,6 +86,7 @@ SQLAlchemy 모델은 domain object와 분리하는 것을 기본으로 한다.
 
 ## 금지
 
+- 메서드 본문을 작성하지 않는다. `UnsupportedOperationException` 또는 `NotImplementedError`로 둔다.
 - layered를 선택했다는 이유로 service에 모든 비즈니스 규칙을 몰아넣지 않는다.
 - hexagonal/clean을 선택했다는 이유로 빈 adapter나 불필요한 interface를 만들지 않는다.
 - controller/router가 repository를 직접 호출하지 않는다.

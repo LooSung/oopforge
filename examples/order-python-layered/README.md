@@ -27,4 +27,4 @@ uvicorn app.main:app --reload
 /oopforge:craft place-order in python-fastapi-layered
 ```
 
-Layout skill: `skills/lang/backend-layout.md`
+Skeleton skill: `skills/skeleton/backend-skeleton.md` (stack via `skills/lang/backend-stack.md`)

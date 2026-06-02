@@ -35,4 +35,4 @@ Swagger UI: http://localhost:8080/swagger-ui
 /oopforge:craft Create a java-spring-layered skeleton for place-order
 ```
 
-Layout skill: `skills/lang/backend-layout.md`
+Skeleton skill: `skills/skeleton/backend-skeleton.md` (stack via `skills/lang/backend-stack.md`)

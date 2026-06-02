@@ -57,7 +57,7 @@ README/스킬 4종 스택 ↔ runnable examples **신뢰 갭** 해소. Released 
 
 ### 6. 린트/강제 템플릿
 - 가이드만 있고 강제 없으면 팀 내에서 빠르게 무너짐
-- Java/Python architecture lint guidance (`skills/lang/backend-layout.md` 또는 별도 lint workflow 후보)
+- Java/Python architecture lint guidance (`skills/skeleton/backend-skeleton.md` 또는 별도 lint workflow 후보)
 - CI에서 자동 검증되게 — 가이드의 핵심 항목을 PR 차단으로 연결
 
 ### 7. 안티 패턴 카탈로그 (`skills/antipatterns/`)

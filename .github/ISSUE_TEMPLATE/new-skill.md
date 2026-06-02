@@ -13,7 +13,8 @@ Category (pick one):
 
 - [ ] `skills/oop/domain-model.md` — Aggregate, Value Object, Domain Event
 - [ ] `skills/oop/use-case-boundary.md` — use case and port boundaries
-- [ ] `skills/lang/backend-layout.md` — Java/Python backend layout
+- [ ] `skills/lang/backend-stack.md` — backend stack selection
+- [ ] `skills/skeleton/backend-skeleton.md` — backend package structure / skeleton
 - [ ] `skills/workflow/` — process stage
 - [ ] other: _____
 

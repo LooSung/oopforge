@@ -13,7 +13,8 @@ Commands and agents must reference skills using the **pack root**, not `skills/o
 ```text
 {pack}/skills/workflow/discovery.md
 {pack}/skills/oop/domain-model.md
-{pack}/skills/lang/backend-layout.md
+{pack}/skills/lang/backend-stack.md
+{pack}/skills/skeleton/backend-skeleton.md
 ```
 
 Installed Claude path (symlink name `oopforge` is the harness folder, not part of the skill path):

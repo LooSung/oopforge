@@ -34,7 +34,8 @@ Core OOP:
 - Domain model: `oop/domain-model.md`
 - Use-case boundary: `oop/use-case-boundary.md`
 
-Backend layout:
-- Java/Python layered or hexagonal/clean: `lang/backend-layout.md`
+Backend stack and skeleton:
+- Stack selection (layered or hexagonal/clean): `lang/backend-stack.md`
+- Package structure / skeleton: `skeleton/backend-skeleton.md`
 
 Roadmap and direction: `../docs/roadmap.md`

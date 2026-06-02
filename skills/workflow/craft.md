@@ -58,6 +58,7 @@ Transaction Boundary:
 
 - 선택한 playbook 또는 workflow의 체크리스트를 완료한다.
 - `AGENTS.md`의 Hard Rules를 변경 파일 기준으로 확인한다.
+- 더 넓은 리뷰가 필요하면 `docs/reviewer-checklist.md`로 레이어별 점검을 수행한다.
 - 필요한 테스트를 실행하고 명령과 결과를 기록한다.
 - 실패하거나 생략한 검증이 있으면 이유와 위험을 남긴다.
 

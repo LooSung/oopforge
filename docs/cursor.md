@@ -56,7 +56,7 @@ Design an Order aggregate using OOPforge. Start at Discovery — no code yet.
 ```
 
 ```text
-OOPforge Skeleton for place-order. Use skills/lang/backend-layout.md.
+OOPforge Skeleton for place-order. Use skills/skeleton/backend-skeleton.md.
 Domain layer framework imports: 0.
 ```
 
