@@ -12,11 +12,26 @@ Thumbs.db
 .env.local
 *.log
 
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# Java / Gradle
+.gradle/
+out/
+
 # Build artifacts
 dist/
 build/
-*.egg-info/
-__pycache__/
 target/
 
 # Internal release notes (not part of public pack surface)
