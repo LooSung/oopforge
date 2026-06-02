@@ -1,12 +1,14 @@
 # OOPforge
 
-> **Forge small. Compose forever.**
+> **AI は機能を作る。OOPforge はアーキテクチャを守る。**
 >
-> Claude Code、Codex CLI、Cursor などの AI コーディングエージェントに、OOP/DDD とクリーンアーキテクチャの規律を注入する methodology pack。
->
-> **OOPforge は OOP/DDD をエージェントが従う方言として定義し**、スキル・ワークフロー・実行可能な例・インストールでその方言を動かす **ハーネス**です。方法論パックかつエージェント・ハーネスであり、汎用 agent framework ではありません。
->
-> Java (Spring) · Python (FastAPI) 対応。**3層 (Controller/Service/Repository)** または **hexagonal/clean** から選択。OpenAPI/Swagger 標準搭載。
+> *バイブコーディングがバックエンドを壊さないようにするハーネスエンジニアリング。*
+
+**Forge small. Compose forever.** OOPforge は OOP/DDD をエージェントが従う方言として定義する — スキルは文法、ハードルールはリント、実行可能な `examples/` はリファレンス実装、install・コマンドはランタイムです。方法論パックかつエージェント・ハーネスであり、汎用 agent framework ではありません。
+
+Claude Code、Codex CLI、Cursor などの互換エージェントが、コードを書く前に **ドメインモデル**、**集約**、**ポート**、**アダプター**、**テスト可能なユースケース** を中心に設計できるようにします。
+
+**Java (Spring)** · **Python (FastAPI)** 特化 — **3層 (Controller/Service/Repository)** または **hexagonal/clean** から選択、**OpenAPI/Swagger** 標準搭載。
 
 [English](./README.md) · [한국어](./README.ko.md) · [日本語](./README.ja.md) · [中文](./README.zh.md)
 
@@ -199,6 +201,7 @@ Packaging:
 Reference only — packaging and layout ideas, not a dependency.
 
 - Multi-harness plugin structure: [obra/superpowers](https://github.com/obra/superpowers)
+- スキルルーティングと「最小経路」の思想: [pstack by Lauren (Cursor)](https://cursor.com/en-US/lp-team/lauren)
 
 ---
 

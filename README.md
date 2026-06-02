@@ -3,15 +3,15 @@
 ![CI](https://github.com/LooSung/oopforge/actions/workflows/lint.yml/badge.svg)
 ![License](https://img.shields.io/github/license/LooSung/oopforge)
 
-> **Forge small. Compose forever.**
+> **AI ships the feature. OOPforge keeps the architecture.**
 >
-> *A portable OOP/DDD methodology pack for AI coding agents.*
+> *Harness engineering that stops vibe coding from wrecking your backend.*
 
-**OOPforge defines OOP/DDD as a dialect agents follow**, and runs that dialect through skills, workflow, runnable examples, and install — **methodology pack plus agent harness** (not a general agent framework).
+**Forge small. Compose forever.** OOPforge defines OOP/DDD as a dialect your agent follows — skills are the grammar, hard rules are the lint, runnable `examples/` are the reference, and install + commands are the runtime. A methodology pack plus agent harness, not a general agent framework.
 
-OOPforge helps AI coding agents design software around **domain models**, **aggregates**, **ports**, **adapters**, and **testable use cases** before implementation.
+It gives Claude Code, Codex CLI, Cursor, and compatible agents a clear way to design around **domain models**, **aggregates**, **ports**, **adapters**, and **testable use cases** before writing code.
 
-OOPforge gives Claude Code, Codex CLI, Cursor, and compatible coding agents a clear way to model software with **DDD**, **layered (3-tier) or hexagonal/clean architecture**, **OpenAPI-first contracts**, and **clean domain boundaries** — for Java (Spring) and Python (FastAPI).
+Specialized for **Java (Spring)** and **Python (FastAPI)** — pick **3-tier (Controller/Service/Repository)** or **hexagonal/clean**, with **OpenAPI/Swagger** built in.
 
 [English](./README.md) · [한국어](./README.ko.md) · [日本語](./README.ja.md) · [中文](./README.zh.md)
 
@@ -419,6 +419,7 @@ Direction, priorities, and non-goals (short/medium/long term, language expansion
 Reference only — OOPforge is an independent project; links here are for packaging and layout ideas, not dependencies or endorsements.
 
 - Multi-harness plugin structure: [obra/superpowers](https://github.com/obra/superpowers)
+- Skill routing and "smallest path" philosophy: [pstack by Lauren (Cursor)](https://cursor.com/en-US/lp-team/lauren)
 
 ---
 

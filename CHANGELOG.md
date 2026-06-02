@@ -4,6 +4,15 @@
 
 ## [Unreleased]
 
+## [0.4.1] - 2026-06-02
+
+README 메시지 정리.
+
+### Changed
+
+- **README 헤드라인 (EN/KO/JA/ZH)** — "AI ships the feature. OOPforge keeps the architecture." 헤드라인과 "Forge small. Compose forever." 태그라인을 도입하고, 장황한 소개 단락을 압축.
+- **Reference** — 스킬 라우팅과 "가장 작은 경로" 철학 참고로 [pstack by Lauren (Cursor)](https://cursor.com/en-US/lp-team/lauren) 추가.
+
 ## [0.4.0] - 2026-06-02
 
 스킬 경계 정리 — 스택 선택과 스켈레톤 구조를 분리.

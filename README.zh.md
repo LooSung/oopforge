@@ -1,12 +1,14 @@
 # OOPforge
 
-> **Forge small. Compose forever.**
+> **AI 负责交付功能，OOPforge 负责守住架构。**
 >
-> 一个面向 AI coding agents 的 OOP/DDD 方法论包，为 Claude Code、Codex CLI、Cursor 等工具注入 clean architecture discipline。
->
-> **OOPforge 将 OOP/DDD 定义为代理遵循的方言语法**，通过技能、工作流、可运行示例与安装脚本运行该方言——**方法论包 + agent harness**，不是通用 agent framework。
->
-> 支持 Java (Spring) · Python (FastAPI)。**3 层 (Controller/Service/Repository)** 或 **hexagonal/clean** 任选，OpenAPI/Swagger 默认开箱即用。
+> *用 harness engineering 阻止 vibe coding 毁掉你的后端。*
+
+**Forge small. Compose forever.** OOPforge 将 OOP/DDD 定义为代理遵循的方言——技能是语法，hard rules 是 lint，可运行的 `examples/` 是参考实现，install 与命令是运行时。它是方法论包 + agent harness，而非通用 agent framework。
+
+它让 Claude Code、Codex CLI、Cursor 等兼容代理在写代码前，先围绕 **领域模型**、**聚合**、**端口**、**适配器** 与 **可测试用例** 进行设计。
+
+专注 **Java (Spring)** · **Python (FastAPI)** —— **3 层 (Controller/Service/Repository)** 或 **hexagonal/clean** 任选，**OpenAPI/Swagger** 默认开箱即用。
 
 [English](./README.md) · [한국어](./README.ko.md) · [日本語](./README.ja.md) · [中文](./README.zh.md)
 
@@ -199,6 +201,7 @@ Enforceable measurable rules live in [`AGENTS.md`](./AGENTS.md). This README kee
 Reference only — packaging and layout ideas, not a dependency.
 
 - Multi-harness plugin structure: [obra/superpowers](https://github.com/obra/superpowers)
+- 技能路由与“最小路径”理念: [pstack by Lauren (Cursor)](https://cursor.com/en-US/lp-team/lauren)
 
 ---
 

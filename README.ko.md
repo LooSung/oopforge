@@ -3,13 +3,15 @@
 ![CI](https://github.com/LooSung/oopforge/actions/workflows/lint.yml/badge.svg)
 ![License](https://img.shields.io/github/license/LooSung/oopforge)
 
-> **Forge small. Compose forever.**
+> **AI는 기능을 만든다. OOPforge는 구조를 지킨다.**
 >
-> OOP 철학을 도구로 벼린다. Claude Code · Codex CLI · Cursor 등 AI 코딩 에이전트에 주입 가능한 skills + workflow 묶음.
->
-> **OOPforge는 OOP/DDD를 에이전트가 따르는 방언으로 정의하고**, 스킬·워크플로·예제·설치로 그 방언을 실행하는 **하네스**입니다. 방법론 팩이자 에이전트 하네스이며, 범용 agent framework가 아닙니다.
->
-> Java(Spring) · Python(FastAPI)에 특화 — **3계층(Controller/Service/Repository)** 또는 **헥사고날/클린** 중 선택, OpenAPI/Swagger 기본 탑재.
+> *바이브 코딩이 백엔드를 망치지 않게 하는 하네스 엔지니어링.*
+
+**Forge small. Compose forever.** OOPforge는 OOP/DDD를 에이전트가 따르는 방언으로 정의한다 — 스킬은 문법, 하드 룰은 린트, 실행 가능한 `examples/`는 표준 구현, install·커맨드는 런타임이다. 방법론 팩이자 에이전트 하네스이며, 범용 agent framework가 아니다.
+
+Claude Code · Codex CLI · Cursor 등 호환 에이전트가 코드 작성 전에 **도메인 모델**, **애그리거트**, **포트**, **어댑터**, **테스트 가능한 유스케이스**를 중심으로 설계하도록 돕는다.
+
+**Java(Spring)** · **Python(FastAPI)** 특화 — **3계층(Controller/Service/Repository)** 또는 **헥사고날/클린** 중 선택, **OpenAPI/Swagger** 기본 탑재.
 
 [English](./README.md) · [한국어](./README.ko.md) · [日本語](./README.ja.md) · [中文](./README.zh.md)
 
@@ -357,6 +359,7 @@ Phase 1을 충분히 사용한 다음에야 Phase 2로 간다.
 OOPforge와 별개 프로젝트입니다. 패키징·레이아웃 참고용이며, 의존이나 공식 연동을 의미하지 않습니다.
 
 - 참고 구조: [obra/superpowers](https://github.com/obra/superpowers) — 멀티 하네스 플러그인 패키징
+- 스킬 라우팅과 "가장 작은 경로" 철학: [pstack by Lauren (Cursor)](https://cursor.com/en-US/lp-team/lauren)
 
 ---
 
