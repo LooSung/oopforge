@@ -4,6 +4,18 @@
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-06-02
+
+예제 검증 CI 추가 및 스택 버전 안정화.
+
+### Added
+
+- CI builds and tests all four runnable examples (Java 21 + Python 3.12 matrix).
+
+### Changed
+
+- **Example stacks pinned to current stable LTS** — Java 17 → **Java 21 LTS**, Spring Boot 3.4.1 → **3.5.14**; Python `>=3.11` → **`>=3.12`**, FastAPI `>=0.115.0` → **`>=0.136.3`**. All four examples build and test green on the new versions.
+
 ## [0.4.1] - 2026-06-02
 
 README 메시지 정리.

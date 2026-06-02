@@ -2,9 +2,9 @@
 name = "order-python-layered-example"
 version = "0.2.2"
 description = "OOPforge reference: FastAPI 3-tier layered place-order"
-requires-python = ">=3.11"
+requires-python = ">=3.12"
 dependencies = [
-    "fastapi>=0.115.0",
+    "fastapi>=0.136.3",
     "uvicorn[standard]>=0.32.0",
 ]
 

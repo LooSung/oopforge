@@ -1,5 +1,9 @@
 # OOPforge
 
+![CI](https://github.com/LooSung/oopforge/actions/workflows/lint.yml/badge.svg)
+![Examples](https://github.com/LooSung/oopforge/actions/workflows/examples.yml/badge.svg)
+![License](https://img.shields.io/github/license/LooSung/oopforge)
+
 > **AI 负责交付功能，OOPforge 负责守住架构。**
 >
 > *用 harness engineering 阻止 vibe coding 毁掉你的后端。*

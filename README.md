@@ -1,6 +1,7 @@
 # OOPforge
 
 ![CI](https://github.com/LooSung/oopforge/actions/workflows/lint.yml/badge.svg)
+![Examples](https://github.com/LooSung/oopforge/actions/workflows/examples.yml/badge.svg)
 ![License](https://img.shields.io/github/license/LooSung/oopforge)
 
 > **AI ships the feature. OOPforge keeps the architecture.**

@@ -1,5 +1,9 @@
 # OOPforge
 
+![CI](https://github.com/LooSung/oopforge/actions/workflows/lint.yml/badge.svg)
+![Examples](https://github.com/LooSung/oopforge/actions/workflows/examples.yml/badge.svg)
+![License](https://img.shields.io/github/license/LooSung/oopforge)
+
 > **AI は機能を作る。OOPforge はアーキテクチャを守る。**
 >
 > *バイブコーディングがバックエンドを壊さないようにするハーネスエンジニアリング。*
