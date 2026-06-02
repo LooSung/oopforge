@@ -36,9 +36,9 @@ README/스킬 4종 스택 ↔ runnable examples **신뢰 갭** 해소. Released 
 - 각 단계 진입 기준을 체크리스트로 (어댑터 수, 도메인 수, 팀 크기)
 - 마이그레이션 가이드 스킬 추가: `skills/workflow/migrate-layered-to-hexagonal.md`
 
-### 2. Forge 진입점 정착
+### 2. Craft 진입점 정착
 - `/oopforge:craft`를 README/AGENTS.md 1번 진입점으로 격상
-- 사용자가 워크플로 전체를 외울 필요 없음 — Forge가 최소 경로 선택
+- 사용자가 워크플로 전체를 외울 필요 없음 — Craft가 최소 경로 선택
 
 ### 3. OpenAPI 기본 탑재
 - 모든 백엔드 스켈레톤이 Swagger UI를 기본으로 켜고 시작
@@ -65,7 +65,7 @@ README/스킬 4종 스택 ↔ runnable examples **신뢰 갭** 해소. Released 
 - `controller-fat.md` — Controller에 비즈니스 로직
 - `repository-with-business-logic.md` — Repository에 판단 로직
 - `god-aggregate.md` — Aggregate가 모든 걸 한꺼번에
-- Forge 리뷰와 CI 검사가 이 카탈로그를 참조하면 강력해짐
+- Craft 리뷰와 CI 검사가 이 카탈로그를 참조하면 강력해짐
 
 ### 8. 도구 자동 설치
 - `install.sh`에 옵션 추가: `--with-lint` → ArchUnit/import-linter 설정 자동 생성
@@ -89,7 +89,7 @@ README/스킬 4종 스택 ↔ runnable examples **신뢰 갭** 해소. Released 
 - 1시간 워크숍 슬라이드 템플릿
 
 ### 11. 도메인 리뷰 자동화
-- Forge 기반 PR diff 리뷰가 안티패턴/하드 룰 위반 자동 코멘트
+- Craft 기반 PR diff 리뷰가 안티패턴/하드 룰 위반 자동 코멘트
 - GitHub Action 템플릿 제공
 
 ### 12. 커뮤니티 패턴 라이브러리

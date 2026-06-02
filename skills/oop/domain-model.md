@@ -10,7 +10,7 @@ stability: stable
 ## 언제 쓰나
 
 도메인 객체의 책임, 상태 변경, 불변식, 이벤트를 정할 때 사용한다.
-Forge의 OOP Contract에서 Aggregate Root, Domain Invariants, State Transition을 채울 때 먼저 읽는다.
+Craft의 OOP Contract에서 Aggregate Root, Domain Invariants, State Transition을 채울 때 먼저 읽는다.
 
 ## Aggregate Root
 

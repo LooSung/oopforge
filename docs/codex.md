@@ -27,7 +27,7 @@ Because this path is a symlink to `~/.oopforge/skills`, Codex sees:
 
 ## Slash-Like Prompts
 
-Codex does not need the Claude Code `commands/` directory. Type Forge as a normal prompt:
+Codex does not need the Claude Code `commands/` directory. Type Craft as a normal prompt:
 
 ```text
 /oopforge:craft Start Discovery for the library loan domain. No code yet.
@@ -35,7 +35,7 @@ Codex does not need the Claude Code `commands/` directory. Type Forge as a norma
 /oopforge:craft Refactor imported billing module without changing behavior
 ```
 
-The Codex `oopforge` skill routes Forge requests to the matching workflow files.
+The Codex `oopforge` skill routes Craft requests to the matching workflow files.
 
 Natural language also works:
 

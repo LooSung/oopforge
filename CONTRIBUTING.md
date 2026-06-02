@@ -8,7 +8,7 @@ In rough priority order:
 
 1. **Clarifying existing aggregate skills** — keep OOP rules in `skills/oop/domain-model.md` or `skills/oop/use-case-boundary.md`
 2. **Backend layout improvements** — Java/Python layout guidance in `skills/lang/backend-layout.md`
-3. **Workflow fixes** — Discovery → Test behavior, Forge routing, or verification clarity
+3. **Workflow fixes** — Discovery → Test behavior, Craft routing, or verification clarity
 4. **Example projects** — runnable variants in `examples/`
 5. **Translations** — KO/JA/ZH docs
 6. **Bug fixes / typos** — always welcome

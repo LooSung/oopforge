@@ -4,6 +4,15 @@
 
 ## [Unreleased]
 
+## [0.3.1] - 2026-06-02
+
+문서 표면 정리 — Craft 중심 README와 하네스별 적용 방법 보강.
+
+### Changed
+
+- **README (EN/KO)** — simplify the first screen around `/oopforge:craft <request>` and add concise Claude Code, Codex CLI, and Cursor Agent CLI setup sections.
+- **Terminology cleanup** — align remaining execution-mode wording from Forge to Craft in agent instructions, skills, examples, roadmap, and setup docs.
+
 ## [0.3.0] - 2026-06-02
 
 대규모 surface 정리 — 단일 진입점, 스킬 통합, 실험적 통합 제거.

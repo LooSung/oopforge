@@ -150,7 +150,7 @@ Symlink インストールでは `~/.oopforge` で `git pull` するだけでス
 skills/
 ├── workflow/        Recommended: Discovery → Design → Delivery Plan → Skeleton → Implement → Test
 ├── principles/      OOP decision principles
-├── playbooks/       Forge task checklists
+├── playbooks/       Craft task checklists
 ├── oop/             Domain model + use-case boundary
 └── lang/            Backend layout for Java Spring and Python FastAPI
 

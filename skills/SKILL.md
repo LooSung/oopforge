@@ -15,7 +15,7 @@ Treat this Codex prompt as the OOPforge user entry point:
 |---|---|---|
 | `/oopforge:craft ...` | `workflow/craft.md` + `principles/oop-discipline.md` | select the smallest OOP path; execute unless advisory only |
 
-Use `/oopforge:craft` as the single user entry point. For ambiguous or advisory requests, Forge recommends the smallest path without implementation. For execution requests, it performs the smallest coherent OOP change. Do not force the full Discovery→Test pipeline for small, focused tasks.
+Use `/oopforge:craft` as the single user entry point. For ambiguous or advisory requests, Craft recommends the smallest path without implementation. For execution requests, it performs the smallest coherent OOP change. Do not force the full Discovery→Test pipeline for small, focused tasks.
 
 Natural language also works, for example: "Use OOPforge Discovery for the payment domain."
 

@@ -10,7 +10,7 @@ stability: stable
 ## 언제 쓰나
 
 유스케이스를 구현하거나 외부 의존성을 연결할 때 사용한다.
-Forge의 OOP Contract에서 Use Case, Required Ports, Transaction Boundary를 채울 때 먼저 읽는다.
+Craft의 OOP Contract에서 Use Case, Required Ports, Transaction Boundary를 채울 때 먼저 읽는다.
 
 ## Application Service
 

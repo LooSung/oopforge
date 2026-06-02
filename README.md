@@ -27,33 +27,17 @@ bash -c "$(curl -fsSL https://raw.githubusercontent.com/LooSung/oopforge/main/sc
 
 Already installed? See [Setup commands](#setup-commands) below.
 
-Then restart your coding agent and ask:
+Then use Craft as the single entry point. It inspects the request, picks the smallest appropriate path, and only implements when the request calls for it:
 
 ```text
-Build an Order aggregate in Java, following OOPforge rules.
-```
-
-Use Forge as the single entry point. It inspects the request, picks the smallest appropriate path, and only executes implementation when the request calls for it:
-
-```text
-/oopforge:craft Add a refund use case to the existing payment domain
-/oopforge:craft Fix the bug that allows cancellation after shipment
-/oopforge:craft Refactor the imported billing God Service without changing behavior
+/oopforge:craft Add a single Email value object
+/oopforge:craft Add a refund feature to the payment domain
+/oopforge:craft Refactor OrderService without changing behavior
 ```
 
 For advisory requests, `/oopforge:craft` recommends the smallest path without implementing.
 
-For a new domain, ask Forge to start at Discovery:
-
-```text
-/oopforge:craft Start Discovery for an order domain. No code yet.
-```
-
-For implementation, keep the request focused:
-
-```text
-/oopforge:craft Implement the place-order use case in java-spring-layered
-```
+Advanced users may ask Craft to start at a specific workflow stage such as Discovery, Design, Delivery Plan, Skeleton, Implement, Test, or Refactor.
 
 **Stack identifiers**:
 
@@ -197,7 +181,34 @@ chmod +x scripts/setup/*.sh
 | **Claude Code** | Supported | `~/.claude/{skills,commands}/oopforge` |
 | **Codex CLI** | Supported via skill entry point | `~/.codex/skills/oopforge` |
 | **Cursor Agent CLI** | Experimental | `cursor-agent --plugin-dir ~/.oopforge` |
+
 Because the install uses symlinks, a `git pull` in `~/.oopforge` updates skill content immediately for linked agents.
+
+### **Claude Code**
+
+`install.sh` links both skills and commands. Restart Claude Code, then use:
+
+```text
+/oopforge:craft <request>
+```
+
+### **Codex CLI**
+
+`install.sh` links `skills/SKILL.md` as the Codex skill entry point. Type the Craft prompt as normal text:
+
+```text
+/oopforge:craft <request>
+```
+
+### **Cursor Agent CLI**
+
+Cursor loads OOPforge with `--plugin-dir` instead of an install symlink:
+
+```bash
+cursor-agent --plugin-dir ~/.oopforge
+```
+
+Then ask naturally, or include the Craft prompt in your request.
 
 To refresh install paths (for example after a version adds new link targets), run:
 
@@ -207,9 +218,7 @@ cd ~/.oopforge && git pull && ./scripts/setup/install.sh update
 
 `./scripts/setup/install.sh update` runs `scripts/setup/uninstall.sh` then reinstalls all OOPforge symlinks. Use `./scripts/setup/install.sh --force` to replace existing symlinks without a full uninstall.
 
-**Cursor Agent CLI:** `cursor-agent --plugin-dir ~/.oopforge`. See [docs/cursor.md](./docs/cursor.md). Marketplace packaging is Phase 2 (no ETA).
-
-**Codex:** [docs/codex.md](./docs/codex.md) · **Claude Code:** [docs/claude-code.md](./docs/claude-code.md)
+More setup details: [Claude Code](docs/claude-code.md) · [Codex](docs/codex.md) · [Cursor](docs/cursor.md)
 
 ---
 
@@ -288,14 +297,6 @@ This keeps the agent from jumping into code before the domain language, boundari
 
 Each stage ends with a human checkpoint before moving on.
 
-### **Codex and Claude Code command flow**
-
-```text
-/oopforge:craft Start Discovery for the payment domain. No code yet.
-/oopforge:craft Implement approve-payment in java-spring-layered
-/oopforge:craft Test approve-payment
-```
-
 ### **Where to start**
 
 - **Start here** → `/oopforge:craft <what you want>` — recommends or performs the smallest suitable OOP path.
@@ -307,21 +308,7 @@ Each stage ends with a human checkpoint before moving on.
 
 **Refactor is intentionally outside the default feature flow.** Use it for existing or imported code that needs cleanup without behavior changes.
 
-### **Single-step commands**
-
-```text
-/oopforge:craft Create a delivery plan for payment approval
-/oopforge:craft Test place-order
-/oopforge:craft Refactor imported billing module without changing behavior
-```
-
-Natural language works too:
-
-```text
-Use OOPforge to create a delivery plan for payment approval.
-Use OOPforge test workflow to add unit and E2E coverage for place-order.
-Use OOPforge refactor workflow to clean up this imported module without changing behavior.
-```
+Advanced users may invoke individual workflow stages through Craft, for example "Start at Discovery", "Create a delivery plan", or "Run the test workflow".
 
 ---
 
@@ -347,7 +334,7 @@ oopforge/
 │   ├── workflow/        Discovery → Design → Delivery Plan → Skeleton
 │   │                    → Implement → Test, plus Refactor
 │   ├── principles/      OOP decision principles
-│   ├── playbooks/       Forge task checklists
+│   ├── playbooks/       Craft task checklists
 │   ├── oop/             Domain model + use-case boundary
 │   └── lang/            Backend layout for Java Spring and Python FastAPI
 ├── commands/            Claude Code slash command entry point

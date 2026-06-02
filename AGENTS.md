@@ -30,7 +30,7 @@ Use `/oopforge:craft` (`commands/craft.md`) as the single OOPforge user entry po
 `/oopforge:craft` delegates orchestration to `skills/workflow/craft.md`, reads `skills/principles/oop-discipline.md`, requires an OOP Contract before business-logic implementation, and verifies Hard Rules before completion.
 
 - Use `/oopforge:craft` for single components, existing-domain features, domain bug fixes, and behavior-preserving refactors.
-- For ambiguous or advisory requests, Forge recommends the smallest path without implementing.
+- For ambiguous or advisory requests, Craft recommends the smallest path without implementing.
 - For a new domain or large feature, Craft routes into the existing Discovery → Test workflow and keeps the human checkpoints.
 
 ## Skill Path Convention
@@ -81,7 +81,7 @@ Before changing behavior, read the relevant skill file:
 - Use-case boundary: `skills/oop/use-case-boundary.md`
 - Backend layout: `skills/lang/backend-layout.md`
 - Craft execution mode: `skills/workflow/craft.md` + `skills/principles/oop-discipline.md`
-- Forge playbooks: `skills/playbooks/feature.md` · `skills/playbooks/bug-fix.md`
+- Craft playbooks: `skills/playbooks/feature.md` · `skills/playbooks/bug-fix.md`
 - Delivery planning: `skills/workflow/delivery-plan.md`
 - Testing: `skills/workflow/test.md`
 - Refactoring existing or external code: `skills/workflow/refactor.md`

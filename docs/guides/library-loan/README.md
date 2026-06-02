@@ -15,7 +15,7 @@ A member **borrows** a book. A book already on loan cannot be borrowed again. Bo
 
 ---
 
-## Forge Prompts
+## Craft Prompts
 
 **Java track:**
 
