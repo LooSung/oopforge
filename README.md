@@ -341,7 +341,7 @@ Advanced users may invoke individual workflow stages through Craft, for example 
 
 OOPforge keeps a lightweight memory so work survives between chats. Write it down, and pull it back when you need it.
 
-- Each work item gets one document at `.craft/<kind>-<slug>.md` (for example `.craft/feature-member-management.md`), tracking decisions, progress, and the next step.
+- Each work item **may** get one document at `.craft/<kind>-<slug>.md` (for example `.craft/feature-member-management.md`), tracking decisions, progress, and the next step. Craft **asks first**; skip if you do not need session memory.
 - When you return, Craft reads the matching document **first** and continues from there.
 - `.craft/` is gitignored by default (personal notes). Override the location with an `OOPforge work dir: <path>` line in your project `AGENTS.md`.
 

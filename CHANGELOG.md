@@ -4,6 +4,17 @@
 
 ## [Unreleased]
 
+## [0.6.3] - 2026-06-02
+
+Continuity opt-in — `.craft`는 사용자가 원할 때만.
+
+### Changed
+
+- **Continuity (opt-in)** — `.craft/<kind>-<slug>.md` 생성 전 Craft가 사용자에게 먼저 묻는다. 거절하면 넘어간다. 명시적 요청·기존 문서 이어가기는 예외.
+- **`skills/workflow/continuity.md`** — 첫 세션을 선택(opt-in)으로 변경; 확인 없이 `.craft/` 생성 금지.
+- **`skills/workflow/craft.md`** — 시작 시 묻기, 완료 시 문서 **있을 때만** 갱신.
+- **README (EN/KO/JA/ZH)** — memory store 섹션에 opt-in 안내.
+
 ## [0.6.2] - 2026-06-02
 
 Codex 호출 방법 문서 정정 및 대상 프로젝트 경로 규칙.
