@@ -4,6 +4,18 @@
 
 ## [Unreleased]
 
+## [0.5.1] - 2026-06-02
+
+CI 안전망 보강.
+
+### Added
+
+- **Cron 실패 알림** — 주간 스케줄 `examples` 빌드가 실패하면 이슈를 자동 생성해 의존성 드리프트를 능동적으로 표면화.
+
+### Changed
+
+- **GitHub Actions Node 24 대응** — `actions/checkout@v4→v5`, `actions/setup-java@v4→v5`, `actions/setup-python@v5→v6` (lint·examples 워크플로 모두). 2026-06-16 Node 20 강제 종료 대비.
+
 ## [0.5.0] - 2026-06-02
 
 예제 검증 CI 추가 및 스택 버전 안정화.

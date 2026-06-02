@@ -30,10 +30,10 @@ jobs:
           - examples/order-java-layered
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up JDK 21
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: '21'
@@ -55,10 +55,10 @@ jobs:
           - examples/order-python-layered
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up Python 3.12
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: '3.12'
           cache: pip
@@ -70,3 +70,21 @@ jobs:
           python -m pip install --upgrade pip
           pip install -e ".[dev]"
           pytest -q
+
+  notify-on-cron-failure:
+    needs: [java, python]
+    # Scheduled runs have no PR/commit surface, so a failure would otherwise go unseen.
+    if: failure() && github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Open issue on scheduled failure
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          gh issue create \
+            --repo "${{ github.repository }}" \
+            --title "Scheduled examples build failed ($(date -u +%Y-%m-%d))" \
+            --body "The weekly \`examples\` workflow failed, likely from upstream dependency drift (Spring Boot / FastAPI / transitive deps). Investigate and pin or update as needed. Run: ${RUN_URL}"
