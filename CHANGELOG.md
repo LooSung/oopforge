@@ -4,6 +4,21 @@
 
 ## [Unreleased]
 
+## [0.5.2] - 2026-06-02
+
+릴리스 표면 정리 및 README 첫 화면 축소.
+
+### Changed
+
+- **README (EN/KO/JA/ZH)** — Quickstart를 설치 → 재시작 → `/oopforge:craft` 3단계만 남기고, 스택 표·Craft 상세·하네스 링크는 **Advanced Usage**로 이동.
+- **Public roadmap** — 런칭 채널·내부 KPI 제거; 공개용 방향·비-목표·기여 우선순위만 유지.
+- **`.gitignore`** — `docs/planning/` 추가 (내부 계획 메모). `docs/release/` tracked 파일 untrack.
+
+### Removed
+
+- **GitHub topic `flask`** — Python 스택은 FastAPI layered/clean만 지원 (4 stacks).
+- **`docs/release/` from git** — 릴리스 초안은 로컬/internal only.
+
 ## [0.5.1] - 2026-06-02
 
 CI 안전망 보강.

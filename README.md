@@ -20,21 +20,33 @@ Specialized for **Java (Spring)** and **Python (FastAPI)** — pick **3-tier (Co
 
 ## **Quickstart**
 
-Install OOPforge into the agents detected on your machine:
+### **1. Install**
 
 ```bash
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/LooSung/oopforge/main/scripts/setup/bootstrap.sh)"
 ```
 
-Already installed? See [Setup commands](#setup-commands) below.
+### **2. Restart your agent**
 
-Then use Craft as the single entry point. It inspects the request, picks the smallest appropriate path, and only implements when the request calls for it:
+Restart Claude Code, Codex CLI, or your Cursor Agent CLI session so it picks up the new skills and commands.
+
+**Cursor:** load the pack explicitly:
+
+```bash
+cursor-agent --plugin-dir ~/.oopforge
+```
+
+### **3. Run Craft**
 
 ```text
 /oopforge:craft Add a single Email value object
 /oopforge:craft Add a refund feature to the payment domain
 /oopforge:craft Refactor OrderService without changing behavior
 ```
+
+---
+
+## **Advanced Usage**
 
 For advisory requests, `/oopforge:craft` recommends the smallest path without implementing.
 
@@ -51,15 +63,9 @@ Advanced users may ask Craft to start at a specific workflow stage such as Disco
 
 All backend skeletons ship with **OpenAPI/Swagger UI** enabled by default (springdoc / FastAPI built-in).
 
-For Cursor Agent CLI:
+Already installed? See [Installation](#installation) for manual setup, updates, and troubleshooting.
 
-```bash
-cursor-agent --plugin-dir ~/.oopforge
-```
-
-```text
-OOPforge Discovery: order domain. Start at Discovery — no code yet.
-```
+Harness guides: [Claude Code](docs/claude-code.md) · [Codex](docs/codex.md) · [Cursor](docs/cursor.md)
 
 ---
 
@@ -348,7 +354,7 @@ oopforge/
 │   │   └── lib/common.sh
 │   ├── ci/              lint-skills.sh, smoke-test.sh
 │   └── path-convention.md
-└── .github/workflows/lint.yml  CI validation
+└── .github/workflows/   lint.yml, examples.yml (CI)
 ```
 
 ### **Agent instruction files**

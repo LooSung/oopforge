@@ -18,6 +18,46 @@
 
 ---
 
+## 快速开始
+
+### 1. 安装
+
+```bash
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/LooSung/oopforge/main/scripts/setup/bootstrap.sh)"
+```
+
+### 2. 重启 agent
+
+重启 Claude Code、Codex CLI 或 Cursor Agent CLI 会话以加载 skills 与 commands。
+
+**Cursor:** 显式加载 pack:
+
+```bash
+cursor-agent --plugin-dir ~/.oopforge
+```
+
+### 3. 运行 Craft
+
+```text
+/oopforge:craft 添加一个 Email 值对象
+/oopforge:craft 在支付域添加退款功能
+/oopforge:craft 在不改行为的前提下重构 OrderService
+```
+
+---
+
+## Advanced Usage
+
+纯咨询类请求时，`/oopforge:craft` 只推荐最小路径，不直接实现。
+
+高级用户可让 Craft 从 Discovery、Design、Delivery Plan、Skeleton、Implement、Test 或 Refactor 等特定 workflow stage 开始。
+
+已安装？见 [Install](#install) 了解手动设置、更新与故障排查。
+
+Harness 指南: [Claude Code](docs/claude-code.md) · [Codex](docs/codex.md) · [Cursor](docs/cursor.md)
+
+---
+
 ## 为什么是 OOPforge
 
 OOPforge 是 **DDD / OOP 专用的 AI 工程 pack**，不是通用 agent framework。**OOP 方言语法的 harness 工程** — 技能即语法，硬规则即 lint，`examples/` 即参考实现，install 与命令即运行时。

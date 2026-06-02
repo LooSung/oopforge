@@ -34,5 +34,6 @@ dist/
 build/
 target/
 
-# Internal release notes (not part of public pack surface)
+# Internal docs (not part of public pack surface)
 docs/release/
+docs/planning/
