@@ -20,11 +20,8 @@ cd examples/order-python && pip install -e ".[dev]" && pytest
 
 ## OOPforge workflow
 
-Pick one stack per project. Start with [library loan walkthrough](../docs/guides/library-loan/README.md) or slash commands:
+Pick one stack per project. Start with [library loan walkthrough](../docs/guides/library-loan/README.md) or Forge:
 
 ```text
-/oopforge:route place-order in java-spring-layered
-/oopforge:skeleton java-spring-layered
-/oopforge:implement place-order
-/oopforge:test place-order
+/oopforge:craft place-order in java-spring-layered
 ```

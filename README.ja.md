@@ -96,11 +96,9 @@ chmod +x scripts/setup/*.sh
 
 | Agent | Status | Install target |
 |---|---|---|
-| **Claude Code** | Supported | `~/.claude/{skills,agents,commands}/oopforge` |
+| **Claude Code** | Supported | `~/.claude/{skills,commands}/oopforge` |
 | **Codex CLI** | Supported | `~/.codex/skills/oopforge` |
 | **Cursor Agent CLI** | Experimental | `cursor-agent --plugin-dir ~/.oopforge` |
-| **OpenCode** | Experimental | `INSTALL_OPENCODE=1 ./scripts/setup/install.sh` |
-
 Symlink インストールでは `~/.oopforge` で `git pull` するだけでスキル内容が更新されます。リンク先の再作成が必要な場合は `./scripts/setup/install.sh update` を実行してください。
 
 ### ローカル smoke test
@@ -113,17 +111,16 @@ Symlink インストールでは `~/.oopforge` で `git pull` するだけでス
 
 ## Use
 
-### `/oopforge:route` — 何から始めるか分からないとき
-
-ワークフロー全体を強制せず、ユーザーの意図に合った最小単位の skill/command を 1 つだけ推薦します。
+### `/oopforge:craft` — 何から始めるか分からないとき
 
 ```text
-/oopforge:route 既存の payment domain に refund use case を追加したい
-/oopforge:route Email の value object を 1 つだけ作る
-/oopforge:route 新しい membership domain をゼロから
+/oopforge:craft Add a refund use case to the existing payment domain
+/oopforge:craft Fix the bug that allows cancellation after shipment
 ```
 
-### Stack 識別子 (`/oopforge:skeleton` 用)
+`/oopforge:craft` はリクエストを確認し、最小の OOP path を推薦または実行します。
+
+### Stack 識別子
 
 | Stack | Architecture | 用途 |
 |---|---|---|
@@ -137,10 +134,8 @@ Symlink インストールでは `~/.oopforge` で `git pull` するだけでス
 ### Full workflow
 
 ```text
-/oopforge:discovery order domain
-/oopforge:design place-order use case
-/oopforge:skeleton java-spring-layered           # または java-spring-hexagonal
-/oopforge:implement place-order
+/oopforge:craft Start Discovery for the order domain. No code yet.
+/oopforge:craft Implement place-order in java-spring-layered
 ```
 
 または自然言語で依頼します。
@@ -154,15 +149,12 @@ Symlink インストールでは `~/.oopforge` で `git pull` するだけでス
 ```
 skills/
 ├── workflow/        Recommended: Discovery → Design → Delivery Plan → Skeleton → Implement → Test
-├── oop/             Aggregate Root, Value Object, Domain Event, ...
-└── lang/
-    ├── api/         OpenAPI / Swagger conventions (springdoc, FastAPI)
-    ├── java/        Spring 3層 (layered) + Spring hexagonal, JPA repository
-    └── python/      FastAPI 3層 + FastAPI clean,
-                     Python aggregate, Python domain event, Pydantic VO
+├── principles/      OOP decision principles
+├── playbooks/       Forge task checklists
+├── oop/             Domain model + use-case boundary
+└── lang/            Backend layout for Java Spring and Python FastAPI
 
-agents/              ddd-architect, domain-reviewer subagents
-commands/            Claude Code slash commands + /oopforge:route
+commands/            Claude Code slash command entry point + /oopforge:craft
 docs/roadmap.md      方向・優先順位・非ゴール
 AGENTS.md            cross-agent repository instructions
 CLAUDE.md            Claude Code bootstrap instructions
@@ -176,13 +168,7 @@ scripts/
 
 ## Hard Rules
 
-- Domain layer framework imports: **0**
-- One file: **≤ 300 lines** — reviewable PR diff size
-- One method: **≤ 20 lines preferred** — single responsibility
-- One skill file: **≤ 200 lines** — one concept per agent context load
-- No public setters; use static factory methods
-- Defensive copy collections at boundaries
-- No domain logic without tests
+Enforceable measurable rules live in [`AGENTS.md`](./AGENTS.md). This README keeps the user-facing overview.
 
 ---
 

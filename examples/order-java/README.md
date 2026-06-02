@@ -37,11 +37,9 @@ curl -X POST http://localhost:8080/orders \
 This example is the **proof** for README Before/After. To extend it with OOPforge agents:
 
 ```text
-/oopforge:discovery order domain
-/oopforge:design place-order use case
-/oopforge:skeleton java-spring
-/oopforge:implement place-order
-/oopforge:test place-order
+/oopforge:craft Start Discovery for the order domain. No code yet.
+/oopforge:craft Implement place-order in java-spring
+/oopforge:craft Test place-order
 ```
 
 See [docs/claude-code.md](../../docs/claude-code.md) and [docs/cursor.md](../../docs/cursor.md).

@@ -1,6 +1,6 @@
 {
     "name": "oopforge",
-    "version": "0.1.0",
+    "version": "0.3.0",
     "description": "DDD와 클린 아키텍처를 신봉하는 OOP 개발 방법론 팩. Java + Python 양손잡이.",
     "author": {
         "name": "Mr.Louis",
@@ -24,9 +24,6 @@
     ],
     "skills": {
         "directory": "../skills"
-    },
-    "agents": {
-        "directory": "../agents"
     },
     "commands": {
         "directory": "../commands"

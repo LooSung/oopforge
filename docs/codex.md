@@ -27,19 +27,15 @@ Because this path is a symlink to `~/.oopforge/skills`, Codex sees:
 
 ## Slash-Like Prompts
 
-Codex does not need the Claude Code `commands/` directory. Type these as normal prompts:
+Codex does not need the Claude Code `commands/` directory. Type Forge as a normal prompt:
 
 ```text
-/oopforge:discovery library loan domain
-/oopforge:design borrow-book use case
-/oopforge:delivery-plan borrow-book
-/oopforge:skeleton python-fastapi
-/oopforge:implement borrow-book
-/oopforge:test borrow-book
-/oopforge:refactor imported billing module
+/oopforge:craft Start Discovery for the library loan domain. No code yet.
+/oopforge:craft Implement borrow-book in python-fastapi
+/oopforge:craft Refactor imported billing module without changing behavior
 ```
 
-The Codex `oopforge` skill routes those prompts to the matching workflow files.
+The Codex `oopforge` skill routes Forge requests to the matching workflow files.
 
 Natural language also works:
 
@@ -60,4 +56,3 @@ Skill content updates immediately via symlinks; restart Codex when the skill ent
 
 - [Claude Code setup](./claude-code.md)
 - [Cursor setup](./cursor.md) (Cursor Agent CLI via `--plugin-dir`)
-- [OpenCode opt-in](./opencode.md)

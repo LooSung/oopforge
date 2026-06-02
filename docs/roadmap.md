@@ -24,7 +24,7 @@ README/스킬 4종 스택 ↔ runnable examples **신뢰 갭** 해소. Released 
 - [x] 각 예제: domain test + OpenAPI smoke
 - [x] Flask skeleton 제거 — Python은 FastAPI layered/clean만
 
-**다음 (v0.2.3 / 런칭 직전):** asciinema 30초 (`/oopforge:route` → skeleton) → README 상단  
+**다음 (v0.2.3 / 런칭 직전):** asciinema 30초 (`/oopforge:craft` → skeleton) → README 상단  
 **런칭:** OKKY · dev.to → (proof 후) r/* · HN Show HN
 
 ---
@@ -36,9 +36,9 @@ README/스킬 4종 스택 ↔ runnable examples **신뢰 갭** 해소. Released 
 - 각 단계 진입 기준을 체크리스트로 (어댑터 수, 도메인 수, 팀 크기)
 - 마이그레이션 가이드 스킬 추가: `skills/workflow/migrate-layered-to-hexagonal.md`
 
-### 2. Route 커맨드 정착
-- `/oopforge:route`를 README/AGENTS.md 1번 진입점으로 격상
-- 사용자가 워크플로 전체를 외울 필요 없음 — Route가 안내
+### 2. Forge 진입점 정착
+- `/oopforge:craft`를 README/AGENTS.md 1번 진입점으로 격상
+- 사용자가 워크플로 전체를 외울 필요 없음 — Forge가 최소 경로 선택
 
 ### 3. OpenAPI 기본 탑재
 - 모든 백엔드 스켈레톤이 Swagger UI를 기본으로 켜고 시작
@@ -57,8 +57,7 @@ README/스킬 4종 스택 ↔ runnable examples **신뢰 갭** 해소. Released 
 
 ### 6. 린트/강제 템플릿
 - 가이드만 있고 강제 없으면 팀 내에서 빠르게 무너짐
-- Java: ArchUnit 템플릿 (`skills/lang/java/archunit-rules.md`)
-- Python: `import-linter` 설정 템플릿 (`skills/lang/python/import-linter.md`)
+- Java/Python architecture lint guidance (`skills/lang/backend-layout.md` 또는 별도 lint workflow 후보)
 - CI에서 자동 검증되게 — 가이드의 핵심 항목을 PR 차단으로 연결
 
 ### 7. 안티 패턴 카탈로그 (`skills/antipatterns/`)
@@ -66,7 +65,7 @@ README/스킬 4종 스택 ↔ runnable examples **신뢰 갭** 해소. Released 
 - `controller-fat.md` — Controller에 비즈니스 로직
 - `repository-with-business-logic.md` — Repository에 판단 로직
 - `god-aggregate.md` — Aggregate가 모든 걸 한꺼번에
-- 코드 리뷰 에이전트(`@domain-reviewer`)가 이 카탈로그를 참조하면 강력해짐
+- Forge 리뷰와 CI 검사가 이 카탈로그를 참조하면 강력해짐
 
 ### 8. 도구 자동 설치
 - `install.sh`에 옵션 추가: `--with-lint` → ArchUnit/import-linter 설정 자동 생성
@@ -90,7 +89,7 @@ README/스킬 4종 스택 ↔ runnable examples **신뢰 갭** 해소. Released 
 - 1시간 워크숍 슬라이드 템플릿
 
 ### 11. 도메인 리뷰 자동화
-- `@domain-reviewer`가 PR diff에 대해 안티패턴/하드 룰 위반 자동 코멘트
+- Forge 기반 PR diff 리뷰가 안티패턴/하드 룰 위반 자동 코멘트
 - GitHub Action 템플릿 제공
 
 ### 12. 커뮤니티 패턴 라이브러리
@@ -103,13 +102,13 @@ README/스킬 4종 스택 ↔ runnable examples **신뢰 갭** 해소. Released 
 - **GUI/IDE 플러그인** — CLI/에이전트 통합으로 충분
 - **자동 코드 생성기** — 패턴은 가르치고, 코드는 에이전트가 작성
 - **모든 패턴 커버** — DDD 핵심 + 백엔드 OOP에 집중. UI/모바일/ML 영역 진출 X
-- **불안정한 통합을 default install에 포함** — OpenCode 등은 experimental 유지
+- **불안정한 통합을 default install에 포함** — 실험적 통합은 별도 opt-in으로 유지
 
 ## 성공 지표
 
 - 신규 사용자가 README → 첫 도메인 스켈레톤까지 **10분 이하**
 - 팀이 OOPforge 도입 후 PR 평균 크기 **감소** (300줄/파일 룰의 효과)
-- `/oopforge:route`가 전체 커맨드 호출의 **30%+** (워크플로 강제가 깨졌다는 증거)
+- `/oopforge:craft`가 전체 커맨드 호출의 **30%+** (워크플로 강제가 깨졌다는 증거)
 - 안티패턴 카탈로그가 코드 리뷰에서 인용되는 빈도
 
 ## 기여 우선순위

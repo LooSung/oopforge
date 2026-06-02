@@ -56,7 +56,7 @@ Design an Order aggregate using OOPforge. Start at Discovery — no code yet.
 ```
 
 ```text
-OOPforge Skeleton for place-order. Use skills/lang/python/clean-fastapi-layout.md.
+OOPforge Skeleton for place-order. Use skills/lang/backend-layout.md.
 Domain layer framework imports: 0.
 ```
 
@@ -83,4 +83,3 @@ Match the structure in examples/order-java/ — domain has zero framework import
 ## Related
 
 - [Claude Code setup](./claude-code.md)
-- [OpenCode opt-in](./opencode.md)

@@ -1,6 +1,6 @@
 # Cursor Plugin Manifest
 
-`.cursor-plugin/plugin.json` declares skills, agents, and commands paths for Cursor Agent CLI.
+`.cursor-plugin/plugin.json` declares skills and commands paths for Cursor Agent CLI.
 
 ## Use today (Cursor Agent CLI)
 

@@ -16,7 +16,6 @@
 | Claude Code | `.claude-plugin/` | 준비 중 (이 디렉토리) |
 | Codex CLI | `.codex-plugin/` | TODO |
 | Cursor | `.cursor-plugin/` | CLI: `cursor-agent --plugin-dir ~/.oopforge` (marketplace Phase 2) |
-| OpenCode | `.opencode/` | TODO |
 
 Multi-harness packaging follows OOPforge's own portable layout (`.claude-plugin/`, `.codex-plugin/`, `.cursor-plugin/`).
 

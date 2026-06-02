@@ -4,7 +4,7 @@
 
 > **シグネチャのみ。** メソッド本体・フレームワークコードは書かない。
 
-スキル: `{pack}/skills/workflow/design.md`, `{pack}/skills/oop/aggregate-root.md`
+スキル: `{pack}/skills/workflow/design.md`, `{pack}/skills/oop/domain-model.md`
 
 出力保存先: `docs/library/design.md`
 

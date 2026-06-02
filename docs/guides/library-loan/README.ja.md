@@ -20,23 +20,17 @@ OOPforge の **使い方**を段階的に示すガイドです。最小実行例
 **Java トラック:**
 
 ```text
-/oopforge:discovery library loan domain
-/oopforge:design borrow-book use case
-/oopforge:delivery-plan borrow-book
-/oopforge:skeleton java-spring
-/oopforge:implement borrow-book
-/oopforge:test borrow-book
+/oopforge:craft Start Discovery for the library loan domain. No code yet.
+/oopforge:craft Implement borrow-book in java-spring
+/oopforge:craft Test borrow-book
 ```
 
 **Python トラック** — Discovery/Design/Delivery Plan は同じ。Skeleton のみ変更:
 
 ```text
-/oopforge:discovery library loan domain
-/oopforge:design borrow-book use case
-/oopforge:delivery-plan borrow-book
-/oopforge:skeleton python-fastapi
-/oopforge:implement borrow-book
-/oopforge:test borrow-book
+/oopforge:craft Start Discovery for the library loan domain. No code yet.
+/oopforge:craft Implement borrow-book in python-fastapi
+/oopforge:craft Test borrow-book
 ```
 
 プロジェクトごとに **1 スタック**を選んでください。両トラックは同じ `borrow-book` ユースケースを実装します。
@@ -81,4 +75,4 @@ Follow OOPforge workflow for a library loan domain. Start at Discovery — no co
 
 OOPforge は **human checkpoint** を前提とします。出力を承認するまで次のステージに進まないでください。
 
-Implement 後は `@domain-reviewer` でルール違反を確認できます。
+Implement 後にルール違反を確認したい場合は、`/oopforge:craft` に Hard Rules レビューを依頼します。

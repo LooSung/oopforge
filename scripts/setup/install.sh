@@ -6,9 +6,6 @@
 # Environment overrides:
 #   INSTALL_CLAUDE=1 INSTALL_CODEX=1 ./scripts/setup/install.sh
 #
-# OpenCode is opt-in:
-#   INSTALL_OPENCODE=1 ./scripts/setup/install.sh
-#
 # Usage:
 #   ./scripts/setup/install.sh             Install (skip existing links)
 #   ./scripts/setup/install.sh update      Remove OOPforge links, then reinstall
@@ -36,7 +33,6 @@ Usage:
 Environment:
   INSTALL_CLAUDE=1    Install Claude Code links even if ~/.claude is missing
   INSTALL_CODEX=1     Install Codex links even if ~/.codex is missing
-  INSTALL_OPENCODE=1  Install OpenCode links under ~/.config/opencode
 USAGE
 }
 
@@ -119,7 +115,6 @@ do_install() {
   if [ -d "$HOME/.claude" ] || [ -n "${INSTALL_CLAUDE:-}" ]; then
     cyan "--- Claude Code detected"
     link_path "$PACK_DIR/skills" "$HOME/.claude/skills/oopforge"
-    link_path "$PACK_DIR/agents" "$HOME/.claude/agents/oopforge"
     link_path "$PACK_DIR/commands" "$HOME/.claude/commands/oopforge"
   fi
 
@@ -128,10 +123,6 @@ do_install() {
     link_path "$PACK_DIR/skills" "$HOME/.codex/skills/oopforge"
   fi
 
-  if [ -n "${INSTALL_OPENCODE:-}" ]; then
-    cyan "--- OpenCode opt-in"
-    link_path "$PACK_DIR/skills" "$HOME/.config/opencode/skills/oopforge"
-  fi
 }
 
 parse_args "$@"

@@ -4,7 +4,7 @@
 
 > **仅签名。** 不写方法体或框架代码。
 
-技能: `{pack}/skills/workflow/design.md`, `{pack}/skills/oop/aggregate-root.md`
+技能: `{pack}/skills/workflow/design.md`, `{pack}/skills/oop/domain-model.md`
 
 输出保存至: `docs/library/design.md`
 

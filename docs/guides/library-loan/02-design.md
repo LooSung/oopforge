@@ -4,7 +4,7 @@
 
 > **Signatures only.** No method bodies or framework code.
 
-Read skills: `{pack}/skills/workflow/design.md`, `{pack}/skills/oop/aggregate-root.md`
+Read skills: `{pack}/skills/workflow/design.md`, `{pack}/skills/oop/domain-model.md`
 
 Save output to: `docs/library/design.md`
 

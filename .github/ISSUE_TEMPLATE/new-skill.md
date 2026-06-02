@@ -11,11 +11,9 @@ Proposed file path: `skills/<category>/<kebab-case-name>.md`
 
 Category (pick one):
 
-- [ ] `skills/oop/` — language-agnostic OOP/DDD concept
-- [ ] `skills/lang/java/` — Java/Spring-specific
-- [ ] `skills/lang/python/` — Python (FastAPI/etc.)
-- [ ] `skills/lang/api/` — API contract (OpenAPI, gRPC, etc.)
-- [ ] `skills/antipatterns/` — "don't do this" entry
+- [ ] `skills/oop/domain-model.md` — Aggregate, Value Object, Domain Event
+- [ ] `skills/oop/use-case-boundary.md` — use case and port boundaries
+- [ ] `skills/lang/backend-layout.md` — Java/Python backend layout
 - [ ] `skills/workflow/` — process stage
 - [ ] other: _____
 

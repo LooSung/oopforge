@@ -17,30 +17,18 @@ Restart Claude Code. Verify:
 Installed paths:
 
 - `~/.claude/skills/oopforge`
-- `~/.claude/agents/oopforge`
 - `~/.claude/commands/oopforge`
 
 ## Slash commands
 
 ```text
-/oopforge:discovery library loan domain
-/oopforge:design borrow-book use case
-/oopforge:delivery-plan borrow-book
-/oopforge:skeleton java-spring
-/oopforge:implement borrow-book
-/oopforge:test borrow-book
-/oopforge:refactor imported billing module
+/oopforge:craft Start Discovery for the library loan domain. No code yet.
+/oopforge:craft Implement borrow-book in java-spring
+/oopforge:craft Refactor imported billing module without changing behavior
 ```
 
 **First time?** Follow the [library loan walkthrough](../guides/library-loan/README.md) step by step.  
 Localized index: [KO](../guides/library-loan/README.ko.md) · [JA](../guides/library-loan/README.ja.md) · [ZH](../guides/library-loan/README.zh.md)
-
-## Subagents
-
-```text
-@ddd-architect Model the payment bounded context with OOPforge.
-@domain-reviewer Review this module for God Service and framework leakage.
-```
 
 ## Update after pull
 
@@ -60,4 +48,3 @@ Use examples/order-java as the structural reference for place-order.
 
 - [Codex setup](./codex.md) (Codex skill entry point and slash-like prompts)
 - [Cursor setup](./cursor.md) (Cursor Agent CLI via `--plugin-dir`)
-- [OpenCode opt-in](./opencode.md)

@@ -19,7 +19,7 @@ One sentence.
 - [ ] Each touched code file is **≤ 300 lines**
 - [ ] Methods kept around **≤ 20 lines** where reasonable
 - [ ] Domain layer in examples has **0 framework imports**
-- [ ] Skill follows `skills/_meta/skill-template.md` structure (frontmatter, 언제 쓰나, 체크리스트, 금지)
+- [ ] Skill follows the standard structure (frontmatter, 언제 쓰나, 체크리스트, 금지)
 - [ ] New skill is referenced from `AGENTS.md` and `skills/SKILL.md` (so it gets discovered)
 - [ ] `CHANGELOG.md` updated under `## [Unreleased]`
 - [ ] Local lint passes: `./scripts/ci/lint-skills.sh`

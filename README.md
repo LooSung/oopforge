@@ -33,37 +33,29 @@ Then restart your coding agent and ask:
 Build an Order aggregate in Java, following OOPforge rules.
 ```
 
-Not sure where to start? Ask the router — it picks the smallest skill/command for your actual goal instead of forcing the full pipeline:
+Use Forge as the single entry point. It inspects the request, picks the smallest appropriate path, and only executes implementation when the request calls for it:
 
 ```text
-/oopforge:route I want to add a refund use case to the existing payment domain
-/oopforge:route Just make a single value object for Email
-/oopforge:route New membership domain from scratch
+/oopforge:craft Add a refund use case to the existing payment domain
+/oopforge:craft Fix the bug that allows cancellation after shipment
+/oopforge:craft Refactor the imported billing God Service without changing behavior
 ```
 
-For Codex, use slash-like prompts (full workflow for a new domain):
+For advisory requests, `/oopforge:craft` recommends the smallest path without implementing.
+
+For a new domain, ask Forge to start at Discovery:
 
 ```text
-/oopforge:discovery order domain
-/oopforge:design place-order use case
-/oopforge:delivery-plan place-order
-/oopforge:skeleton python-fastapi-layered     # or python-fastapi-clean
-/oopforge:implement place-order
-/oopforge:test place-order
+/oopforge:craft Start Discovery for an order domain. No code yet.
 ```
 
-For Claude Code, the same flow is available as slash commands:
+For implementation, keep the request focused:
 
 ```text
-/oopforge:discovery order domain
-/oopforge:design place-order use case
-/oopforge:delivery-plan place-order
-/oopforge:skeleton java-spring-layered        # or java-spring-hexagonal
-/oopforge:implement place-order
-/oopforge:test place-order
+/oopforge:craft Implement the place-order use case in java-spring-layered
 ```
 
-**Stack identifiers** for `/oopforge:skeleton`:
+**Stack identifiers**:
 
 | Stack | Architecture | When |
 |---|---|---|
@@ -202,11 +194,9 @@ chmod +x scripts/setup/*.sh
 
 | Agent | Status | Install target |
 |---|---|---|
-| **Claude Code** | Supported | `~/.claude/{skills,agents,commands}/oopforge` |
+| **Claude Code** | Supported | `~/.claude/{skills,commands}/oopforge` |
 | **Codex CLI** | Supported via skill entry point | `~/.codex/skills/oopforge` |
 | **Cursor Agent CLI** | Experimental | `cursor-agent --plugin-dir ~/.oopforge` |
-| **OpenCode** | Experimental | `INSTALL_OPENCODE=1 ./scripts/setup/install.sh` |
-
 Because the install uses symlinks, a `git pull` in `~/.oopforge` updates skill content immediately for linked agents.
 
 To refresh install paths (for example after a version adds new link targets), run:
@@ -219,7 +209,7 @@ cd ~/.oopforge && git pull && ./scripts/setup/install.sh update
 
 **Cursor Agent CLI:** `cursor-agent --plugin-dir ~/.oopforge`. See [docs/cursor.md](./docs/cursor.md). Marketplace packaging is Phase 2 (no ETA).
 
-**Codex:** [docs/codex.md](./docs/codex.md) · **Claude Code:** [docs/claude-code.md](./docs/claude-code.md) · **OpenCode (experimental):** [docs/opencode.md](./docs/opencode.md)
+**Codex:** [docs/codex.md](./docs/codex.md) · **Claude Code:** [docs/claude-code.md](./docs/claude-code.md)
 
 ---
 
@@ -285,7 +275,7 @@ Discovery → Design → Delivery Plan → Skeleton → Implement → Test
 
 This keeps the agent from jumping into code before the domain language, boundaries, contracts, and verification plan are clear.
 
-**For smaller, focused tasks** (one value object, extending an existing domain, refactoring, code review) — start with `/oopforge:route`. It asks your intent and points to the minimal skill instead of forcing the full pipeline.
+**For smaller, focused tasks** (one value object, extending an existing domain, refactoring, code review) — start with `/oopforge:craft`. It picks the minimal path instead of forcing the full pipeline.
 
 | Stage | Output | Do not do |
 |---|---|---|
@@ -301,17 +291,14 @@ Each stage ends with a human checkpoint before moving on.
 ### **Codex and Claude Code command flow**
 
 ```text
-/oopforge:discovery payment domain
-/oopforge:design approve-payment use case
-/oopforge:delivery-plan approve-payment
-/oopforge:skeleton java-spring-layered           # or java-spring-hexagonal
-/oopforge:implement approve-payment
-/oopforge:test approve-payment
+/oopforge:craft Start Discovery for the payment domain. No code yet.
+/oopforge:craft Implement approve-payment in java-spring-layered
+/oopforge:craft Test approve-payment
 ```
 
 ### **Where to start**
 
-- **Not sure?** → `/oopforge:route <what you want>` — picks the minimal skill/command.
+- **Start here** → `/oopforge:craft <what you want>` — recommends or performs the smallest suitable OOP path.
 - Start at **Discovery** for a new domain or unclear feature.
 - Start at **Delivery Plan** if Discovery/Design already exist.
 - Start at **Implement** only when the contract and skeleton are already clear.
@@ -323,9 +310,9 @@ Each stage ends with a human checkpoint before moving on.
 ### **Single-step commands**
 
 ```text
-/oopforge:delivery-plan payment approval
-/oopforge:test place-order
-/oopforge:refactor imported billing module
+/oopforge:craft Create a delivery plan for payment approval
+/oopforge:craft Test place-order
+/oopforge:craft Refactor imported billing module without changing behavior
 ```
 
 Natural language works too:
@@ -354,26 +341,17 @@ oopforge/
 │   ├── sample-output/         Short expected agent outputs
 │   ├── codex.md         Codex setup guide
 │   ├── cursor.md        Cursor setup guide
-│   ├── claude-code.md   Claude Code setup guide
-│   └── opencode.md      OpenCode opt-in guide
+│   └── claude-code.md   Claude Code setup guide
 ├── skills/
 │   ├── SKILL.md         Codex skill entry point
 │   ├── workflow/        Discovery → Design → Delivery Plan → Skeleton
 │   │                    → Implement → Test, plus Refactor
-│   ├── oop/             Aggregate Root, Value Object, Repository Port,
-│   │                    Domain Event, Bounded Context, Factory Method,
-│   │                    Specification Pattern
-│   └── lang/
-│       ├── api/         OpenAPI / Swagger conventions (springdoc,
-│       │                FastAPI built-in)
-│       ├── java/        Spring 3-tier layered + Spring hexagonal
-│       │                + JPA repository
-│       └── python/      FastAPI 3-tier + FastAPI clean,
-│                        Python aggregate, Python domain event,
-│                        Pydantic value object
-├── agents/              ddd-architect, domain-reviewer subagents
-├── commands/            Claude Code slash commands for workflow stages
-│                        + /oopforge:route (intent triage)
+│   ├── principles/      OOP decision principles
+│   ├── playbooks/       Forge task checklists
+│   ├── oop/             Domain model + use-case boundary
+│   └── lang/            Backend layout for Java Spring and Python FastAPI
+├── commands/            Claude Code slash command entry point
+│                        + /oopforge:craft
 ├── AGENTS.md            cross-agent repository instructions
 ├── CLAUDE.md            Claude Code bootstrap instructions
 ├── scripts/
@@ -386,25 +364,14 @@ oopforge/
 
 ### **Agent instruction files**
 
-- **`AGENTS.md`** is the shared source of truth for Codex, Cursor, OpenCode, and other compatible agents.
+- **`AGENTS.md`** is the shared source of truth for Codex, Cursor, and other compatible agents.
 - **`CLAUDE.md`** is a thin Claude Code entry point that imports `AGENTS.md`.
 
 ---
 
 ## **Hard Rules**
 
-These are intentionally measurable:
-
-- Domain layer framework imports: **0**
-- One file: **300 lines or less** — fits a reviewable PR diff; beyond this, review quality drops
-- One method: **20 lines preferred** — one responsibility, testable and nameable without scrolling
-- One skill file: **200 lines or less** — one concept per agent context load; split when teaching two ideas
-- Public methods use **use-case verbs**, not CRUD names
-- No public setters; use **factory methods** and intention-revealing behavior
-- Collections crossing boundaries are defensively copied or immutable
-- Other aggregates are referenced by **ID only**
-- No domain logic without tests
-- Comments explain *why*; names explain *what*
+The enforceable, measurable rules live in [`AGENTS.md`](./AGENTS.md). README keeps the user-facing overview; agents should use `AGENTS.md` as the source of truth for rule checks.
 
 ---
 

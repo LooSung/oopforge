@@ -20,23 +20,17 @@
 **Java 轨道:**
 
 ```text
-/oopforge:discovery library loan domain
-/oopforge:design borrow-book use case
-/oopforge:delivery-plan borrow-book
-/oopforge:skeleton java-spring
-/oopforge:implement borrow-book
-/oopforge:test borrow-book
+/oopforge:craft Start Discovery for the library loan domain. No code yet.
+/oopforge:craft Implement borrow-book in java-spring
+/oopforge:craft Test borrow-book
 ```
 
 **Python 轨道** — Discovery/Design/Delivery Plan 相同；仅 Skeleton 不同:
 
 ```text
-/oopforge:discovery library loan domain
-/oopforge:design borrow-book use case
-/oopforge:delivery-plan borrow-book
-/oopforge:skeleton python-fastapi
-/oopforge:implement borrow-book
-/oopforge:test borrow-book
+/oopforge:craft Start Discovery for the library loan domain. No code yet.
+/oopforge:craft Implement borrow-book in python-fastapi
+/oopforge:craft Test borrow-book
 ```
 
 每个项目只选 **一种技术栈**。两条轨道实现相同的 `borrow-book` 用例。
@@ -81,4 +75,4 @@ Follow OOPforge workflow for a library loan domain. Start at Discovery — no co
 
 OOPforge 要求 **人工检查点**。在批准输出前不要进入下一阶段。
 
-Implement 之后可用 `@domain-reviewer` 检查规则违反。
+Implement 之后如需检查规则违反，可让 `/oopforge:craft` 按 Hard Rules 审查结果。

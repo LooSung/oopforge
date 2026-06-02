@@ -4,7 +4,7 @@
 
 > **시그니처만.** 메서드 본문·프레임워크 코드 작성 금지.
 
-스킬: `{pack}/skills/workflow/design.md`, `{pack}/skills/oop/aggregate-root.md`
+스킬: `{pack}/skills/workflow/design.md`, `{pack}/skills/oop/domain-model.md`
 
 출력 저장 위치: `docs/library/design.md`
 

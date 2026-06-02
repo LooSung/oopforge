@@ -24,8 +24,7 @@ uvicorn app.main:app --reload
 ## OOPforge
 
 ```text
-/oopforge:route place-order in python-fastapi-layered
-/oopforge:skeleton python-fastapi-layered
+/oopforge:craft place-order in python-fastapi-layered
 ```
 
-Layout skill: `skills/lang/python/fastapi-layered-layout.md`
+Layout skill: `skills/lang/backend-layout.md`

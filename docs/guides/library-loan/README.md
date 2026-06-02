@@ -15,28 +15,22 @@ A member **borrows** a book. A book already on loan cannot be borrowed again. Bo
 
 ---
 
-## Slash commands (Claude Code)
+## Forge Prompts
 
 **Java track:**
 
 ```text
-/oopforge:discovery library loan domain
-/oopforge:design borrow-book use case
-/oopforge:delivery-plan borrow-book
-/oopforge:skeleton java-spring
-/oopforge:implement borrow-book
-/oopforge:test borrow-book
+/oopforge:craft Start Discovery for the library loan domain. No code yet.
+/oopforge:craft Implement borrow-book in java-spring
+/oopforge:craft Test borrow-book
 ```
 
 **Python track** — same Discovery/Design/Delivery Plan; Skeleton only changes:
 
 ```text
-/oopforge:discovery library loan domain
-/oopforge:design borrow-book use case
-/oopforge:delivery-plan borrow-book
-/oopforge:skeleton python-fastapi
-/oopforge:implement borrow-book
-/oopforge:test borrow-book
+/oopforge:craft Start Discovery for the library loan domain. No code yet.
+/oopforge:craft Implement borrow-book in python-fastapi
+/oopforge:craft Test borrow-book
 ```
 
 Pick **one stack** per project. Both tracks implement the same `borrow-book` use case.
@@ -81,4 +75,4 @@ If you only need **expected Discovery/Design shape** for prompts:
 
 OOPforge expects a **human checkpoint**. Do not skip to the next stage until you approve the output.
 
-Review with `@domain-reviewer` after Implement if you want a rule-violation pass.
+After Implement, ask `/oopforge:craft` to review the result against the Hard Rules if you want a rule-violation pass.

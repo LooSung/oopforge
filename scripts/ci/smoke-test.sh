@@ -24,7 +24,6 @@ mkdir -p "$HOME/.claude" "$HOME/.codex"
 "$SETUP_DIR/doctor.sh"
 
 test -L "$HOME/.claude/skills/oopforge"
-test -L "$HOME/.claude/agents/oopforge"
 test -L "$HOME/.claude/commands/oopforge"
 test -L "$HOME/.codex/skills/oopforge"
 test -f "$HOME/.codex/skills/oopforge/SKILL.md"
@@ -45,7 +44,6 @@ cyan "==> scripts/setup/uninstall.sh"
 "$SETUP_DIR/uninstall.sh"
 
 test ! -e "$HOME/.claude/skills/oopforge"
-test ! -e "$HOME/.claude/agents/oopforge"
 test ! -e "$HOME/.claude/commands/oopforge"
 test ! -e "$HOME/.codex/skills/oopforge"
 

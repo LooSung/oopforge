@@ -6,8 +6,7 @@
 
 Read skills: `{pack}/skills/workflow/skeleton.md`
 
-- Java: `{pack}/skills/lang/java/spring-hexagonal-layout.md` → command: `/oopforge:skeleton java-spring`
-- Python: `{pack}/skills/lang/python/clean-fastapi-layout.md` → command: `/oopforge:skeleton python-fastapi`
+- Java/Python: `{pack}/skills/lang/backend-layout.md`
 
 ---
 

@@ -24,9 +24,7 @@ rm_link() {
 }
 
 rm_link "$HOME/.claude/skills/oopforge"
-rm_link "$HOME/.claude/agents/oopforge"
 rm_link "$HOME/.claude/commands/oopforge"
 rm_link "$HOME/.codex/skills/oopforge"
-rm_link "$HOME/.config/opencode/skills/oopforge"
 
 green "==> Uninstall complete."

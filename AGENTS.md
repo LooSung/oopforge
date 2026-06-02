@@ -21,7 +21,17 @@ For new domains or large features, do not jump straight to code.
 
 Ask for human approval before moving from one stage to the next.
 
-**For smaller, focused tasks** (extending an existing domain, adding a single value object, refactoring, code review) — start with `/oopforge:route` (`commands/route.md`). It picks the minimal skill/command instead of forcing the full pipeline.
+**For smaller, focused tasks** (extending an existing domain, adding a single value object, refactoring, code review) — start with `/oopforge:craft` (`commands/craft.md`). It selects the smallest path and does not force the full pipeline.
+
+## Default Entry Point
+
+Use `/oopforge:craft` (`commands/craft.md`) as the single OOPforge user entry point.
+
+`/oopforge:craft` delegates orchestration to `skills/workflow/craft.md`, reads `skills/principles/oop-discipline.md`, requires an OOP Contract before business-logic implementation, and verifies Hard Rules before completion.
+
+- Use `/oopforge:craft` for single components, existing-domain features, domain bug fixes, and behavior-preserving refactors.
+- For ambiguous or advisory requests, Forge recommends the smallest path without implementing.
+- For a new domain or large feature, Craft routes into the existing Discovery → Test workflow and keeps the human checkpoints.
 
 ## Skill Path Convention
 
@@ -33,37 +43,25 @@ Skill files live at `{pack}/skills/...`. Do **not** use legacy `skills/oopforge/
 
 Use this table to decide **which skill to read first**. Workflow stage always wins over ad-hoc coding.
 
-| Workflow stage | Goal | Read first | Agent (optional) |
-|---|---|---|---|
-| Route (intent triage) | Pick the smallest skill/command for the user's actual goal | `commands/route.md` | — |
-| Discovery | Glossary, contexts, actors | `skills/workflow/discovery.md` | `@ddd-architect` |
-| Design | Use-case signatures, aggregates | `skills/workflow/design.md` + relevant `skills/oop/*` | `@ddd-architect` |
-| Delivery Plan | Scope, order, tests, risks | `skills/workflow/delivery-plan.md` | — |
-| Skeleton | Packages, empty types | `skills/workflow/skeleton.md` + lang layout skill | `@ddd-architect` |
-| Implement | One use case + tests | `skills/workflow/implement.md` + oop/lang skills | `@ddd-architect` |
-| Test | Unit / integration / E2E | `skills/workflow/test.md` | — |
-| Refactor | Behavior-preserving cleanup | `skills/workflow/refactor.md` | `@domain-reviewer` |
-| Code review | Detect rule violations | Hard Rules below + `examples/order-java/` | `@domain-reviewer` |
+| Workflow stage | Goal | Read first |
+|---|---|---|
+| Craft (entrypoint) | Select and execute the smallest OOP path, or recommend only for advisory requests | `skills/workflow/craft.md` + `skills/principles/oop-discipline.md` |
+| Discovery | Glossary, contexts, actors | `skills/workflow/discovery.md` |
+| Design | Use-case signatures, aggregates | `skills/workflow/design.md` + `skills/oop/domain-model.md` |
+| Delivery Plan | Scope, order, tests, risks | `skills/workflow/delivery-plan.md` |
+| Skeleton | Packages, empty types | `skills/workflow/skeleton.md` + `skills/lang/backend-layout.md` |
+| Implement | One use case + tests | `skills/workflow/implement.md` + `skills/oop/use-case-boundary.md` |
+| Test | Unit / integration / E2E | `skills/workflow/test.md` |
+| Refactor | Behavior-preserving cleanup | `skills/workflow/refactor.md` |
+| Code review | Detect rule violations | Hard Rules below + `examples/order-java/` |
 
 ### Task → skill (within a stage)
 
 | Task | Skill |
 |---|---|
-| Aggregate design | `skills/oop/aggregate-root.md` |
-| Value object | `skills/oop/value-object.md` |
-| Use case / application service | `skills/oop/application-service.md` |
-| Repository port | `skills/oop/repository-port.md` |
-| Domain event | `skills/oop/domain-event.md` |
-| Bounded context | `skills/oop/bounded-context.md` |
-| Java package layout — 3-tier | `skills/lang/java/spring-layered-layout.md` |
-| Java package layout — hexagonal | `skills/lang/java/spring-hexagonal-layout.md` |
-| JPA adapter | `skills/lang/java/jpa-repository.md` |
-| Python layout — FastAPI 3-tier | `skills/lang/python/fastapi-layered-layout.md` |
-| Python layout — FastAPI clean | `skills/lang/python/clean-fastapi-layout.md` |
-| Python aggregate | `skills/lang/python/python-aggregate.md` |
-| Python domain event | `skills/lang/python/python-domain-event.md` |
-| Pydantic value object | `skills/lang/python/pydantic-value-object.md` |
-| OpenAPI / Swagger conventions | `skills/lang/api/openapi-conventions.md` |
+| Aggregate, Value Object, Domain Event | `skills/oop/domain-model.md` |
+| Use case / application service / Repository port | `skills/oop/use-case-boundary.md` |
+| Java/Python backend layout | `skills/lang/backend-layout.md` |
 
 ### Harness setup
 
@@ -72,7 +70,6 @@ Use this table to decide **which skill to read first**. Workflow stage always wi
 | Codex | `docs/codex.md` |
 | Claude Code | `docs/claude-code.md` |
 | Cursor | `docs/cursor.md` |
-| OpenCode (experimental) | `docs/opencode.md` |
 
 Reference implementation: [examples/README.md](examples/README.md) — `order-java`, `order-java-layered`, `order-python`, `order-python-layered` (same place-order flow).
 
@@ -80,19 +77,11 @@ Reference implementation: [examples/README.md](examples/README.md) — `order-ja
 
 Before changing behavior, read the relevant skill file:
 
-- Aggregate design: `skills/oop/aggregate-root.md`
-- Value objects: `skills/oop/value-object.md`
-- Application services: `skills/oop/application-service.md`
-- Repository ports: `skills/oop/repository-port.md`
-- Domain events: `skills/oop/domain-event.md`
-- Bounded contexts: `skills/oop/bounded-context.md`
-- Factory methods: `skills/oop/factory-method.md`
-- Specification pattern: `skills/oop/specification-pattern.md`
-- Java layouts: `skills/lang/java/spring-layered-layout.md` (3-tier) · `skills/lang/java/spring-hexagonal-layout.md` (hexagonal)
-- JPA repositories: `skills/lang/java/jpa-repository.md`
-- Python layouts: `skills/lang/python/fastapi-layered-layout.md` (FastAPI 3-tier) · `skills/lang/python/clean-fastapi-layout.md` (FastAPI clean)
-- Python patterns: `skills/lang/python/python-aggregate.md` · `skills/lang/python/python-domain-event.md` · `skills/lang/python/pydantic-value-object.md`
-- API contracts: `skills/lang/api/openapi-conventions.md`
+- Domain model: `skills/oop/domain-model.md`
+- Use-case boundary: `skills/oop/use-case-boundary.md`
+- Backend layout: `skills/lang/backend-layout.md`
+- Craft execution mode: `skills/workflow/craft.md` + `skills/principles/oop-discipline.md`
+- Forge playbooks: `skills/playbooks/feature.md` · `skills/playbooks/bug-fix.md`
 - Delivery planning: `skills/workflow/delivery-plan.md`
 - Testing: `skills/workflow/test.md`
 - Refactoring existing or external code: `skills/workflow/refactor.md`
@@ -118,7 +107,6 @@ These limits are intentionally measurable. They come from review focus and agent
 
 ## Repository Discipline
 
-- Keep harness packaging portable: Claude and Codex install via `install.sh`; Cursor Agent CLI loads via `cursor-agent --plugin-dir` (experimental, not in `install.sh`); OpenCode is experimental/opt-in.
 - Do not add runtime dependencies for installer scripts unless there is no simpler shell-based alternative.
 - Update `CHANGELOG.md` for user-visible changes.
 - When changing install behavior, verify with a clean temporary `HOME`.
@@ -129,5 +117,4 @@ These limits are intentionally measurable. They come from review focus and agent
 - Do not merge workflow stages to save time.
 - Do not add framework annotations or infrastructure concerns to domain examples.
 - Do not create mega-prompts, mega-skills, or broad abstractions without evidence.
-- Do not make OpenCode part of the default install path unless its integration becomes stable.
 - Do not mix refactoring with feature changes; use `workflow-refactor` only for behavior-preserving cleanup.

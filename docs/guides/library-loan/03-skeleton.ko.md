@@ -6,8 +6,7 @@
 
 스킬: `{pack}/skills/workflow/skeleton.md`
 
-- Java: `{pack}/skills/lang/java/spring-hexagonal-layout.md` → 명령: `/oopforge:skeleton java-spring`
-- Python: `{pack}/skills/lang/python/clean-fastapi-layout.md` → 명령: `/oopforge:skeleton python-fastapi`
+- Java/Python: `{pack}/skills/lang/backend-layout.md`
 
 ---
 

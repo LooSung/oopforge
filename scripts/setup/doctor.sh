@@ -74,14 +74,11 @@ cyan "--- Pack structure"
 check_dir "skills"
 check_dir "skills/workflow"
 check_dir "skills/oop"
-check_dir "skills/lang/java"
-check_dir "skills/lang/python"
-check_dir "agents"
+check_dir "skills/lang"
 check_dir "commands"
 check_dir ".claude-plugin"
 check_dir ".codex-plugin"
 check_dir ".cursor-plugin"
-check_dir ".opencode"
 check_dir "scripts/setup"
 check_dir "scripts/ci"
 check_file "scripts/setup/bootstrap.sh"
@@ -95,7 +92,6 @@ check_file "skills/SKILL.md"
 check_file ".claude-plugin/plugin.json"
 check_file ".codex-plugin/plugin.json"
 check_file ".cursor-plugin/plugin.json"
-check_file ".opencode/README.md"
 
 cyan "--- Harness commands"
 check_command "claude"
@@ -112,17 +108,9 @@ warn "No scripts/setup/install.sh symlink target; marketplace packaging is Phase
 
 cyan "--- Installed links"
 check_link "Claude skills" "$HOME/.claude/skills/oopforge" "$PACK_DIR/skills"
-check_link "Claude agents" "$HOME/.claude/agents/oopforge" "$PACK_DIR/agents"
 check_link "Claude commands" "$HOME/.claude/commands/oopforge" "$PACK_DIR/commands"
 check_link "Codex skills" "$HOME/.codex/skills/oopforge" "$PACK_DIR/skills"
 
-if [ -n "${CHECK_OPENCODE:-}" ]; then
-  cyan "--- OpenCode opt-in"
-  check_command "opencode"
-  check_link "OpenCode skills" "$HOME/.config/opencode/skills/oopforge" "$PACK_DIR/skills"
-else
-  warn "OpenCode checks skipped by default (use CHECK_OPENCODE=1 ./scripts/setup/doctor.sh)."
-fi
 
 if [ "$FAILED" -eq 0 ]; then
   green "==> doctor complete: no critical issues"

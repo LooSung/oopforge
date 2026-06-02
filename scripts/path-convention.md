@@ -12,8 +12,8 @@ Commands and agents must reference skills using the **pack root**, not `skills/o
 
 ```text
 {pack}/skills/workflow/discovery.md
-{pack}/skills/oop/aggregate-root.md
-{pack}/skills/lang/java/spring-hexagonal-layout.md
+{pack}/skills/oop/domain-model.md
+{pack}/skills/lang/backend-layout.md
 ```
 
 Installed Claude path (symlink name `oopforge` is the harness folder, not part of the skill path):

@@ -21,7 +21,6 @@ scripts/**                           linguist-vendored=true
 .claude-plugin/**                    linguist-generated=true
 .codex-plugin/**                     linguist-generated=true
 .cursor-plugin/**                    linguist-generated=true
-.opencode/**                         linguist-generated=true
 
 # 5) Normalize line endings on text files (cross-platform contributors).
 *                                    text=auto
