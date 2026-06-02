@@ -15,12 +15,12 @@ stability: experimental
 
 ## 작업 위치
 
-- 기본값: 대상 프로젝트 루트의 `.oopforge/`.
+- 기본값: 대상 프로젝트 루트의 `.craft/`.
 - 오버라이드: 대상 프로젝트 `AGENTS.md`에 `OOPforge work dir: <path>` 한 줄이 있으면 그 경로를 우선한다.
 - 작업당 문서 하나: `<work dir>/<kind>-<slug>.md`.
   - `kind`는 `feature`, `refactor`, `bugfix` 중 하나.
   - `slug`는 kebab-case. 같은 작업이 항상 같은 파일로 복원되도록 결정론적으로 짓는다.
-  - 예: `.oopforge/feature-member-management.md`, `.oopforge/refactor-order-service.md`.
+  - 예: `.craft/feature-member-management.md`, `.craft/refactor-order-service.md`.
 
 ## Resume 프로토콜 (작업 시작 시)
 
@@ -33,7 +33,7 @@ stability: experimental
 
 1. `<kind>-<slug>` 이름을 제안하고 사용자 확인을 받는다.
 2. work dir과 작업 문서를 생성한다.
-3. 대상 프로젝트 `.gitignore`에 `.oopforge/`가 없으면 추가한다 (개인 작업 노트, 커밋하지 않음).
+3. 대상 프로젝트 `.gitignore`에 `.craft/`가 없으면 추가한다 (개인 작업 노트, 커밋하지 않음).
 4. 오버라이드 경로를 쓰면 그 경로를 `.gitignore` 대상으로 한다.
 
 ## 작업 문서 포맷

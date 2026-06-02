@@ -188,6 +188,16 @@ Symlink インストールでは `~/.oopforge` で `git pull` するだけでス
 
 > "Build an Order aggregate in Java, following OOPforge rules."
 
+### メモリーストア (セッションをまたいで再開)
+
+会話が変わっても作業が残るよう、軽量なメモリを残します。書いておき、必要なときに取り出します。
+
+- 作業ごとに 1 つのドキュメント `.craft/<kind>-<slug>.md` (例: `.craft/feature-member-management.md`) に決定・進捗・次の作業を蓄積します。
+- 戻ってきたら Craft が該当ドキュメントを**先に読み**、そこから続けます。
+- `.craft/` はデフォルトで gitignore (個人ノート)。場所はプロジェクト `AGENTS.md` の `OOPforge work dir: <path>` 行で変更します。
+
+詳細: [`skills/workflow/continuity.md`](skills/workflow/continuity.md).
+
 ---
 
 ## What's inside

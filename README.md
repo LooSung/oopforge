@@ -317,6 +317,16 @@ Each stage ends with a human checkpoint before moving on.
 
 Advanced users may invoke individual workflow stages through Craft, for example "Start at Discovery", "Create a delivery plan", or "Run the test workflow".
 
+### **Memory store (resume across sessions)**
+
+OOPforge keeps a lightweight memory so work survives between chats. Write it down, and pull it back when you need it.
+
+- Each work item gets one document at `.craft/<kind>-<slug>.md` (for example `.craft/feature-member-management.md`), tracking decisions, progress, and the next step.
+- When you return, Craft reads the matching document **first** and continues from there.
+- `.craft/` is gitignored by default (personal notes). Override the location with an `OOPforge work dir: <path>` line in your project `AGENTS.md`.
+
+See [`skills/workflow/continuity.md`](skills/workflow/continuity.md).
+
 ---
 
 ## **What's Inside**

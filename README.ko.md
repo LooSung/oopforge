@@ -344,6 +344,16 @@ OOPforge가 강제하는 단계. 절대 합치지 않는다.
 
 **작은 작업**은 전체 파이프라인을 돌리지 말고 `/oopforge:craft`부터 시작한다.
 
+### 기억 저장소 (세션 간 이어가기)
+
+대화가 바뀌어도 작업이 살아남도록 가벼운 기억을 남긴다. 써두고, 필요하면 꺼내 쓴다.
+
+- 작업마다 문서 한 장 `.craft/<kind>-<slug>.md` (예: `.craft/feature-member-management.md`) 에 결정·진행·다음 할 일을 누적한다.
+- 다시 돌아오면 Craft가 해당 문서를 **먼저 읽고** 이어간다.
+- `.craft/` 는 기본 gitignore (개인 노트). 위치는 프로젝트 `AGENTS.md`의 `OOPforge work dir: <path>` 한 줄로 바꾼다.
+
+자세히: [`skills/workflow/continuity.md`](skills/workflow/continuity.md).
+
 ---
 
 ## 코딩 룰 (측정 가능한 메트릭으로)
