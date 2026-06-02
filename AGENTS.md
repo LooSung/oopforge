@@ -53,6 +53,7 @@ Use this table to decide **which skill to read first**. Workflow stage always wi
 | Implement | One use case + tests | `skills/workflow/implement.md` + `skills/oop/use-case-boundary.md` |
 | Test | Unit / integration / E2E | `skills/workflow/test.md` |
 | Refactor | Behavior-preserving cleanup | `skills/workflow/refactor.md` |
+| Continuity | Resume work across sessions | `skills/workflow/continuity.md` |
 | Code review | Detect rule violations | Hard Rules below + `examples/order-java/` |
 
 ### Task → skill (within a stage)
@@ -87,6 +88,7 @@ Before changing behavior, read the relevant skill file:
 - Delivery planning: `skills/workflow/delivery-plan.md`
 - Testing: `skills/workflow/test.md`
 - Refactoring existing or external code: `skills/workflow/refactor.md`
+- Resuming work across sessions (persist + restore context): `skills/workflow/continuity.md`
 - Roadmap / direction: `docs/roadmap.md`
 
 ## Hard Rules

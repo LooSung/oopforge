@@ -15,6 +15,7 @@ stability: experimental
 
 ## 시작 절차
 
+0. `skills/workflow/continuity.md`의 Resume 프로토콜로 기존 작업 문서가 있으면 먼저 읽고 이어간다.
 1. `skills/principles/oop-discipline.md`를 읽는다.
 2. 사용자 요청과 기존 코드를 확인한다.
 3. 아래 표에서 가장 작은 실행 경로 하나를 선택한다.
@@ -24,7 +25,7 @@ stability: experimental
 7. 비즈니스 로직 구현 전 OOP Contract를 작성한다.
 8. 선택한 경로대로 구현하고 테스트한다.
 9. `AGENTS.md`의 Hard Rules와 실행한 테스트 결과를 확인한다.
-10. 완료 보고 형식에 맞춰 설계 결정, 검증 결과, 남은 위험을 기록한다.
+10. 완료 보고 형식에 맞춰 설계 결정, 검증 결과, 남은 위험을 기록하고, `continuity.md`를 쓰는 작업이면 작업 문서에 반영한다.
 
 ## 실행 경로 선택
 

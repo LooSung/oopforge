@@ -4,6 +4,19 @@
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-06-02
+
+세션 간 작업 연속성(메모리) 도입.
+
+### Added
+
+- **`skills/workflow/continuity.md`** — 작업당 단일 문서(`.oopforge/<kind>-<slug>.md`)에 결정·진행·다음 할 일을 누적하고, 다음 세션에서 먼저 읽어 맥락을 복원하는 연속성 규칙. work dir은 기본 `.oopforge/`(gitignore), 대상 프로젝트 `AGENTS.md`의 `OOPforge work dir:` 한 줄로 오버라이드.
+
+### Changed
+
+- **Craft** — 시작 절차에 Resume(기존 작업 문서 읽기), 완료 시 작업 문서 갱신을 연결.
+- **AGENTS.md** — Skill Routing/Selection에 continuity 추가.
+
 ## [0.5.2] - 2026-06-02
 
 릴리스 표면 정리 및 README 첫 화면 축소.
