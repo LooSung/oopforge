@@ -39,6 +39,17 @@ Resolve the OOPforge pack root in order: `$OOPFORGE_HOME` → `~/.oopforge` → 
 
 Skill files live at `{pack}/skills/...`. Do **not** use legacy `skills/oopforge/...` paths. See `scripts/path-convention.md`.
 
+## Project Configuration (target project `AGENTS.md`)
+
+Optional single-line directives the target project can set to control OOPforge behavior:
+
+| Directive | Effect |
+|---|---|
+| `OOPforge work dir: <path>` | Override the continuity work dir (default `.craft/`). |
+| `OOPforge continuity: off` | Disable automatic `.craft/` work-doc creation. |
+
+By default, continuity work docs are **auto-created (opt-out)** for execution tasks (feature/refactor/bugfix); advisory and tiny tasks never create one. See `skills/workflow/continuity.md`.
+
 ## Skill Routing
 
 Use this table to decide **which skill to read first**. Workflow stage always wins over ad-hoc coding.

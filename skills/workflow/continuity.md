@@ -1,6 +1,6 @@
 ---
 name: workflow-continuity
-description: 작업 맥락을 단일 문서로 저장하고 다음 세션에서 먼저 읽어 이어가는 OOPforge 연속성 규칙.
+description: 작업 맥락을 단일 문서로 저장하고 다음 세션에서 먼저 읽어 이어가는 OOPforge 연속성 규칙. 실행 작업은 기본 자동 생성(opt-out).
 tags: [workflow, memory, continuity]
 stability: experimental
 ---
@@ -17,6 +17,7 @@ stability: experimental
 
 - 기본값: 대상 프로젝트 루트의 `.craft/`.
 - 오버라이드: 대상 프로젝트 `AGENTS.md`에 `OOPforge work dir: <path>` 한 줄이 있으면 그 경로를 우선한다.
+- 끄기(opt-out): 대상 프로젝트 `AGENTS.md`에 `OOPforge continuity: off` 한 줄이 있으면 생성하지 않는다.
 - 작업당 문서 하나: `<work dir>/<kind>-<slug>.md`.
   - `kind`는 `feature`, `refactor`, `bugfix` 중 하나.
   - `slug`는 kebab-case. 같은 작업이 항상 같은 파일로 복원되도록 결정론적으로 짓는다.
@@ -26,20 +27,24 @@ stability: experimental
 
 1. work dir이 있으면 목록을 확인한다.
 2. 현재 요청과 관련된 문서가 있으면 **그 문서를 먼저 읽고** 이어간다.
-3. 관련 문서가 없으면 아래 **첫 세션 (선택)** 을 따른다.
+3. 관련 문서가 없으면 아래 **첫 세션 (자동 생성)** 을 따른다.
 4. 사용자가 특정 문서를 지목하면 그 문서를 따른다.
 
-## 첫 세션 (선택)
+## 첫 세션 (자동 생성, opt-out)
 
-관련 작업 문서가 없으면 **먼저 사용자에게 묻는다**:
+관련 작업 문서가 없을 때, **작업 종류로 생성 여부를 결정론적으로 판단한다.** 묻지 않는다.
 
-> 이번 작업을 다음 세션에도 이어가려면 `.craft/<kind>-<slug>.md`에 기록할 수 있습니다. 만들까요?
+| 작업 분류 | 동작 |
+|---|---|
+| `feature` / `refactor` / `bugfix` (실행 작업) | **자동 생성** 후 한 줄 고지 |
+| advisory · 추천만 · 단일 Value Object 등 초소형 | 생성하지 않음 |
+| `AGENTS.md`에 `OOPforge continuity: off` | 생성하지 않음 |
 
-- **예** — `<kind>-<slug>` 이름을 제안하고 확인받은 뒤 work dir·작업 문서를 생성한다.
-- **아니오 / 넘어가기** — continuity 없이 진행한다. `.craft/`를 만들지 않는다.
-- 사용자가 프롬프트에 `.craft/…` 경로를 지정했거나 continuity 생성을 **명시**했으면 묻지 않고 따른다.
+자동 생성 시 한 줄 고지:
 
-생성할 때만:
+> 이 작업을 `.craft/<kind>-<slug>.md`에 기록합니다. (끄려면 `AGENTS.md`에 `OOPforge continuity: off`)
+
+생성 절차:
 
 1. work dir과 작업 문서를 만든다.
 2. 대상 프로젝트 `.gitignore`에 `.craft/`가 없으면 추가한다 (개인 작업 노트, 커밋하지 않음).
@@ -79,6 +84,7 @@ stability: experimental
 - 의미 있는 결정이 나오면 `Decisions`에 **append**한다 (기존 줄을 지우지 않는다).
 - 작업 단위가 끝나면 `Status`와 `Progress`를 갱신한다.
 - Craft 완료 보고(Design Decisions, Verification, Remaining Risks)는 이 문서에 반영한다.
+- **완료 게이트**: 문서가 존재하는 작업은 이 문서를 갱신하기 전에는 done 보고를 하지 않는다.
 
 ## 큰 작업
 
@@ -87,7 +93,8 @@ stability: experimental
 
 ## 금지
 
-- **사용자 확인 없이 `.craft/` 생성 금지** — 명시적 요청·기존 문서 이어가기는 예외.
+- **advisory·초소형 작업에 `.craft/` 생성 금지** — 실행 작업(feature/refactor/bugfix)만 자동 생성.
+- **`OOPforge continuity: off`면 생성 금지** — 사용자 opt-out을 존중한다.
 - **결정 로그 덮어쓰기 금지** — append만 한다.
 - **민감 정보 기록 금지** — 비밀키, 토큰, 개인정보를 문서에 남기지 않는다.
 - **결과 보고서로 쓰기 금지** — 진행 중 맥락과 다음 할 일을 적는다.
