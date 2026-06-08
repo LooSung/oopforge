@@ -105,7 +105,7 @@ Discovery → Design → Skeleton → Implement (Java + Python) → Test
 |---|---|
 | [图书馆借阅指南](docs/guides/library-loan/README.zh.md) | 完整工作流教程 |
 | [Examples index](examples/README.md) | 可运行证明 — 相同 calculator，5 种架构 |
-| [calculator-java-layered](examples/calculator-java-layered/) · [calculator-java-hexagonal](examples/calculator-java-hexagonal/) | Java 3-tier · Java hexagonal |
+| [calculator-java-layered](examples/calculator-java-layered/) · [calculator-java-hexagonal](examples/calculator-java-hexagonal/) · [calculator-java-hexagonal-cqrs](examples/calculator-java-hexagonal-cqrs/) | Java 3-tier · hexagonal · hexagonal + CQRS |
 | [calculator-python-layered](examples/calculator-python-layered/) · [calculator-python-hexagonal](examples/calculator-python-hexagonal/) · [calculator-python-hexagonal-cqrs](examples/calculator-python-hexagonal-cqrs/) | FastAPI 3-tier · hexagonal · hexagonal + CQRS |
 | [Discovery 样本 (library)](docs/sample-output/discovery-library.zh.md) | 期望 agent 输出 ([EN](docs/sample-output/discovery-library.md) · [KO](docs/sample-output/discovery-library.ko.md) · [JA](docs/sample-output/discovery-library.ja.md)) |
 | [Design 样本 (library)](docs/sample-output/design-library.zh.md) | 期望 agent 输出 ([EN](docs/sample-output/design-library.md) · [KO](docs/sample-output/design-library.ko.md) · [JA](docs/sample-output/design-library.ja.md)) |

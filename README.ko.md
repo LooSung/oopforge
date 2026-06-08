@@ -105,7 +105,7 @@ Discovery → Design → Skeleton → Implement (Java + Python) → Test
 | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | [도서관 대출 가이드](docs/guides/library-loan/README.ko.md)                          | 전체 워크플로우 튜토리얼                                                                                                                                                 |
 | [Examples index](examples/README.md) | 실행 가능한 증명 — 동일 calculator, 5종 아키텍처 |
-| [calculator-java-layered](examples/calculator-java-layered/) · [calculator-java-hexagonal](examples/calculator-java-hexagonal/) | Java 3-tier · Java hexagonal |
+| [calculator-java-layered](examples/calculator-java-layered/) · [calculator-java-hexagonal](examples/calculator-java-hexagonal/) · [calculator-java-hexagonal-cqrs](examples/calculator-java-hexagonal-cqrs/) | Java 3-tier · hexagonal · hexagonal + CQRS |
 | [calculator-python-layered](examples/calculator-python-layered/) · [calculator-python-hexagonal](examples/calculator-python-hexagonal/) · [calculator-python-hexagonal-cqrs](examples/calculator-python-hexagonal-cqrs/) | FastAPI 3-tier · hexagonal · hexagonal + CQRS |
 | [Discovery 샘플 (library)](docs/sample-output/discovery-library.ko.md)               | 에이전트 기대 출력 ([EN](docs/sample-output/discovery-library.md) · [JA](docs/sample-output/discovery-library.ja.md) · [ZH](docs/sample-output/discovery-library.zh.md)) |
 | [Design 샘플 (library)](docs/sample-output/design-library.ko.md)                     | 에이전트 기대 출력 ([EN](docs/sample-output/design-library.md) · [JA](docs/sample-output/design-library.ja.md) · [ZH](docs/sample-output/design-library.zh.md))          |
@@ -323,6 +323,7 @@ oopforge/
 │   ├── README.md                   ← 스택 ↔ 폴더 매핑
 │   ├── calculator-java-layered/    ← Java Spring 3-tier
 │   ├── calculator-java-hexagonal/  ← Java Spring hexagonal
+│   ├── calculator-java-hexagonal-cqrs/  ← Java Spring hexagonal + CQRS
 │   ├── calculator-python-layered/  ← FastAPI 3-tier
 │   ├── calculator-python-hexagonal/ ← FastAPI hexagonal/clean
 │   └── calculator-python-hexagonal-cqrs/  ← FastAPI hexagonal + CQRS

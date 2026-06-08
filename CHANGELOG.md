@@ -2,6 +2,16 @@
 
 모든 변경은 여기에 기록한다. [Keep a Changelog](https://keepachangelog.com/) 형식.
 
+## [0.8.2] - 2026-06-09
+
+calculator 예제 패밀리를 대칭으로 완성 — Java에도 hexagonal + CQRS 예제 추가.
+
+### Added
+
+- **`examples/calculator-java-hexagonal-cqrs`** — Spring Boot hexagonal에 CQRS를 얹은 예제. command 측은 write 포트(`CalculationRepository`)로 `CalculationId`만 반환, query 측은 read 포트(`HistoryQueryRepository`)로 `HistorySummary` 프로젝션만 반환. 두 어댑터가 하나의 `CalculationStore`를 공유(쓰기 시 read model로 프로젝션). 이제 java/python 모두 layered/hexagonal/hexagonal-cqrs 3종을 가진다.
+- **ArchUnit CQRS 규칙** — `ArchitectureTest`가 domain 프레임워크 의존 0, command↔query 측 상호 비의존, application→adapter 비의존을 강제(`./gradlew test`).
+- **CI 강제** — `examples.yml` 매트릭스에 java-hexagonal-cqrs 추가, `arch-lint.yml`이 이 예제에도 `archlint.py cqrs` 실행. 린터 self-test에 실예제 검증 추가.
+
 ## [0.8.1] - 2026-06-08
 
 레이어 경계를 업계 표준 도구로 한 겹 더 강제하고, CI Gradle 래퍼 다운로드를 견고화했다.

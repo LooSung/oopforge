@@ -102,7 +102,7 @@ Guide index: [EN](docs/guides/library-loan/README.md) · [KO](docs/guides/librar
 |---|---|
 | [Library loan guide](docs/guides/library-loan/README.md) | Full tutorial — how to use OOPforge end to end |
 | [Examples index](examples/README.md) | Runnable proof — same calculator, 5 architectures |
-| [calculator-java-layered](examples/calculator-java-layered/) · [calculator-java-hexagonal](examples/calculator-java-hexagonal/) | Java 3-tier · Java hexagonal |
+| [calculator-java-layered](examples/calculator-java-layered/) · [calculator-java-hexagonal](examples/calculator-java-hexagonal/) · [calculator-java-hexagonal-cqrs](examples/calculator-java-hexagonal-cqrs/) | Java 3-tier · hexagonal · hexagonal + CQRS |
 | [calculator-python-layered](examples/calculator-python-layered/) · [calculator-python-hexagonal](examples/calculator-python-hexagonal/) · [calculator-python-hexagonal-cqrs](examples/calculator-python-hexagonal-cqrs/) | FastAPI 3-tier · hexagonal · hexagonal + CQRS |
 | [Sample discovery (library)](docs/sample-output/discovery-library.md) | Short expected agent output ([KO](docs/sample-output/discovery-library.ko.md) · [JA](docs/sample-output/discovery-library.ja.md) · [ZH](docs/sample-output/discovery-library.zh.md)) |
 | [Sample design (library)](docs/sample-output/design-library.md) | Short expected agent output ([KO](docs/sample-output/design-library.ko.md) · [JA](docs/sample-output/design-library.ja.md) · [ZH](docs/sample-output/design-library.zh.md)) |
@@ -357,6 +357,7 @@ oopforge/
 │   ├── README.md        Stack ↔ folder index
 │   ├── calculator-java-layered/      Java Spring 3-tier
 │   ├── calculator-java-hexagonal/    Java Spring hexagonal
+│   ├── calculator-java-hexagonal-cqrs/  Java Spring hexagonal + CQRS
 │   ├── calculator-python-layered/    FastAPI 3-tier
 │   ├── calculator-python-hexagonal/  FastAPI hexagonal/clean
 │   └── calculator-python-hexagonal-cqrs/  FastAPI hexagonal + CQRS

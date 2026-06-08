@@ -83,6 +83,10 @@ def main():
     if os.path.isdir(calc_cqrs):
         expect("real calculator-hexagonal-cqrs cqrs clean", "cqrs", calc_cqrs, False)
 
+    java_cqrs = f"{REPO}/examples/calculator-java-hexagonal-cqrs/src/main/java/com/oopforge/example/calculator"
+    if os.path.isdir(java_cqrs):
+        expect("real calculator-java-hexagonal-cqrs cqrs clean", "cqrs", java_cqrs, False)
+
     print("RESULT:", "PASS" if not FAILURES else f"FAIL ({FAILURES})")
     return 1 if FAILURES else 0
 

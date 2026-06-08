@@ -68,7 +68,7 @@ README/스킬 4종 스택 ↔ runnable examples **신뢰 갭** 해소. Released 
 - [x] **v0.7.2** — `examples/calculator-python-hexagonal-cqrs` + Python `archlint` + CI `cqrs` on real code.
 - [x] **v0.8** — calculator 예제 패밀리(java/python × layered/hexagonal + cqrs)로 통일, Python archlint를 layered/cqrs 실예제에 연결.
 - [x] **v0.8.1** — 표준 도구 강제 한 겹 추가: `calculator-python-layered` import-linter(`.importlinter` + CI `lint-imports`), `calculator-java-layered` ArchUnit(`./gradlew test`). `skills/skeleton/lint-enforcement.md`가 예제 설정을 정식 템플릿으로 제공(= `--with-lint`를 설치 플래그 대신 가이드로 처리).
-- [ ] 다음: **`examples/calculator-java-hexagonal-cqrs` 추가** — Python에는 hexagonal+CQRS 예제가 있으나 Java에는 없음. command/query 포트 분리로 패밀리 대칭 맞추기(+ archlint cqrs / ArchUnit 연결).
+- [x] **v0.8.2** — `examples/calculator-java-hexagonal-cqrs` 추가로 패밀리 대칭 완성(java/python × hexagonal+CQRS). command/query 포트 분리, archlint cqrs + ArchUnit(command/query 격리) CI 연결.
 - [ ] 다음: `install.sh --with-lint`로 타깃 프로젝트에 템플릿 생성(항목 8), 헥사고날 예제용 ArchUnit/import-linter 변종.
 
 ### 7. 안티 패턴 카탈로그 (`skills/antipatterns/`)

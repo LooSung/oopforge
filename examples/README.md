@@ -6,6 +6,7 @@ One domain — a **calculator with history** — implemented across architecture
 |---|---|---|
 | [calculator-java-layered](calculator-java-layered/) | Spring Boot | 3-tier (controller / service / repository) |
 | [calculator-java-hexagonal](calculator-java-hexagonal/) | Spring Boot | hexagonal (ports & adapters) |
+| [calculator-java-hexagonal-cqrs](calculator-java-hexagonal-cqrs/) | Spring Boot | hexagonal **+ CQRS** overlay (command/query ports, history) |
 | [calculator-python-layered](calculator-python-layered/) | FastAPI | 3-tier (router / service / repository) |
 | [calculator-python-hexagonal](calculator-python-hexagonal/) | FastAPI | hexagonal / clean |
 | [calculator-python-hexagonal-cqrs](calculator-python-hexagonal-cqrs/) | FastAPI | hexagonal **+ CQRS** overlay (command/query ports, history) |
@@ -23,6 +24,7 @@ One domain — a **calculator with history** — implemented across architecture
 ```bash
 cd examples/calculator-java-layered && ./gradlew test
 cd examples/calculator-java-hexagonal && ./gradlew test
+cd examples/calculator-java-hexagonal-cqrs && ./gradlew test
 cd examples/calculator-python-layered && pip install -e ".[dev]" && pytest
 cd examples/calculator-python-hexagonal && pip install -e ".[dev]" && pytest
 cd examples/calculator-python-hexagonal-cqrs && pip install -e ".[dev]" && pytest

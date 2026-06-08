@@ -28,6 +28,7 @@ jobs:
         dir:
           - examples/calculator-java-layered
           - examples/calculator-java-hexagonal
+          - examples/calculator-java-hexagonal-cqrs
     steps:
       - name: Checkout
         uses: actions/checkout@v5
