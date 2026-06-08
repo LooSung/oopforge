@@ -43,9 +43,13 @@ Natural language also works, for example: "Use OOPforge Discovery for the paymen
 Core OOP:
 - Domain model: `oop/domain-model.md`
 - Use-case boundary: `oop/use-case-boundary.md`
+- CQRS (read/write split, medium): `oop/cqrs.md`
 
 Backend stack and skeleton:
 - Stack selection (layered or hexagonal/clean): `lang/backend-stack.md`
 - Package structure / skeleton: `skeleton/backend-skeleton.md`
+
+Anti-patterns:
+- Flat package (layered without layer folders): `antipatterns/flat-package.md`
 
 Roadmap and direction: `../docs/roadmap.md`

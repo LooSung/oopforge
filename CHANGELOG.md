@@ -4,6 +4,26 @@
 
 ## [Unreleased]
 
+## [0.7.0] - 2026-06-08
+
+작은 모델 견고성 라운드 — 암묵적 가이드를 명시적·검증 가능·결정론적 체크로 전환.
+
+### Added
+
+- **CQRS 스킬 (`skills/oop/cqrs.md`)** — 미디엄 수준(Command/Query 분리, 스토어 공유). layered/헥사고날 매핑, 진입 기준 체크리스트, 금지. event-sourcing은 범위 밖(장기).
+- **안티패턴 카탈로그 시작 (`skills/antipatterns/flat-package.md`)** — layered인데 레이어를 폴더로 안 나누고 파일명 suffix로만 분리한 안티패턴: 증상·원인·교정.
+- **Hard Rules — Layer layout** — layered는 각 레이어가 별도 폴더, 파일명 분리 금지, Controller→Repository 직접 호출 금지.
+- **Hard Rules — CQRS** — 쿼리 측 부수효과 금지, 커맨드 측 read-shaped 반환 금지(ID/void).
+- **스켈레톤 셀프 체크 게이트 (`skills/skeleton/backend-skeleton.md`)** — 스켈레톤 직후 디렉터리 트리로 레이어 폴더 존재를 직접 확인·보고. `skills/workflow/skeleton.md` 체크리스트에 연결.
+- **프로젝트 설정 디렉티브 (`AGENTS.md`)** — `OOPforge continuity: off` 추가 문서화.
+
+### Changed
+
+- **Continuity 자동 생성 (opt-out)** — opt-in 묻기를 폐기하고, 실행 작업(feature/refactor/bugfix)이면 `.craft/<kind>-<slug>.md`를 묻지 않고 자동 생성한 뒤 한 줄 고지. advisory·초소형 작업은 생성 안 함. `OOPforge continuity: off`로 끌 수 있음.
+- **Craft 완료 게이트 (`skills/workflow/craft.md`)** — continuity 문서가 있으면 그 문서를 갱신하기 전에는 done 보고 금지. 시작 0번 스텝을 자동 생성으로 변경.
+- **`skills/SKILL.md` / `AGENTS.md` 라우팅** — CQRS·안티패턴 스킬 항목 추가.
+- **`skills/lang/backend-stack.md`** — CQRS를 layered/헥사고날 위에 얹는 변형으로 명시.
+
 ## [0.6.3] - 2026-06-02
 
 Continuity opt-in — `.craft`는 사용자가 원할 때만.

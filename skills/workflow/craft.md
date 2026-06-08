@@ -38,6 +38,7 @@ stability: experimental
 | 기존 도메인에 행동, 유스케이스, API 추가 | `skills/playbooks/feature.md` |
 | 비즈니스 규칙 오류, 회귀, 잘못된 상태 전이 수정 | `skills/playbooks/bug-fix.md` |
 | God Service, 책임 이동, 중복 제거, 동작 보존 정리 | `skills/workflow/refactor.md` |
+| 읽기/쓰기 모델 분리, 복잡 조회를 도메인에서 떼기, CQRS 적용 | `skills/oop/cqrs.md` |
 | 새 도메인 또는 큰 기능 | `skills/workflow/discovery.md`부터 기존 전체 workflow |
 | 모호하거나 추천만 원하는 요청 | 가장 작은 경로만 추천하고 구현하지 않음 |
 
