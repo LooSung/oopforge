@@ -21,6 +21,7 @@ Design과 Delivery Plan이 끝났을 때. Implement 이전.
 - [ ] 유스케이스/Service 클래스 골격 (빈 execute 메서드)
 - [ ] 빌드 도구 파일 (Gradle, pyproject.toml 등) 의존성만
 - [ ] 테스트 폴더 미러링
+- [ ] **셀프 체크**: `skills/skeleton/backend-skeleton.md`의 "셀프 체크" 통과 — 레이어가 각각 별도 폴더, 한 폴더에 파일명 suffix로만 분리 금지
 
 ## 스택과 레이아웃 분리
 

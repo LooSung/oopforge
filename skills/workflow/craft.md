@@ -15,7 +15,7 @@ stability: experimental
 
 ## 시작 절차
 
-0. `skills/workflow/continuity.md` Resume: 기존 작업 문서가 있으면 먼저 읽고 이어간다. 없으면 **`.craft/<kind>-<slug>.md`를 만들지 사용자에게 묻고**, 거절하면 넘어간다.
+0. `skills/workflow/continuity.md` Resume: 기존 작업 문서가 있으면 먼저 읽고 이어간다. 없고 이번이 **실행 작업(feature/refactor/bugfix)**이면 묻지 않고 `.craft/<kind>-<slug>.md`를 **자동 생성**하고 한 줄 고지한다. advisory·초소형 작업이거나 `AGENTS.md`에 `OOPforge continuity: off`가 있으면 생성하지 않는다.
 1. **대상 프로젝트**를 확인한다. OOPforge **팩**(`~/.oopforge`, 스킬 경로) ≠ 사용자가 Craft로 작업하는 **레포**. `pwd`가 팩 루트면 잘못된 위치 — 대상 프로젝트에서 에이전트를 시작했는지 확인한다.
 2. 사용자가 `@…`, 절대 경로, 상대 경로로 파일을 지정하면 **대상 프로젝트 루트**(현재 작업 디렉터리 또는 git root) 기준으로 해석한다. `{pack}/docs/…`나 `~/.oopforge/…`에서 찾지 않는다. 없으면 절대 경로 또는 프로젝트 루트를 사용자에게 확인한다.
 3. `skills/principles/oop-discipline.md`를 읽는다.
@@ -27,7 +27,7 @@ stability: experimental
 9. 비즈니스 로직 구현 전 OOP Contract를 작성한다.
 10. 선택한 경로대로 구현하고 테스트한다.
 11. `AGENTS.md`의 Hard Rules와 실행한 테스트 결과를 확인한다.
-12. 완료 보고 형식에 맞춰 설계 결정, 검증 결과, 남은 위험을 기록한다. continuity 작업 문서가 **있을 때만** 그 문서에 반영한다.
+12. 완료 보고 형식에 맞춰 설계 결정, 검증 결과, 남은 위험을 기록한다. **완료 게이트**: continuity 작업 문서가 있으면 그 문서(Status/Progress/Decisions)를 갱신하기 전에는 done 보고를 하지 않는다.
 
 ## 실행 경로 선택
 
@@ -38,6 +38,7 @@ stability: experimental
 | 기존 도메인에 행동, 유스케이스, API 추가 | `skills/playbooks/feature.md` |
 | 비즈니스 규칙 오류, 회귀, 잘못된 상태 전이 수정 | `skills/playbooks/bug-fix.md` |
 | God Service, 책임 이동, 중복 제거, 동작 보존 정리 | `skills/workflow/refactor.md` |
+| 읽기/쓰기 모델 분리, 복잡 조회를 도메인에서 떼기, CQRS 적용 | `skills/oop/cqrs.md` |
 | 새 도메인 또는 큰 기능 | `skills/workflow/discovery.md`부터 기존 전체 workflow |
 | 모호하거나 추천만 원하는 요청 | 가장 작은 경로만 추천하고 구현하지 않음 |
 

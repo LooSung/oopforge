@@ -40,6 +40,11 @@ stability: stable
 3. 모호하면 사용자에게 "3계층(layered)인지 헥사고날/clean인지" 묻는다.
 4. 정해진 stack 식별자 하나를 다음 단계로 넘긴다.
 
+## CQRS 변형 (선택)
+
+- CQRS는 별도 스택이 아니라 layered/헥사고날 **위에 얹는 변형**이다. 진입 경로: `layered → hexagonal/clean → CQRS`.
+- 읽기/쓰기 모델이 크게 다르거나 복잡 조회가 도메인을 오염시킬 때만 도입한다. 적용 규칙과 진입 기준은 `skills/oop/cqrs.md`.
+
 ## OpenAPI 기본 방침
 
 - 모든 백엔드 스택은 OpenAPI/Swagger를 개발 환경에서 바로 확인할 수 있어야 한다.

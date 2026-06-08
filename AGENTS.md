@@ -39,6 +39,17 @@ Resolve the OOPforge pack root in order: `$OOPFORGE_HOME` → `~/.oopforge` → 
 
 Skill files live at `{pack}/skills/...`. Do **not** use legacy `skills/oopforge/...` paths. See `scripts/path-convention.md`.
 
+## Project Configuration (target project `AGENTS.md`)
+
+Optional single-line directives the target project can set to control OOPforge behavior:
+
+| Directive | Effect |
+|---|---|
+| `OOPforge work dir: <path>` | Override the continuity work dir (default `.craft/`). |
+| `OOPforge continuity: off` | Disable automatic `.craft/` work-doc creation. |
+
+By default, continuity work docs are **auto-created (opt-out)** for execution tasks (feature/refactor/bugfix); advisory and tiny tasks never create one. See `skills/workflow/continuity.md`.
+
 ## Skill Routing
 
 Use this table to decide **which skill to read first**. Workflow stage always wins over ad-hoc coding.
@@ -62,6 +73,7 @@ Use this table to decide **which skill to read first**. Workflow stage always wi
 |---|---|
 | Aggregate, Value Object, Domain Event | `skills/oop/domain-model.md` |
 | Use case / application service / Repository port | `skills/oop/use-case-boundary.md` |
+| Read/write split, complex query off the domain (CQRS) | `skills/oop/cqrs.md` |
 | Backend stack selection | `skills/lang/backend-stack.md` |
 | Backend package structure / skeleton | `skills/skeleton/backend-skeleton.md` |
 
@@ -88,6 +100,7 @@ Before changing behavior, read the relevant skill file:
 - Delivery planning: `skills/workflow/delivery-plan.md`
 - Testing: `skills/workflow/test.md`
 - Refactoring existing or external code: `skills/workflow/refactor.md`
+- Anti-patterns: `skills/antipatterns/flat-package.md`
 - Resuming work across sessions (persist + restore context): `skills/workflow/continuity.md`
 - Roadmap / direction: `docs/roadmap.md`
 
@@ -108,6 +121,17 @@ These limits are intentionally measurable. They come from review focus and agent
 - Other aggregates are referenced by ID only.
 - Do not commit domain logic without tests.
 - Comments explain "why"; names explain "what".
+
+### Layer layout (layered / 3-tier)
+
+- **Each layer is its own package/folder** — `controller/`, `service/`, `repository/`, `domain/`. Splitting a single folder by filename suffix only (`*Controller`, `*Service`, `*Repository`) is a violation.
+- **Controller/Router must not call Repository directly** — go through a Service.
+- After skeleton, list the directory tree and confirm the layer folders exist with the right file types. See `skills/skeleton/backend-skeleton.md` self-check.
+
+### CQRS (when adopted)
+
+- **Query side has no side effects** — read paths must not mutate state.
+- **Command side returns no read-shaped data** — return an ID or void, not a query DTO.
 
 ## Repository Discipline
 
