@@ -16,6 +16,7 @@
 - **Hard Rules — CQRS** — 쿼리 측 부수효과 금지, 커맨드 측 read-shaped 반환 금지(ID/void).
 - **스켈레톤 셀프 체크 게이트 (`skills/skeleton/backend-skeleton.md`)** — 스켈레톤 직후 디렉터리 트리로 레이어 폴더 존재를 직접 확인·보고. `skills/workflow/skeleton.md` 체크리스트에 연결.
 - **프로젝트 설정 디렉티브 (`AGENTS.md`)** — `OOPforge continuity: off` 추가 문서화.
+- **아키텍처 린터 (`scripts/ci/archlint.py`) + CI 차단 (`.github/workflows/arch-lint.yml`)** — Layer layout·CQRS Hard Rule을 기계적으로 강제(모델 준수에 비의존). `scripts/ci/test-archlint.py`로 린터 자체를 CI에서 자가 검증. layered 예제만 검사(헥사고날 제외). 순수 stdlib.
 
 ### Changed
 

@@ -64,6 +64,8 @@ README/스킬 4종 스택 ↔ runnable examples **신뢰 갭** 해소. Released 
 - 가이드만 있고 강제 없으면 팀 내에서 빠르게 무너짐
 - Java/Python architecture lint guidance (`skills/skeleton/backend-skeleton.md` 또는 별도 lint workflow 후보)
 - CI에서 자동 검증되게 — 가이드의 핵심 항목을 PR 차단으로 연결
+- [x] **v0.7** — `scripts/ci/archlint.py` (Layer layout + CQRS Hard Rule) + `arch-lint.yml` PR 차단 + 린터 자가 테스트. 시작점.
+- [ ] 다음: Python(import-linter) 레이어 규칙, ArchUnit 옵션, `--with-lint` 자동 설치(항목 8)와 연결.
 
 ### 7. 안티 패턴 카탈로그 (`skills/antipatterns/`)
 

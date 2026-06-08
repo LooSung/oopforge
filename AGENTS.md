@@ -127,11 +127,13 @@ These limits are intentionally measurable. They come from review focus and agent
 - **Each layer is its own package/folder** — `controller/`, `service/`, `repository/`, `domain/`. Splitting a single folder by filename suffix only (`*Controller`, `*Service`, `*Repository`) is a violation.
 - **Controller/Router must not call Repository directly** — go through a Service.
 - After skeleton, list the directory tree and confirm the layer folders exist with the right file types. See `skills/skeleton/backend-skeleton.md` self-check.
+- Enforced in CI by `scripts/ci/archlint.py` (`.github/workflows/arch-lint.yml`) — violations block the PR.
 
 ### CQRS (when adopted)
 
 - **Query side has no side effects** — read paths must not mutate state.
 - **Command side returns no read-shaped data** — return an ID or void, not a query DTO.
+- Checkable via `scripts/ci/archlint.py cqrs <root>`.
 
 ## Repository Discipline
 

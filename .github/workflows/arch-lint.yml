@@ -1,0 +1,29 @@
+name: Arch Lint
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  arch-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Self-test the linter
+        run: python3 scripts/ci/test-archlint.py
+
+      - name: Enforce layered layout on the layered Java example
+        # Only layered examples obey the layer-folder rule; hexagonal/clean
+        # examples use domain/application/adapter and must not be linted here.
+        run: |
+          python3 scripts/ci/archlint.py layered \
+            examples/order-java-layered/src/main/java/com/oopforge/example/layered/order
