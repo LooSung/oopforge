@@ -37,3 +37,12 @@ jobs:
         run: |
           python3 scripts/ci/archlint.py cqrs \
             examples/calculator-python-hexagonal-cqrs/app
+
+      # Second enforcement layer: the industry-standard import-linter on top of
+      # the fast stdlib archlint, proving boundaries with a real off-the-shelf tool.
+      - name: Enforce import boundaries on the layered Python example (import-linter)
+        working-directory: examples/calculator-python-layered
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+          lint-imports

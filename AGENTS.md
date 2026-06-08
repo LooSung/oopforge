@@ -95,6 +95,7 @@ Before changing behavior, read the relevant skill file:
 - Use-case boundary: `skills/oop/use-case-boundary.md`
 - Backend stack selection: `skills/lang/backend-stack.md`
 - Backend skeleton structure: `skills/skeleton/backend-skeleton.md`
+- Lint enforcement (import-linter / ArchUnit in CI): `skills/skeleton/lint-enforcement.md`
 - Craft execution mode: `skills/workflow/craft.md` + `skills/principles/oop-discipline.md`
 - Craft playbooks: `skills/playbooks/feature.md` · `skills/playbooks/bug-fix.md`
 - Delivery planning: `skills/workflow/delivery-plan.md`
@@ -127,7 +128,7 @@ These limits are intentionally measurable. They come from review focus and agent
 - **Each layer is its own package/folder** — `controller/`, `service/`, `repository/`, `domain/`. Splitting a single folder by filename suffix only (`*Controller`, `*Service`, `*Repository`) is a violation.
 - **Controller/Router must not call Repository directly** — go through a Service.
 - After skeleton, list the directory tree and confirm the layer folders exist with the right file types. See `skills/skeleton/backend-skeleton.md` self-check.
-- Enforced in CI by `scripts/ci/archlint.py` (`.github/workflows/arch-lint.yml`) — violations block the PR.
+- Enforced in CI by `scripts/ci/archlint.py` (`.github/workflows/arch-lint.yml`) — violations block the PR. Standard tools (import-linter / ArchUnit) add a second enforcement layer; see `skills/skeleton/lint-enforcement.md`.
 
 ### CQRS (when adopted)
 

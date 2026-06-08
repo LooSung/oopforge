@@ -2,6 +2,20 @@
 
 모든 변경은 여기에 기록한다. [Keep a Changelog](https://keepachangelog.com/) 형식.
 
+## [0.8.1] - 2026-06-08
+
+레이어 경계를 업계 표준 도구로 한 겹 더 강제하고, CI Gradle 래퍼 다운로드를 견고화했다.
+
+### Added
+
+- **import-linter (Python layered)** — `calculator-python-layered/.importlinter`에 `layers`(router > service > repository > domain) + `forbidden`(router→repository 직접 import 금지, 간접 경로는 허용) 계약. `arch-lint.yml`에 `lint-imports` 스텝으로 PR 차단.
+- **ArchUnit (Java layered)** — `calculator-java-layered`에 `ArchitectureTest`(layeredArchitecture 규칙 + domain 프레임워크 의존 0). `./gradlew test`에 포함되어 examples 워크플로가 그대로 강제.
+- **`skills/skeleton/lint-enforcement.md`** — 빠른 stdlib `archlint` 위에 표준 도구(import-linter/ArchUnit)를 얹는 방법. 예제 설정을 정식 복사 템플릿으로 제공(`--with-lint`를 설치 플래그 대신 가이드로 처리).
+
+### Fixed
+
+- **CI Gradle 래퍼 다운로드 타임아웃** — 두 자바 예제의 `gradle-wrapper.properties`가 `networkTimeout=10000`/`retries=0`이라 배포본 fetch가 한 번만 느려도 잡 전체가 실패했다. `networkTimeout=120000`/`retries=3`으로 강화.
+
 ## [0.8.0] - 2026-06-08
 
 예제를 하나의 calculator 도메인으로 통일(java/python × layered/hexagonal + hexagonal-cqrs)하고, 모호한 빌드 요청·스택 범위 가드를 추가했다.

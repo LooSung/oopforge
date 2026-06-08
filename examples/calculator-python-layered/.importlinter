@@ -1,0 +1,20 @@
+[importlinter]
+root_package = app
+
+[importlinter:contract:layers]
+name = Calculator layers (router > service > repository > domain)
+type = layers
+layers =
+    app.calculator.router
+    app.calculator.service
+    app.calculator.repository
+    app.calculator.domain
+
+[importlinter:contract:no-router-repository]
+name = Router must not import repository directly (go through service)
+type = forbidden
+source_modules =
+    app.calculator.router
+forbidden_modules =
+    app.calculator.repository
+allow_indirect_imports = true

@@ -95,6 +95,8 @@ SQLAlchemy 모델은 domain object와 분리하는 것을 기본으로 한다.
 - [ ] 각 파일이 자기 레이어 폴더 안에 있다 (controller 파일은 `controller/`에).
 - [ ] 테스트 폴더가 production 구조를 미러링한다.
 
+셀프 체크를 빌드로 강제하려면(import-linter/ArchUnit) `skills/skeleton/lint-enforcement.md`를 따른다.
+
 예시 (layered Java, 통과):
 
 ```text
