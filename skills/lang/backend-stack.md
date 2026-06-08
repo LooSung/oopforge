@@ -33,9 +33,17 @@ stability: stable
 
 기본 권장: 도메인 2개 이하 + 어댑터 적음 → layered. 그 외 → hexagonal/clean.
 
+## 스택 범위 게이트 (먼저 통과)
+
+OOPforge가 지원하는 백엔드는 **Java Spring · Python FastAPI 뿐**이다. 새 빌드 요청에서 언어가 정해지지 않았거나 다른 스택을 함의하면 코드 전에 처리한다.
+
+- **언어 미지정**: 임의로 고르지 말고 지원 스택(Java/Python)만 제시하고 사용자가 고르게 한다.
+- **지원 외 스택**(JavaScript/TypeScript, 프론트엔드, 모바일, 셸/CLI 등)을 함의: OOPforge를 그 스택에 **적용할 수 없음**을 분명히 알린다.
+- 그래도 사용자가 그 스택을 고집하면: OOPforge 규율(스켈레톤/하드룰) 없이 **일반(비-OOPforge) 빌드**로만 진행하고, OOPforge 범위 밖임을 고지한다.
+
 ## 결정 절차
 
-1. 언어를 정한다 (Java Spring 또는 Python FastAPI).
+1. 위 범위 게이트로 언어를 확정한다 (Java Spring 또는 Python FastAPI).
 2. 위 기준으로 layered 또는 hexagonal/clean을 고른다.
 3. 모호하면 사용자에게 "3계층(layered)인지 헥사고날/clean인지" 묻는다.
 4. 정해진 stack 식별자 하나를 다음 단계로 넘긴다.
@@ -55,3 +63,4 @@ stability: stable
 - 스택을 정하지 않은 채 폴더 구조나 빈 타입을 만들지 않는다.
 - 한 프로젝트에 여러 스택을 섞지 않는다.
 - 근거 없이 hexagonal/clean을 기본값으로 강요하지 않는다.
+- 지원 외 스택(JS/TS 등)에 OOPforge 스켈레톤·하드룰을 적용하지 않는다. 적용 불가를 먼저 알린다.

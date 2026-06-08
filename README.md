@@ -101,9 +101,9 @@ Guide index: [EN](docs/guides/library-loan/README.md) · [KO](docs/guides/librar
 | Resource | Purpose |
 |---|---|
 | [Library loan guide](docs/guides/library-loan/README.md) | Full tutorial — how to use OOPforge end to end |
-| [Examples index](examples/README.md) | Runnable proof — 4 stacks, same place-order |
-| [order-java](examples/order-java/) · [order-java-layered](examples/order-java-layered/) | Java hexagonal · Java 3-tier |
-| [order-python](examples/order-python/) · [order-python-layered](examples/order-python-layered/) | FastAPI clean · FastAPI 3-tier |
+| [Examples index](examples/README.md) | Runnable proof — same calculator, 5 architectures |
+| [calculator-java-layered](examples/calculator-java-layered/) · [calculator-java-hexagonal](examples/calculator-java-hexagonal/) | Java 3-tier · Java hexagonal |
+| [calculator-python-layered](examples/calculator-python-layered/) · [calculator-python-hexagonal](examples/calculator-python-hexagonal/) · [calculator-python-hexagonal-cqrs](examples/calculator-python-hexagonal-cqrs/) | FastAPI 3-tier · hexagonal · hexagonal + CQRS |
 | [Sample discovery (library)](docs/sample-output/discovery-library.md) | Short expected agent output ([KO](docs/sample-output/discovery-library.ko.md) · [JA](docs/sample-output/discovery-library.ja.md) · [ZH](docs/sample-output/discovery-library.zh.md)) |
 | [Sample design (library)](docs/sample-output/design-library.md) | Short expected agent output ([KO](docs/sample-output/design-library.ko.md) · [JA](docs/sample-output/design-library.ja.md) · [ZH](docs/sample-output/design-library.zh.md)) |
 | [Reviewer checklist](docs/reviewer-checklist.md) | Post-implement rule check |
@@ -136,10 +136,10 @@ Most teams already know *what* DDD looks like in a diagram. The hard part is sto
 
 ```java
 @Service
-public class OrderService {
-    public void createOrder(CreateOrderRequest req) {
-        // validation, pricing, persistence, events — all in one class
-        orderRepository.save(toEntity(req));
+public class CalculatorService {
+    public CalculationResponse calculate(CalculateRequest req) {
+        // parsing, computing, persistence, history, formatting — all in one class
+        repository.save(toEntity(req));
         eventPublisher.publish(...);
     }
 }
@@ -150,24 +150,24 @@ public class OrderService {
 ### After (OOPforge)
 
 ```java
-Order order = Order.place(orderId, customerId, lines);   // domain
-placeOrder.handle(command);                            // use case
-orderRepository.save(order);                             // port
-order.popEvents();                                       // OrderPlaced
+Calculation calc = Calculation.perform(id, operandA, operator, operandB);  // domain
+calculate.handle(command);                                  // use case
+calculationRepository.save(calc);                           // port
+calc.popEvents();                                           // CalculationPerformed
 ```
 
 ```text
-order/domain/Order.java              ← Aggregate Root (framework import 0)
-order/application/provided/PlaceOrder.java
-order/application/required/OrderRepository.java
-order/application/service/PlaceOrderService.java
-order/adapter/web/OrderController.java
-order/adapter/persistence/InMemoryOrderRepository.java
+calculator/domain/Calculation.java   ← Aggregate Root (framework import 0)
+calculator/application/provided/Calculate.java
+calculator/application/required/CalculationRepository.java
+calculator/application/service/CalculateService.java
+calculator/adapter/web/CalculatorController.java
+calculator/adapter/persistence/InMemoryCalculationRepository.java
 ```
 
 **Effects:** domain-first · clear boundaries · domain tests without Spring · easier maintenance · agents follow a repeatable layout
 
-Runnable reference: [examples/README.md](examples/README.md) — same place-order flow across hexagonal and layered stacks.
+Runnable reference: [examples/README.md](examples/README.md) — the same calculator across layered, hexagonal, and CQRS stacks.
 
 ---
 
@@ -355,10 +355,11 @@ See [`skills/workflow/continuity.md`](skills/workflow/continuity.md).
 oopforge/
 ├── examples/
 │   ├── README.md        Stack ↔ folder index
-│   ├── order-java/      Java Spring hexagonal
-│   ├── order-java-layered/  Java Spring 3-tier
-│   ├── order-python/    Python FastAPI hexagonal
-│   └── order-python-layered/  FastAPI 3-tier
+│   ├── calculator-java-layered/      Java Spring 3-tier
+│   ├── calculator-java-hexagonal/    Java Spring hexagonal
+│   ├── calculator-python-layered/    FastAPI 3-tier
+│   ├── calculator-python-hexagonal/  FastAPI hexagonal/clean
+│   └── calculator-python-hexagonal-cqrs/  FastAPI hexagonal + CQRS
 ├── docs/
 │   ├── roadmap.md             Direction, priorities, non-goals
 │   ├── guides/library-loan/   Step-by-step walkthrough (start here)

@@ -26,4 +26,14 @@ jobs:
         # examples use domain/application/adapter and must not be linted here.
         run: |
           python3 scripts/ci/archlint.py layered \
-            examples/order-java-layered/src/main/java/com/oopforge/example/layered/order
+            examples/calculator-java-layered/src/main/java/com/oopforge/example/layered/calculator
+
+      - name: Enforce layered layout on the layered Python example
+        run: |
+          python3 scripts/ci/archlint.py layered \
+            examples/calculator-python-layered/app/calculator
+
+      - name: Enforce CQRS rules on the hexagonal CQRS example
+        run: |
+          python3 scripts/ci/archlint.py cqrs \
+            examples/calculator-python-hexagonal-cqrs/app

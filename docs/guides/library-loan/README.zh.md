@@ -5,7 +5,7 @@
 
 [English](./README.md) · [한국어](./README.ko.md) · [日本語](./README.ja.md) · [中文](./README.zh.md)
 
-本指南逐步展示 OOPforge **用法**。最小可运行示例见 [`examples/order-java`](../../../examples/order-java/) 和 [`examples/order-python`](../../../examples/order-python/)。
+本指南逐步展示 OOPforge **用法**。最小可运行示例见 [`examples/calculator-java-hexagonal`](../../../examples/calculator-java-hexagonal/) 和 [`examples/calculator-python-hexagonal`](../../../examples/calculator-python-hexagonal/)。
 
 ---
 

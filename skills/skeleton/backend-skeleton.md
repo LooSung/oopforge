@@ -59,14 +59,16 @@ JPA가 필요하면 domain model과 JPA entity를 분리하고 adapter에서 map
 
 ### Layered
 
+레이어는 파일명이 아니라 **폴더**로 나눈다 (Hard Rule). 의존성 조립은 레이어 밖(`app/core/`)에 둔다.
+
 ```text
-app/order/
-├── router.py
-├── service.py
-├── repository.py
-├── models.py
-├── schemas.py
-└── exceptions.py
+app/calculator/
+├── router/        calculator_router.py   # HTTP in/out (repository import 금지)
+├── service/       calculator_service.py  # orchestration
+├── repository/    calculation_repository.py
+├── domain/        calculation.py
+└── schemas/       api_models.py
+app/core/dependencies.py                  # 조립(wiring)
 ```
 
 ### Clean

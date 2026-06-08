@@ -1,11 +1,13 @@
 ---
 name: oopforge
-description: Use OOPforge for DDD, OOP, layered or hexagonal/clean architecture, aggregates, value objects, ports/adapters, OpenAPI/Swagger conventions, or the /oopforge:craft workflow prompt.
+description: Use OOPforge when building or changing a backend service, server, REST/HTTP API, or business app/feature in Java or Python — including vague build prompts like "make a calculator" or "build an order service" — and for DDD/OOP modeling, layered or hexagonal/clean architecture, aggregates, value objects, ports/adapters, CQRS, OpenAPI/Swagger, or the /oopforge:craft workflow prompt.
 ---
 
 # OOPforge
 
-Use this skill when the user asks for OOPforge, DDD/OOP modeling, clean or hexagonal architecture, domain-first implementation, or the `/oopforge:craft` prompt.
+Use this skill when the user asks for OOPforge, DDD/OOP modeling, clean or hexagonal architecture, domain-first implementation, or the `/oopforge:craft` prompt — and also for everyday backend build requests in Java/Python (e.g. "make a calculator", "build an order API"), so they are governed instead of free-formed.
+
+**Stack scope:** OOPforge targets **Java Spring** and **Python FastAPI** backends only. If a request leaves the language unspecified, steer the user to a supported stack rather than picking one silently. If it targets an unsupported stack (JavaScript/TypeScript, frontend, mobile, CLI), tell the user OOPforge does not apply there; only build it as a plain (non-OOPforge) task if the user explicitly insists. See `lang/backend-stack.md`.
 
 ## Command Routing
 

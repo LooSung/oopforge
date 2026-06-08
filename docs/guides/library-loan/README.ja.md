@@ -5,7 +5,7 @@
 
 [English](./README.md) · [한국어](./README.ko.md) · [日本語](./README.ja.md) · [中文](./README.zh.md)
 
-OOPforge の **使い方**を段階的に示すガイドです。最小実行例は [`examples/order-java`](../../../examples/order-java/) と [`examples/order-python`](../../../examples/order-python/) を参照してください。
+OOPforge の **使い方**を段階的に示すガイドです。最小実行例は [`examples/calculator-java-hexagonal`](../../../examples/calculator-java-hexagonal/) と [`examples/calculator-python-hexagonal`](../../../examples/calculator-python-hexagonal/) を参照してください。
 
 ---
 

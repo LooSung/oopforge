@@ -85,7 +85,7 @@ Do not skip stages for new domains. See [README](../README.md#the-basic-workflow
 ## 6. Reference example
 
 ```text
-Match the structure in examples/order-java/ — domain has zero framework imports.
+Match the structure in examples/calculator-java-hexagonal/ — domain has zero framework imports.
 ```
 
 ## Limitations

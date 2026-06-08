@@ -40,7 +40,18 @@ stability: experimental
 | God Service, 책임 이동, 중복 제거, 동작 보존 정리 | `skills/workflow/refactor.md` |
 | 읽기/쓰기 모델 분리, 복잡 조회를 도메인에서 떼기, CQRS 적용 | `skills/oop/cqrs.md` |
 | 새 도메인 또는 큰 기능 | `skills/workflow/discovery.md`부터 기존 전체 workflow |
-| 모호하거나 추천만 원하는 요청 | 가장 작은 경로만 추천하고 구현하지 않음 |
+| 추천만 원하는 advisory 요청 | 가장 작은 경로만 추천하고 구현하지 않음 |
+| 실행 요청이지만 결정이 빠짐("계산기 만들어줘") | 아래 **모호성 해소**로 결정을 채운 뒤 경로 선택 |
+
+## 모호성 해소 (구현 전)
+
+실행 의도인데 결정적 입력이 비어 있으면(언어·아키텍처·영속성·히스토리/조회=CQRS 여부·지원 연산/엣지), 코드 전에 한 번 해소한다 — 심문하지 말고 기본값을 제시하라.
+
+1. 빠진 결정 차원을 식별한다.
+2. **언어·아키텍처는 반드시 `skills/lang/backend-stack.md` 범위 게이트를 거친다.** 미지정이면 지원 스택(Java-Spring/Python-FastAPI)으로 안내하고, 지원 외 스택(JS/TS 등)이면 OOPforge 적용 불가를 알린다(고집하면 일반 빌드로만).
+3. 안전하게 정할 수 있는 항목은 **기본값을 명시**하고 진행한다(예: in-memory, layered, 사칙연산).
+4. 결과(아키텍처·범위)를 실제로 바꾸는 1~2개만 질문한다(예: "이력/조회가 필요해? → CQRS를 얹는다").
+5. 참고 메뉴로 `examples/` calculator 패밀리(layered/hexagonal/+CQRS)를 제시할 수 있다.
 
 ## OOP Contract
 

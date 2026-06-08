@@ -26,8 +26,8 @@ jobs:
       fail-fast: false
       matrix:
         dir:
-          - examples/order-java
-          - examples/order-java-layered
+          - examples/calculator-java-layered
+          - examples/calculator-java-hexagonal
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -51,8 +51,9 @@ jobs:
       fail-fast: false
       matrix:
         dir:
-          - examples/order-python
-          - examples/order-python-layered
+          - examples/calculator-python-layered
+          - examples/calculator-python-hexagonal
+          - examples/calculator-python-hexagonal-cqrs
     steps:
       - name: Checkout
         uses: actions/checkout@v5

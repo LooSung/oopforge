@@ -5,7 +5,7 @@
 
 [English](./README.md) · [한국어](./README.ko.md) · [日本語](./README.ja.md) · [中文](./README.zh.md)
 
-OOPforge **사용법**을 단계별로 보여주는 가이드입니다. 최소 실행 예제는 [`examples/order-java`](../../../examples/order-java/), [`examples/order-python`](../../../examples/order-python/)를 참고하세요.
+OOPforge **사용법**을 단계별로 보여주는 가이드입니다. 최소 실행 예제는 [`examples/calculator-java-hexagonal`](../../../examples/calculator-java-hexagonal/), [`examples/calculator-python-hexagonal`](../../../examples/calculator-python-hexagonal/)를 참고하세요.
 
 ---
 

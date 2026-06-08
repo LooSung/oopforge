@@ -41,7 +41,7 @@ Skill content updates immediately via symlinks; re-run `scripts/setup/install.sh
 ## Reference example
 
 ```text
-Use examples/order-java as the structural reference for place-order.
+Use examples/calculator-java-hexagonal as the structural reference for the calculate use case.
 ```
 
 ## Related

@@ -65,7 +65,7 @@ Use this table to decide **which skill to read first**. Workflow stage always wi
 | Test | Unit / integration / E2E | `skills/workflow/test.md` |
 | Refactor | Behavior-preserving cleanup | `skills/workflow/refactor.md` |
 | Continuity | Resume work across sessions | `skills/workflow/continuity.md` |
-| Code review | Detect rule violations | Hard Rules below + `examples/order-java/` |
+| Code review | Detect rule violations | Hard Rules below + `examples/calculator-java-hexagonal/` |
 
 ### Task → skill (within a stage)
 
@@ -85,7 +85,7 @@ Use this table to decide **which skill to read first**. Workflow stage always wi
 | Claude Code | `docs/claude-code.md` |
 | Cursor | `docs/cursor.md` |
 
-Reference implementation: [examples/README.md](examples/README.md) — `order-java`, `order-java-layered`, `order-python`, `order-python-layered` (same place-order flow).
+Reference implementation: [examples/README.md](examples/README.md) — `calculator-java-layered`, `calculator-java-hexagonal`, `calculator-python-layered`, `calculator-python-hexagonal`, `calculator-python-hexagonal-cqrs` (same calculator domain, different architectures).
 
 ## Skill Selection
 

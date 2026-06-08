@@ -104,9 +104,9 @@ Discovery → Design → Skeleton → Implement (Java + Python) → Test
 | 자료                                                                                 | 용도                                                                                                                                                                     |
 | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | [도서관 대출 가이드](docs/guides/library-loan/README.ko.md)                          | 전체 워크플로우 튜토리얼                                                                                                                                                 |
-| [Examples index](examples/README.md) | 실행 가능한 증명 — 4종 스택, 동일 place-order |
-| [order-java](examples/order-java/) · [order-java-layered](examples/order-java-layered/) | Java hexagonal · Java 3-tier |
-| [order-python](examples/order-python/) · [order-python-layered](examples/order-python-layered/) | FastAPI clean · FastAPI 3-tier |
+| [Examples index](examples/README.md) | 실행 가능한 증명 — 동일 calculator, 5종 아키텍처 |
+| [calculator-java-layered](examples/calculator-java-layered/) · [calculator-java-hexagonal](examples/calculator-java-hexagonal/) | Java 3-tier · Java hexagonal |
+| [calculator-python-layered](examples/calculator-python-layered/) · [calculator-python-hexagonal](examples/calculator-python-hexagonal/) · [calculator-python-hexagonal-cqrs](examples/calculator-python-hexagonal-cqrs/) | FastAPI 3-tier · hexagonal · hexagonal + CQRS |
 | [Discovery 샘플 (library)](docs/sample-output/discovery-library.ko.md)               | 에이전트 기대 출력 ([EN](docs/sample-output/discovery-library.md) · [JA](docs/sample-output/discovery-library.ja.md) · [ZH](docs/sample-output/discovery-library.zh.md)) |
 | [Design 샘플 (library)](docs/sample-output/design-library.ko.md)                     | 에이전트 기대 출력 ([EN](docs/sample-output/design-library.md) · [JA](docs/sample-output/design-library.ja.md) · [ZH](docs/sample-output/design-library.zh.md))          |
 
@@ -122,10 +122,10 @@ Discovery → Design → Skeleton → Implement (Java + Python) → Test
 
 ```java
 @Service
-public class OrderService {
-    public void createOrder(CreateOrderRequest req) {
-        // 검증, 가격, 저장, 이벤트 — 한 클래스에 전부
-        orderRepository.save(toEntity(req));
+public class CalculatorService {
+    public CalculationResponse calculate(CalculateRequest req) {
+        // 파싱, 계산, 저장, 이력, 포맷팅 — 한 클래스에 전부
+        repository.save(toEntity(req));
         eventPublisher.publish(...);
     }
 }
@@ -136,24 +136,24 @@ public class OrderService {
 ### After (OOPforge)
 
 ```java
-Order order = Order.place(orderId, customerId, lines);   // domain
-placeOrder.handle(command);                            // use case
-orderRepository.save(order);                             // port
-order.popEvents();                                       // OrderPlaced
+Calculation calc = Calculation.perform(id, operandA, operator, operandB);  // domain
+calculate.handle(command);                                  // use case
+calculationRepository.save(calc);                           // port
+calc.popEvents();                                           // CalculationPerformed
 ```
 
 ```text
-order/domain/Order.java
-order/application/provided/PlaceOrder.java
-order/application/required/OrderRepository.java
-order/application/service/PlaceOrderService.java
-order/adapter/web/OrderController.java
-order/adapter/persistence/InMemoryOrderRepository.java
+calculator/domain/Calculation.java
+calculator/application/provided/Calculate.java
+calculator/application/required/CalculationRepository.java
+calculator/application/service/CalculateService.java
+calculator/adapter/web/CalculatorController.java
+calculator/adapter/persistence/InMemoryCalculationRepository.java
 ```
 
 **효과:** 도메인 중심 · 책임 분리 · Spring 없이 도메인 테스트 · 유지보수 용이 · 에이전트가 반복 가능한 레이아웃 따름
 
-실행 가능한 참고 구현: [examples/README.md](examples/README.md) — hexagonal·layered 동일 place-order
+실행 가능한 참고 구현: [examples/README.md](examples/README.md) — layered·hexagonal·CQRS 스택의 동일 calculator
 
 ---
 
@@ -321,10 +321,11 @@ OOPforge Discovery: 주문 도메인. Discovery부터 — 코드는 아직 작�
 oopforge/
 ├── examples/
 │   ├── README.md                   ← 스택 ↔ 폴더 매핑
-│   ├── order-java/                 ← Java Spring hexagonal
-│   ├── order-java-layered/         ← Java Spring 3-tier
-│   ├── order-python/               ← Python FastAPI hexagonal
-│   └── order-python-layered/      ← FastAPI 3-tier
+│   ├── calculator-java-layered/    ← Java Spring 3-tier
+│   ├── calculator-java-hexagonal/  ← Java Spring hexagonal
+│   ├── calculator-python-layered/  ← FastAPI 3-tier
+│   ├── calculator-python-hexagonal/ ← FastAPI hexagonal/clean
+│   └── calculator-python-hexagonal-cqrs/  ← FastAPI hexagonal + CQRS
 ├── docs/                          ← Cursor, Claude Code 가이드
 ├── .claude-plugin/                ← Claude Code 플러그인 매니페스트 (Phase 2)
 ├── .codex-plugin/                 ← Codex 플러그인 매니페스트 (Phase 2)

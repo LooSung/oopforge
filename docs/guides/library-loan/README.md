@@ -5,7 +5,7 @@
 
 [English](./README.md) · [한국어](./README.ko.md) · [日本語](./README.ja.md) · [中文](./README.zh.md)
 
-This guide shows **how to use OOPforge end to end**. For a minimal runnable proof, see [`examples/order-java`](../../../examples/order-java/) and [`examples/order-python`](../../../examples/order-python/).
+This guide shows **how to use OOPforge end to end**. For a minimal runnable proof, see [`examples/calculator-java-hexagonal`](../../../examples/calculator-java-hexagonal/) and [`examples/calculator-python-hexagonal`](../../../examples/calculator-python-hexagonal/).
 
 ---
 

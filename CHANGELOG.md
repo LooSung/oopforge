@@ -2,7 +2,24 @@
 
 모든 변경은 여기에 기록한다. [Keep a Changelog](https://keepachangelog.com/) 형식.
 
-## [Unreleased]
+## [0.8.0] - 2026-06-08
+
+예제를 하나의 calculator 도메인으로 통일(java/python × layered/hexagonal + hexagonal-cqrs)하고, 모호한 빌드 요청·스택 범위 가드를 추가했다.
+
+### Added
+
+- **Calculator example family** — `calculator-java-layered`, `calculator-java-hexagonal`, `calculator-python-layered`, `calculator-python-hexagonal`, `calculator-python-hexagonal-cqrs`. One easy-to-grasp domain (calculator + history) across every architecture, replacing the harder-to-read `order-*` examples. CQRS is shown as an overlay on hexagonal (separate command/query ports), not as a peer architecture.
+- **`archlint.py` Python support** — layered (router/service/repository folders, router→repository ban) + CQRS (`*query_service.py` / `*command_service.py`), enforced in CI on the layered and CQRS calculator examples.
+
+### Changed
+
+- **Ambiguity & stack scope guard** — under-specified build requests (e.g. "make a calculator") are now handled: `skills/workflow/craft.md` adds a "모호성 해소" step (state defaults, ask only decision-critical questions), and `skills/lang/backend-stack.md` adds a scope gate — OOPforge targets Java Spring / Python FastAPI only; unsupported stacks (JS/TS, frontend, CLI) are flagged as out of scope instead of silently built. `SKILL.md` trigger broadened to catch everyday backend build prompts.
+- **Example naming convention** — standardized on `{domain}-{lang}-{architecture}` (`layered` / `hexagonal` / `cqrs`). `4-tier` intentionally avoided: hexagonal is ports & adapters, not a tier count.
+- **`skills/skeleton/backend-skeleton.md`** — Python layered now uses per-layer **folders** (router/ service/ repository/ domain/) with wiring in `app/core/`, matching the v0.7 layer-layout Hard Rule.
+
+### Removed
+
+- **`examples/order-*`** (`order-java`, `order-java-layered`, `order-python`, `order-python-layered`) — replaced by the calculator family.
 
 ## [0.7.1] - 2026-06-08
 
