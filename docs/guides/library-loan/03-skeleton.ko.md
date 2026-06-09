@@ -1,7 +1,6 @@
 # Step 3 — Skeleton
 
-[English](./03-skeleton.md) · [한국어](./03-skeleton.ko.md) · [日本語](./03-skeleton.ja.md) · [中文](./03-skeleton.zh.md)
-
+[English](./03-skeleton.md) · [한국어](./03-skeleton.ko.md)
 > **패키지 + 빈 타입.** 비즈니스 로직은 `NotImplementedError` / `UnsupportedOperationException` only.
 
 스킬: `{pack}/skills/workflow/skeleton.md`

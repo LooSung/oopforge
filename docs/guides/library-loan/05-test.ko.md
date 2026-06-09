@@ -1,7 +1,6 @@
 # Step 5 — Test
 
-[English](./05-test.md) · [한국어](./05-test.ko.md) · [日本語](./05-test.ja.md) · [中文](./05-test.zh.md)
-
+[English](./05-test.md) · [한국어](./05-test.ko.md)
 Domain 테스트는 Spring·DB fixture **없이** 실행. 유스케이스 테스트는 in-memory port 사용.
 
 ---

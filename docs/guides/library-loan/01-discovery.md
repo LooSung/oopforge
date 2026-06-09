@@ -1,7 +1,6 @@
 # Step 1 — Discovery
 
-[English](./01-discovery.md) · [한국어](./01-discovery.ko.md) · [日本語](./01-discovery.ja.md) · [中文](./01-discovery.zh.md)
-
+[English](./01-discovery.md) · [한국어](./01-discovery.ko.md)
 > **No code.** Define language, boundaries, and terms only.
 
 Read skill: `{pack}/skills/workflow/discovery.md`

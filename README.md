@@ -14,7 +14,7 @@ It gives Claude Code, Codex CLI, Cursor, and compatible agents a clear way to de
 
 Specialized for **Java (Spring)** and **Python (FastAPI)** — pick **3-tier (Controller/Service/Repository)** or **hexagonal/clean**, with **OpenAPI/Swagger** built in.
 
-[English](./README.md) · [한국어](./README.ko.md) · [日本語](./README.ja.md) · [中文](./README.zh.md)
+[English](./README.md) · [한국어](./README.ko.md)
 
 ---
 
@@ -96,16 +96,14 @@ Harness guides: [Claude Code](docs/claude-code.md) · [Codex](docs/codex.md) · 
 **[Library loan walkthrough →](docs/guides/library-loan/README.md)**  
 Discovery → Design → Skeleton → Implement (Java + Python) → Test
 
-Guide index: [EN](docs/guides/library-loan/README.md) · [KO](docs/guides/library-loan/README.ko.md) · [JA](docs/guides/library-loan/README.ja.md) · [ZH](docs/guides/library-loan/README.zh.md)
+Guide index: [EN](docs/guides/library-loan/README.md) · [KO](docs/guides/library-loan/README.ko.md)
 
 | Resource | Purpose |
 |---|---|
 | [Library loan guide](docs/guides/library-loan/README.md) | Full tutorial — how to use OOPforge end to end |
-| [Examples index](examples/README.md) | Runnable proof — same calculator, 5 architectures |
+| [Examples index](examples/README.md) | Runnable proof — same calculator, 6 examples |
 | [calculator-java-layered](examples/calculator-java-layered/) · [calculator-java-hexagonal](examples/calculator-java-hexagonal/) · [calculator-java-hexagonal-cqrs](examples/calculator-java-hexagonal-cqrs/) | Java 3-tier · hexagonal · hexagonal + CQRS |
 | [calculator-python-layered](examples/calculator-python-layered/) · [calculator-python-hexagonal](examples/calculator-python-hexagonal/) · [calculator-python-hexagonal-cqrs](examples/calculator-python-hexagonal-cqrs/) | FastAPI 3-tier · hexagonal · hexagonal + CQRS |
-| [Sample discovery (library)](docs/sample-output/discovery-library.md) | Short expected agent output ([KO](docs/sample-output/discovery-library.ko.md) · [JA](docs/sample-output/discovery-library.ja.md) · [ZH](docs/sample-output/discovery-library.zh.md)) |
-| [Sample design (library)](docs/sample-output/design-library.md) | Short expected agent output ([KO](docs/sample-output/design-library.ko.md) · [JA](docs/sample-output/design-library.ja.md) · [ZH](docs/sample-output/design-library.zh.md)) |
 | [Reviewer checklist](docs/reviewer-checklist.md) | Post-implement rule check |
 
 Each workflow stage ends with a **human checkpoint** — do not skip ahead.
@@ -364,7 +362,6 @@ oopforge/
 ├── docs/
 │   ├── roadmap.md             Direction, priorities, non-goals
 │   ├── guides/library-loan/   Step-by-step walkthrough (start here)
-│   ├── sample-output/         Short expected agent outputs
 │   ├── codex.md         Codex setup guide
 │   ├── cursor.md        Cursor setup guide
 │   └── claude-code.md   Claude Code setup guide
@@ -406,7 +403,7 @@ The enforceable, measurable rules live in [`AGENTS.md`](./AGENTS.md). README kee
 
 | Area | Language |
 |---|---|
-| README | English (primary), plus KO / JA / ZH translations |
+| README & docs | English (primary) + Korean only; other languages only on request |
 | `AGENTS.md`, shell scripts, CI | English |
 | Skill files (`skills/`) | Korean (default); English translations welcome via PR |
 
@@ -472,7 +469,3 @@ MIT
 
 - [Library loan walkthrough](docs/guides/library-loan/README.md) — **recommended starting point**
 - [Reviewer checklist](docs/reviewer-checklist.md)
-- [Sample discovery — library](docs/sample-output/discovery-library.md)
-- [Sample design — library](docs/sample-output/design-library.md)
-- [Sample discovery — order](docs/sample-output/discovery-order.md)
-- [Sample design — order](docs/sample-output/design-order.md)

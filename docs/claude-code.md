@@ -28,7 +28,7 @@ Installed paths:
 ```
 
 **First time?** Follow the [library loan walkthrough](../guides/library-loan/README.md) step by step.  
-Localized index: [KO](../guides/library-loan/README.ko.md) · [JA](../guides/library-loan/README.ja.md) · [ZH](../guides/library-loan/README.zh.md)
+Localized index: [KO](../guides/library-loan/README.ko.md)
 
 ## Update after pull
 

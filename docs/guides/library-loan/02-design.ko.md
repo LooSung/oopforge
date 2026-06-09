@@ -1,7 +1,6 @@
 # Step 2 — Design
 
-[English](./02-design.md) · [한국어](./02-design.ko.md) · [日本語](./02-design.ja.md) · [中文](./02-design.zh.md)
-
+[English](./02-design.md) · [한국어](./02-design.ko.md)
 > **시그니처만.** 메서드 본문·프레임워크 코드 작성 금지.
 
 스킬: `{pack}/skills/workflow/design.md`, `{pack}/skills/oop/domain-model.md`

@@ -1,7 +1,6 @@
 # Step 4 — Implement (Python)
 
-[English](./04-implement-python.md) · [한국어](./04-implement-python.ko.md) · [日本語](./04-implement-python.ja.md) · [中文](./04-implement-python.zh.md)
-
+[English](./04-implement-python.md) · [한국어](./04-implement-python.ko.md)
 Java와 동일한 유스케이스. **Domain: stdlib + dataclasses only.**
 
 ---

@@ -1,7 +1,6 @@
 # Step 3 — Skeleton
 
-[English](./03-skeleton.md) · [한국어](./03-skeleton.ko.md) · [日本語](./03-skeleton.ja.md) · [中文](./03-skeleton.zh.md)
-
+[English](./03-skeleton.md) · [한국어](./03-skeleton.ko.md)
 > **Packages + empty types.** Business logic is `NotImplementedError` / `UnsupportedOperationException` only.
 
 Read skills: `{pack}/skills/workflow/skeleton.md`

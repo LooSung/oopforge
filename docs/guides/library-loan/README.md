@@ -3,7 +3,7 @@
 > End-to-end **library loan system** in Java (Spring Boot) and Python (FastAPI).  
 > Follow Discovery → Design → Delivery Plan → Skeleton → Implement → Test.
 
-[English](./README.md) · [한국어](./README.ko.md) · [日本語](./README.ja.md) · [中文](./README.zh.md)
+[English](./README.md) · [한국어](./README.ko.md)
 
 This guide shows **how to use OOPforge end to end**. For a minimal runnable proof, see [`examples/calculator-java-hexagonal`](../../../examples/calculator-java-hexagonal/) and [`examples/calculator-python-hexagonal`](../../../examples/calculator-python-hexagonal/).
 
@@ -54,20 +54,7 @@ Follow OOPforge workflow for a library loan domain. Start at Discovery — no co
 | 5. Test | [05-test.md](./05-test.md) § Java | [05-test.md](./05-test.md) § Python |
 | 6. Layer rules | [06-layer-rules.md](./06-layer-rules.md) | same |
 
-Each step file includes language links (EN · KO · JA · ZH) at the top.
-
----
-
-## Short samples (agent output)
-
-If you only need **expected Discovery/Design shape** for prompts:
-
-| Language | Discovery | Design |
-|---|---|---|
-| English | [discovery-library.md](../../sample-output/discovery-library.md) | [design-library.md](../../sample-output/design-library.md) |
-| 한국어 | [discovery-library.ko.md](../../sample-output/discovery-library.ko.md) | [design-library.ko.md](../../sample-output/design-library.ko.md) |
-| 日本語 | [discovery-library.ja.md](../../sample-output/discovery-library.ja.md) | [design-library.ja.md](../../sample-output/design-library.ja.md) |
-| 中文 | [discovery-library.zh.md](../../sample-output/discovery-library.zh.md) | [design-library.zh.md](../../sample-output/design-library.zh.md) |
+Each step file includes language links (EN · KO) at the top.
 
 ---
 

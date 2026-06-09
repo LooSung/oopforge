@@ -3,7 +3,7 @@
 > Java (Spring Boot)와 Python (FastAPI)로 **도서관 대출 시스템**을 처음부터 끝까지 구현합니다.  
 > Discovery → Design → Delivery Plan → Skeleton → Implement → Test 순서로 진행합니다.
 
-[English](./README.md) · [한국어](./README.ko.md) · [日本語](./README.ja.md) · [中文](./README.zh.md)
+[English](./README.md) · [한국어](./README.ko.md)
 
 OOPforge **사용법**을 단계별로 보여주는 가이드입니다. 최소 실행 예제는 [`examples/calculator-java-hexagonal`](../../../examples/calculator-java-hexagonal/), [`examples/calculator-python-hexagonal`](../../../examples/calculator-python-hexagonal/)를 참고하세요.
 
@@ -54,20 +54,7 @@ Follow OOPforge workflow for a library loan domain. Start at Discovery — no co
 | 5. Test | [05-test.ko.md](./05-test.ko.md) § Java | [05-test.ko.md](./05-test.ko.md) § Python |
 | 6. 레이어 규칙 | [06-layer-rules.ko.md](./06-layer-rules.ko.md) | 동일 |
 
-각 단계 파일 상단에서 EN · KO · JA · ZH 전환 가능.
-
----
-
-## 짧은 샘플 (에이전트 출력)
-
-프롬프트용 **Discovery/Design 기대 형태**만 필요할 때:
-
-| 언어 | Discovery | Design |
-|---|---|---|
-| English | [discovery-library.md](../../sample-output/discovery-library.md) | [design-library.md](../../sample-output/design-library.md) |
-| 한국어 | [discovery-library.ko.md](../../sample-output/discovery-library.ko.md) | [design-library.ko.md](../../sample-output/design-library.ko.md) |
-| 日本語 | [discovery-library.ja.md](../../sample-output/discovery-library.ja.md) | [design-library.ja.md](../../sample-output/design-library.ja.md) |
-| 中文 | [discovery-library.zh.md](../../sample-output/discovery-library.zh.md) | [design-library.zh.md](../../sample-output/design-library.zh.md) |
+각 단계 파일 상단에서 EN · KO 전환 가능.
 
 ---
 

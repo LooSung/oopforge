@@ -65,7 +65,7 @@ After `git pull` in `~/.oopforge`, restart `cursor-agent` to pick up skill chang
 
 ```text
 Follow the OOPforge library loan walkthrough: docs/guides/library-loan/README.md
-(Localized: README.ko.md · README.ja.md · README.zh.md in the same folder.)
+(Localized: README.ko.md in the same folder.)
 Design an Order aggregate using OOPforge. Start at Discovery — no code yet.
 ```
 

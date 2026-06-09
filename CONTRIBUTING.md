@@ -10,7 +10,7 @@ In rough priority order:
 2. **Backend stack / skeleton improvements** — stack selection in `skills/lang/backend-stack.md`, package structure in `skills/skeleton/backend-skeleton.md`
 3. **Workflow fixes** — Discovery → Test behavior, Craft routing, or verification clarity
 4. **Example projects** — runnable variants in `examples/`
-5. **Translations** — KO/JA/ZH docs
+5. **Translations** — Korean docs (English is primary; other languages only on request)
 6. **Bug fixes / typos** — always welcome
 
 ## What we do not accept
@@ -92,11 +92,11 @@ Every skill must:
 
 | Area | Language |
 |---|---|
-| README | English primary, KO/JA/ZH translations welcome |
+| README & docs | English (primary) + Korean only; other languages only on request |
 | `AGENTS.md`, scripts, CI | English |
 | Skills (`skills/`) | Korean (default); English translations welcome under `skills/en/` (future) |
 | PR descriptions, commit messages | English (preferred) or Korean |
-| Issue discussions | Any of EN/KO/JA/ZH |
+| Issue discussions | English or Korean |
 
 ## Commit messages
 

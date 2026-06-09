@@ -1,7 +1,6 @@
 # Step 6 — Layer dependency rules
 
-[English](./06-layer-rules.md) · [한국어](./06-layer-rules.ko.md) · [日本語](./06-layer-rules.ja.md) · [中文](./06-layer-rules.zh.md)
-
+[English](./06-layer-rules.md) · [한국어](./06-layer-rules.ko.md)
 ```text
 Presentation / Adapter
         │

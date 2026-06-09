@@ -1,7 +1,6 @@
 # Step 2 — Design
 
-[English](./02-design.md) · [한국어](./02-design.ko.md) · [日本語](./02-design.ja.md) · [中文](./02-design.zh.md)
-
+[English](./02-design.md) · [한국어](./02-design.ko.md)
 > **Signatures only.** No method bodies or framework code.
 
 Read skills: `{pack}/skills/workflow/design.md`, `{pack}/skills/oop/domain-model.md`

@@ -1,7 +1,6 @@
 # Step 4 — Implement (Java)
 
-[English](./04-implement-java.md) · [한국어](./04-implement-java.ko.md) · [日本語](./04-implement-java.ja.md) · [中文](./04-implement-java.zh.md)
-
+[English](./04-implement-java.md) · [한국어](./04-implement-java.ko.md)
 Domain → application → adapter order. **Domain layer: Spring import 0.**
 
 ---

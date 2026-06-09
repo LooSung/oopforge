@@ -2,6 +2,21 @@
 
 모든 변경은 여기에 기록한다. [Keep a Changelog](https://keepachangelog.com/) 형식.
 
+## [0.8.3] - 2026-06-09
+
+레포 군살 제거 — 죽은/중복 문서를 들어내 유지보수 표면을 줄였다.
+
+### Removed
+
+- **`docs/sample-output/` 전체** — Discovery/Design 샘플 출력은 `docs/guides/library-loan/` 가이드 본문과 중복이라 제거. 메인 README 표·트리·리소스 링크와 가이드의 "Short samples" 섹션 참조도 함께 정리.
+- **일본어(JA)·중국어(ZH) 문서 전체** — README 및 `library-loan` 가이드의 `*.ja.md`·`*.zh.md`(~20개) 제거. 솔로 유지보수에서 4개국어 동기화로 인한 번역 드리프트를 막기 위해 **영어 정본 + 한국어** 2개 언어로 축소.
+
+### Changed
+
+- **언어 선택자 정리** — 모든 문서 상단 선택자와 가이드 목차를 `EN · KO`로 통일(README ×2, 가이드 step ×14, 가이드 README ×2, `docs/claude-code.md`, `docs/cursor.md`).
+- **예제 개수 표기 수정** — README의 "5 architectures / 5종 아키텍처"를 실제 예제 수에 맞춰 "6 examples / 6종 예제"로 정정.
+- **언어 정책을 EN+KO로 명문화** — `CONTRIBUTING.md`·`README.md`의 "KO/JA/ZH 번역 환영" 지시문을 "영어(정본) + 한국어, 그 외 언어는 요청 시에만"으로 변경. 에이전트/기여자가 무심코 JA/ZH 문서를 다시 만들지 않도록 생성 유도 문구 자체를 제거.
+
 ## [0.8.2] - 2026-06-09
 
 calculator 예제 패밀리를 대칭으로 완성 — Java에도 hexagonal + CQRS 예제 추가.
