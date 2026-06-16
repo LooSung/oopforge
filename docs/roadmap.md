@@ -165,8 +165,9 @@ AI 에이전트는 제약이 없으면 백엔드 아키텍처를 무너뜨린다
 
 ## 최근 완료 (요약)
 
-상세는 [`CHANGELOG.md`](../CHANGELOG.md) 참조. 현재 최신: **v0.8.4**.
+상세는 [`CHANGELOG.md`](../CHANGELOG.md) 참조. 현재 최신: **v0.8.5**.
 
+- **DRY-with-DDD (v0.8.5)** — `oop-discipline` #9로 DRY를 추가하되 Rule of Three + 바운디드 컨텍스트 경계 가드레일로 한정. 원칙 감사 결과 유일한 빈칸을 메움.
 - **과설계 방지 사다리 (v0.8.4)** — `oop-discipline` #7을 작성 직전 번호 사다리로 강화(본질 vs 우발 복잡성 구분, 안전 항목 비협상, 미룬 것은 upgrade path 표식). `implement.md` 발화 지점에 연결. ponytail의 YAGNI 사다리를 백엔드 OOP/DDD 맥락으로 차용하되 도메인 구조는 면제.
 - **레포 군살 제거 (v0.8.3)** — `docs/sample-output/` 전체와 JA/ZH 문서(~20개) 제거. 문서를 **영어(정본) + 한국어**로 축소하고 정책 명문화.
 - **runnable 예제 패밀리** — `calculator` 한 도메인을 java/python × layered/hexagonal/hexagonal-cqrs 6종으로 통일.

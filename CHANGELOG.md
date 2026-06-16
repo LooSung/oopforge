@@ -2,6 +2,14 @@
 
 모든 변경은 여기에 기록한다. [Keep a Changelog](https://keepachangelog.com/) 형식.
 
+## [0.8.5] - 2026-06-16
+
+DRY를 DDD 가드레일로 추가 — 순진한 중복 제거가 아니라 "언제 멈출지"를 가르친다.
+
+### Added
+
+- **`skills/principles/oop-discipline.md` #9 "Duplicate before the wrong abstraction"** — SOLID/원칙 감사에서 유일하게 빈칸이던 DRY를 채움. 잘못된 추상화 비용 > 중복 비용 전제 위에 **Rule of Three**(세 번째 중복에야 추상화), **바운디드 컨텍스트 가로지르는 도메인 모델 공유 금지**(닮아도 따로 진화 → 중복이 옳음), **흩어진 비즈니스 규칙만 도메인 행동 메서드로 모으기**(God Service·anemic domain 예방). LSP·OCP·Composition은 수직 정체성상 의도적으로 제외.
+
 ## [0.8.4] - 2026-06-16
 
 과설계 방지 "사다리"를 방법론에 도입 — 코드 작성을 마지막 수단으로 강제한다.
