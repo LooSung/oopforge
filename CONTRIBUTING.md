@@ -94,7 +94,7 @@ Every skill must:
 |---|---|
 | README & docs | English (primary) + Korean only; other languages only on request |
 | `AGENTS.md`, scripts, CI | English |
-| Skills (`skills/`) | Korean (default); English translations welcome under `skills/en/` (future) |
+| Skills (`skills/`) | **English (canonical)** — agent-facing instructions; Korean methodology lives in `docs/methodology.ko.md` |
 | PR descriptions, commit messages | English (preferred) or Korean |
 | Issue discussions | English or Korean |
 

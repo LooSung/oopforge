@@ -1,34 +1,34 @@
 ---
 name: workflow-discovery
-description: 새 도메인/기능 시작 시 가장 먼저 수행하는 단계. 코드 없이 도메인 언어와 경계만 정의한다.
+description: The first step when starting a new domain/feature. Define the domain language and boundaries only, with no code.
 tags: [workflow, ddd]
 stability: stable
 ---
 
 # Workflow — Discovery
 
-## 언제 쓰나
-새 도메인을 모델링하거나, 큰 기능을 시작할 때. **첫 번째** 단계.
-Design 이전에 반드시 수행. 건너뛰면 잘못된 추상화로 직행한다.
+## When to use
+When modeling a new domain or starting a large feature. The **first** stage.
+Always do this before Design. Skipping it heads straight to the wrong abstraction.
 
-## 체크리스트
-- [ ] 도메인 용어집(ubiquitous language) 정의
-- [ ] 바운디드 컨텍스트 식별 (여러 개일 수 있음)
-- [ ] 컨텍스트별 핵심 애그리거트 후보 나열
-- [ ] 외부 시스템/액터 식별
-- [ ] 비기능 요구사항 (성능, 일관성 모델) 한 줄씩
-- [ ] 모르는 것을 명시적으로 적기 (Open Questions)
+## Checklist
+- [ ] Define the ubiquitous language (glossary)
+- [ ] Identify bounded contexts (there may be several)
+- [ ] List core aggregate candidates per context
+- [ ] Identify external systems/actors
+- [ ] Non-functional requirements (performance, consistency model), one line each
+- [ ] Explicitly write down unknowns (Open Questions)
 
-## 산출물
+## Output
 
-`docs/discovery.md` 에 다음 형식으로 저장:
+Save to `docs/discovery.md` in this format:
 
 ```markdown
 # <Domain> — Discovery
 
 ## Glossary
-- **Order**: 고객이 제출한 구매 의사. 결제 전까지 변경 가능.
-- **OrderLine**: Order 안의 단일 품목 + 수량.
+- **Order**: a customer's purchase intent. Changeable until payment.
+- **OrderLine**: a single item + quantity within an Order.
 - ...
 
 ## Bounded Contexts
@@ -42,22 +42,22 @@ Design 이전에 반드시 수행. 건너뛰면 잘못된 추상화로 직행한
 
 ## Actors / External
 - Customer (web), AdminUser (back office)
-- Payment Gateway (외부), Inventory Service (내부)
+- Payment Gateway (external), Inventory Service (internal)
 
 ## Non-Functional
-- 결제는 동기, 발송은 eventual consistency
-- Order 생성은 99p 200ms 이내
+- Payment is synchronous; fulfillment is eventual consistency
+- Order creation within 200ms at p99
 
 ## Open Questions
-- 부분 환불 정책?
-- 재고 부족 시 대기열 운영 여부?
+- Partial refund policy?
+- Whether to run a queue when inventory is short?
 ```
 
-## 금지
-- **코드 작성 금지** — 시그니처도 X. 단어와 문장만.
-- **프레임워크 언급 금지** — Spring/FastAPI/JPA는 아직 등장 X.
-- **CRUD 사고 금지** — "Order를 update한다" 대신 "주문을 확정한다", "주문을 취소한다".
-- **Open Questions 비우기** — 모르는 게 없을 리 없다. 명시하라.
+## Prohibited
+- **No writing code** — not even signatures. Words and sentences only.
+- **No framework mentions** — Spring/FastAPI/JPA do not appear yet.
+- **No CRUD thinking** — instead of "update an Order", say "confirm the order", "cancel the order".
+- **No empty Open Questions** — there can't be nothing unknown. State it.
 
-## 다음 단계
-사용자 승인 후 → `workflow-design`
+## Next step
+After user approval -> `workflow-design`

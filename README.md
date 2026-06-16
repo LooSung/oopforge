@@ -405,9 +405,9 @@ The enforceable, measurable rules live in [`AGENTS.md`](./AGENTS.md). README kee
 |---|---|
 | README & docs | English (primary) + Korean only; other languages only on request |
 | `AGENTS.md`, shell scripts, CI | English |
-| Skill files (`skills/`) | Korean (default); English translations welcome via PR |
+| Skill files (`skills/`) | **English (canonical)** — these are agent-facing instructions |
 
-Scripts and agent instructions use English so contributors and CI share one vocabulary. Skill content stays Korean-first because the pack was written for Korean-speaking teams. A future `skills/en/` tree is possible if demand grows.
+Skills, scripts, and agent instructions are English so the agent reads its native instruction language and contributors/CI share one vocabulary. Korean speakers read the methodology in one place: **[docs/methodology.ko.md](./docs/methodology.ko.md)** — a conceptual guide, not a per-skill mirror (mirrors drift; a concept guide stays stable).
 
 ---
 

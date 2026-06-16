@@ -1,34 +1,34 @@
 ---
 name: playbook-bug-fix
-description: 도메인 버그를 실패 테스트로 재현하고 가장 작은 변경으로 해결하는 실행 플레이북.
+description: Execution playbook to reproduce a domain bug with a failing test and resolve it with the smallest change.
 tags: [playbook, bug-fix, tdd]
 stability: experimental
 ---
 
 # Playbook — Bug Fix
 
-## 사용 시점
+## When to use
 
-잘못된 상태 전이, 불변식 위반, 중복 처리, 권한 오류,
-회귀 버그를 수정할 때 사용한다.
+Use this when fixing a wrong state transition, an invariant violation, duplicate handling,
+an authorization error, or a regression bug.
 
-테스트 설계와 실행 기록은 `skills/workflow/test.md`를 따른다.
-OOP Contract 형식과 최종 검증은 `skills/workflow/craft.md`를 따른다.
+Follow `skills/workflow/test.md` for test design and run records.
+Follow `skills/workflow/craft.md` for the OOP Contract format and final verification.
 
-## 체크리스트
+## Checklist
 
-- [ ] 증상을 한 문장으로 적는다.
-- [ ] 영향을 받는 Aggregate와 유스케이스를 찾는다.
-- [ ] 버그를 재현하는 실패 테스트를 작성한다.
-- [ ] 수정 전 테스트가 실제로 실패하는지 확인한다.
-- [ ] 근본 원인을 적는다.
-- [ ] 가장 작은 코드 변경으로 수정한다.
-- [ ] 실패 테스트와 관련 회귀 테스트가 통과하는지 확인한다.
-- [ ] `skills/workflow/craft.md`의 검증과 완료 보고를 따른다.
+- [ ] Write the symptom in one sentence.
+- [ ] Find the affected Aggregate and use case.
+- [ ] Write a failing test that reproduces the bug.
+- [ ] Confirm the test actually fails before the fix.
+- [ ] Write down the root cause.
+- [ ] Fix with the smallest code change.
+- [ ] Confirm the failing test and related regression tests pass.
+- [ ] Follow the verification and completion report in `skills/workflow/craft.md`.
 
-## 금지
+## Prohibited
 
-- 실패 테스트 없이 바로 수정하지 않는다.
-- 증상만 가리는 조건문을 추가하지 않는다.
-- 버그 수정과 구조 개편을 한 번에 섞지 않는다.
-- 재현하지 못했다면 완료했다고 말하지 않는다.
+- Do not fix directly without a failing test.
+- Do not add a conditional that only masks the symptom.
+- Do not mix a bug fix with structural rework.
+- Do not claim done if you could not reproduce it.

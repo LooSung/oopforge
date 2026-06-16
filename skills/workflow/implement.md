@@ -1,66 +1,67 @@
 ---
 name: workflow-implement
-description: Skeleton 다음 단계. 유스케이스를 하나씩, 테스트와 함께 구현한다.
+description: The step after Skeleton. Implement one use case at a time, with tests.
 tags: [workflow, ddd]
 stability: stable
 ---
 
 # Workflow — Implement
 
-## 언제 쓰나
-Skeleton이 끝났을 때. **유스케이스 하나 = 한 번의 Implement 사이클**.
-여러 유스케이스를 동시에 구현하지 않는다.
+## When to use
+When Skeleton is done. **One use case = one Implement cycle.**
+Do not implement several use cases at once.
 
-## 체크리스트 (유스케이스 1개당)
-- [ ] 도메인 모델 메서드 구현 + 단위 테스트
-- [ ] 유스케이스 클래스 구현 (orchestration)
-- [ ] 포트 어댑터 구현 (필요한 부분만)
-- [ ] 인바운드 어댑터 (Controller 등) 구현
-- [ ] 통합 테스트 1개 이상
-- [ ] 사람의 코드 리뷰 통과
+## Checklist (per use case)
+- [ ] Implement domain model methods + unit tests
+- [ ] Implement the use case class (orchestration)
+- [ ] Implement port adapters (only what is needed)
+- [ ] Implement the inbound adapter (Controller, etc.)
+- [ ] At least one integration test
+- [ ] Pass human code review
 
-## 구현 순서 (안에서 밖으로)
+## Implementation order (inside-out)
 
 ```
-1. Domain model 메서드 + 단위 테스트   ← 여기부터
-2. Use case 클래스
-3. Outbound port adapter (Repository 구현 등)
-4. Inbound adapter (REST Controller 등)
-5. 통합 테스트
+1. Domain model methods + unit tests   <- start here
+2. Use case class
+3. Outbound port adapter (Repository implementation, etc.)
+4. Inbound adapter (REST Controller, etc.)
+5. Integration test
 ```
 
-도메인부터 짜야 프레임워크에 새지 않는다.
+Writing the domain first prevents leaking into the framework.
 
-## 작성 직전: 사다리를 밟는다
+## Just before writing: climb the ladder
 
-각 조각을 쓰기 전에 `skills/principles/oop-discipline.md` #7 사다리를 밟는다 —
-표준/프레임워크 기본/기존 의존성으로 되면 직접 짜지 않는다. 단 도메인 구조
-(Aggregate 경계·불변식·포트)는 본질적 복잡성이므로 깎지 않고, 신뢰 경계 검증·
-데이터 손실·보안도 생략하지 않는다. 의도적으로 미룬 부분은 upgrade path와 함께
-표식을 남긴다.
+Before writing each piece, climb the `skills/principles/oop-discipline.md` #7
+ladder — if the standard library, a framework default, or an existing dependency
+does it, do not hand-write it. But domain structure (Aggregate boundaries,
+invariants, ports) is essential complexity and is not cut, and trust-boundary
+validation, data loss, and security are not skipped. Leave a marker with the
+upgrade path for anything you intentionally defer.
 
-## 테스트 우선순위
+## Test priority
 
-| 종류 | 필수? | 도구 예시 |
+| Kind | Required? | Example tools |
 |---|---|---|
-| 도메인 단위 테스트 | **필수** | JUnit, pytest |
-| 유스케이스 테스트 (port mock) | **필수** | Mockito, unittest.mock |
-| 통합 테스트 (DB 포함) | **필수** | Testcontainers, pytest-docker |
-| E2E | 선택 | RestAssured, httpx |
+| Domain unit test | **required** | JUnit, pytest |
+| Use-case test (port mock) | **required** | Mockito, unittest.mock |
+| Integration test (incl. DB) | **required** | Testcontainers, pytest-docker |
+| E2E | optional | RestAssured, httpx |
 
-## 금지
-- **여러 유스케이스 동시 구현 금지** — 한 번에 하나, 머지 후 다음.
-- **테스트 없는 도메인 로직 커밋 금지**
-- **도메인에 어노테이션 추가 금지** — `@Entity`, `@Component` 등은 infrastructure 레이어에서만
-- **CRUD 메서드 추가 유혹 저항** — 유스케이스 동사로만
-- **TDD 강요 X, 테스트 강요 O** — 순서는 자유, 존재는 필수
+## Prohibited
+- **No implementing multiple use cases at once** — one at a time, next after merge.
+- **No committing domain logic without tests**
+- **No annotations on the domain** — `@Entity`, `@Component`, etc. live only in the infrastructure layer
+- **Resist the urge to add CRUD methods** — use business verbs only
+- **TDD not required, tests required** — order is free, existence is mandatory
 
-## 완료 정의 (Definition of Done)
-- 단위 테스트 + 통합 테스트 통과
-- 코드 리뷰 1명 이상
-- `CHANGELOG` 또는 PR 설명에 변경 요약
-- 다음 유스케이스로 넘어가기 전 머지
+## Definition of Done
+- Unit tests + integration tests pass
+- At least one code reviewer
+- Change summary in `CHANGELOG` or the PR description
+- Merge before moving to the next use case
 
-## 다음 단계
-완료된 유스케이스 머지 → 다음 유스케이스로 Implement 사이클 반복.
-모든 유스케이스 완료 시 → 도메인 단위 회고.
+## Next step
+Merge the completed use case -> repeat the Implement cycle for the next use case.
+When all use cases are done -> domain-level retrospective.

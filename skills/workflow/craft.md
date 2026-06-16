@@ -1,62 +1,62 @@
 ---
 name: workflow-craft
-description: 기존 백엔드 OOP 작업을 분류하고 가장 작은 실행 경로로 수행하는 OOPforge 실행 오케스트레이터.
+description: OOPforge execution orchestrator that classifies an existing backend OOP task and runs it via the smallest appropriate path.
 tags: [workflow, oop, ddd]
 stability: experimental
 ---
 
 # Workflow — Craft
 
-## 목적
+## Purpose
 
-기존 백엔드 OOP 작업을 가장 작은 적절한 실행 경로로 수행한다.
-코드 양을 늘리는 것이 목적이 아니다.
-도메인 객체가 책임을 갖게 하고 application service가 orchestration을 넘지 않게 한다.
+Run an existing backend OOP task via the smallest appropriate execution path.
+The goal is not to add code.
+Make domain objects own their responsibilities and keep the application service from doing more than orchestration.
 
-## 시작 절차
+## Startup procedure
 
-0. `skills/workflow/continuity.md` Resume: 기존 작업 문서가 있으면 먼저 읽고 이어간다. 없고 이번이 **실행 작업(feature/refactor/bugfix)**이면 묻지 않고 `.craft/<kind>-<slug>.md`를 **자동 생성**하고 한 줄 고지한다. advisory·초소형 작업이거나 `AGENTS.md`에 `OOPforge continuity: off`가 있으면 생성하지 않는다.
-1. **대상 프로젝트**를 확인한다. OOPforge **팩**(`~/.oopforge`, 스킬 경로) ≠ 사용자가 Craft로 작업하는 **레포**. `pwd`가 팩 루트면 잘못된 위치 — 대상 프로젝트에서 에이전트를 시작했는지 확인한다.
-2. 사용자가 `@…`, 절대 경로, 상대 경로로 파일을 지정하면 **대상 프로젝트 루트**(현재 작업 디렉터리 또는 git root) 기준으로 해석한다. `{pack}/docs/…`나 `~/.oopforge/…`에서 찾지 않는다. 없으면 절대 경로 또는 프로젝트 루트를 사용자에게 확인한다.
-3. `skills/principles/oop-discipline.md`를 읽는다.
-4. 사용자 요청과 기존 코드를 확인한다.
-5. 아래 표에서 가장 작은 실행 경로 하나를 선택한다.
-6. advisory 요청이면 경로만 추천하고 구현하지 않는다.
-7. 실행 요청이면 선택한 skill, playbook, 또는 workflow의 체크리스트를 작업 목록에 복사한다.
-8. 생략한 단계가 있다면 이유를 한 줄로 남긴다.
-9. 비즈니스 로직 구현 전 OOP Contract를 작성한다.
-10. 선택한 경로대로 구현하고 테스트한다.
-11. `AGENTS.md`의 Hard Rules와 실행한 테스트 결과를 확인한다.
-12. 완료 보고 형식에 맞춰 설계 결정, 검증 결과, 남은 위험을 기록한다. **완료 게이트**: continuity 작업 문서가 있으면 그 문서(Status/Progress/Decisions)를 갱신하기 전에는 done 보고를 하지 않는다.
+0. `skills/workflow/continuity.md` Resume: if a work doc already exists, read it first and continue. If none exists and this is an **execution task (feature/refactor/bugfix)**, create `.craft/<kind>-<slug>.md` **automatically** without asking and announce it in one line. Do not create one for advisory or tiny tasks, or if `AGENTS.md` contains `OOPforge continuity: off`.
+1. Confirm the **target project**. The OOPforge **pack** (`~/.oopforge`, skill paths) is not the **repo** the user works on with Craft. If `pwd` is the pack root, you are in the wrong place — confirm the agent was started from the target project.
+2. When the user points to a file via `@…`, an absolute path, or a relative path, resolve it against the **target project root** (current working directory or git root). Do not look under `{pack}/docs/…` or `~/.oopforge/…`. If missing, confirm the absolute path or project root with the user.
+3. Read `skills/principles/oop-discipline.md`.
+4. Review the user request and the existing code.
+5. Select one smallest execution path from the table below.
+6. For an advisory request, only recommend a path and do not implement.
+7. For an execution request, copy the checklist of the chosen skill, playbook, or workflow into your task list.
+8. If you skip any step, leave a one-line reason.
+9. Write the OOP Contract before implementing business logic.
+10. Implement and test along the chosen path.
+11. Verify the Hard Rules in `AGENTS.md` and the results of the tests you ran.
+12. Record design decisions, verification results, and remaining risks in the completion report format. **Completion gate**: if a continuity work doc exists, do not report done before updating that doc (Status/Progress/Decisions).
 
-## 실행 경로 선택
+## Execution-path selection
 
-| 요청 신호 | 실행 경로 |
+| Request signal | Execution path |
 |---|---|
-| 단일 Aggregate, Value Object, Domain Event 설계 | `skills/oop/domain-model.md` |
-| 단일 use case, application service, Repository port 설계 | `skills/oop/use-case-boundary.md` |
-| 기존 도메인에 행동, 유스케이스, API 추가 | `skills/playbooks/feature.md` |
-| 비즈니스 규칙 오류, 회귀, 잘못된 상태 전이 수정 | `skills/playbooks/bug-fix.md` |
-| God Service, 책임 이동, 중복 제거, 동작 보존 정리 | `skills/workflow/refactor.md` |
-| 읽기/쓰기 모델 분리, 복잡 조회를 도메인에서 떼기, CQRS 적용 | `skills/oop/cqrs.md` |
-| 새 도메인 또는 큰 기능 | `skills/workflow/discovery.md`부터 기존 전체 workflow |
-| 추천만 원하는 advisory 요청 | 가장 작은 경로만 추천하고 구현하지 않음 |
-| 실행 요청이지만 결정이 빠짐("계산기 만들어줘") | 아래 **모호성 해소**로 결정을 채운 뒤 경로 선택 |
+| Design a single Aggregate, Value Object, or Domain Event | `skills/oop/domain-model.md` |
+| Design a single use case, application service, or Repository port | `skills/oop/use-case-boundary.md` |
+| Add behavior, a use case, or an API to an existing domain | `skills/playbooks/feature.md` |
+| Fix a business-rule error, regression, or wrong state transition | `skills/playbooks/bug-fix.md` |
+| God Service, moving responsibility, removing duplication, behavior-preserving cleanup | `skills/workflow/refactor.md` |
+| Read/write model split, lifting complex queries off the domain, applying CQRS | `skills/oop/cqrs.md` |
+| New domain or large feature | the full existing workflow starting at `skills/workflow/discovery.md` |
+| Advisory request that wants a recommendation only | recommend the smallest path and do not implement |
+| Execution request but a decision is missing ("make a calculator") | fill the decision via **Ambiguity resolution** below, then select a path |
 
-## 모호성 해소 (구현 전)
+## Ambiguity resolution (before implementation)
 
-실행 의도인데 결정적 입력이 비어 있으면(언어·아키텍처·영속성·히스토리/조회=CQRS 여부·지원 연산/엣지), 코드 전에 한 번 해소한다 — 심문하지 말고 기본값을 제시하라.
+When the intent is execution but a decisive input is empty (language, architecture, persistence, history/query = whether CQRS, supported operations/edge cases), resolve it once before code — do not interrogate; propose defaults.
 
-1. 빠진 결정 차원을 식별한다.
-2. **언어·아키텍처는 반드시 `skills/lang/backend-stack.md` 범위 게이트를 거친다.** 미지정이면 지원 스택(Java-Spring/Python-FastAPI)으로 안내하고, 지원 외 스택(JS/TS 등)이면 OOPforge 적용 불가를 알린다(고집하면 일반 빌드로만).
-3. 안전하게 정할 수 있는 항목은 **기본값을 명시**하고 진행한다(예: in-memory, layered, 사칙연산).
-4. 결과(아키텍처·범위)를 실제로 바꾸는 1~2개만 질문한다(예: "이력/조회가 필요해? → CQRS를 얹는다").
-5. 참고 메뉴로 `examples/` calculator 패밀리(layered/hexagonal/+CQRS)를 제시할 수 있다.
+1. Identify the missing decision dimensions.
+2. **Language and architecture must pass the `skills/lang/backend-stack.md` scope gate.** If unspecified, steer to a supported stack (Java-Spring/Python-FastAPI); for an unsupported stack (JS/TS, etc.) state that OOPforge does not apply (plain build only if insisted).
+3. For items you can set safely, **state the default** and proceed (e.g., in-memory, layered, four arithmetic operations).
+4. Ask only the 1–2 questions that actually change the result (architecture/scope) (e.g., "Do you need history/queries? -> add CQRS").
+5. You may offer the `examples/` calculator family (layered/hexagonal/+CQRS) as a reference menu.
 
 ## OOP Contract
 
-Craft에서 구현이 필요한 작업은 코드 작성 전에 아래 형식을 한 번 채운다.
-해당하지 않는 항목은 `none`이라고 쓰고 이유를 남긴다.
+For any Craft task that requires implementation, fill in the form below once before writing code.
+For items that do not apply, write `none` and leave a reason.
 
 ```markdown
 ## OOP Contract
@@ -69,15 +69,15 @@ Required Ports:
 Transaction Boundary:
 ```
 
-## 검증
+## Verification
 
-- 선택한 playbook 또는 workflow의 체크리스트를 완료한다.
-- `AGENTS.md`의 Hard Rules를 변경 파일 기준으로 확인한다.
-- 더 넓은 리뷰가 필요하면 `docs/reviewer-checklist.md`로 레이어별 점검을 수행한다.
-- 필요한 테스트를 실행하고 명령과 결과를 기록한다.
-- 실패하거나 생략한 검증이 있으면 이유와 위험을 남긴다.
+- Complete the checklist of the chosen playbook or workflow.
+- Verify the Hard Rules in `AGENTS.md` against the changed files.
+- If broader review is needed, run the per-layer checks in `docs/reviewer-checklist.md`.
+- Run the necessary tests and record the commands and results.
+- For any failed or skipped verification, leave a reason and the risk.
 
-## 완료 보고
+## Completion report
 
 ```markdown
 ## Design Decisions
@@ -91,7 +91,7 @@ Transaction Boundary:
 -
 ```
 
-## 단계 경계
+## Stage boundaries
 
-새 도메인 또는 큰 기능은 기존 Discovery → Test 단계와 사람 승인을 유지한다.
-Craft는 이 경계를 지우지 않는다. 기존 도메인의 집중 작업을 더 엄격하게 수행한다.
+A new domain or large feature keeps the existing Discovery -> Test stages and human approvals.
+Craft does not erase these boundaries. It performs focused work on an existing domain more strictly.

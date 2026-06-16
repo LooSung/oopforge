@@ -1,66 +1,66 @@
 ---
 name: backend-stack
-description: Java Spring과 Python FastAPI 백엔드에서 layered 또는 hexagonal/clean 스택 하나를 선택한다.
+description: Choose one stack — layered or hexagonal/clean — for a Java Spring or Python FastAPI backend.
 tags: [backend, stack, java, python]
 stability: stable
 ---
 
 # Backend Stack
 
-## 언제 쓰나
+## When to use
 
-새 백엔드 작업에서 **어떤 스택을 쓸지 아직 정하지 않았을 때** 사용한다.
-스택을 정하는 단계이며, 폴더 구조나 빈 타입은 만들지 않는다.
-구조 생성은 `skills/skeleton/backend-skeleton.md`가 맡는다.
+Use this when a new backend task **has not yet decided which stack to use**.
+This is the stack-selection step; do not create folder structure or empty types.
+Structure creation is handled by `skills/skeleton/backend-skeleton.md`.
 
-## 지원 스택
+## Supported stacks
 
-| Stack | 아키텍처 |
+| Stack | Architecture |
 |---|---|
-| `java-spring-layered` | 3계층 (Controller/Service/Repository) |
-| `java-spring-hexagonal` | 헥사고날 (domain/application/adapter) |
-| `python-fastapi-layered` | 3계층 (Router/Service/Repository) |
-| `python-fastapi-clean` | 클린 (domain/application/infrastructure/presentation) |
+| `java-spring-layered` | 3-tier (Controller/Service/Repository) |
+| `java-spring-hexagonal` | hexagonal (domain/application/adapter) |
+| `python-fastapi-layered` | 3-tier (Router/Service/Repository) |
+| `python-fastapi-clean` | clean (domain/application/infrastructure/presentation) |
 
-## 선택 기준
+## Selection criteria
 
-| 상황 | 선택 |
+| Situation | Choice |
 |---|---|
-| 작은 서비스, MVP, 도메인 1~2개 | layered |
-| 도메인 규칙이 복잡함 | hexagonal/clean |
-| 외부 adapter가 많음 | hexagonal/clean |
-| 팀이 아직 아키텍처 학습 중 | layered로 시작, 경계 규칙은 유지 |
+| Small service, MVP, 1–2 domains | layered |
+| Domain rules are complex | hexagonal/clean |
+| Many external adapters | hexagonal/clean |
+| Team still learning the architecture | start layered, keep the boundary rules |
 
-기본 권장: 도메인 2개 이하 + 어댑터 적음 → layered. 그 외 → hexagonal/clean.
+Default recommendation: 2 domains or fewer + few adapters -> layered. Otherwise -> hexagonal/clean.
 
-## 스택 범위 게이트 (먼저 통과)
+## Stack scope gate (pass first)
 
-OOPforge가 지원하는 백엔드는 **Java Spring · Python FastAPI 뿐**이다. 새 빌드 요청에서 언어가 정해지지 않았거나 다른 스택을 함의하면 코드 전에 처리한다.
+OOPforge supports **only Java Spring and Python FastAPI** backends. If a new build request leaves the language undecided or implies another stack, handle it before code.
 
-- **언어 미지정**: 임의로 고르지 말고 지원 스택(Java/Python)만 제시하고 사용자가 고르게 한다.
-- **지원 외 스택**(JavaScript/TypeScript, 프론트엔드, 모바일, 셸/CLI 등)을 함의: OOPforge를 그 스택에 **적용할 수 없음**을 분명히 알린다.
-- 그래도 사용자가 그 스택을 고집하면: OOPforge 규율(스켈레톤/하드룰) 없이 **일반(비-OOPforge) 빌드**로만 진행하고, OOPforge 범위 밖임을 고지한다.
+- **Language unspecified**: do not pick arbitrarily; present only the supported stacks (Java/Python) and let the user choose.
+- **Implies an unsupported stack** (JavaScript/TypeScript, frontend, mobile, shell/CLI, etc.): clearly state that OOPforge **cannot be applied** to that stack.
+- If the user still insists on that stack: proceed only as a **plain (non-OOPforge) build** without OOPforge discipline (skeleton/hard rules), and state that it is outside OOPforge scope.
 
-## 결정 절차
+## Decision procedure
 
-1. 위 범위 게이트로 언어를 확정한다 (Java Spring 또는 Python FastAPI).
-2. 위 기준으로 layered 또는 hexagonal/clean을 고른다.
-3. 모호하면 사용자에게 "3계층(layered)인지 헥사고날/clean인지" 묻는다.
-4. 정해진 stack 식별자 하나를 다음 단계로 넘긴다.
+1. Fix the language via the scope gate above (Java Spring or Python FastAPI).
+2. Pick layered or hexagonal/clean using the criteria above.
+3. If ambiguous, ask the user "3-tier (layered) or hexagonal/clean?".
+4. Pass one chosen stack identifier to the next step.
 
-## CQRS 변형 (선택)
+## CQRS variant (optional)
 
-- CQRS는 별도 스택이 아니라 layered/헥사고날 **위에 얹는 변형**이다. 진입 경로: `layered → hexagonal/clean → CQRS`.
-- 읽기/쓰기 모델이 크게 다르거나 복잡 조회가 도메인을 오염시킬 때만 도입한다. 적용 규칙과 진입 기준은 `skills/oop/cqrs.md`.
+- CQRS is not a separate stack but a **variant layered on top of** layered/hexagonal. Entry path: `layered -> hexagonal/clean -> CQRS`.
+- Introduce it only when read/write models differ greatly or complex queries pollute the domain. Application rules and entry criteria are in `skills/oop/cqrs.md`.
 
-## OpenAPI 기본 방침
+## OpenAPI default policy
 
-- 모든 백엔드 스택은 OpenAPI/Swagger를 개발 환경에서 바로 확인할 수 있어야 한다.
-- 구체적인 도구 설정과 폴더 구조는 `skills/skeleton/backend-skeleton.md`를 따른다.
+- Every backend stack must expose OpenAPI/Swagger directly in the dev environment.
+- Follow `skills/skeleton/backend-skeleton.md` for concrete tooling and folder structure.
 
-## 금지
+## Prohibited
 
-- 스택을 정하지 않은 채 폴더 구조나 빈 타입을 만들지 않는다.
-- 한 프로젝트에 여러 스택을 섞지 않는다.
-- 근거 없이 hexagonal/clean을 기본값으로 강요하지 않는다.
-- 지원 외 스택(JS/TS 등)에 OOPforge 스켈레톤·하드룰을 적용하지 않는다. 적용 불가를 먼저 알린다.
+- Do not create folder structure or empty types before the stack is decided.
+- Do not mix multiple stacks in one project.
+- Do not force hexagonal/clean as the default without justification.
+- Do not apply the OOPforge skeleton/hard rules to an unsupported stack (JS/TS, etc.). State that it does not apply first.

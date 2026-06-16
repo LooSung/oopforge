@@ -1,26 +1,26 @@
 ---
 name: backend-skeleton
-description: 선택된 백엔드 스택으로 표준 패키지 구조와 빈 타입을 만드는 스켈레톤 규칙.
+description: Skeleton rules for creating the standard package structure and empty types for the chosen backend stack.
 tags: [backend, skeleton, java, python]
 stability: stable
 ---
 
 # Backend Skeleton
 
-## 언제 쓰나
+## When to use
 
-Skeleton 단계에서 **이미 선택된 스택**으로 패키지 구조를 만들 때 사용한다.
-스택이 아직 없으면 먼저 `skills/lang/backend-stack.md`로 하나를 고른다.
-언어별 세부 레이아웃을 새로 발명하지 말고 아래 표준 구조를 따른다.
+Use this in the Skeleton stage to create the package structure for an **already-chosen stack**.
+If there is no stack yet, pick one first via `skills/lang/backend-stack.md`.
+Do not invent a per-language layout; follow the standard structure below.
 
-## 공통 규칙
+## Common rules
 
-- [ ] domain은 가능한 한 framework import 0을 유지한다.
-- [ ] inbound adapter는 request/response 매핑만 맡는다.
-- [ ] application service는 orchestration과 transaction boundary만 맡는다.
-- [ ] outbound adapter는 repository, external API, messaging 구현만 맡는다.
-- [ ] API DTO, ORM entity, domain object를 같은 클래스로 공유하지 않는다.
-- [ ] 테스트 폴더는 production 구조를 미러링한다.
+- [ ] Keep the domain at 0 framework imports as much as possible.
+- [ ] The inbound adapter handles only request/response mapping.
+- [ ] The application service handles only orchestration and the transaction boundary.
+- [ ] The outbound adapter handles only repository, external API, and messaging implementations.
+- [ ] Do not share an API DTO, ORM entity, and domain object as one class.
+- [ ] The test folder mirrors the production structure.
 
 ## Java Spring
 
@@ -52,23 +52,23 @@ src/main/java/com/example/order/
 └── config/
 ```
 
-Java API는 `springdoc-openapi`로 `/swagger-ui` 또는 `/v3/api-docs`를 노출한다.
-JPA가 필요하면 domain model과 JPA entity를 분리하고 adapter에서 mapper로 변환한다.
+The Java API exposes `/swagger-ui` or `/v3/api-docs` via `springdoc-openapi`.
+If JPA is needed, separate the domain model from the JPA entity and convert with a mapper in the adapter.
 
 ## Python FastAPI
 
 ### Layered
 
-레이어는 파일명이 아니라 **폴더**로 나눈다 (Hard Rule). 의존성 조립은 레이어 밖(`app/core/`)에 둔다.
+Split layers by **folder**, not by filename (Hard Rule). Put dependency wiring outside the layers (`app/core/`).
 
 ```text
 app/calculator/
-├── router/        calculator_router.py   # HTTP in/out (repository import 금지)
+├── router/        calculator_router.py   # HTTP in/out (no repository import)
 ├── service/       calculator_service.py  # orchestration
 ├── repository/    calculation_repository.py
 ├── domain/        calculation.py
 └── schemas/       api_models.py
-app/core/dependencies.py                  # 조립(wiring)
+app/core/dependencies.py                  # wiring
 ```
 
 ### Clean
@@ -83,21 +83,21 @@ app/
 └── shared/
 ```
 
-FastAPI는 OpenAPI를 기본 생성한다. `docs_url`, `openapi_url`, tags, response model, error schema를 명시한다.
-SQLAlchemy 모델은 domain object와 분리하는 것을 기본으로 한다.
+FastAPI generates OpenAPI by default. Specify `docs_url`, `openapi_url`, tags, response model, and error schema.
+By default, separate SQLAlchemy models from domain objects.
 
-## 셀프 체크 (스켈레톤 직후, 필수)
+## Self-check (right after the skeleton, required)
 
-구조를 만든 직후 디렉터리 트리를 출력하고 아래를 직접 확인·보고한다. 통과 못하면 다음 단계로 넘어가지 않는다.
+Right after creating the structure, print the directory tree and verify and report the following yourself. Do not move to the next stage until it passes.
 
-- [ ] **레이어가 각각 별도 폴더다.** layered면 `controller/ service/ repository/ domain/`이 실제 폴더로 존재한다.
-- [ ] **한 폴더에 파일명 suffix(`*Controller`, `*Service`, `*Repository`)로만 나눠두지 않았다.** — 이건 위반이다.
-- [ ] 각 파일이 자기 레이어 폴더 안에 있다 (controller 파일은 `controller/`에).
-- [ ] 테스트 폴더가 production 구조를 미러링한다.
+- [ ] **Each layer is its own folder.** For layered, `controller/ service/ repository/ domain/` exist as real folders.
+- [ ] **They are not split only by filename suffix (`*Controller`, `*Service`, `*Repository`) inside one folder.** — that is a violation.
+- [ ] Each file is inside its own layer folder (controller files in `controller/`).
+- [ ] The test folder mirrors the production structure.
 
-셀프 체크를 빌드로 강제하려면(import-linter/ArchUnit) `skills/skeleton/lint-enforcement.md`를 따른다.
+To enforce the self-check via the build (import-linter/ArchUnit), follow `skills/skeleton/lint-enforcement.md`.
 
-예시 (layered Java, 통과):
+Example (layered Java, passing):
 
 ```text
 order/
@@ -107,7 +107,7 @@ order/
 └── domain/Order.java
 ```
 
-위반 (한 폴더에 파일명으로만 분리 — 금지):
+Violation (split only by filename in one folder — prohibited):
 
 ```text
 order/
@@ -116,10 +116,10 @@ order/
 └── OrderRepository.java
 ```
 
-## 금지
+## Prohibited
 
-- 메서드 본문을 작성하지 않는다. `UnsupportedOperationException` 또는 `NotImplementedError`로 둔다.
-- layered를 선택했다는 이유로 service에 모든 비즈니스 규칙을 몰아넣지 않는다.
-- hexagonal/clean을 선택했다는 이유로 빈 adapter나 불필요한 interface를 만들지 않는다.
-- controller/router가 repository를 직접 호출하지 않는다.
-- domain이 web, persistence, framework 설정을 import하지 않는다.
+- Do not write method bodies. Leave `UnsupportedOperationException` or `NotImplementedError`.
+- Do not cram all business rules into the service just because you chose layered.
+- Do not create empty adapters or needless interfaces just because you chose hexagonal/clean.
+- Do not let the controller/router call the repository directly.
+- Do not let the domain import web, persistence, or framework configuration.
