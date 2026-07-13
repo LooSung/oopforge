@@ -110,7 +110,19 @@ DRY는 **지식(규칙)의 중복**을 없애는 것이지, 닮아 보이는 코
 
 ---
 
-## 7. 하드룰 (측정 가능)
+## 7. 트랜잭션 경계와 안티패턴
+
+- **한 트랜잭션 = 한 Aggregate** — 여러 Aggregate를 한 커밋에 같이 쓰면 설계 신호다(이벤트·후속 유스케이스·결과적 일관성). 정본: `skills/oop/transaction-boundary.md`.
+- **안티패턴 카탈로그** (`skills/antipatterns/`) — Craft 리뷰·코드 리뷰가 참조하는 증상/교정:
+  - `anemic-domain` — 도메인은 데이터백, 규칙은 Service
+  - `controller-fat` — Controller/Router에 비즈니스 로직·직접 Repository 호출
+  - `repository-with-business-logic` — Repository에 판단·정책
+  - `god-aggregate` — 한 Aggregate에 무관한 불변식·생명주기 몰아넣기
+  - `flat-package` — 레이어드인데 폴더 없이 파일명만 구분
+
+---
+
+## 8. 하드룰 (측정 가능)
 
 영어 정본은 `AGENTS.md`. 측정 가능한 한도로 둔 이유는 리뷰 부담과 에이전트 컨텍스트 크기 때문이다.
 
@@ -119,6 +131,7 @@ DRY는 **지식(규칙)의 중복**을 없애는 것이지, 닮아 보이는 코
 - public setter 금지 — 팩토리 메서드나 의도를 드러내는 행동 메서드.
 - 경계를 넘는 컬렉션은 방어 복사 또는 불변.
 - 다른 애그리거트는 ID로만 참조.
+- **한 트랜잭션에서 Aggregate 하나만 수정**.
 - 테스트 없이 도메인 로직 커밋 금지.
 - **외과수술식 수정** — 요청에 필요한 것만; 드라이브바이 리팩터·포맷·주석 손질 금지. 이번 변경이 만든 orphan만 정리.
 - 레이어는 각각 별도 폴더(`controller/ service/ repository/ domain/`). Controller→Repository 직접 호출 금지.
@@ -126,7 +139,7 @@ DRY는 **지식(규칙)의 중복**을 없애는 것이지, 닮아 보이는 코
 
 ---
 
-## 8. 더 읽기
+## 9. 더 읽기
 
 - 영어 정본 스킬: `skills/`
 - 런어블 예제: [`examples/README.md`](../examples/README.md) — 같은 calculator를 layered/hexagonal/CQRS로

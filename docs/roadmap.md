@@ -59,9 +59,9 @@ AI 에이전트는 제약이 없으면 백엔드 아키텍처를 무너뜨린다
 
 ### A1. 전술적 DDD 스킬 확장 `skills/oop/` `[단기~중기]`
 
-현재 `domain-model`·`use-case-boundary`·`cqrs`만 있음. 백엔드 핵심 패턴 추가:
+현재 `domain-model`·`use-case-boundary`·`cqrs`·**`transaction-boundary`(v0.9.2)** 보유. 이어서:
 
-- `transaction-boundary.md` `[단기]` — **하나의 트랜잭션에 하나의 Aggregate**. 다중 Aggregate 수정은 결과적 일관성 신호. (이미 하드룰에 "ID로만 참조"가 있으니 자연 확장)
+- ~~`transaction-boundary.md`~~ ✅ v0.9.2 — **하나의 트랜잭션에 하나의 Aggregate**. 다중 Aggregate 수정은 결과적 일관성 신호.
 - `transactional-outbox.md` `[단기]` — DB 쓰기와 이벤트 발행을 **같은 트랜잭션**에. relay/CDC로 브로커 전달. ghost/lost 이벤트 방지.
 - `saga.md` `[중기]` — Aggregate/서비스를 가로지르는 프로세스, **보상 트랜잭션**. choreography(단순) vs orchestration(복잡).
 - `domain-events.md` `[중기]` — 내부 도메인 이벤트 vs 통합(integration) 이벤트, **idempotent consumer**, 이벤트 스키마 **버저닝/upcaster**.
@@ -69,12 +69,10 @@ AI 에이전트는 제약이 없으면 백엔드 아키텍처를 무너뜨린다
 
 ### A2. 안티패턴 카탈로그 확장 `skills/antipatterns/` `[단기]`
 
-현재 `flat-package` 하나뿐. Craft 리뷰·CI가 참조할 핵심 4종:
+~~핵심 4종 + flat-package~~ ✅ v0.9.2 (`anemic-domain`, `controller-fat`, `repository-with-business-logic`, `god-aggregate`, `flat-package`). 추가 후보:
 
-- `anemic-domain.md` — 도메인은 데이터백, 로직은 전부 Service
-- `controller-fat.md` — Controller/Router에 비즈니스 로직
-- `repository-with-business-logic.md` — Repository에 판단 로직
-- `god-aggregate.md` — Aggregate가 모든 걸 한꺼번에 (A1 transaction-boundary와 짝)
+- (수요 시) `god-service.md` — application service에 모든 유스케이스·규칙 집중
+- Craft 리뷰·CI가 참조할 메시지 템플릿 보강 `[중기]`
 
 ### A3. 프로덕션 준비 게이트 `[중기]`
 
@@ -165,8 +163,9 @@ AI 에이전트는 제약이 없으면 백엔드 아키텍처를 무너뜨린다
 
 ## 최근 완료 (요약)
 
-상세는 [`CHANGELOG.md`](../CHANGELOG.md) 참조. 현재 최신: **v0.9.1**.
+상세는 [`CHANGELOG.md`](../CHANGELOG.md) 참조. 현재 최신: **v0.9.2**.
 
+- **안티패턴 카탈로그 + 트랜잭션 경계 (v0.9.2)** — `anemic-domain`·`controller-fat`·`repository-with-business-logic`·`god-aggregate` 추가. `transaction-boundary.md`(한 TX = 한 Aggregate). Craft/Hard Rules/reviewer checklist 연결. 로드맵 A1·A2 단기 항목 진척.
 - **에이전트 행동 가드레일 (v0.9.1)** — `oop-discipline` #10 Assumptions / #11 Surgical changes. Craft에 Assumptions 게이트·Scope drift, playbook `verify:`, Hard Rules에 외과수술식 수정. Karpathy식 실패 패턴을 통째 복제하지 않고 Craft 레이어에만 흡수.
 - **스킬 영어 정본화 (v0.9.0)** — 모든 `skills/`를 영어로 번역(에이전트 지시문은 영어가 정본). 한국어는 개념 가이드 `docs/methodology.ko.md` 1개로 흡수. 로드맵 B2(Agent Skills 스펙 정렬)·B3(레포 위생) 진척.
 - **DRY-with-DDD (v0.8.5)** — `oop-discipline` #9로 DRY를 추가하되 Rule of Three + 바운디드 컨텍스트 경계 가드레일로 한정. 원칙 감사 결과 유일한 빈칸을 메움.

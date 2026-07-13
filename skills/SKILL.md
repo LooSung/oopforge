@@ -45,6 +45,7 @@ Natural language also works, for example: "Use OOPforge Discovery for the paymen
 Core OOP:
 - Domain model: `oop/domain-model.md`
 - Use-case boundary: `oop/use-case-boundary.md`
+- Transaction boundary (one Aggregate per TX): `oop/transaction-boundary.md`
 - CQRS (read/write split, medium): `oop/cqrs.md`
 
 Backend stack and skeleton:
@@ -52,6 +53,10 @@ Backend stack and skeleton:
 - Package structure / skeleton: `skeleton/backend-skeleton.md`
 
 Anti-patterns:
-- Flat package (layered without layer folders): `antipatterns/flat-package.md`
+- Flat package: `antipatterns/flat-package.md`
+- Anemic domain: `antipatterns/anemic-domain.md`
+- Fat controller: `antipatterns/controller-fat.md`
+- Repository with business logic: `antipatterns/repository-with-business-logic.md`
+- God Aggregate: `antipatterns/god-aggregate.md`
 
 Roadmap and direction: `../docs/roadmap.md`

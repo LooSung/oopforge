@@ -65,7 +65,7 @@ Use this table to decide **which skill to read first**. Workflow stage always wi
 | Test | Unit / integration / E2E | `skills/workflow/test.md` |
 | Refactor | Behavior-preserving cleanup | `skills/workflow/refactor.md` |
 | Continuity | Resume work across sessions | `skills/workflow/continuity.md` |
-| Code review | Detect rule violations | Hard Rules below + `examples/calculator-java-hexagonal/` |
+| Code review | Detect rule violations | Hard Rules below + `skills/antipatterns/` + `examples/calculator-java-hexagonal/` |
 
 ### Task → skill (within a stage)
 
@@ -73,9 +73,15 @@ Use this table to decide **which skill to read first**. Workflow stage always wi
 |---|---|
 | Aggregate, Value Object, Domain Event | `skills/oop/domain-model.md` |
 | Use case / application service / Repository port | `skills/oop/use-case-boundary.md` |
+| One Aggregate per transaction / multi-Aggregate writes | `skills/oop/transaction-boundary.md` |
 | Read/write split, complex query off the domain (CQRS) | `skills/oop/cqrs.md` |
 | Backend stack selection | `skills/lang/backend-stack.md` |
 | Backend package structure / skeleton | `skills/skeleton/backend-skeleton.md` |
+| Anemic domain | `skills/antipatterns/anemic-domain.md` |
+| Fat controller | `skills/antipatterns/controller-fat.md` |
+| Repository with business logic | `skills/antipatterns/repository-with-business-logic.md` |
+| God Aggregate | `skills/antipatterns/god-aggregate.md` |
+| Flat package (layered without folders) | `skills/antipatterns/flat-package.md` |
 
 ### Harness setup
 
@@ -93,6 +99,7 @@ Before changing behavior, read the relevant skill file:
 
 - Domain model: `skills/oop/domain-model.md`
 - Use-case boundary: `skills/oop/use-case-boundary.md`
+- Transaction boundary (one Aggregate per TX): `skills/oop/transaction-boundary.md`
 - Backend stack selection: `skills/lang/backend-stack.md`
 - Backend skeleton structure: `skills/skeleton/backend-skeleton.md`
 - Lint enforcement (import-linter / ArchUnit in CI): `skills/skeleton/lint-enforcement.md`
@@ -101,7 +108,7 @@ Before changing behavior, read the relevant skill file:
 - Delivery planning: `skills/workflow/delivery-plan.md`
 - Testing: `skills/workflow/test.md`
 - Refactoring existing or external code: `skills/workflow/refactor.md`
-- Anti-patterns: `skills/antipatterns/flat-package.md`
+- Anti-patterns: `skills/antipatterns/` (`flat-package`, `anemic-domain`, `controller-fat`, `repository-with-business-logic`, `god-aggregate`)
 - Resuming work across sessions (persist + restore context): `skills/workflow/continuity.md`
 - Roadmap / direction: `docs/roadmap.md`
 
@@ -120,6 +127,7 @@ These limits are intentionally measurable. They come from review focus and agent
 - No public setters; use factory methods or intention-revealing behavior methods.
 - Collections crossing boundaries must be defensively copied or immutable.
 - Other aggregates are referenced by ID only.
+- **One Aggregate modified per transaction** — multi-Aggregate writes in one commit need an explicit consistency design (see `skills/oop/transaction-boundary.md`).
 - Do not commit domain logic without tests.
 - Comments explain "why"; names explain "what".
 - **Surgical changes only** — touch what the request requires; no drive-by edits to adjacent code, comments, or formatting. Clean orphans your change created; mention pre-existing dead code instead of deleting it in the same change.

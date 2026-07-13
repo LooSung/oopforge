@@ -38,6 +38,8 @@ Make domain objects own their responsibilities and keep the application service 
 | Add behavior, a use case, or an API to an existing domain | `skills/playbooks/feature.md` |
 | Fix a business-rule error, regression, or wrong state transition | `skills/playbooks/bug-fix.md` |
 | God Service, moving responsibility, removing duplication, behavior-preserving cleanup | `skills/workflow/refactor.md` |
+| Multi-Aggregate save in one TX, unclear Transaction Boundary on the Contract | `skills/oop/transaction-boundary.md` |
+| Anemic domain, fat controller, smart repository, god Aggregate, flat package | matching file under `skills/antipatterns/` |
 | Read/write model split, lifting complex queries off the domain, applying CQRS | `skills/oop/cqrs.md` |
 | New domain or large feature | the full existing workflow starting at `skills/workflow/discovery.md` |
 | Advisory request that wants a recommendation only | recommend the smallest path and do not implement |
@@ -90,6 +92,8 @@ Transaction Boundary:
 - Complete the checklist of the chosen playbook or workflow (each step should have a `verify:`).
 - Verify the Hard Rules in `AGENTS.md` against the changed files.
 - Confirm **Scope drift** is `none`, or list every out-of-request change with a reason.
+- Spot-check relevant `skills/antipatterns/` symptoms on the diff (anemic domain, fat controller, smart repository, god Aggregate, flat package).
+- If the use case writes domain state, confirm Transaction Boundary names one Aggregate (`skills/oop/transaction-boundary.md`).
 - If broader review is needed, run the per-layer checks in `docs/reviewer-checklist.md`.
 - Run the necessary tests and record the commands and results.
 - For any failed or skipped verification, leave a reason and the risk.

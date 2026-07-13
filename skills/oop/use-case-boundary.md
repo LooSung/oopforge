@@ -48,3 +48,4 @@ Inbound adapter
 - Do not let the controller/router call the repository directly.
 - Do not let the repository own transaction start/commit or external API calls.
 - Do not expose a persistence model or API DTO on the port interface.
+- Do not modify several Aggregates in one transaction — see `skills/oop/transaction-boundary.md`.

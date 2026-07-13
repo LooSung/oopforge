@@ -10,13 +10,17 @@ Use this checklist after an agent generates or refactors code with OOPforge.
 - [ ] Domain events describe business facts, not technical actions.
 - [ ] Entities do not expose public setters for invariant-sensitive fields.
 - [ ] Cross-aggregate references use IDs instead of object references.
+- [ ] Domain behavior methods own invariants (not an anemic data bag — `skills/antipatterns/anemic-domain.md`).
+- [ ] No God Aggregate: unrelated capabilities are not forced into one root (`skills/antipatterns/god-aggregate.md`).
 
 ## Application layer
 
 - [ ] Use cases coordinate domain objects but do not own business rules.
 - [ ] Application services depend on ports, not infrastructure implementations.
-- [ ] Transaction boundaries are explicit.
+- [ ] Transaction boundaries are explicit — **one Aggregate modified per transaction** (`skills/oop/transaction-boundary.md`).
 - [ ] Commands and results are small, explicit, and framework-agnostic where possible.
+- [ ] Controllers/Routers do not own domain rules or call repositories directly (`skills/antipatterns/controller-fat.md`).
+- [ ] Repositories do not own domain judgments (`skills/antipatterns/repository-with-business-logic.md`).
 
 ## Infrastructure layer
 

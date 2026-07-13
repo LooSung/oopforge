@@ -2,6 +2,25 @@
 
 모든 변경은 여기에 기록한다. [Keep a Changelog](https://keepachangelog.com/) 형식.
 
+## [0.9.2] - 2026-07-13
+
+백엔드 깊이 — 안티패턴 카탈로그 핵심 4종 + 트랜잭션 경계 스킬. Craft 리뷰·하드룰·리뷰어 체크리스트에 연결.
+
+### Added
+
+- **`skills/antipatterns/anemic-domain.md`** — 도메인 데이터백 + Service에 규칙.
+- **`skills/antipatterns/controller-fat.md`** — Controller/Router에 비즈니스 로직·직접 Repository 호출.
+- **`skills/antipatterns/repository-with-business-logic.md`** — Repository에 판단·정책·오케스트레이션.
+- **`skills/antipatterns/god-aggregate.md`** — 한 Aggregate에 무관한 불변식·생명주기 몰아넣기.
+- **`skills/oop/transaction-boundary.md`** — 한 트랜잭션 = 한 Aggregate 수정. 다중 Aggregate 쓰기는 일관성 설계 신호.
+
+### Changed
+
+- **`AGENTS.md`** — 라우팅·Skill Selection·Hard Rule(one Aggregate per TX). Code review가 `skills/antipatterns/`를 참조.
+- **`skills/workflow/craft.md`** — 실행 경로에 transaction-boundary·antipattern 매칭. Verification에 안티패턴 spot-check·TX 경계 확인.
+- **`skills/SKILL.md`**, **`docs/reviewer-checklist.md`**, **`docs/methodology.ko.md`**, **`docs/roadmap.md`** — 신규 스킬 반영.
+- **플러그인 매니페스트** — version `0.9.2`.
+
 ## [0.9.1] - 2026-07-13
 
 에이전트 행동 가드레일 — 가정 노출·외과수술식 수정·목표 verify를 Craft에 흡수(Karpathy식 코딩 실패 패턴 대응). 통째 가이드 복제가 아니라 OOPforge 수직 레이어에만 얹음.

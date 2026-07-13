@@ -54,3 +54,4 @@ Read it first when filling Aggregate Root, Domain Invariants, and State Transiti
 - Do not put Spring, JPA, FastAPI, SQLAlchemy, or HTTP types into domain objects.
 - Do not blur domain behavior with CRUD names like `create`, `update`, `delete`.
 - Do not modify several Aggregates within one transaction.
+  (Details: `skills/oop/transaction-boundary.md`.)
