@@ -2,6 +2,16 @@
 
 모든 변경은 여기에 기록한다. [Keep a Changelog](https://keepachangelog.com/) 형식.
 
+## [0.9.3] - 2026-07-13
+
+README 랜딩 명확화 — 설치·대상 프로젝트·Craft·수동 업데이트를 Quickstart에서 한눈에 보이게.
+
+### Changed
+
+- **`README.md` / `README.ko.md` Quickstart** — (1) install + `doctor.sh` (2) 대상 프로젝트 `cd` (3) 에이전트 로드·Cursor `--plugin-dir` (4) Craft (5) **Release는 자동 설치 아님** → `git pull` + `install.sh update`.
+- **Codex 설치 섹션** — 잘못된 `/oopforge:craft` 예시를 `Use OOPforge craft:`로 수정.
+- **플러그인 매니페스트** — version `0.9.3`.
+
 ## [0.9.2] - 2026-07-13
 
 백엔드 깊이 — 안티패턴 카탈로그 핵심 4종 + 트랜잭션 경계 스킬. Craft 리뷰·하드룰·리뷰어 체크리스트에 연결.

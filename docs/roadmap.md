@@ -163,8 +163,9 @@ AI 에이전트는 제약이 없으면 백엔드 아키텍처를 무너뜨린다
 
 ## 최근 완료 (요약)
 
-상세는 [`CHANGELOG.md`](../CHANGELOG.md) 참조. 현재 최신: **v0.9.2**.
+상세는 [`CHANGELOG.md`](../CHANGELOG.md) 참조. 현재 최신: **v0.9.3**.
 
+- **README Quickstart 명확화 (v0.9.3)** — 설치·대상 프로젝트·Craft·수동 업데이트(Release ≠ 자동 설치)를 상단에 배치. Codex 잘못된 slash 예시 수정.
 - **안티패턴 카탈로그 + 트랜잭션 경계 (v0.9.2)** — `anemic-domain`·`controller-fat`·`repository-with-business-logic`·`god-aggregate` 추가. `transaction-boundary.md`(한 TX = 한 Aggregate). Craft/Hard Rules/reviewer checklist 연결. 로드맵 A1·A2 단기 항목 진척.
 - **에이전트 행동 가드레일 (v0.9.1)** — `oop-discipline` #10 Assumptions / #11 Surgical changes. Craft에 Assumptions 게이트·Scope drift, playbook `verify:`, Hard Rules에 외과수술식 수정. Karpathy식 실패 패턴을 통째 복제하지 않고 Craft 레이어에만 흡수.
 - **스킬 영어 정본화 (v0.9.0)** — 모든 `skills/`를 영어로 번역(에이전트 지시문은 영어가 정본). 한국어는 개념 가이드 `docs/methodology.ko.md` 1개로 흡수. 로드맵 B2(Agent Skills 스펙 정렬)·B3(레포 위생) 진척.

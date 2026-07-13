@@ -26,17 +26,31 @@ Specialized for **Java (Spring)** and **Python (FastAPI)** — pick **3-tier (Co
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/LooSung/oopforge/main/scripts/setup/bootstrap.sh)"
 ```
 
-### **2. Restart your agent**
+Check the install:
 
-Restart Claude Code, Codex CLI, or your Cursor Agent CLI session so it picks up the new skills and commands.
+```bash
+~/.oopforge/scripts/setup/doctor.sh
+```
 
-**Cursor:** load the pack explicitly:
+### **2. Open your target project (not the pack)**
+
+OOPforge lives in `~/.oopforge`. Your app code lives in **your backend repo**. Always start the agent from that project:
+
+```bash
+cd /path/to/your-backend-project
+```
+
+### **3. Restart / load your agent**
+
+Restart Claude Code or Codex CLI so it picks up the new skills and commands.
+
+**Cursor** has no install symlink — pass the pack on every launch:
 
 ```bash
 cursor-agent --plugin-dir ~/.oopforge
 ```
 
-### **3. Run Craft**
+### **4. Run Craft**
 
 Entry point is **Craft** on every harness; only **how you invoke it** differs:
 
@@ -44,7 +58,7 @@ Entry point is **Craft** on every harness; only **how you invoke it** differs:
 |---|---|
 | **Claude Code** | `/oopforge:craft <request>` — registered slash command |
 | **Codex CLI** | `/skills` → pick **oopforge**, then prompt **without** a leading `/` (Codex reserves `/` for its own commands) |
-| **Cursor Agent CLI** | After `--plugin-dir`, use natural language (see [Cursor setup](docs/cursor.md)) |
+| **Cursor Agent CLI** | After `--plugin-dir`, slash command or natural language (see [Cursor setup](docs/cursor.md)) |
 
 **Claude Code:**
 
@@ -61,8 +75,18 @@ Use OOPforge craft: Add a single Email value object
 **Cursor:**
 
 ```text
-Use OOPforge craft: Add a single Email value object
+/oopforge:craft Add a single Email value object
 ```
+
+### **5. Update (manual — Releases do not auto-install)**
+
+Publishing a GitHub Release does **not** update your machine. Pull the pack, then refresh symlinks:
+
+```bash
+cd ~/.oopforge && git pull && ./scripts/setup/install.sh update
+```
+
+Then restart the agent (Cursor: relaunch with `--plugin-dir`). See [Installation](#installation) for troubleshooting.
 
 ---
 
@@ -84,6 +108,8 @@ Advanced users may ask Craft to start at a specific workflow stage such as Disco
 All backend skeletons ship with **OpenAPI/Swagger UI** enabled by default (springdoc / FastAPI built-in).
 
 Already installed? See [Installation](#installation) for manual setup, updates, and troubleshooting.
+
+**Remember:** a new [GitHub Release](https://github.com/LooSung/oopforge/releases) does not update `~/.oopforge` by itself — use Quickstart step 5.
 
 Harness guides: [Claude Code](docs/claude-code.md) · [Codex](docs/codex.md) · [Cursor](docs/cursor.md)
 
@@ -219,10 +245,10 @@ Because the install uses symlinks, a `git pull` in `~/.oopforge` updates skill c
 
 ### **Codex CLI**
 
-`install.sh` links `skills/SKILL.md` as the Codex skill entry point. Type the Craft prompt as normal text:
+`install.sh` links `skills/SKILL.md` as the Codex skill entry point. Codex reserves `/` for built-ins — do **not** type `/oopforge:craft`. After `/skills` → **oopforge**:
 
 ```text
-/oopforge:craft <request>
+Use OOPforge craft: <request>
 ```
 
 ### **Cursor Agent CLI**
