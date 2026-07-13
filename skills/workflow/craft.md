@@ -24,10 +24,10 @@ Make domain objects own their responsibilities and keep the application service 
 6. For an advisory request, only recommend a path and do not implement.
 7. For an execution request, copy the checklist of the chosen skill, playbook, or workflow into your task list.
 8. If you skip any step, leave a one-line reason.
-9. Write the OOP Contract before implementing business logic.
-10. Implement and test along the chosen path.
+9. Write the **Assumptions** block (below), then the OOP Contract, before implementing business logic.
+10. Implement and test along the chosen path. Keep changes surgical (`oop-discipline` #11).
 11. Verify the Hard Rules in `AGENTS.md` and the results of the tests you ran.
-12. Record design decisions, verification results, and remaining risks in the completion report format. **Completion gate**: if a continuity work doc exists, do not report done before updating that doc (Status/Progress/Decisions).
+12. Record design decisions, verification results, **Scope drift**, and remaining risks in the completion report format. **Completion gate**: if a continuity work doc exists, do not report done before updating that doc (Status/Progress/Decisions).
 
 ## Execution-path selection
 
@@ -53,6 +53,22 @@ When the intent is execution but a decisive input is empty (language, architectu
 4. Ask only the 1–2 questions that actually change the result (architecture/scope) (e.g., "Do you need history/queries? -> add CQRS").
 5. You may offer the `examples/` calculator family (layered/hexagonal/+CQRS) as a reference menu.
 
+## Assumptions (before Contract)
+
+For any Craft task that requires implementation, fill this once before the OOP Contract
+(`oop-discipline` #10). Keep it short. If nothing is uncertain, write `none` with a reason.
+
+```markdown
+## Assumptions
+
+Assumptions:
+Alternatives considered:
+Why this path:
+```
+
+If interpretations diverge and the choice changes architecture or scope, list the
+options in one sentence and ask — do not silently pick one.
+
 ## OOP Contract
 
 For any Craft task that requires implementation, fill in the form below once before writing code.
@@ -71,8 +87,9 @@ Transaction Boundary:
 
 ## Verification
 
-- Complete the checklist of the chosen playbook or workflow.
+- Complete the checklist of the chosen playbook or workflow (each step should have a `verify:`).
 - Verify the Hard Rules in `AGENTS.md` against the changed files.
+- Confirm **Scope drift** is `none`, or list every out-of-request change with a reason.
 - If broader review is needed, run the per-layer checks in `docs/reviewer-checklist.md`.
 - Run the necessary tests and record the commands and results.
 - For any failed or skipped verification, leave a reason and the risk.
@@ -86,6 +103,7 @@ Transaction Boundary:
 ## Verification
 - Tests:
 - Hard Rules:
+- Scope drift: none | <file/change — why>
 
 ## Remaining Risks
 -

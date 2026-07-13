@@ -2,6 +2,23 @@
 
 모든 변경은 여기에 기록한다. [Keep a Changelog](https://keepachangelog.com/) 형식.
 
+## [0.9.1] - 2026-07-13
+
+에이전트 행동 가드레일 — 가정 노출·외과수술식 수정·목표 verify를 Craft에 흡수(Karpathy식 코딩 실패 패턴 대응). 통째 가이드 복제가 아니라 OOPforge 수직 레이어에만 얹음.
+
+### Added
+
+- **`skills/principles/oop-discipline.md` #10 "Surface assumptions before coding"** — 해석이 갈릴 때 조용히 하나 고르지 말고 Assumptions를 먼저 드러냄. Craft Ambiguity resolution과 짝; 새 도메인/대형 기능의 Discovery→Skeleton은 면제하지 않음.
+- **`skills/principles/oop-discipline.md` #11 "Surgical changes only"** — 요청에 필요한 곳만 수정. 인접 코드·주석·포맷 드라이브바이 금지. 이번 변경이 만든 orphan만 정리, 기존 죽은 코드는 언급만.
+- **`skills/workflow/craft.md` Assumptions 게이트** — OOP Contract 앞에 Assumptions/Alternatives/Why this path 블록. Completion report에 `Scope drift: none | …`.
+- **Playbook `verify:`** — `feature.md`·`bug-fix.md` 체크리스트 각 단계에 검증 문장 추가(Goal-Driven 형식 고정).
+
+### Changed
+
+- **`AGENTS.md` Hard Rules** — Surgical changes only 한 줄 추가. Craft 설명에 Assumptions → Contract → surgical scope 검증 순서 반영.
+- **`docs/methodology.ko.md`** — 원칙 #10·#11 및 하드룰 외과수술식 수정 개념 반영.
+- **플러그인 매니페스트** — `.claude-plugin` / `.codex-plugin` / `.cursor-plugin` `version`을 `0.9.1`로 맞춤(0.8.3에서 정체되어 있던 표기 갱신).
+
 ## [0.9.0] - 2026-06-16
 
 스킬 정본 언어를 영어로 통일 — 에이전트가 읽는 지시문을 모국어로 맞추고, 한국어 사용자는 단일 개념 가이드로 흡수한다.

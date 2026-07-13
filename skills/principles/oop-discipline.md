@@ -85,3 +85,30 @@ keeping duplication.
 - What you should actually consolidate is scattered *business rules* — pull them
   into one domain behavior method. (Rules copied across services seed God Service
   and anemic domain.)
+
+## 10. Surface assumptions before coding
+
+Do not silently pick one interpretation when several are plausible.
+Before writing business logic, state what you are assuming, what you considered,
+and why this path — then proceed or ask.
+
+- If unsure, stop and name what is unclear.
+- If alternatives exist, list them briefly; do not hide the choice.
+- Prefer a simpler path when it still satisfies the request; say so.
+- This complements Ambiguity resolution in Craft: defaults are fine when safe,
+  but the default must be **visible**, not silent.
+
+Essential structure (Aggregates, ports, layer separation) is still required —
+surfacing assumptions does not license skipping Discovery/Design/Skeleton for
+a new domain or large feature.
+
+## 11. Surgical changes only
+
+Touch only what the request requires. Match existing style; do not "improve"
+adjacent code, comments, formatting, or naming while delivering the task.
+
+- Clean up orphans **your change** created (unused imports, dead locals).
+- Pre-existing dead code: mention it; do not delete it in the same change.
+- Do not mix unrelated refactoring with a feature or bug fix.
+- Essential structure work (new port, layer folder) is in scope when the
+  chosen Craft path requires it — surgical means no *accidental* drive-by edits.

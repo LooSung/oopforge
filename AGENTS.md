@@ -27,7 +27,7 @@ Ask for human approval before moving from one stage to the next.
 
 Use `/oopforge:craft` (`commands/craft.md`) as the single OOPforge user entry point.
 
-`/oopforge:craft` delegates orchestration to `skills/workflow/craft.md`, reads `skills/principles/oop-discipline.md`, requires an OOP Contract before business-logic implementation, and verifies Hard Rules before completion.
+`/oopforge:craft` delegates orchestration to `skills/workflow/craft.md`, reads `skills/principles/oop-discipline.md`, requires Assumptions then an OOP Contract before business-logic implementation, and verifies Hard Rules (including surgical scope) before completion.
 
 - Use `/oopforge:craft` for single components, existing-domain features, domain bug fixes, and behavior-preserving refactors.
 - For ambiguous or advisory requests, Craft recommends the smallest path without implementing.
@@ -122,6 +122,7 @@ These limits are intentionally measurable. They come from review focus and agent
 - Other aggregates are referenced by ID only.
 - Do not commit domain logic without tests.
 - Comments explain "why"; names explain "what".
+- **Surgical changes only** — touch what the request requires; no drive-by edits to adjacent code, comments, or formatting. Clean orphans your change created; mention pre-existing dead code instead of deleting it in the same change.
 
 ### Layer layout (layered / 3-tier)
 
