@@ -47,7 +47,7 @@
 
 - `[단기]` **B2. Agent Skills 스펙 정렬** — `SKILL.md` frontmatter(`name`/`description`) + progressive disclosure 표준화 → Claude/Codex/Cursor 외 에이전트 호환.
 - `[단기]` **B3. 레포 위생** — 죽은/중복 스킬·끊긴 링크 정리, 빌드 산출물 ignore, 문서 링크 무결성 CI.
-- `[중기]` **B1. MCP 서버 모드** — `oopforge serve --mcp`. 스킬/룰/안티패턴을 MCP로 주입, 룰 위반 시 **실시간 피드백**. instructions 파일·재시작 없이 작동. **opt-in 실험**으로 시작. (멀티에이전트 환경에서 각 에이전트에 규율을 얹는 우리다운 방법 — 오케스트레이터가 되는 것과 다름)
+- `[중기]` **B1. MCP 서버 모드** — `oopforge serve --mcp`. archlint·안티패턴 탐지·도메인 리뷰를 **MCP 툴로 노출**해 에이전트가 코딩 중 위반을 **실시간 피드백**받고 자가교정. 스킬을 나르는 게 아니라 **강제(enforcement)가 핵심** — 코드 인덱서/메모리 인프라를 흉내 내지 않는다. instructions 파일·재시작 없이 작동, **opt-in 실험**으로 시작. (멀티에이전트 환경에서 각 에이전트에 규율을 얹는 우리다운 방법 — 오케스트레이터가 되는 것과 다름)
 
 ### 축 C — 강제 & 증명
 
