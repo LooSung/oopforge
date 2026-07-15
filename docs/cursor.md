@@ -1,8 +1,8 @@
-# Cursor Setup
+# Cursor Setup (Experimental)
 
-Use OOPforge with **Cursor Agent CLI** (`cursor-agent`) via `--plugin-dir`.
-
-There is no `scripts/setup/install.sh` symlink target for Cursor. Marketplace packaging is Phase 2 (no ETA).
+Use OOPforge with **Cursor Agent CLI** (`cursor-agent`) as a project-local
+skill. There is no `scripts/setup/install.sh` target for Cursor. Marketplace
+packaging is Phase 2 (no ETA).
 
 ## 1. Install OOPforge
 
@@ -19,47 +19,47 @@ chmod +x scripts/setup/*.sh
 ./scripts/setup/doctor.sh
 ```
 
-## 2. Load the plugin
+## 2. Link the skill into the target project
 
-Point `--plugin-dir` at the **pack root** (`~/.oopforge`), not `.cursor-plugin/`:
+From the backend project, create a local skill link and keep it out of Git:
 
 ```bash
 cd /path/to/your-backend-project
-cursor-agent --plugin-dir ~/.oopforge
+mkdir -p .cursor/skills
+ln -s ~/.oopforge/skills .cursor/skills/oopforge
+printf '%s\n' '.cursor/skills/oopforge' >> .git/info/exclude
 ```
 
-Start the agent **from your target project** so paths like `docs/foo.md` resolve in your repo, not in `~/.oopforge`.
+Cursor discovers project-local skills, including symlinks. Start the agent from
+this target project so paths like `docs/foo.md` resolve in the app repository.
 
 ## 3. Run Craft
 
-Cursor loads `commands/` like Claude Code — use the slash command:
+Start Cursor Agent and invoke Craft by name:
 
-```text
-/oopforge:craft Add a single Email value object
-/oopforge:craft Read docs/integration/image-storage.md and advise only. No implementation.
+```bash
+cursor-agent
 ```
 
-Natural language also works: `Use OOPforge craft: …`
+```text
+Use OOPforge craft: Add a single Email value object
+Use OOPforge craft: Read docs/integration/image-storage.md and advise only.
+```
 
 Planning-only sessions (Discovery, Design, Delivery Plan):
 
 ```bash
-cursor-agent --plugin-dir ~/.oopforge --plan
+cursor-agent --plan
 ```
 
 One-shot (non-interactive):
 
 ```bash
-cursor-agent --plugin-dir ~/.oopforge -p "OOPforge Discovery: order domain. No code yet."
+cursor-agent -p "Use OOPforge Discovery: order domain. No code yet."
 ```
 
-Optional shell alias:
-
-```bash
-alias cursor-oop='cursor-agent --plugin-dir ~/.oopforge'
-```
-
-After `git pull` in `~/.oopforge`, restart `cursor-agent` to pick up skill changes.
+After `git pull` in `~/.oopforge`, restart `cursor-agent` to pick up skill
+changes through the symlink.
 
 ## 4. Example prompts
 
@@ -90,7 +90,10 @@ Match the structure in examples/calculator-java-hexagonal/ — domain has zero f
 
 ## Limitations
 
-- **`--plugin-dir` per session** — pass the flag each run, or use a shell alias.
+- **Project-local setup** — each target repository needs its own skill link.
+- **`--plugin-dir` is not the verified headless path** — clean one-shot smoke
+  tests did not prove that it loaded Craft, so this guide does not claim it for
+  automation.
 - **No bootstrap auto-link** — unlike Claude Code / Codex, `install.sh` does not configure Cursor.
 - **Marketplace** — Phase 2; `.cursor-plugin/plugin.json` is a manifest only today.
 

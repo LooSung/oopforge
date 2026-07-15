@@ -11,7 +11,7 @@
 - 우리는 **수직(vertical) 방법론**이다. 범용 코딩 에이전트·코드 인덱서·컨텍스트 압축기 같은 **수평(horizontal) 인프라**가 아니다.
 - 대상은 **Java(Spring) / Python(FastAPI) 백엔드**와 **OOP/DDD를 제대로 하려는 팀**. 그 좁은 영역에서 **가장 깊다**.
 - Spec-Driven Development(SDD) 생태계 안에서, OOPforge는 "도메인 모델/레이어 경계/전술적 DDD"에 특화된 변종이다.
-- **효과 지표는 토큰 절감이 아니라 아키텍처 위반율과 재작업률이다.** 제약 없는 세션은 레이어/도메인 경계를 무너뜨리고, 명시적 제약(constitution + skills + fitness function)은 위반을 거의 0으로 만든다.
+- **효과 지표는 토큰 절감이 아니라 아키텍처 위반율과 재작업률이다.** 명시적 제약(constitution + skills + fitness function)이 이 지표를 실제로 낮추는지 재현 가능한 대조 실험으로 검증한다.
 
 ---
 
@@ -52,7 +52,7 @@
 ### 축 C — 강제 & 증명
 
 - `[단기]` **C2. 도메인 리뷰 자동화** — Craft 기반 PR diff가 안티패턴/하드룰 위반을 자동 코멘트. GitHub Action 템플릿. 위반 메시지를 에이전트에 피드백해 **자가교정** 유도. (수직 도구의 진짜 무기)
-- `[단기]` **C4. 정성적 Proof + 포지셔닝** — 무개입 vs OOPforge before/after diff, README 상단 install + Craft 실행 GIF/asciinema, 위반율/재작업 약한 정량표. `docs/positioning.md` 경쟁 비교표 + "우리는 무엇이 아닌가"를 README 첫 화면으로. (가장 싸고 임팩트 큼)
+- `[단기]` **C4. 반복 Proof + 데모** — 고정 프로토콜로 무개입 vs OOPforge 짝 실험을 반복하고, 유리·중립·불리한 결과를 모두 공개. README에 Craft 실행 GIF/asciinema와 위반율·재작업 요약을 연결하되 단일 실행을 개선율로 일반화하지 않는다.
 - `[중기]` **C1. fitness function 확장** — 헥사고날용 import-linter/ArchUnit, archlint에 축 A 패턴 검사 추가(outbox 트랜잭션, saga 경계, 다중 Aggregate 탐지).
 
 ---
@@ -61,7 +61,7 @@
 
 | 우선 | 항목 |
 |---|---|
-| C4 | before/after proof + README GIF + `docs/positioning.md` |
+| C4 | 반복 before/after proof 공개 + README Craft 데모 |
 | C2 | PR diff 자동 리뷰 |
 | A1 | `transactional-outbox.md` |
 | B2 | `SKILL.md` frontmatter 표준화 |

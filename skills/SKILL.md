@@ -15,7 +15,9 @@ Treat **`/oopforge:craft`** as the OOPforge user entry point on **Claude Code** 
 
 On **Codex CLI**, do not type `/oopforge:craft` at the composer — Codex reserves `/` for built-in commands. Use `/skills` or `$oopforge` → **oopforge**, then `craft: …` (no leading `/`).
 
-On **Cursor Agent CLI** (with `--plugin-dir`), use the plugin slash command like Claude: `/oopforge:craft …`.
+On **Cursor Agent CLI**, use the project-local skill setup documented in
+`docs/cursor.md`, then prompt `Use OOPforge craft: …`. Do not claim
+`--plugin-dir` works in headless automation until a clean smoke test proves it.
 
 ## Project vs pack (paths)
 

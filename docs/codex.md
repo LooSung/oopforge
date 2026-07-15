@@ -78,4 +78,4 @@ Skill content updates immediately via symlinks; restart Codex when the skill ent
 ## Related
 
 - [Claude Code setup](./claude-code.md) — slash command `/oopforge:craft`
-- [Cursor setup](./cursor.md) (Cursor Agent CLI via `--plugin-dir`)
+- [Cursor setup](./cursor.md) (experimental project-local skill setup)

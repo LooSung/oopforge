@@ -1,18 +1,21 @@
 # Cursor Plugin Manifest
 
-`.cursor-plugin/plugin.json` declares skills and commands paths for Cursor Agent CLI.
+`.cursor-plugin/plugin.json` is the experimental Cursor marketplace manifest.
 
-## Use today (Cursor Agent CLI)
+## Use today
 
-After bootstrap, load the pack at runtime:
+Use a project-local skill link from the target backend repository:
 
 ```bash
-cursor-agent --plugin-dir ~/.oopforge
+mkdir -p .cursor/skills
+ln -s ~/.oopforge/skills .cursor/skills/oopforge
+printf '%s\n' '.cursor/skills/oopforge' >> .git/info/exclude
+cursor-agent
 ```
 
-Point `--plugin-dir` at the **pack root** (`~/.oopforge`), not this `.cursor-plugin/` directory.
-
-There is no `scripts/setup/install.sh` symlink target for Cursor.
+Clean headless smoke tests did not prove that `--plugin-dir` loaded Craft, so
+the manifest is not presented as the verified automation path. There is no
+`scripts/setup/install.sh` symlink target for Cursor.
 
 ## Phase 2
 

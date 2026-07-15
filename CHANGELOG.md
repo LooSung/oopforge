@@ -2,6 +2,21 @@
 
 모든 변경은 여기에 기록한다. [Keep a Changelog](https://keepachangelog.com/) 형식.
 
+## [0.9.4] - 2026-07-15
+
+C4의 포지셔닝과 재현 가능한 증거 기준을 확립하고, 검증되지 않은 Cursor headless plugin 주장을 제거했다.
+
+### Added
+
+- **`docs/positioning.md`** — OOPforge의 카테고리, 대상 사용자, 대안 대비 차별점, 비-목표, 증거 기준과 메시지 가드레일을 정의. 측정되지 않은 위반율·재작업 개선을 사실처럼 주장하지 않도록 C4 proof 기준을 명문화.
+- **C4 재현 실험 하네스** — `docs/proof/`에 고정 과제·대조군·평가·공개 프로토콜과 결과 템플릿을 추가하고, `scripts/proof/`에 동일 모델 control/OOPforge 실행기와 결정적 평가기를 추가. `auto` 모델·저장소 내부 workspace를 거부하고 control 오염/treatment 로드를 검증하며, 평가기 self-test를 `lint.yml`에 연결.
+
+### Changed
+
+- **README proof 상태** — EN/KO 첫 화면에서 positioning·proof 프로토콜을 연결하고, 유효한 짝 실험 전에는 Before/After 구조 예시를 측정된 개선율로 표현하지 않도록 증거 상태를 명시.
+- **Cursor 설정 정정** — clean headless smoke test에서 `--plugin-dir`의 Craft 로드를 증명하지 못해 자동화 경로 주장을 제거. 검증된 프로젝트 로컬 `.cursor/skills/oopforge` 링크를 실험적 설정으로 문서화.
+- **Roadmap C4 잔여 범위** — 완료된 positioning·프로토콜은 이력으로 옮기고, 반복 짝 실험 공개와 README Craft 데모만 미래 작업으로 유지.
+
 ## [0.9.3] - 2026-07-13
 
 README 랜딩 명확화 — 설치·대상 프로젝트·Craft·수동 업데이트를 Quickstart에서 한눈에 보이게.

@@ -14,6 +14,8 @@ It gives Claude Code, Codex CLI, Cursor, and compatible agents a clear way to de
 
 Specialized for **Java (Spring)** and **Python (FastAPI)** — pick **3-tier (Controller/Service/Repository)** or **hexagonal/clean**, with **OpenAPI/Swagger** built in.
 
+[Positioning and non-goals](docs/positioning.md) · [Reproducible proof protocol](docs/proof/README.md)
+
 [English](./README.md) · [한국어](./README.ko.md)
 
 ---
@@ -44,10 +46,12 @@ cd /path/to/your-backend-project
 
 Restart Claude Code or Codex CLI so it picks up the new skills and commands.
 
-**Cursor** has no install symlink — pass the pack on every launch:
+**Cursor** integration is experimental. Link the skill into each target project:
 
 ```bash
-cursor-agent --plugin-dir ~/.oopforge
+mkdir -p .cursor/skills
+ln -s ~/.oopforge/skills .cursor/skills/oopforge
+printf '%s\n' '.cursor/skills/oopforge' >> .git/info/exclude
 ```
 
 ### **4. Run Craft**
@@ -58,7 +62,7 @@ Entry point is **Craft** on every harness; only **how you invoke it** differs:
 |---|---|
 | **Claude Code** | `/oopforge:craft <request>` — registered slash command |
 | **Codex CLI** | `/skills` → pick **oopforge**, then prompt **without** a leading `/` (Codex reserves `/` for its own commands) |
-| **Cursor Agent CLI** | After `--plugin-dir`, slash command or natural language (see [Cursor setup](docs/cursor.md)) |
+| **Cursor Agent CLI** | After project-local skill setup, `Use OOPforge craft: …` ([Cursor setup](docs/cursor.md)) |
 
 **Claude Code:**
 
@@ -75,7 +79,7 @@ Use OOPforge craft: Add a single Email value object
 **Cursor:**
 
 ```text
-/oopforge:craft Add a single Email value object
+Use OOPforge craft: Add a single Email value object
 ```
 
 ### **5. Update (manual — Releases do not auto-install)**
@@ -86,7 +90,7 @@ Publishing a GitHub Release does **not** update your machine. Pull the pack, the
 cd ~/.oopforge && git pull && ./scripts/setup/install.sh update
 ```
 
-Then restart the agent (Cursor: relaunch with `--plugin-dir`). See [Installation](#installation) for troubleshooting.
+Then restart the agent. See [Installation](#installation) for troubleshooting.
 
 ---
 
@@ -193,6 +197,13 @@ calculator/adapter/persistence/InMemoryCalculationRepository.java
 
 Runnable reference: [examples/README.md](examples/README.md) — the same calculator across layered, hexagonal, and CQRS stacks.
 
+### Evidence status
+
+The code above explains the intended structure; it is not by itself evidence of
+an improvement rate. The [proof protocol](docs/proof/README.md) fixes the task,
+control, treatment, evaluation rules, and publication standard for reproducible
+before/after runs. Measured results will be linked here after a valid paired run.
+
 ---
 
 ## **Installation**
@@ -231,7 +242,7 @@ chmod +x scripts/setup/*.sh
 |---|---|---|
 | **Claude Code** | Supported | `~/.claude/{skills,commands}/oopforge` |
 | **Codex CLI** | Supported via skill entry point | `~/.codex/skills/oopforge` |
-| **Cursor Agent CLI** | Experimental | `cursor-agent --plugin-dir ~/.oopforge` |
+| **Cursor Agent CLI** | Experimental | project-local `.cursor/skills/oopforge` link |
 
 Because the install uses symlinks, a `git pull` in `~/.oopforge` updates skill content immediately for linked agents.
 
@@ -253,13 +264,19 @@ Use OOPforge craft: <request>
 
 ### **Cursor Agent CLI**
 
-Cursor loads OOPforge with `--plugin-dir` instead of an install symlink:
+Cursor currently uses a project-local skill link:
 
 ```bash
-cursor-agent --plugin-dir ~/.oopforge
+cd /path/to/your-backend-project
+mkdir -p .cursor/skills
+ln -s ~/.oopforge/skills .cursor/skills/oopforge
+printf '%s\n' '.cursor/skills/oopforge' >> .git/info/exclude
+cursor-agent
 ```
 
-Then ask naturally, or include the Craft prompt in your request.
+Then ask `Use OOPforge craft: <request>`. Clean headless smoke tests did not
+prove `--plugin-dir` loaded Craft, so it is not documented as the automation
+path.
 
 To refresh install paths (for example after a version adds new link targets), run:
 
@@ -460,7 +477,7 @@ OOPforge is not a model layer. It is a **development protocol layer**.
 Packaging phases:
 
 - **Phase 1** — Lightweight portable methodology pack using symlinks
-- **Phase 2** — Claude Code / Codex / Cursor plugin marketplace packaging (Cursor CLI works via `--plugin-dir` today; bootstrap symlink + marketplace pending)
+- **Phase 2** — Claude Code / Codex / Cursor plugin marketplace packaging (Cursor project-local skills work today; plugin packaging pending)
 - **Phase 3** — Standalone CLI built on Claude Agent SDK
 
 Direction, priorities, and non-goals (short/medium/long term, language expansion, lint enforcement, anti-pattern catalog): **[docs/roadmap.md](./docs/roadmap.md)**

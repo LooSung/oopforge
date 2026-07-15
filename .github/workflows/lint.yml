@@ -40,6 +40,9 @@ jobs:
           chmod +x scripts/ci/lint-skills.sh
           ./scripts/ci/lint-skills.sh
 
+      - name: Self-test proof evaluator
+        run: python3 scripts/ci/test-proof-evaluator.py
+
       - name: Smoke test
         run: |
           chmod +x scripts/ci/smoke-test.sh scripts/setup/*.sh

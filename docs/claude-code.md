@@ -47,4 +47,4 @@ Use examples/calculator-java-hexagonal as the structural reference for the calcu
 ## Related
 
 - [Codex setup](./codex.md) (Codex skill entry point and slash-like prompts)
-- [Cursor setup](./cursor.md) (Cursor Agent CLI via `--plugin-dir`)
+- [Cursor setup](./cursor.md) (experimental project-local skill setup)

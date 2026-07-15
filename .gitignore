@@ -37,3 +37,6 @@ target/
 # Internal docs (not part of public pack surface)
 docs/release/
 docs/planning/
+
+# Legacy/invalid local C4 runs (valid runs are created outside this repository)
+.proof-runs/
