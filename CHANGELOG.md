@@ -2,7 +2,7 @@
 
 모든 변경은 여기에 기록한다. [Keep a Changelog](https://keepachangelog.com/) 형식.
 
-## [Unreleased]
+## [0.9.5] - 2026-07-16
 
 C2 도메인 리뷰 자동화 MVP — PR diff에서 **신규 하드룰 위반만** 코멘트하는 read-only 리뷰어.
 
@@ -11,6 +11,10 @@ C2 도메인 리뷰 자동화 MVP — PR diff에서 **신규 하드룰 위반만
 - **`scripts/ci/review/`** — 순수 stdlib PR 도메인 리뷰어. `ReviewRun` 애그리거트가 **new-only + line-level** 불변식을 소유(라인 번호 대신 `SubjectKey`로 base↔head 매칭해 라인 시프트 오탐 방지). 어댑터: `changeset`(git diff -U0 파싱)·`detectors`(파일 300줄·스킬 200줄·`domain/` 프레임워크 import)·`delivery`(요약 코멘트 + machine JSON). 검증은 항상 NEUTRAL(비차단).
 - **`.github/workflows/domain-review.yml`** — `pull_request`에서 리뷰어 실행, 요약 코멘트를 마커로 멱등 upsert, `review-findings.json` 아티팩트 업로드. 코드 미수정·머지 미차단. OOPforge 레포 자체에 먼저 dogfooding.
 - **`scripts/ci/test-review.py`** — 도메인 로직 self-test(diff 파싱·detector·new-only/line-level·delivery). `lint.yml`에 연결.
+
+### Changed
+
+- **플러그인 매니페스트** — `.claude-plugin` / `.codex-plugin` / `.cursor-plugin` `version`을 `0.9.5`로.
 
 ### Notes
 
