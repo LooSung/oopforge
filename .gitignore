@@ -40,3 +40,6 @@ docs/planning/
 
 # Legacy/invalid local C4 runs (valid runs are created outside this repository)
 .proof-runs/
+
+# OOPforge continuity work docs (personal in-progress notes, not committed)
+.craft/

@@ -1,0 +1,63 @@
+name: Domain Review
+
+# Read-only OOPforge domain review (roadmap C2, MVP).
+# Comments NEW hard-rule violations introduced by a PR on changed lines only.
+# Non-blocking: it never fails the check or edits code; it posts one summary
+# comment (idempotent) and uploads a machine-readable findings artifact.
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  domain-review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Run domain review
+        run: |
+          PYTHONPATH=scripts/ci python3 -m review.main \
+            --base "${{ github.event.pull_request.base.sha }}" \
+            --head "${{ github.event.pull_request.head.sha }}" \
+            --root "$PWD" \
+            --comment-out review-summary.md \
+            --json-out review-findings.json
+
+      - name: Upload machine-readable findings
+        uses: actions/upload-artifact@v4
+        with:
+          name: domain-review-findings
+          path: review-findings.json
+
+      - name: Upsert PR summary comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const body = fs.readFileSync('review-summary.md', 'utf8');
+            const marker = '<!-- oopforge-domain-review -->';
+            const { owner, repo } = context.repo;
+            const issue_number = context.issue.number;
+            const comments = await github.paginate(
+              github.rest.issues.listComments, { owner, repo, issue_number });
+            const existing = comments.find(
+              c => c.body && c.body.includes(marker));
+            if (existing) {
+              await github.rest.issues.updateComment(
+                { owner, repo, comment_id: existing.id, body });
+            } else {
+              await github.rest.issues.createComment(
+                { owner, repo, issue_number, body });
+            }

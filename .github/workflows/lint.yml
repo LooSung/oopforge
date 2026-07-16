@@ -43,6 +43,9 @@ jobs:
       - name: Self-test proof evaluator
         run: python3 scripts/ci/test-proof-evaluator.py
 
+      - name: Self-test domain review
+        run: python3 scripts/ci/test-review.py
+
       - name: Smoke test
         run: |
           chmod +x scripts/ci/smoke-test.sh scripts/setup/*.sh
