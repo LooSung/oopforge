@@ -424,9 +424,11 @@ oopforge/
 ├── scripts/
 │   ├── setup/           bootstrap, install, uninstall, doctor
 │   │   └── lib/common.sh
-│   ├── ci/              lint-skills.sh, smoke-test.sh
+│   ├── ci/              lint-skills.sh, smoke-test.sh, archlint.py,
+│   │                    review/ (read-only PR domain review)
 │   └── path-convention.md
-└── .github/workflows/   lint.yml, examples.yml (CI)
+└── .github/workflows/   lint.yml, examples.yml, arch-lint.yml,
+                         domain-review.yml (CI)
 ```
 
 ### **Agent instruction files**
