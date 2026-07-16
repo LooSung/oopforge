@@ -51,7 +51,7 @@
 
 ### 축 C — 강제 & 증명
 
-- `[단기]` **C2. 도메인 리뷰 자동화** — Craft 기반 PR diff가 안티패턴/하드룰 위반을 자동 코멘트. GitHub Action 템플릿. 위반 메시지를 에이전트에 피드백해 **자가교정** 유도. (수직 도구의 진짜 무기)
+- `[단기]` **C2. 도메인 리뷰 자동화** — ✅ MVP 완료(상세 이력 CHANGELOG): PR diff에서 **신규 하드룰 위반만** read-only로 코멘트(+machine JSON), GitHub Action, OOPforge 레포 dogfood로 검증. **남은 범위**: 안티패턴·메서드 길이 detector, archlint layered/CQRS 재사용, 타깃 프로젝트용 Action 템플릿 배포, 위반 피드백 기반 **자가교정** 루프. (수직 도구의 진짜 무기)
 - `[단기]` **C4. 반복 Proof + 데모** — 고정 프로토콜로 무개입 vs OOPforge 짝 실험을 반복하고, 유리·중립·불리한 결과를 모두 공개. README에 Craft 실행 GIF/asciinema와 위반율·재작업 요약을 연결하되 단일 실행을 개선율로 일반화하지 않는다.
 - `[중기]` **C1. fitness function 확장** — 헥사고날용 import-linter/ArchUnit, archlint에 축 A 패턴 검사 추가(outbox 트랜잭션, saga 경계, 다중 Aggregate 탐지).
 
@@ -62,7 +62,7 @@
 | 우선 | 항목 |
 |---|---|
 | C4 | 반복 before/after proof 공개 + README Craft 데모 |
-| C2 | PR diff 자동 리뷰 |
+| C2+ | 도메인 리뷰 탐지기 확장(안티패턴·메서드 길이·archlint 재사용) + 타깃 프로젝트 템플릿 (MVP는 완료) |
 | A1 | `transactional-outbox.md` |
 | B2 | `SKILL.md` frontmatter 표준화 |
 | B3 | 레포 위생 |

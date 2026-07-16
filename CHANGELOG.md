@@ -2,6 +2,20 @@
 
 모든 변경은 여기에 기록한다. [Keep a Changelog](https://keepachangelog.com/) 형식.
 
+## [Unreleased]
+
+C2 도메인 리뷰 자동화 MVP — PR diff에서 **신규 하드룰 위반만** 코멘트하는 read-only 리뷰어.
+
+### Added
+
+- **`scripts/ci/review/`** — 순수 stdlib PR 도메인 리뷰어. `ReviewRun` 애그리거트가 **new-only + line-level** 불변식을 소유(라인 번호 대신 `SubjectKey`로 base↔head 매칭해 라인 시프트 오탐 방지). 어댑터: `changeset`(git diff -U0 파싱)·`detectors`(파일 300줄·스킬 200줄·`domain/` 프레임워크 import)·`delivery`(요약 코멘트 + machine JSON). 검증은 항상 NEUTRAL(비차단).
+- **`.github/workflows/domain-review.yml`** — `pull_request`에서 리뷰어 실행, 요약 코멘트를 마커로 멱등 upsert, `review-findings.json` 아티팩트 업로드. 코드 미수정·머지 미차단. OOPforge 레포 자체에 먼저 dogfooding.
+- **`scripts/ci/test-review.py`** — 도메인 로직 self-test(diff 파싱·detector·new-only/line-level·delivery). `lint.yml`에 연결.
+
+### Notes
+
+- MVP 범위: 하드룰만(안티패턴·메서드 20줄·archlint 재사용·waiver·자가교정 루프는 후속). 기존 위반이 "더 나빠지는" 경우는 의도적으로 미탐지(문서화된 트레이드오프).
+
 ## [0.9.4] - 2026-07-15
 
 C4의 포지셔닝과 재현 가능한 증거 기준을 확립하고, 검증되지 않은 Cursor headless plugin 주장을 제거했다.
