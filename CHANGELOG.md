@@ -2,6 +2,14 @@
 
 모든 변경은 여기에 기록한다. [Keep a Changelog](https://keepachangelog.com/) 형식.
 
+## [0.9.7] - 2026-08-11
+
+### Added
+
+- **Comment discipline** — LLM이 남기는 장황한 "what" 주석을 줄이기 위해 `oop-discipline`에 narration comment 금지 원칙을 추가. 인접 코드 설명 주석은 삭제하거나 이름/메서드 추출로 대체하고, 주석은 why·외부 제약·숨은 불변식·추적되는 임시 결정에만 남기도록 명시.
+- **Craft 검증 항목** — 완료 전 comment discipline을 확인하도록 Verification에 `names explain what, comments explain why` 체크를 추가.
+- **AGENTS 하드룰 보강** — OOPforge 레포 자체 규칙에도 narration comment 금지와 rename/extract 대체 기준을 추가.
+
 ## [0.9.6] - 2026-08-11
 
 ### Fixed

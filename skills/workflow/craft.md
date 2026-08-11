@@ -35,7 +35,7 @@ Make domain objects own their responsibilities and keep the application service 
 7. For an execution request, copy the checklist of the chosen skill, playbook, or workflow into your task list.
 8. If you skip any step, leave a one-line reason.
 9. Write the **Assumptions** block (below), then the OOP Contract, before implementing business logic.
-10. Implement and test along the chosen path. Keep changes surgical (`oop-discipline` #12).
+10. Implement and test along the chosen path. Keep changes surgical (`oop-discipline` #13).
 11. Verify the project's stated rules (`AGENTS.md` or equivalent), naming them in the report, and the results of the tests you ran.
 12. Record design decisions, verification results, **Scope drift**, and remaining risks in the completion report format. **Completion gate**: if a continuity work doc exists, do not report done before updating that doc (Status/Progress/Decisions).
 
@@ -104,6 +104,7 @@ Transaction Boundary:
 - Verify the project's stated rules (`AGENTS.md` or equivalent) against the changed files, and identify them by name in the report.
 - Confirm **Scope drift** is `none`, or list every out-of-request change with a reason.
 - Spot-check relevant `skills/antipatterns/` symptoms on the diff (anemic domain, fat controller, smart repository, god Aggregate, flat package).
+- Check comment discipline: no narration comments; names explain what, comments explain why.
 - If the use case writes domain state, confirm Transaction Boundary names one Aggregate (`skills/oop/transaction-boundary.md`).
 - If broader review is needed, run the per-layer checks in `docs/reviewer-checklist.md`.
 - Run the necessary tests and record reproducible commands, toolchain identity (interpreter path/version, required env vars), and results.

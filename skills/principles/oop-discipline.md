@@ -108,7 +108,13 @@ Before recording a cause, secure one observation that would differ if that
 cause were false. Prefer mechanism over correlation; if two environments behave
 differently, compare the thing you believe differs before documenting it.
 
-## 12. Surgical changes only
+## 12. Comment discipline
+
+Do not narrate code. If a comment explains what adjacent code does, delete it
+or rename/extract code until the comment is unnecessary. Keep comments only for
+why, external constraints, hidden invariants, or tracked temporary decisions.
+
+## 13. Surgical changes only
 
 Touch only what the request requires. Match existing style; do not "improve"
 adjacent code, comments, formatting, or naming while delivering the task.

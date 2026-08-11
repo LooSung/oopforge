@@ -130,6 +130,7 @@ These limits are intentionally measurable. They come from review focus and agent
 - **One Aggregate modified per transaction** — multi-Aggregate writes in one commit need an explicit consistency design (see `skills/oop/transaction-boundary.md`).
 - Do not commit domain logic without tests.
 - Comments explain "why"; names explain "what".
+- No narration comments — delete comments that restate nearby code, or rename/extract code until the comment is unnecessary.
 - **Surgical changes only** — touch what the request requires; no drive-by edits to adjacent code, comments, or formatting. Clean orphans your change created; mention pre-existing dead code instead of deleting it in the same change.
 
 ### Layer layout (layered / 3-tier)
