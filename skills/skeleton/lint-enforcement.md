@@ -1,6 +1,6 @@
 ---
 name: lint-enforcement
-description: How to enforce layer/boundary Hard Rules in CI with standard tools (import-linter, ArchUnit). Add machine enforcement so guidance alone does not collapse.
+description: How to enforce layer/boundary project rules in CI with standard tools (import-linter, ArchUnit). Add machine enforcement so guidance alone does not collapse.
 tags: [lint, ci, layered, hexagonal, java, python]
 stability: stable
 ---
@@ -9,7 +9,7 @@ stability: stable
 
 ## When to use
 
-When you want to enforce layer/boundary rules **via the build, not docs**. Self-checks and reviews can be missed, so block the core Hard Rules automatically with tools.
+When you want to enforce layer/boundary rules **via the build, not docs**. Self-checks and reviews can be missed, so block the core project rules automatically with tools.
 
 Stack it in two layers:
 

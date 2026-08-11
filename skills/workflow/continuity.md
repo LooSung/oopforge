@@ -82,6 +82,8 @@ Accumulate everything on this one page per task.
 ## Update rules
 
 - When a meaningful decision is made, **append** to `Decisions` (do not delete existing lines).
+- If a new finding conflicts with earlier records, search the whole work dir
+  and correct the earlier claim too; append-only does not preserve false facts.
 - When a work unit finishes, update `Status` and `Progress`.
 - Reflect Craft's completion report (Design Decisions, Verification, Remaining Risks) in this doc.
 - **Completion gate**: for a task that has a doc, do not report done before updating this doc.
@@ -90,6 +92,8 @@ Accumulate everything on this one page per task.
 
 - A new domain or large feature may keep per-stage artifacts (`discovery.md`, `design.md`, etc.) next to the work dir.
 - Even then, `<kind>-<slug>.md` remains the single entry point (anchor) that links the stage docs.
+- For a long program made of many sequential tasks, keep one handoff anchor for
+  cross-task facts and risks; keep task docs for local decisions and progress.
 
 ## Prohibited
 

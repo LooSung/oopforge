@@ -62,5 +62,5 @@ Follow `skills/skeleton/backend-skeleton.md` for the detailed standard structure
 ## Related
 
 - `skills/skeleton/backend-skeleton.md` — standard layout + self-check
-- `AGENTS.md` Hard Rules — Layer layout
+- Project rules (`AGENTS.md` or equivalent) — Layer layout
 - `skills/workflow/refactor.md` — behavior-preserving moves

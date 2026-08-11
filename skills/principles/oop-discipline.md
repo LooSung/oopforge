@@ -102,7 +102,13 @@ Essential structure (Aggregates, ports, layer separation) is still required —
 surfacing assumptions does not license skipping Discovery/Design/Skeleton for
 a new domain or large feature.
 
-## 11. Surgical changes only
+## 11. Evidence before cause
+
+Before recording a cause, secure one observation that would differ if that
+cause were false. Prefer mechanism over correlation; if two environments behave
+differently, compare the thing you believe differs before documenting it.
+
+## 12. Surgical changes only
 
 Touch only what the request requires. Match existing style; do not "improve"
 adjacent code, comments, formatting, or naming while delivering the task.

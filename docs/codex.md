@@ -38,6 +38,9 @@ codex
 
 If `pwd` is `~/.oopforge`, relative paths like `docs/integration/foo.md` will be resolved in the **pack**, not your app repo. Use an absolute path or restart Codex after `cd` to your project.
 
+Exception: when you are maintaining OOPforge itself, start Codex from the
+OOPforge repository and treat that repository as the work target.
+
 ## Run Craft on Codex
 
 1. Start Codex in your backend project: `cd /path/to/your-project && codex`

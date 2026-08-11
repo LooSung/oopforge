@@ -10,14 +10,24 @@ stability: experimental
 ## Purpose
 
 Run an existing backend OOP task via the smallest appropriate execution path.
-The goal is not to add code.
+The goal is not code volume. Add or change code only when the selected path
+requires it, and keep domain behavior inside domain objects while the
+application service orchestrates.
 Make domain objects own their responsibilities and keep the application service from doing more than orchestration.
 
 ## Startup procedure
 
 0. `skills/workflow/continuity.md` Resume: if a work doc already exists, read it first and continue. If none exists and this is an **execution task (feature/refactor/bugfix)**, create `.craft/<kind>-<slug>.md` **automatically** without asking and announce it in one line. Do not create one for advisory or tiny tasks, or if `AGENTS.md` contains `OOPforge continuity: off`.
-1. Confirm the **target project**. The OOPforge **pack** (`~/.oopforge`, skill paths) is not the **repo** the user works on with Craft. If `pwd` is the pack root, you are in the wrong place — confirm the agent was started from the target project.
-2. When the user points to a file via `@…`, an absolute path, or a relative path, resolve it against the **target project root** (current working directory or git root). Do not look under `{pack}/docs/…` or `~/.oopforge/…`. If missing, confirm the absolute path or project root with the user.
+1. Confirm the **work target**. For ordinary app work, the target project is the
+   backend repo, not the OOPforge **pack** (`~/.oopforge`, skill paths). If
+   `pwd` is the pack root during app work, confirm the agent was started from
+   the target project. If the request is to maintain OOPforge itself, the pack
+   root is the correct target.
+2. When the user points to a file via `@…`, an absolute path, or a relative
+   path, resolve it against the confirmed work target (current working
+   directory or git root). Do not look under `{pack}/docs/…` or `~/.oopforge/…`
+   for app-project files. If missing, confirm the absolute path or project root
+   with the user.
 3. Read `skills/principles/oop-discipline.md`.
 4. Review the user request and the existing code.
 5. Select one smallest execution path from the table below.
@@ -25,8 +35,8 @@ Make domain objects own their responsibilities and keep the application service 
 7. For an execution request, copy the checklist of the chosen skill, playbook, or workflow into your task list.
 8. If you skip any step, leave a one-line reason.
 9. Write the **Assumptions** block (below), then the OOP Contract, before implementing business logic.
-10. Implement and test along the chosen path. Keep changes surgical (`oop-discipline` #11).
-11. Verify the Hard Rules in `AGENTS.md` and the results of the tests you ran.
+10. Implement and test along the chosen path. Keep changes surgical (`oop-discipline` #12).
+11. Verify the project's stated rules (`AGENTS.md` or equivalent), naming them in the report, and the results of the tests you ran.
 12. Record design decisions, verification results, **Scope drift**, and remaining risks in the completion report format. **Completion gate**: if a continuity work doc exists, do not report done before updating that doc (Status/Progress/Decisions).
 
 ## Execution-path selection
@@ -42,6 +52,7 @@ Make domain objects own their responsibilities and keep the application service 
 | Anemic domain, fat controller, smart repository, god Aggregate, flat package | matching file under `skills/antipatterns/` |
 | Read/write model split, lifting complex queries off the domain, applying CQRS | `skills/oop/cqrs.md` |
 | New domain or large feature | the full existing workflow starting at `skills/workflow/discovery.md` |
+| Not a backend OOP change (environment, tooling, docs, ops, investigation) | say so in one line; skip Assumptions and OOP Contract; keep Verification and Scope drift |
 | Advisory request that wants a recommendation only | recommend the smallest path and do not implement |
 | Execution request but a decision is missing ("make a calculator") | fill the decision via **Ambiguity resolution** below, then select a path |
 
@@ -90,12 +101,12 @@ Transaction Boundary:
 ## Verification
 
 - Complete the checklist of the chosen playbook or workflow (each step should have a `verify:`).
-- Verify the Hard Rules in `AGENTS.md` against the changed files.
+- Verify the project's stated rules (`AGENTS.md` or equivalent) against the changed files, and identify them by name in the report.
 - Confirm **Scope drift** is `none`, or list every out-of-request change with a reason.
 - Spot-check relevant `skills/antipatterns/` symptoms on the diff (anemic domain, fat controller, smart repository, god Aggregate, flat package).
 - If the use case writes domain state, confirm Transaction Boundary names one Aggregate (`skills/oop/transaction-boundary.md`).
 - If broader review is needed, run the per-layer checks in `docs/reviewer-checklist.md`.
-- Run the necessary tests and record the commands and results.
+- Run the necessary tests and record reproducible commands, toolchain identity (interpreter path/version, required env vars), and results.
 - For any failed or skipped verification, leave a reason and the risk.
 
 ## Completion report
@@ -106,7 +117,7 @@ Transaction Boundary:
 
 ## Verification
 - Tests:
-- Hard Rules:
+- Project rules:
 - Scope drift: none | <file/change — why>
 
 ## Remaining Risks

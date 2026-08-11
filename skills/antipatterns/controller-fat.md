@@ -63,6 +63,6 @@ POST /orders/{id}/cancel
 ## Related
 
 - `skills/oop/use-case-boundary.md` — application service role
-- `AGENTS.md` Hard Rules — Controller must not call Repository
+- Project rules (`AGENTS.md` or equivalent) — Controller must not call Repository
 - `skills/antipatterns/anemic-domain.md` — often co-occurs
 - `skills/antipatterns/repository-with-business-logic.md` — rules pushed the other way

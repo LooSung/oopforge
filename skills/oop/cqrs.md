@@ -89,4 +89,4 @@ Store: shared  # medium always shares
 - `skills/lang/backend-stack.md` — stack selection (CQRS is a variant)
 - `skills/skeleton/backend-skeleton.md` — layer-folder standard
 - `skills/oop/use-case-boundary.md` — use case / port boundary
-- `AGENTS.md` Hard Rules — CQRS rules
+- Project rules (`AGENTS.md` or equivalent) — CQRS rules

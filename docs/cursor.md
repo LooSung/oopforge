@@ -32,6 +32,8 @@ printf '%s\n' '.cursor/skills/oopforge' >> .git/info/exclude
 
 Cursor discovers project-local skills, including symlinks. Start the agent from
 this target project so paths like `docs/foo.md` resolve in the app repository.
+If you are maintaining OOPforge itself, start from the OOPforge repository and
+treat that repository as the work target.
 
 ## 3. Run Craft
 

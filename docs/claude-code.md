@@ -19,6 +19,10 @@ Installed paths:
 - `~/.claude/skills/oopforge`
 - `~/.claude/commands/oopforge`
 
+Start Claude Code from the backend project you want to change. If you are
+maintaining OOPforge itself, start from the OOPforge repository and treat that
+repository as the work target.
+
 ## Slash commands
 
 ```text
