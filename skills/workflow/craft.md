@@ -17,7 +17,7 @@ Make domain objects own their responsibilities and keep the application service 
 
 ## Startup procedure
 
-0. `skills/workflow/continuity.md` Resume: if a work doc already exists, read it first and continue. If none exists and this is an **execution task (feature/refactor/bugfix)**, create `.craft/<kind>-<slug>.md` **automatically** without asking and announce it in one line. Do not create one for advisory or tiny tasks, or if `AGENTS.md` contains `OOPforge continuity: off`.
+0. `skills/workflow/continuity.md` Resume: list `.craft/`. If previous work exists, read `next-session-prompt.md` first and **emit the Resume block before any other output** — even if the user did not mention it. Re-scope an inherited prompt to one decision; it is evidence, not a session scope. If none exists and this is an **execution task (feature/refactor/bugfix)**, create `.craft/<kind>-<slug>.md` automatically and announce it in one line. Do not create one for advisory or tiny tasks, or if `AGENTS.md` contains `OOPforge continuity: off`.
 1. Confirm the **work target**. For ordinary app work, the target project is the
    backend repo, not the OOPforge **pack** (`~/.oopforge`, skill paths). If
    `pwd` is the pack root during app work, confirm the agent was started from
@@ -37,7 +37,7 @@ Make domain objects own their responsibilities and keep the application service 
 9. Write the **Assumptions** block (below), then the OOP Contract, before implementing business logic.
 10. Implement and test along the chosen path. Keep changes surgical (`oop-discipline` #13).
 11. Verify the project's stated rules (`AGENTS.md` or equivalent), naming them in the report, and the results of the tests you ran.
-12. Record design decisions, verification results, **Scope drift**, and remaining risks in the completion report format. **Completion gate**: if a continuity work doc exists, do not report done before updating that doc (Status/Progress/Decisions).
+12. Record design decisions, verification results, **Scope drift**, and remaining risks in the completion report format. **Completion gate**: if a continuity work doc exists, do not report done before updating that doc (Status/Progress/Decisions). If the unit is done but work remains, write `.craft/next-session-prompt.md` before reporting done — do not wait to be asked (`continuity` Session cut).
 
 ## Execution-path selection
 
@@ -65,6 +65,7 @@ When the intent is execution but a decisive input is empty (language, architectu
 3. For items you can set safely, **state the default** and proceed (e.g., in-memory, layered, four arithmetic operations).
 4. Ask only the 1–2 questions that actually change the result (architecture/scope) (e.g., "Do you need history/queries? -> add CQRS").
 5. You may offer the `examples/` calculator family (layered/hexagonal/+CQRS) as a reference menu.
+6. On resume, the Resume block's `Continue this, or a new request instead?` is that question. Do not invent a default that drops unfinished previous work.
 
 ## Assumptions (before Contract)
 
@@ -104,6 +105,8 @@ Transaction Boundary:
 - Verify the project's stated rules (`AGENTS.md` or equivalent) against the changed files, and identify them by name in the report.
 - Confirm **Scope drift** is `none`, or list every out-of-request change with a reason.
 - Spot-check relevant `skills/antipatterns/` symptoms on the diff (anemic domain, fat controller, smart repository, god Aggregate, flat package).
+- For each structure you added (Aggregate, port, layer, new type), name the invariant it protects and the user's word for it, or put it back on the ladder (`oop-discipline` #7).
+- Confirm anything a person was asked to approve was written in their words, not Contract jargon (`oop-discipline` #14).
 - Check comment discipline: no narration comments; names explain what, comments explain why.
 - If the use case writes domain state, confirm Transaction Boundary names one Aggregate (`skills/oop/transaction-boundary.md`).
 - If broader review is needed, run the per-layer checks in `docs/reviewer-checklist.md`.

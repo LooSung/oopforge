@@ -382,8 +382,9 @@ Advanced users may invoke individual workflow stages through Craft, for example 
 
 OOPforge keeps a lightweight memory so work survives between chats. Write it down, and pull it back when you need it.
 
-- Each work item **may** get one document at `.craft/<kind>-<slug>.md` (for example `.craft/feature-member-management.md`), tracking decisions, progress, and the next step. Craft **asks first**; skip if you do not need session memory.
-- When you return, Craft reads the matching document **first** and continues from there.
+- Execution tasks auto-create `.craft/<kind>-<slug>.md` (for example `.craft/feature-member-management.md`). Advisory and tiny tasks do not.
+- If previous work exists, Craft **asks whether to continue it before writing code** — you do not have to mention `.craft/` or past sessions.
+- One session ships one decision. When that unit ends and work remains, Craft writes `.craft/next-session-prompt.md` without being asked. That file is the only "what's next"; the next chat reads it first.
 - `.craft/` is gitignored by default (personal notes). Override the location with an `OOPforge work dir: <path>` line in your project `AGENTS.md`.
 
 See [`skills/workflow/continuity.md`](skills/workflow/continuity.md).

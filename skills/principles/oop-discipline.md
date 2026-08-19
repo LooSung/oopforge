@@ -61,6 +61,17 @@ and stop at the first rung that holds. The lower you go, the more code you add.
 complexity* (Aggregate boundaries, invariants, ports, layer separation) is
 deliberate structure and is not subject to the ladder.
 
+**Earn the exemption; do not claim it.** The exemption is granted by evidence,
+not by category name — anything can be called an Aggregate boundary. A structure
+is essential only when you can name both:
+
+1. the invariant it protects, in one sentence;
+2. the **user's own word** for the thing it protects.
+
+If the name is one the user never used, the structure goes back on rung 1 and
+has to argue for itself. Naming is where accidental complexity enters disguised
+as essential.
+
 **Lazy, not negligent.** Trust-boundary input validation, data-loss handling,
 and security are never skipped at any rung.
 
@@ -124,3 +135,15 @@ adjacent code, comments, formatting, or naming while delivering the task.
 - Do not mix unrelated refactoring with a feature or bug fix.
 - Essential structure work (new port, layer folder) is in scope when the
   chosen Craft path requires it — surgical means no *accidental* drive-by edits.
+
+## 14. Product language at the human boundary
+
+The OOP Contract is a contract with the agent, not a screen for a person.
+Aggregate, Port, Bounded Context, and any name you invented stay in the
+Contract and the code — not in what you ask someone to approve.
+
+- Ask for approval in the user's words: what changes, for whom, what breaks.
+- Introduce a new name only once the thing exists and the user needs to say
+  it. Then define it in one line, and keep using their word for the rest.
+- An approval of a name the person cannot check is not an approval. It is the
+  cheapest way to get a wrong design blessed.

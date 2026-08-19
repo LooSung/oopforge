@@ -57,6 +57,8 @@ Discovery → Design → Delivery Plan → Skeleton → Implement → Test
 
 advisory(추천만) 요청이면 구현하지 않고 가장 작은 경로만 추천한다.
 
+세션이 바뀌어도 일은 끊기지 않는다. 실행 작업은 `.craft/` 에 기록을 남기고, **한 세션은 결정 하나만** 끝낸다. 일이 남으면 에이전트가 묻지 않고 `next-session-prompt.md` 를 쓴다. 다음 Craft는 그 파일을 먼저 읽고, 사용자가 지난 작업을 꺼내지 않아도 이어서 할지 한 번 묻는다.
+
 ---
 
 ## 4. 원칙 (oop-discipline)

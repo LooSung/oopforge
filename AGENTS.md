@@ -48,7 +48,7 @@ Optional single-line directives the target project can set to control OOPforge b
 | `OOPforge work dir: <path>` | Override the continuity work dir (default `.craft/`). |
 | `OOPforge continuity: off` | Disable automatic `.craft/` work-doc creation. |
 
-By default, continuity work docs are **auto-created (opt-out)** for execution tasks (feature/refactor/bugfix); advisory and tiny tasks never create one. See `skills/workflow/continuity.md`.
+By default, continuity work docs are **auto-created (opt-out)** for execution tasks (feature/refactor/bugfix); advisory and tiny tasks never create one. If previous work exists, Craft emits a **Resume block** (previous work / last verified / proposed job / parked) **before any code** and re-scopes an inherited prompt to one decision — the user does not have to mention it. When a session unit ends with work remaining, Craft writes `.craft/next-session-prompt.md` without being asked. See `skills/workflow/continuity.md`.
 
 ## Skill Routing
 
@@ -132,6 +132,8 @@ These limits are intentionally measurable. They come from review focus and agent
 - Comments explain "why"; names explain "what".
 - No narration comments — delete comments that restate nearby code, or rename/extract code until the comment is unnecessary.
 - **Surgical changes only** — touch what the request requires; no drive-by edits to adjacent code, comments, or formatting. Clean orphans your change created; mention pre-existing dead code instead of deleting it in the same change.
+- **Structure earns its exemption** — a structure escapes the YAGNI ladder only when you can name the invariant it protects *and* the user's own word for it. Calling it an Aggregate boundary is not evidence.
+- **Product language at the human boundary** — Aggregate, Port, Bounded Context, and invented names stay in the OOP Contract and the code; ask for approval in the user's words.
 
 ### Layer layout (layered / 3-tier)
 

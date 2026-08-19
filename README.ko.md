@@ -415,8 +415,9 @@ OOPforge가 강제하는 단계. 절대 합치지 않는다.
 
 대화가 바뀌어도 작업이 살아남도록 가벼운 기억을 남긴다. 써두고, 필요하면 꺼내 쓴다.
 
-- 작업마다 **원하면** 문서 한 장 `.craft/<kind>-<slug>.md` (예: `.craft/feature-member-management.md`) 에 결정·진행·다음 할 일을 누적한다. Craft가 **먼저 묻고**, 필요 없으면 넘어간다.
-- 다시 돌아오면 Craft가 해당 문서를 **먼저 읽고** 이어간다.
+- 실행 작업은 `.craft/<kind>-<slug>.md` (예: `.craft/feature-member-management.md`) 를 자동 생성한다. advisory·초소형 작업은 만들지 않는다.
+- 이전 작업이 있으면 Craft가 **코드를 쓰기 전에 이어서 할지 묻는다** — `.craft/` 나 지난 세션을 사용자가 꺼내지 않아도 된다.
+- 한 세션은 결정 하나를 끝낸다. 그 단위가 끝났는데 일이 남으면 Craft가 묻지 않고 `.craft/next-session-prompt.md` 를 쓴다. "다음은 무엇인가"는 그 파일 하나이고, 다음 채팅이 그걸 먼저 읽는다.
 - `.craft/` 는 기본 gitignore (개인 노트). 위치는 프로젝트 `AGENTS.md`의 `OOPforge work dir: <path>` 한 줄로 바꾼다.
 
 자세히: [`skills/workflow/continuity.md`](skills/workflow/continuity.md).
