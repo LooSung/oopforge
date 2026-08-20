@@ -49,6 +49,7 @@ Make domain objects own their responsibilities and keep the application service 
 | Fix a business-rule error, regression, or wrong state transition | `skills/playbooks/bug-fix.md` |
 | God Service, moving responsibility, removing duplication, behavior-preserving cleanup | `skills/workflow/refactor.md` |
 | Multi-Aggregate save in one TX, unclear Transaction Boundary on the Contract | `skills/oop/transaction-boundary.md` |
+| Use case must both write state and publish an event or notify another system | `skills/oop/outbox.md` |
 | Anemic domain, fat controller, smart repository, god Aggregate, flat package | matching file under `skills/antipatterns/` |
 | Read/write model split, lifting complex queries off the domain, applying CQRS | `skills/oop/cqrs.md` |
 | New domain or large feature | the full existing workflow starting at `skills/workflow/discovery.md` |

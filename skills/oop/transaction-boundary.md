@@ -67,6 +67,7 @@ approvePayment TX:
 
 ## Related
 
+- `skills/oop/outbox.md` — publishing that event without a second write target
 - `skills/oop/domain-model.md` — Aggregate Root; no multi-Aggregate TX
 - `skills/oop/use-case-boundary.md` — explicit transaction in the application service
 - `skills/antipatterns/god-aggregate.md` — boundary too wide

@@ -28,14 +28,7 @@
 
 ## 남은 작업
 
-### v0.11.0 — 백엔드 깊이 (현재)
-
-**A1 — Transactional Outbox**
-
-DB 쓰기와 이벤트 발행을 같은 트랜잭션에 묶고 relay/CDC 전달,
-ghost/lost 이벤트 방지를 가르친다.
-
-### v0.12.0 — 이식성과 위생
+### v0.12.0 — 이식성과 위생 (현재)
 
 **B2 — Claude/Codex/Cursor 3개 하네스 동등 지원 + Agent Skills 스펙 정렬**
 

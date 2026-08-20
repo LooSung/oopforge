@@ -49,6 +49,7 @@ Core OOP:
 - Domain model: `oop/domain-model.md`
 - Use-case boundary: `oop/use-case-boundary.md`
 - Transaction boundary (one Aggregate per TX): `oop/transaction-boundary.md`
+- Transactional Outbox (state change + event in one commit): `oop/outbox.md`
 - CQRS (read/write split, medium): `oop/cqrs.md`
 
 Backend stack and skeleton:

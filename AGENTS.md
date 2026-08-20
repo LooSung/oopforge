@@ -74,6 +74,7 @@ Use this table to decide **which skill to read first**. Workflow stage always wi
 | Aggregate, Value Object, Domain Event | `skills/oop/domain-model.md` |
 | Use case / application service / Repository port | `skills/oop/use-case-boundary.md` |
 | One Aggregate per transaction / multi-Aggregate writes | `skills/oop/transaction-boundary.md` |
+| Publishing an event or notifying another system in the same commit | `skills/oop/outbox.md` |
 | Read/write split, complex query off the domain (CQRS) | `skills/oop/cqrs.md` |
 | Backend stack selection | `skills/lang/backend-stack.md` |
 | Backend package structure / skeleton | `skills/skeleton/backend-skeleton.md` |
@@ -100,6 +101,7 @@ Before changing behavior, read the relevant skill file:
 - Domain model: `skills/oop/domain-model.md`
 - Use-case boundary: `skills/oop/use-case-boundary.md`
 - Transaction boundary (one Aggregate per TX): `skills/oop/transaction-boundary.md`
+- Transactional Outbox (state change + event in one commit): `skills/oop/outbox.md`
 - Backend stack selection: `skills/lang/backend-stack.md`
 - Backend skeleton structure: `skills/skeleton/backend-skeleton.md`
 - Lint enforcement (import-linter / ArchUnit in CI): `skills/skeleton/lint-enforcement.md`
