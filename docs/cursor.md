@@ -1,8 +1,8 @@
 # Cursor Setup (Experimental)
 
-Use OOPforge with **Cursor Agent CLI** (`cursor-agent`) as a project-local
-skill. There is no `scripts/setup/install.sh` target for Cursor. Marketplace
-packaging is Phase 2 (no ETA).
+Use OOPforge with **Cursor Agent CLI** (`cursor-agent`) through an explicit
+local plugin directory or a project-local skill. There is no
+`scripts/setup/install.sh` target for Cursor.
 
 ## 1. Install OOPforge
 
@@ -19,9 +19,19 @@ chmod +x scripts/setup/*.sh
 ./scripts/setup/doctor.sh
 ```
 
-## 2. Link the skill into the target project
+## 2. Register the local plugin
 
-From the backend project, create a local skill link and keep it out of Git:
+Link the installed pack into Cursor's local-plugin directory:
+
+```bash
+mkdir -p ~/.cursor/plugins/local
+ln -s ~/.oopforge ~/.cursor/plugins/local/oopforge
+```
+
+Pass this directory explicitly when starting Cursor Agent. Headless sessions
+did not discover it from the directory alone.
+
+Project-local skill links remain a verified alternative:
 
 ```bash
 cd /path/to/your-backend-project
@@ -30,17 +40,17 @@ ln -s ~/.oopforge/skills .cursor/skills/oopforge
 printf '%s\n' '.cursor/skills/oopforge' >> .git/info/exclude
 ```
 
-Cursor discovers project-local skills, including symlinks. Start the agent from
-this target project so paths like `docs/foo.md` resolve in the app repository.
-If you are maintaining OOPforge itself, start from the OOPforge repository and
-treat that repository as the work target.
+Start the agent from the target project so paths like `docs/foo.md` resolve in
+the app repository. For OOPforge maintenance, the pack repository is the work
+target.
 
 ## 3. Run Craft
 
 Start Cursor Agent and invoke Craft by name:
 
 ```bash
-cursor-agent
+cd /path/to/your-backend-project
+cursor-agent --plugin-dir ~/.cursor/plugins/local/oopforge
 ```
 
 ```text
@@ -57,11 +67,12 @@ cursor-agent --plan
 One-shot (non-interactive):
 
 ```bash
-cursor-agent -p "Use OOPforge Discovery: order domain. No code yet."
+cursor-agent --plugin-dir ~/.cursor/plugins/local/oopforge \
+  -p "Use OOPforge Discovery: order domain. No code yet."
 ```
 
-After `git pull` in `~/.oopforge`, restart `cursor-agent` to pick up skill
-changes through the symlink.
+If you chose the project-local skill alternative, omit `--plugin-dir`. After
+`git pull` in `~/.oopforge`, restart `cursor-agent` to pick up changes.
 
 ## 4. Example prompts
 
@@ -92,12 +103,40 @@ Match the structure in examples/calculator-java-hexagonal/ — domain has zero f
 
 ## Limitations
 
-- **Project-local setup** — each target repository needs its own skill link.
-- **`--plugin-dir` is not the verified headless path** — clean one-shot smoke
-  tests did not prove that it loaded Craft, so this guide does not claim it for
-  automation.
+- **Explicit load required** — a clean headless session loaded Craft with
+  `--plugin-dir ~/.cursor/plugins/local/oopforge`; the local directory alone
+  returned `OOPFORGE_NOT_LOADED`.
+- **Natural-language entry point** — use `Use OOPforge craft: …`.
+  `/oopforge:craft` did not expand as a Cursor headless command.
 - **No bootstrap auto-link** — unlike Claude Code / Codex, `install.sh` does not configure Cursor.
-- **Marketplace** — Phase 2; `.cursor-plugin/plugin.json` is a manifest only today.
+- **Marketplace** — local packaging is verified; marketplace publication is
+  separate future work.
+
+### Local plugin smoke evidence
+
+The result above was reproduced with Cursor Agent `2026.08.11-e8db854` in an
+empty workspace after temporarily isolating other OOPforge links:
+
+```bash
+mkdir -p /tmp/oopforge-cursor-plugin-smoke
+ln -s ~/.oopforge ~/.cursor/plugins/local/oopforge
+PROBE="Use OOPforge craft for an advisory-only Java value-object question. \
+If no OOPforge skill is automatically available, output OOPFORGE_NOT_LOADED \
+and stop. Do not search the filesystem for OOPforge."
+cursor-agent --print --mode ask --trust \
+  --workspace /tmp/oopforge-cursor-plugin-smoke \
+  --plugin-dir ~/.cursor/plugins/local/oopforge \
+  "$PROBE"
+cursor-agent --print --mode ask --trust \
+  --workspace /tmp/oopforge-cursor-plugin-smoke \
+  "$PROBE"
+```
+
+With `--plugin-dir`, the probe automatically read the packaged adapter,
+`skills/SKILL.md`, `workflow/craft.md`, and `principles/oop-discipline.md`.
+Without the flag it returned `OOPFORGE_NOT_LOADED`. The project-local skill
+alternative passed the same positive control, while a no-skill workspace
+returned `OOPFORGE_NOT_LOADED`.
 
 ## Related
 

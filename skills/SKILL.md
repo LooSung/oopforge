@@ -1,6 +1,8 @@
 ---
 name: oopforge
 description: Use OOPforge when building or changing a backend service, server, REST/HTTP API, or business app/feature in Java or Python — including vague build prompts like "make a calculator" or "build an order service" — and for DDD/OOP modeling, layered or hexagonal/clean architecture, aggregates, value objects, ports/adapters, CQRS, OpenAPI/Swagger, or the /oopforge:craft workflow prompt.
+license: MIT
+compatibility: Claude Code, Codex CLI, Cursor Agent, and Agent Skills-compatible clients with access to the complete OOPforge pack.
 ---
 
 # OOPforge
@@ -15,9 +17,9 @@ Treat **`/oopforge:craft`** as the OOPforge user entry point on **Claude Code** 
 
 On **Codex CLI**, do not type `/oopforge:craft` at the composer — Codex reserves `/` for built-in commands. Use `/skills` or `$oopforge` → **oopforge**, then `craft: …` (no leading `/`).
 
-On **Cursor Agent CLI**, use the project-local skill setup documented in
-`docs/cursor.md`, then prompt `Use OOPforge craft: …`. Do not claim
-`--plugin-dir` works in headless automation until a clean smoke test proves it.
+On **Cursor Agent CLI**, use the explicit local-plugin or project-local skill
+setup documented in `docs/cursor.md`, then prompt `Use OOPforge craft: …`.
+Do not use `/oopforge:craft` as the Cursor headless entry point.
 
 ## Project vs pack (paths)
 

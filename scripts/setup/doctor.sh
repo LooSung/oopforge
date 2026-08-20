@@ -101,11 +101,11 @@ check_command "cursor-agent"
 
 cyan "--- Cursor Agent CLI"
 if command -v cursor-agent >/dev/null 2>&1; then
-  ok "CLI found; link $PACK_DIR/skills into <target>/.cursor/skills/oopforge"
+  ok "CLI found; use --plugin-dir $PACK_DIR or a project-local skill link"
 else
   warn "cursor-agent not found (install Cursor CLI to use OOPforge with Cursor)"
 fi
-warn "Cursor setup is project-local and experimental; marketplace packaging is Phase 2."
+warn "Cursor setup is not installed automatically; see docs/cursor.md."
 
 cyan "--- Installed links"
 check_link "Claude skills" "$HOME/.claude/skills/oopforge" "$PACK_DIR/skills"

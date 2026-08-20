@@ -46,12 +46,13 @@ cd /path/to/your-backend-project
 
 Restart Claude Code or Codex CLI so it picks up the new skills and commands.
 
-**Cursor** integration is experimental. Link the skill into each target project:
+**Cursor** integration is experimental. Register the local plugin and load it
+explicitly:
 
 ```bash
-mkdir -p .cursor/skills
-ln -s ~/.oopforge/skills .cursor/skills/oopforge
-printf '%s\n' '.cursor/skills/oopforge' >> .git/info/exclude
+mkdir -p ~/.cursor/plugins/local
+ln -s ~/.oopforge ~/.cursor/plugins/local/oopforge
+cursor-agent --plugin-dir ~/.cursor/plugins/local/oopforge
 ```
 
 ### **4. Run Craft**
@@ -62,7 +63,7 @@ Entry point is **Craft** on every harness; only **how you invoke it** differs:
 |---|---|
 | **Claude Code** | `/oopforge:craft <request>` — registered slash command |
 | **Codex CLI** | `/skills` → pick **oopforge**, then prompt **without** a leading `/` (Codex reserves `/` for its own commands) |
-| **Cursor Agent CLI** | After project-local skill setup, `Use OOPforge craft: …` ([Cursor setup](docs/cursor.md)) |
+| **Cursor Agent CLI** | Load the local plugin explicitly, then `Use OOPforge craft: …` ([Cursor setup](docs/cursor.md)) |
 
 **Claude Code:**
 
@@ -252,7 +253,7 @@ chmod +x scripts/setup/*.sh
 |---|---|---|
 | **Claude Code** | Supported | `~/.claude/{skills,commands}/oopforge` |
 | **Codex CLI** | Supported via skill entry point | `~/.codex/skills/oopforge` |
-| **Cursor Agent CLI** | Experimental | project-local `.cursor/skills/oopforge` link |
+| **Cursor Agent CLI** | Experimental | explicit local plugin or project-local skill |
 
 Because the install uses symlinks, a `git pull` in `~/.oopforge` updates skill content immediately for linked agents.
 
@@ -274,19 +275,18 @@ Use OOPforge craft: <request>
 
 ### **Cursor Agent CLI**
 
-Cursor currently uses a project-local skill link:
+Cursor can load the local plugin explicitly:
 
 ```bash
+mkdir -p ~/.cursor/plugins/local
+ln -s ~/.oopforge ~/.cursor/plugins/local/oopforge
 cd /path/to/your-backend-project
-mkdir -p .cursor/skills
-ln -s ~/.oopforge/skills .cursor/skills/oopforge
-printf '%s\n' '.cursor/skills/oopforge' >> .git/info/exclude
-cursor-agent
+cursor-agent --plugin-dir ~/.cursor/plugins/local/oopforge
 ```
 
-Then ask `Use OOPforge craft: <request>`. Clean headless smoke tests did not
-prove `--plugin-dir` loaded Craft, so it is not documented as the automation
-path.
+Then ask `Use OOPforge craft: <request>`. Clean headless smoke tests verified
+this explicit path. Directory auto-discovery and `/oopforge:craft` did not
+load Craft; the project-local skill remains a verified alternative.
 
 To refresh install paths (for example after a version adds new link targets), run:
 
@@ -498,7 +498,7 @@ OOPforge is not a model layer. It is a **development protocol layer**.
 Packaging phases:
 
 - **Phase 1** — Lightweight portable methodology pack using symlinks
-- **Phase 2** — Claude Code / Codex / Cursor plugin marketplace packaging (Cursor project-local skills work today; plugin packaging pending)
+- **Phase 2** — Claude Code / Codex / Cursor marketplace publication (Cursor local packaging works today)
 - **Phase 3** — Standalone CLI built on Claude Agent SDK
 
 Direction, priorities, and non-goals (short/medium/long term, language expansion, lint enforcement, anti-pattern catalog): **[docs/roadmap.md](./docs/roadmap.md)**

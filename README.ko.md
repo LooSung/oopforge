@@ -49,12 +49,12 @@ cd /path/to/your-backend-project
 
 Claude Code · Codex CLI 세션을 재시작해 skills·commands를 불러온다.
 
-**Cursor** 통합은 실험적이다. 대상 프로젝트마다 skill을 연결한다:
+**Cursor** 통합은 실험적이다. 로컬 플러그인을 등록하고 명시적으로 로드한다:
 
 ```bash
-mkdir -p .cursor/skills
-ln -s ~/.oopforge/skills .cursor/skills/oopforge
-printf '%s\n' '.cursor/skills/oopforge' >> .git/info/exclude
+mkdir -p ~/.cursor/plugins/local
+ln -s ~/.oopforge ~/.cursor/plugins/local/oopforge
+cursor-agent --plugin-dir ~/.cursor/plugins/local/oopforge
 ```
 
 ### 4. Craft 실행
@@ -65,7 +65,7 @@ printf '%s\n' '.cursor/skills/oopforge' >> .git/info/exclude
 |---|---|
 | **Claude Code** | `/oopforge:craft <요청>` — 슬래시 커맨드 |
 | **Codex CLI** | `/skills` → **oopforge** 선택 후, **`/` 없이** 프롬프트 (Codex는 `/`를 자체 명령으로 처리) |
-| **Cursor Agent CLI** | 프로젝트 로컬 skill 설정 후 `Use OOPforge craft: …` ([Cursor 설정](docs/cursor.md)) |
+| **Cursor Agent CLI** | 로컬 플러그인을 명시적으로 로드한 뒤 `Use OOPforge craft: …` ([Cursor 설정](docs/cursor.md)) |
 
 **Claude Code:**
 
@@ -254,7 +254,7 @@ chmod +x scripts/setup/*.sh
 | --------------- | ---------------- | -------------------------------------------------------- |
 | **Claude Code** | 지원             | `~/.claude/{skills,commands}/oopforge`                   |
 | **Codex CLI**   | 스킬 진입점으로 지원 | `~/.codex/skills/oopforge`                               |
-| **Cursor Agent CLI** | 실험적 | 프로젝트 로컬 `.cursor/skills/oopforge` 링크 |
+| **Cursor Agent CLI** | 실험적 | 명시적 로컬 플러그인 또는 프로젝트 로컬 skill |
 
 심볼릭 링크이므로 **`~/.oopforge` 에서 `git pull` 하면 스킬 내용이 즉시 반영** 된다.
 
@@ -276,19 +276,19 @@ Use OOPforge craft: <request>
 
 ### Cursor Agent CLI
 
-Cursor는 대상 프로젝트에 로컬 skill을 연결한다:
+Cursor는 로컬 플러그인을 명시적으로 로드할 수 있다:
 
 ```bash
+mkdir -p ~/.cursor/plugins/local
+ln -s ~/.oopforge ~/.cursor/plugins/local/oopforge
 cd /path/to/your-backend-project
-mkdir -p .cursor/skills
-ln -s ~/.oopforge/skills .cursor/skills/oopforge
-printf '%s\n' '.cursor/skills/oopforge' >> .git/info/exclude
-cursor-agent
+cursor-agent --plugin-dir ~/.cursor/plugins/local/oopforge
 ```
 
 이후 `Use OOPforge craft: <요청>`으로 실행한다. clean headless smoke
-test에서 `--plugin-dir`의 Craft 로드를 증명하지 못했으므로 자동화 경로로
-문서화하지 않는다.
+test에서 이 명시적 경로를 검증했다. 디렉터리 자동 탐색과
+`/oopforge:craft`는 Craft를 로드하지 않았고, 프로젝트 로컬 skill은 검증된
+대안으로 유지한다.
 
 이후 자연어로 요청하거나 Craft 프롬프트를 요청에 포함한다.
 
@@ -451,7 +451,7 @@ OOPforge가 강제하는 단계. 절대 합치지 않는다.
 패키징 단계:
 
 - **Phase 1 (현재)** — Lightweight portable methodology layer (심볼릭 링크 설치)
-- **Phase 2** — Claude Code / Codex / Cursor 플러그인 마켓플레이스 등록 (Cursor project-local skill은 현재 사용 가능; plugin packaging은 Phase 2)
+- **Phase 2** — Claude Code / Codex / Cursor 마켓플레이스 등록 (Cursor 로컬 패키징은 현재 사용 가능)
 - **Phase 3** — Standalone CLI (Claude Agent SDK 위)
 
 방향·우선순위·비-목표·언어 확장 계획·린트 강제·안티패턴 카탈로그는: **[docs/roadmap.md](./docs/roadmap.md)**

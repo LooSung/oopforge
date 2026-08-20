@@ -1,4 +1,5 @@
 ---
+name: craft
 description: Execute backend OOP work with the smallest appropriate path.
 ---
 

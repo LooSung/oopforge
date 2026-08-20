@@ -2,7 +2,8 @@
 
 이 디렉토리는 OOPforge를 **Claude Code 플러그인 마켓플레이스** 에 등록하기 위한 매니페스트를 담는다.
 
-현재는 Phase 1 (심볼릭 링크 설치) 단계지만, 향후 Phase 2 에서 다음 명령으로 설치 가능하도록 준비:
+현재 검증된 경로는 심볼릭 링크 설치다. 마켓플레이스 공개 후에는 다음
+명령으로 설치할 수 있도록 준비한다:
 
 ```text
 /plugin marketplace add LooSung/oopforge
@@ -13,9 +14,9 @@
 
 | 하네스 | 디렉토리 | 상태 |
 |---|---|---|
-| Claude Code | `.claude-plugin/` | 준비 중 (이 디렉토리) |
-| Codex CLI | `.codex-plugin/` | TODO |
-| Cursor | `.cursor-plugin/` | project-local skill today; marketplace Phase 2 |
+| Claude Code | `.claude-plugin/` | manifest 준비, marketplace 미공개 |
+| Codex CLI | `.codex-plugin/` | global skill 검증 |
+| Cursor | `.cursor-plugin/` | explicit local plugin 검증 |
 
 Multi-harness packaging follows OOPforge's own portable layout (`.claude-plugin/`, `.codex-plugin/`, `.cursor-plugin/`).
 

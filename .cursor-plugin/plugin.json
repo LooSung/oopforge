@@ -20,6 +20,6 @@
         "korean",
         "methodology"
     ],
-    "skills": "./skills/",
+    "skills": "./.cursor-plugin/skills/",
     "commands": "./commands/"
 }

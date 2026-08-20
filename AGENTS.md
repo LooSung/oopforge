@@ -155,7 +155,7 @@ These limits are intentionally measurable. They come from review focus and agent
 - Do not add runtime dependencies for installer scripts unless there is no simpler shell-based alternative.
 - Update `CHANGELOG.md` for user-visible changes.
 - When changing install behavior, verify with a clean temporary `HOME`.
-- Do not claim a harness integration works until documented setup steps and a clean-session smoke test prove it. Cursor's current verified path is a project-local skill; do not document `--plugin-dir` as working until a clean smoke test proves it loads Craft.
+- Do not claim a harness integration works until documented setup steps and a clean-session smoke test prove it. Cursor's verified paths are the project-local skill and explicit `--plugin-dir`; directory auto-discovery and `/oopforge:craft` remain unverified.
 
 ## What Not To Do
 
