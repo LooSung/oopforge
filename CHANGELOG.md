@@ -4,6 +4,25 @@
 
 ## [Unreleased]
 
+## [0.12.1] - 2026-08-20
+
+### Changed
+
+- **첫 사용자 온보딩** — 영문·한국어 README를 300줄 이하의 사용자 동선으로
+  재구성하고 Quickstart, Craft 성공 기준, 핵심 workflow, 근거와 설치 수명주기를
+  앞에서부터 읽히는 순서로 정리했다.
+- **하네스별 활성화 안내** — `doctor.sh`의 범위와 Claude/Codex/Cursor의 실제
+  Craft 진입점을 분리하고, main 추적·릴리스 고정 clone의 업데이트 및 Cursor
+  수동 링크 제거 절차를 명시했다.
+
+### Fixed
+
+- **Codex·Cursor 호출 혼동** — 한국어 문서가 Codex에 Claude 전용
+  `/oopforge:craft`를 권하던 오류를 제거하고 자연어 Craft 진입점으로 통일했다.
+- **설치 검증과 제거 안전성** — doctor가 Cursor 패키징 어댑터를 검사하고 검증된
+  설정 문서를 안내한다. uninstall은 다른 대상을 가리키는 동명 symlink를
+  보존하며 smoke test가 이 동작을 고정한다.
+
 ## [0.12.0] - 2026-08-20
 
 ### Added
