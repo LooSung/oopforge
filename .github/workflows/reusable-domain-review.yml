@@ -1,13 +1,16 @@
-name: Domain Review
+name: OOPforge domain review
 
-# Read-only OOPforge domain review (roadmap C2+).
-# Comments new or worsened hard-rule, antipattern, and archlint findings
-# on the changed surface. Non-blocking: never fails the check or edits code.
-# Posts one summary comment (idempotent), uploads findings JSON, and a
-# correction prompt the agent can follow.
+# Reusable workflow for a target backend. The caller is the project under
+# review; this job fetches the pack only to run scripts/ci/review.
 
 on:
-  pull_request:
+  workflow_call:
+    inputs:
+      oopforge_ref:
+        description: OOPforge ref that provides the reviewer
+        type: string
+        required: false
+        default: main
 
 permissions:
   contents: read
@@ -17,10 +20,17 @@ jobs:
   domain-review:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout target project
         uses: actions/checkout@v5
         with:
           fetch-depth: 0
+
+      - name: Checkout OOPforge reviewer
+        uses: actions/checkout@v5
+        with:
+          repository: LooSung/oopforge
+          ref: ${{ inputs.oopforge_ref }}
+          path: .oopforge-reviewer
 
       - name: Set up Python 3.12
         uses: actions/setup-python@v6
@@ -29,7 +39,7 @@ jobs:
 
       - name: Run domain review
         run: |
-          PYTHONPATH=scripts/ci python3 -m review.main \
+          PYTHONPATH="$PWD/.oopforge-reviewer/scripts/ci" python3 -m review.main \
             --base "${{ github.event.pull_request.base.sha }}" \
             --head "${{ github.event.pull_request.head.sha }}" \
             --root "$PWD" \

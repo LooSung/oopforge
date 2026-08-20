@@ -40,10 +40,19 @@ def _finding_summary(findings) -> list[str]:
         loc = f"`{f.location.path}`:{f.location.lines.start}"
         detail = f.message.replace("|", "\\|")
         lines.append(f"| `{f.rule_id}` | {loc} | {detail} |")
-    return lines + [
+    return lines + _finding_footer()
+
+
+def _finding_footer() -> list[str]:
+    return [
         "",
-        "_Only new or worsened violations on changed lines are shown "
+        "_Only new or worsened violations on the changed surface are shown "
         "(read-only, non-blocking)._",
+        "",
+        "### Agent correction",
+        "",
+        "Fix only the listed subjects. Re-run domain review.",
+        "Do not mix unrelated refactors.",
     ]
 
 
@@ -57,6 +66,46 @@ def summary_markdown(report: ReviewReport) -> str:
     return "\n".join(lines)
 
 
+def machine_json(report: ReviewReport) -> str:
+    return json.dumps(machine_findings(report), indent=2, sort_keys=True)
+
+
+def _correction_lines(report: ReviewReport) -> list[str]:
+    findings = sorted(
+        report.findings,
+        key=lambda f: (f.location.path, f.location.lines.start, f.rule_id),
+    )
+    if not findings:
+        return ["No correction needed.", ""]
+    lines = [
+        "Fix only these domain-review findings. Surgical changes only.",
+        "Re-run the reviewer after the fix. Do not mix unrelated refactors.",
+        "",
+    ]
+    for index, finding in enumerate(findings, start=1):
+        loc = f"{finding.location.path}:{finding.location.lines.start}"
+        lines.append(f"{index}. `{finding.rule_id}` at `{loc}` — {finding.message}")
+    return lines + [""]
+
+
+def correction_prompt(report: ReviewReport) -> str:
+    return "\n".join(["# OOPforge domain-review correction", ""] + _correction_lines(report))
+
+
+def _finding_dicts(report: ReviewReport) -> list[Dict[str, Any]]:
+    return [
+        {
+            "rule_id": f.rule_id,
+            "severity": f.severity,
+            "path": f.location.path,
+            "line_start": f.location.lines.start,
+            "line_end": f.location.lines.end,
+            "message": f.message,
+        }
+        for f in report.findings
+    ]
+
+
 def machine_findings(report: ReviewReport) -> Dict[str, Any]:
     return {
         "schema": "oopforge.domain-review.v1",
@@ -66,19 +115,9 @@ def machine_findings(report: ReviewReport) -> Dict[str, Any]:
             "status": report.verdict.status,
             "finding_count": report.verdict.finding_count,
         },
-        "findings": [
-            {
-                "rule_id": f.rule_id,
-                "severity": f.severity,
-                "path": f.location.path,
-                "line_start": f.location.lines.start,
-                "line_end": f.location.lines.end,
-                "message": f.message,
-            }
-            for f in report.findings
-        ],
+        "findings": _finding_dicts(report),
+        "correction": {
+            "needed": report.verdict.finding_count > 0,
+            "instruction": "Fix only the listed findings. Surgical. Re-run domain review.",
+        },
     }
-
-
-def machine_json(report: ReviewReport) -> str:
-    return json.dumps(machine_findings(report), indent=2, sort_keys=True)

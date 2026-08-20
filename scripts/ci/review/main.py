@@ -12,8 +12,9 @@ import subprocess
 import sys
 from typing import Dict, Optional
 
+from .archlint_adapter import scan_tree
 from .changeset import parse_unified_diff
-from .delivery import machine_json, summary_markdown
+from .delivery import correction_prompt, machine_json, summary_markdown
 from .detectors import scan
 from .model import ReviewReport, ReviewRun, RuleCatalog
 
@@ -53,6 +54,8 @@ def review_pull_request(base: str, head: str, root: str) -> ReviewReport:
     changed = changeset.files()
     head_violations = scan(_collect(head, changed, root), catalog)
     base_violations = scan(_collect(base, changed, root), catalog)
+    head_violations.extend(scan_tree(root, head, catalog))
+    base_violations.extend(scan_tree(root, base, catalog))
     run = ReviewRun.open(base, head, changeset)
     run.assess(head_violations, base_violations)
     return run.summarize()
@@ -65,6 +68,7 @@ def _parse_args(argv):
     p.add_argument("--root", default=".", help="repository root")
     p.add_argument("--comment-out", help="write the Markdown summary here")
     p.add_argument("--json-out", help="write the machine-readable findings here")
+    p.add_argument("--correction-out", help="write the agent correction prompt here")
     return p.parse_args(argv)
 
 
@@ -79,6 +83,9 @@ def main(argv) -> int:
     if args.json_out:
         with open(args.json_out, "w") as fh:
             fh.write(machine_json(report) + "\n")
+    if args.correction_out:
+        with open(args.correction_out, "w") as fh:
+            fh.write(correction_prompt(report) + "\n")
     return 0  # read-only, non-blocking
 
 

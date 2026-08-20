@@ -1,12 +1,13 @@
-"""OOPforge domain-review MVP (roadmap C2).
+"""OOPforge domain review (roadmap C2+).
 
-Read-only PR-diff reviewer that surfaces ONLY NEW hard-rule violations
-introduced by a pull request. Pure stdlib.
+Read-only PR-diff reviewer that surfaces new or worsened hard-rule,
+antipattern, and archlint violations. Pure stdlib.
 
-Layout mirrors the OOP Contract from the design stage:
-  model      -- domain: ReviewRun aggregate, value objects, RuleCatalog
-  changeset  -- adapter: parse `git diff -U0` into added line ranges
-  detectors  -- adapter: scan a file set into candidate Violations
-  delivery   -- adapter: render summary comment + machine JSON
-  main       -- application: reviewPullRequest orchestration + CLI
+Layout:
+  model             -- ReviewRun aggregate, value objects, RuleCatalog
+  changeset         -- parse `git diff -U0` into added line ranges
+  detectors         -- per-file scans into candidate Violations
+  archlint_adapter  -- reuse layered/CQRS fitness functions on a git ref
+  delivery          -- summary comment + machine JSON + correction prompt
+  main              -- reviewPullRequest orchestration + CLI
 """

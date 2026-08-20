@@ -1,12 +1,13 @@
 """Adapter: scan a set of files into candidate Violations.
 
-MVP hard-rule detectors, all per-file (no project-root inference needed):
-  - FILE_TOO_LONG            code file > 300 lines
-  - SKILL_FILE_TOO_LONG      skills/**/*.md > 200 lines
-  - DOMAIN_FRAMEWORK_IMPORT  a file under a `domain/` folder imports a framework
-  - METHOD_TOO_LONG          Python/Java method > 20 lines
+Per-file detectors:
+  - FILE_TOO_LONG                 code file > 300 lines
+  - SKILL_FILE_TOO_LONG           skills/**/*.md > 200 lines
+  - DOMAIN_FRAMEWORK_IMPORT       a file under a `domain/` folder imports a framework
+  - METHOD_TOO_LONG               Python/Java method > 20 lines
+  - PUBLIC_MUTABLE_DOMAIN_FIELD   public domain field assigned in behavior
 
-Archlint layered/CQRS reuse remains deferred; it needs project-root detection.
+Project-root archlint reuse lives in archlint_adapter.py.
 """
 from __future__ import annotations
 
@@ -20,6 +21,7 @@ from .model import (
     FILE_TOO_LONG,
     LineRange,
     METHOD_TOO_LONG,
+    PUBLIC_MUTABLE_DOMAIN_FIELD,
     RuleCatalog,
     SKILL_FILE_TOO_LONG,
     Violation,
@@ -34,6 +36,13 @@ _JAVA_FW = re.compile(
     r"javax\.persistence|org\.hibernate)[\w.]*"
 )
 _PY_FW = re.compile(r"^\s*(?:from|import)\s+(fastapi|sqlalchemy|flask|django)\b")
+_DATACLASS = re.compile(r"^@dataclass(?:\((.*)\))?\s*$")
+_PY_FIELD = re.compile(r"^    ([A-Za-z][A-Za-z0-9_]*)\s*:")
+_SELF_ASSIGN = re.compile(r"\bself\.([A-Za-z][A-Za-z0-9_]*)\s*=")
+_JAVA_PUBLIC_FIELD = re.compile(
+    r"^\s*public\s+(?!static|class|interface|enum)[\w.<>,\s]+\s+([A-Za-z][A-Za-z0-9_]*)\s*[;=]"
+)
+_THIS_ASSIGN = re.compile(r"\bthis\.([A-Za-z][A-Za-z0-9_]*)\s*=")
 
 
 def _norm(path: str) -> str:
@@ -118,6 +127,51 @@ def _detect_method_too_long(path: str, content: str) -> List[Violation]:
     return out
 
 
+def _py_public_mutable_fields(content: str) -> Dict[str, int]:
+    fields: Dict[str, int] = {}
+    assigned: set[str] = set()
+    watching = False
+    for idx, raw in enumerate(content.splitlines(), start=1):
+        deco = _DATACLASS.match(raw.strip())
+        if deco is not None:
+            watching = "frozen=True" not in (deco.group(1) or "")
+            continue
+        if not watching:
+            continue
+        field = _PY_FIELD.match(raw)
+        if field:
+            fields[field.group(1)] = idx
+        assigned.update(_SELF_ASSIGN.findall(raw))
+    return {name: line for name, line in fields.items() if name in assigned}
+
+
+def _java_public_mutable_fields(content: str) -> Dict[str, int]:
+    fields = {}
+    assigned = set(_THIS_ASSIGN.findall(content))
+    for idx, raw in enumerate(content.splitlines(), start=1):
+        match = _JAVA_PUBLIC_FIELD.match(raw)
+        if match and "final" not in raw.split(match.group(1), 1)[0]:
+            fields[match.group(1)] = idx
+    return {name: line for name, line in fields.items() if name in assigned}
+
+
+def _detect_public_mutable_domain(path: str, content: str) -> List[Violation]:
+    fields = (
+        _py_public_mutable_fields(content) if path.endswith(".py")
+        else _java_public_mutable_fields(content)
+    )
+    return [
+        Violation(
+            PUBLIC_MUTABLE_DOMAIN_FIELD,
+            CodeLocation(path, LineRange(line, line)),
+            subject_key=f"{path}::field:{name}",
+            message=f"domain field '{name}' is public and assigned in "
+                    f"behavior; callers can bypass the invariant.",
+        )
+        for name, line in fields.items()
+    ]
+
+
 def scan(files: Dict[str, str], catalog: RuleCatalog) -> List[Violation]:
     """files maps path -> content at one ref. Absent files are simply omitted."""
     out: List[Violation] = []
@@ -132,4 +186,6 @@ def scan(files: Dict[str, str], catalog: RuleCatalog) -> List[Violation]:
             out.extend(_detect_domain_framework_import(path, content))
         if catalog.is_enabled(METHOD_TOO_LONG) and _is_code_file(path):
             out.extend(_detect_method_too_long(path, content))
+        if catalog.is_enabled(PUBLIC_MUTABLE_DOMAIN_FIELD) and _is_domain_file(path):
+            out.extend(_detect_public_mutable_domain(path, content))
     return out

@@ -13,8 +13,16 @@ FILE_TOO_LONG = "FILE_TOO_LONG"
 SKILL_FILE_TOO_LONG = "SKILL_FILE_TOO_LONG"
 DOMAIN_FRAMEWORK_IMPORT = "DOMAIN_FRAMEWORK_IMPORT"
 METHOD_TOO_LONG = "METHOD_TOO_LONG"
+PUBLIC_MUTABLE_DOMAIN_FIELD = "PUBLIC_MUTABLE_DOMAIN_FIELD"
+ARCHLINT_FLAT_PACKAGE = "ARCHLINT_FLAT_PACKAGE"
+ARCHLINT_LAYER_MISPLACED = "ARCHLINT_LAYER_MISPLACED"
+ARCHLINT_CONTROLLER_REPOSITORY = "ARCHLINT_CONTROLLER_REPOSITORY"
+ARCHLINT_QUERY_MUTATION = "ARCHLINT_QUERY_MUTATION"
+ARCHLINT_COMMAND_RETURNS_READ = "ARCHLINT_COMMAND_RETURNS_READ"
 
 WARN = "WARN"
+SCOPE_LINE = "line"
+SCOPE_FILE = "file"
 
 
 @dataclass(frozen=True)
@@ -45,6 +53,7 @@ class Violation:
     subject_key: str
     message: str
     magnitude: int | None = None
+    scope: str = SCOPE_LINE
 
     def identity(self) -> Tuple[str, str]:
         return (self.rule_id, self.subject_key)
@@ -79,6 +88,12 @@ class Changeset:
             return False
         return any(location.lines.overlaps(r) for r in ranges)
 
+    def touches(self, path: str) -> bool:
+        if path in self._added:
+            return True
+        prefix = path.rstrip("/") + "/"
+        return any(f.startswith(prefix) for f in self._added)
+
 
 @dataclass
 class RuleCatalog:
@@ -88,12 +103,19 @@ class RuleCatalog:
         SKILL_FILE_TOO_LONG,
         DOMAIN_FRAMEWORK_IMPORT,
         METHOD_TOO_LONG,
+        PUBLIC_MUTABLE_DOMAIN_FIELD,
+        ARCHLINT_FLAT_PACKAGE,
+        ARCHLINT_LAYER_MISPLACED,
+        ARCHLINT_CONTROLLER_REPOSITORY,
+        ARCHLINT_QUERY_MUTATION,
+        ARCHLINT_COMMAND_RETURNS_READ,
     )
     exclusions: Tuple[str, ...] = (
         "/test/", "/tests/", "test_", "_test.", ".test.",
         "/build/", "/dist/", "/target/", "/node_modules/",
         "/.venv/", "/__pycache__/", "/vendor/",
         "/examples/",  # runnable references, deliberately illustrate patterns
+        "/.oopforge-reviewer/",
     )
 
     @staticmethod
@@ -124,17 +146,22 @@ class ReviewRun:
 
     def assess(self, head_violations: List[Violation],
                base_violations: List[Violation]) -> None:
-        """Admit new or worsened violations that overlap changed lines."""
+        """Admit new or worsened violations on the changed surface."""
         base_by_id = {v.identity(): v for v in base_violations}
         for v in head_violations:
             previous = base_by_id.get(v.identity())
             if previous is not None and not self._worsened(v, previous):
                 continue  # pre-existing subject -> stay silent
-            if not self._changeset.covers(v.location):
-                continue  # not on changed lines -> out of review scope
+            if not self._in_scope(v):
+                continue
             self._findings.append(
                 Finding(v.rule_id, v.location, WARN, v.message)
             )
+
+    def _in_scope(self, v: Violation) -> bool:
+        if v.scope == SCOPE_FILE:
+            return self._changeset.touches(v.location.path)
+        return self._changeset.covers(v.location)
 
     @staticmethod
     def _worsened(current: Violation, previous: Violation) -> bool:

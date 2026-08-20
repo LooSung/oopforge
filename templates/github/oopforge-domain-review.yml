@@ -1,0 +1,17 @@
+# Copy this file to your backend as .github/workflows/oopforge-domain-review.yml
+# Pin oopforge_ref to a released tag once you depend on a stable pack.
+
+name: OOPforge domain review
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  domain-review:
+    uses: LooSung/oopforge/.github/workflows/reusable-domain-review.yml@main
+    with:
+      oopforge_ref: main

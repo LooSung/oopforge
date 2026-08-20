@@ -44,7 +44,9 @@ jobs:
         run: python3 scripts/ci/test-proof-evaluator.py
 
       - name: Self-test domain review
-        run: python3 scripts/ci/test-review.py
+        run: |
+          python3 scripts/ci/test-review.py
+          python3 scripts/ci/test-review-c2plus.py
 
       - name: Smoke test
         run: |
