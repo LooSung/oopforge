@@ -46,9 +46,10 @@ The treatment run uses the same coding agent and model with a pinned copy of
 OOPforge under the workspace's `.cursor/skills/oopforge`, then routes the
 request through Craft. The business requirements are otherwise identical.
 
-Project-local skill delivery is used because clean headless smoke tests did not
-prove that `cursor-agent --plugin-dir` loaded Craft. Plugin packaging is a
-separate integration concern; this experiment measures the methodology.
+Project-local skill delivery was used because, when these pairs were run, clean
+headless smoke tests had not proved that `cursor-agent --plugin-dir` loaded
+Craft. The later packaging verification is separate; this experiment measures
+the methodology.
 
 ## Fixed conditions
 
@@ -151,7 +152,7 @@ percentage improvement claim.
 
 After inspecting the raw artifacts:
 
-1. Copy the generated result template to
+1. Copy the [result template](./result-template.md) to
    `docs/proof/results/<date>-cursor-<model>.md`.
 2. Record the exact model, agent version, source commit, commands, violations,
    test results, and rework.

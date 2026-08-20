@@ -2,6 +2,33 @@
 
 모든 변경은 여기에 기록한다. [Keep a Changelog](https://keepachangelog.com/) 형식.
 
+## [Unreleased]
+
+### Added
+
+- **Cursor 로컬 플러그인 어댑터** — Cursor 규약의
+  `skills/oopforge/SKILL.md` 패키징 어댑터를 추가했다. 격리한 빈 작업공간에서
+  `--plugin-dir ~/.cursor/plugins/local/oopforge`가 Craft 지침을 자동 로드함을
+  검증했다. 디렉터리 자동 탐색과 `/oopforge:craft`는 실패 결과 그대로 남긴다.
+- **문서 링크 무결성 CI** — git 추적 Markdown의 상대 파일과 heading anchor를
+  stdlib-only 검사기로 검증하고 self-test를 `lint.yml`에 연결했다.
+
+### Changed
+
+- **Agent Skills 정렬** — 루트 Skill에 license·compatibility 메타데이터를
+  추가하고, Craft command의 공식 `name` frontmatter와 세 manifest 버전·Cursor
+  component 경로를 저장소 lint로 강제한다.
+
+### Fixed
+
+- **끊긴 문서 링크** — Claude Code 가이드의 library-loan 링크 두 개를 고치고,
+  proof result template을 프로토콜 문서에서 직접 연결했다.
+
+### Removed
+
+- **반영 완료된 피드백 원문** — v0.9.5 개선 항목이 모두 스킬에 반영된 뒤에도
+  고아로 남아 있던 `docs/feedback/2026-08-11.md`를 제거했다.
+
 ## [0.11.0] - 2026-08-20
 
 ### Added

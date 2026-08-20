@@ -68,6 +68,69 @@ check_json_file() {
   fi
 }
 
+frontmatter_value() {
+  local file="$1"
+  local key="$2"
+  awk -v key="$key" 'NR > 1 && /^---$/ { exit } index($0, key ": ") == 1 {
+    sub("^[^:]+: ", "")
+    print
+    exit
+  }' "$file"
+}
+
+check_craft_command() {
+  local file="$PACK_DIR/commands/craft.md"
+  [ -f "$file" ] || { fail "missing command file: commands/craft.md"; return; }
+  if [ "$(frontmatter_value "$file" name)" != "craft" ]; then
+    fail "commands/craft.md: name must be craft"
+  elif [ -z "$(frontmatter_value "$file" description)" ]; then
+    fail "commands/craft.md: frontmatter missing description"
+  else
+    ok "commands/craft.md frontmatter"
+  fi
+}
+
+check_cursor_skill() {
+  local file="$PACK_DIR/.cursor-plugin/skills/oopforge/SKILL.md"
+  check_skill_file "$file"
+  [ "$(frontmatter_value "$file" name)" = "oopforge" ] ||
+    fail ".cursor-plugin skill name must match directory: oopforge"
+}
+
+check_cursor_manifest_paths() {
+  local file="$PACK_DIR/.cursor-plugin/plugin.json"
+  local skills commands
+  skills="$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1]))["skills"])' "$file")"
+  commands="$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1]))["commands"])' "$file")"
+  if [ "$skills" != "./.cursor-plugin/skills/" ]; then
+    fail ".cursor-plugin/plugin.json: unexpected skills path: $skills"
+  elif [ "$commands" != "./commands/" ]; then
+    fail ".cursor-plugin/plugin.json: unexpected commands path: $commands"
+  else
+    ok ".cursor-plugin component paths"
+  fi
+}
+
+check_manifest_versions() {
+  local versions
+  versions="$(for file in .claude-plugin/plugin.json .codex-plugin/plugin.json .cursor-plugin/plugin.json; do
+    python3 -c 'import json,sys; print(json.load(open(sys.argv[1]))["version"])' "$PACK_DIR/$file"
+  done)"
+  if [ "$(printf '%s\n' "$versions" | sort -u | wc -l | tr -d ' ')" = "1" ]; then
+    ok "plugin manifest versions match"
+  else
+    fail "plugin manifest versions do not match"
+  fi
+}
+
+check_doc_links() {
+  if python3 "$PACK_DIR/scripts/ci/check-doc-links.py"; then
+    ok "documentation link integrity"
+  else
+    fail "documentation link integrity"
+  fi
+}
+
 check_agents_skill_refs() {
   local agents_file="$PACK_DIR/AGENTS.md"
   local path
@@ -97,6 +160,15 @@ cyan "--- Plugin manifests"
 check_json_file "$PACK_DIR/.claude-plugin/plugin.json"
 check_json_file "$PACK_DIR/.codex-plugin/plugin.json"
 check_json_file "$PACK_DIR/.cursor-plugin/plugin.json"
+check_manifest_versions
+
+cyan "--- Harness packaging"
+check_craft_command
+check_cursor_skill
+check_cursor_manifest_paths
+
+cyan "--- Documentation links"
+check_doc_links
 
 cyan "--- AGENTS.md skill references"
 check_agents_skill_refs

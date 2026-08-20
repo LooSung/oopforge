@@ -31,8 +31,8 @@ repository as the work target.
 /oopforge:craft Refactor imported billing module without changing behavior
 ```
 
-**First time?** Follow the [library loan walkthrough](../guides/library-loan/README.md) step by step.  
-Localized index: [KO](../guides/library-loan/README.ko.md)
+**First time?** Follow the [library loan walkthrough](./guides/library-loan/README.md) step by step.
+Localized index: [KO](./guides/library-loan/README.ko.md)
 
 ## Update after pull
 
@@ -51,4 +51,4 @@ Use examples/calculator-java-hexagonal as the structural reference for the calcu
 ## Related
 
 - [Codex setup](./codex.md) (Codex skill entry point and slash-like prompts)
-- [Cursor setup](./cursor.md) (experimental project-local skill setup)
+- [Cursor setup](./cursor.md) (experimental local plugin or project-local skill)
