@@ -4,20 +4,22 @@ MVP hard-rule detectors, all per-file (no project-root inference needed):
   - FILE_TOO_LONG            code file > 300 lines
   - SKILL_FILE_TOO_LONG      skills/**/*.md > 200 lines
   - DOMAIN_FRAMEWORK_IMPORT  a file under a `domain/` folder imports a framework
+  - METHOD_TOO_LONG          Python/Java method > 20 lines
 
-Method-length (20) and archlint layered/CQRS reuse are deferred (see design doc);
-they need language-aware parsing / project-root detection.
+Archlint layered/CQRS reuse remains deferred; it needs project-root detection.
 """
 from __future__ import annotations
 
 import re
 from typing import Dict, List
 
+from .method_length import scan_methods
 from .model import (
     CodeLocation,
     DOMAIN_FRAMEWORK_IMPORT,
     FILE_TOO_LONG,
     LineRange,
+    METHOD_TOO_LONG,
     RuleCatalog,
     SKILL_FILE_TOO_LONG,
     Violation,
@@ -25,6 +27,7 @@ from .model import (
 
 FILE_LIMIT = 300
 SKILL_LIMIT = 200
+METHOD_LIMIT = 20
 
 _JAVA_FW = re.compile(
     r"^\s*import\s+(org\.springframework|jakarta\.persistence|"
@@ -99,6 +102,22 @@ def _detect_domain_framework_import(path: str, content: str) -> List[Violation]:
     return out
 
 
+def _detect_method_too_long(path: str, content: str) -> List[Violation]:
+    out: List[Violation] = []
+    for method in scan_methods(path, content):
+        if method.length <= METHOD_LIMIT:
+            continue
+        out.append(Violation(
+            METHOD_TOO_LONG,
+            CodeLocation(path, LineRange(method.start, method.end)),
+            subject_key=f"{path}::{method.name}",
+            message=f"method '{method.name}' is {method.length} lines "
+                    f"(limit {METHOD_LIMIT}); extract one responsibility.",
+            magnitude=method.length,
+        ))
+    return out
+
+
 def scan(files: Dict[str, str], catalog: RuleCatalog) -> List[Violation]:
     """files maps path -> content at one ref. Absent files are simply omitted."""
     out: List[Violation] = []
@@ -111,4 +130,6 @@ def scan(files: Dict[str, str], catalog: RuleCatalog) -> List[Violation]:
             out.extend(_detect_skill_too_long(path, content))
         if catalog.is_enabled(DOMAIN_FRAMEWORK_IMPORT) and _is_domain_file(path):
             out.extend(_detect_domain_framework_import(path, content))
+        if catalog.is_enabled(METHOD_TOO_LONG) and _is_code_file(path):
+            out.extend(_detect_method_too_long(path, content))
     return out

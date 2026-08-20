@@ -18,30 +18,42 @@ from .model import ReviewReport
 COMMENT_MARKER = "<!-- oopforge-domain-review -->"
 
 
+def _clean_summary() -> list[str]:
+    return [
+        "",
+        "No new or worsened hard-rule violations introduced by this PR. ✅",
+        "",
+        "_Read-only review; pre-existing violations are not reported._",
+    ]
+
+
+def _finding_summary(findings) -> list[str]:
+    lines = [
+        "",
+        f"Found **{len(findings)}** new or worsened hard-rule violation(s) "
+        "on changed lines:",
+        "",
+        "| Rule | Location | Detail |",
+        "|---|---|---|",
+    ]
+    for f in findings:
+        loc = f"`{f.location.path}`:{f.location.lines.start}"
+        detail = f.message.replace("|", "\\|")
+        lines.append(f"| `{f.rule_id}` | {loc} | {detail} |")
+    return lines + [
+        "",
+        "_Only new or worsened violations on changed lines are shown "
+        "(read-only, non-blocking)._",
+    ]
+
+
 def summary_markdown(report: ReviewReport) -> str:
     lines = [COMMENT_MARKER, "## OOPforge domain review"]
     findings = sorted(
         report.findings,
         key=lambda f: (f.location.path, f.location.lines.start, f.rule_id),
     )
-    if not findings:
-        lines.append("")
-        lines.append("No new hard-rule violations introduced by this PR. ✅")
-        lines.append("")
-        lines.append("_Read-only review; pre-existing violations are not reported._")
-        return "\n".join(lines)
-
-    lines.append("")
-    lines.append(f"Found **{len(findings)}** new hard-rule violation(s) on changed lines:")
-    lines.append("")
-    lines.append("| Rule | Location | Detail |")
-    lines.append("|---|---|---|")
-    for f in findings:
-        loc = f"`{f.location.path}`:{f.location.lines.start}"
-        detail = f.message.replace("|", "\\|")
-        lines.append(f"| `{f.rule_id}` | {loc} | {detail} |")
-    lines.append("")
-    lines.append("_Only NEW violations on changed lines are shown (read-only, non-blocking)._")
+    lines.extend(_finding_summary(findings) if findings else _clean_summary())
     return "\n".join(lines)
 
 

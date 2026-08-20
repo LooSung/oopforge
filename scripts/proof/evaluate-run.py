@@ -3,12 +3,16 @@
 
 from __future__ import annotations
 
-import ast
 import json
 import re
 import subprocess
 import sys
 from pathlib import Path
+
+CI_DIR = Path(__file__).resolve().parents[1] / "ci"
+sys.path.insert(0, str(CI_DIR))
+
+from review.method_length import scan_methods  # noqa: E402
 
 
 FRAMEWORK_IMPORT = re.compile(r"^\s*(?:from|import)\s+(fastapi|pydantic|sqlalchemy)\b", re.MULTILINE)
@@ -48,29 +52,16 @@ def baseline_text(root: Path, rel: str) -> str:
 
 
 def method_length_findings(content: str, rel: str) -> list[dict[str, object]]:
-    if not rel.endswith(".py"):
-        return []
-    try:
-        tree = ast.parse(content)
-    except SyntaxError:
-        return [{"rule": "syntax-error", "file": rel}]
-    findings = []
-    for node in ast.walk(tree):
-        if not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
-            continue
-        if node.end_lineno is None:
-            continue
-        length = node.end_lineno - node.lineno + 1
-        if length > 20:
-            findings.append(
-                {
-                    "rule": "method-over-20-lines",
-                    "file": rel,
-                    "method": node.name,
-                    "lines": length,
-                }
-            )
-    return findings
+    return [
+        {
+            "rule": "method-over-20-lines",
+            "file": rel,
+            "method": method.name,
+            "lines": method.length,
+        }
+        for method in scan_methods(rel, content)
+        if method.length > 20
+    ]
 
 
 def content_findings(content: str, rel: str) -> list[dict[str, object]]:
@@ -94,6 +85,30 @@ def finding_key(finding: dict[str, object]) -> tuple[object, ...]:
     return finding.get("rule"), finding.get("file"), finding.get("method")
 
 
+def is_attributable(
+    current: dict[str, object], previous: dict[str, object] | None
+) -> bool:
+    if previous is None:
+        return True
+    return (
+        current.get("rule") == "method-over-20-lines"
+        and isinstance(current.get("lines"), int)
+        and isinstance(previous.get("lines"), int)
+        and current["lines"] > previous["lines"]
+    )
+
+
+def attributable_findings(
+    current: list[dict[str, object]],
+    previous: list[dict[str, object]],
+) -> list[dict[str, object]]:
+    previous_by_key = {finding_key(item): item for item in previous}
+    return [
+        item for item in current
+        if is_attributable(item, previous_by_key.get(finding_key(item)))
+    ]
+
+
 def architecture_findings(paths: list[Path], root: Path) -> list[dict[str, object]]:
     findings: list[dict[str, object]] = []
     for path in paths:
@@ -101,10 +116,8 @@ def architecture_findings(paths: list[Path], root: Path) -> list[dict[str, objec
         if not path.exists() or path.is_dir():
             continue
         current = content_findings(text(path), rel)
-        previous_keys = {
-            finding_key(item) for item in content_findings(baseline_text(root, rel), rel)
-        }
-        findings.extend(item for item in current if finding_key(item) not in previous_keys)
+        previous = content_findings(baseline_text(root, rel), rel)
+        findings.extend(attributable_findings(current, previous))
         if not rel.startswith(("app/", "tests/", ".craft/")) and rel not in {
             ".gitignore",
             "pyproject.toml",

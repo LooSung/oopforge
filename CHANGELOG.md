@@ -2,6 +2,18 @@
 
 모든 변경은 여기에 기록한다. [Keep a Changelog](https://keepachangelog.com/) 형식.
 
+## [Unreleased]
+
+### Added
+
+- **Python/Java 메서드 길이 탐지** — PR 리뷰와 Proof 평가기가 같은
+  stdlib-only 스캐너로 20줄 초과 메서드를 판정한다.
+
+### Changed
+
+- **신규뿐 아니라 악화도 귀속** — 기준선부터 20줄을 넘은 같은 메서드라도
+  이번 변경으로 더 길어지면 `METHOD_TOO_LONG`으로 보고한다.
+
 ## [0.9.9] - 2026-08-20
 
 ### Added

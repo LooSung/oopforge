@@ -30,33 +30,29 @@
 
 ### 현재
 
-**C2+ — 메서드 길이 탐지 신뢰도**
+**C4 — 반복 Proof + Craft 데모**
 
-첫 Proof에서 사람이 확인한 메서드 길이 악화를 자동 평가기가 놓쳤다.
-`METHOD_TOO_LONG` 탐지기를 PR 리뷰와 Proof 평가기가 함께 쓰게 만든다.
+고정 조건의 control/OOPforge 짝 실험을 반복해 단일 실행의 우연을 분리한다.
+유리한 결과를 만드는 것이 아니라 나온 결과를 그대로 누적하는 작업이다.
 
 끝나는 조건:
 
-- 기준선에 이미 긴 메서드와 이번 변경으로 새로 길어진 메서드를 구분한다.
-- Python과 Java 메서드 길이를 같은 규칙으로 판정한다.
-- PR diff 리뷰와 Proof 평가기 회귀 테스트가 통과한다.
+- 같은 조건의 유효 짝을 최소 3개까지 누적하고 원시 근거를 공개한다.
+- 유리·중립·불리한 결과를 모두 포함해 요약한다.
+- README에 Craft GIF/asciinema를 연결한다.
 
 ### 다음
 
-1. **C4 — 반복 Proof + Craft 데모**
-   - 같은 조건의 유효 짝을 최소 3개까지 누적하고 결과와 원시 근거를 공개한다.
-   - 유리·중립·불리한 결과를 모두 포함해 요약한다.
-   - README에 Craft GIF/asciinema를 연결한다.
-2. **C2+ — 도메인 리뷰 자동화 확장**
+1. **C2+ — 도메인 리뷰 자동화 확장**
    - 안티패턴 탐지, archlint layered/CQRS 재사용, 타깃 프로젝트 Action
      템플릿, 위반 피드백 기반 자가교정.
-3. **A1 — Transactional Outbox**
+2. **A1 — Transactional Outbox**
    - DB 쓰기와 이벤트 발행을 같은 트랜잭션에 묶고 relay/CDC 전달,
      ghost/lost 이벤트 방지를 가르친다.
-4. **B2 — Agent Skills 스펙 정렬**
+3. **B2 — Agent Skills 스펙 정렬**
    - `SKILL.md` frontmatter와 progressive disclosure를 표준화해
      Claude/Codex/Cursor 밖에서도 읽히게 한다.
-5. **B3 — 레포 위생**
+4. **B3 — 레포 위생**
    - 죽은·중복 스킬, 끊긴 링크, 빌드 산출물을 정리하고 문서 링크
      무결성 CI를 건다.
 

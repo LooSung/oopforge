@@ -1,7 +1,7 @@
 """Domain model for the PR architecture review (no framework, no I/O).
 
-The core value lives here: deciding which raw violations are NEW (introduced by
-the diff) and located on changed lines. Everything else is an adapter.
+The core value lives here: deciding which raw violations are new or worsened by
+the diff and located on changed lines. Everything else is an adapter.
 """
 from __future__ import annotations
 
@@ -12,6 +12,7 @@ from typing import Dict, List, Tuple
 FILE_TOO_LONG = "FILE_TOO_LONG"
 SKILL_FILE_TOO_LONG = "SKILL_FILE_TOO_LONG"
 DOMAIN_FRAMEWORK_IMPORT = "DOMAIN_FRAMEWORK_IMPORT"
+METHOD_TOO_LONG = "METHOD_TOO_LONG"
 
 WARN = "WARN"
 
@@ -36,13 +37,14 @@ class Violation:
     """Raw detector output (a candidate, before new-only/line-level filtering).
 
     subject_key is a line-number-independent identity of the violating subject,
-    so a violation counts as NEW only when its subject is new -- surviving the
-    line shifts a diff introduces.
+    so a violation counts as new when its subject is new, or worsened when its
+    measured magnitude grows, while surviving line shifts.
     """
     rule_id: str
     location: CodeLocation
     subject_key: str
     message: str
+    magnitude: int | None = None
 
     def identity(self) -> Tuple[str, str]:
         return (self.rule_id, self.subject_key)
@@ -85,6 +87,7 @@ class RuleCatalog:
         FILE_TOO_LONG,
         SKILL_FILE_TOO_LONG,
         DOMAIN_FRAMEWORK_IMPORT,
+        METHOD_TOO_LONG,
     )
     exclusions: Tuple[str, ...] = (
         "/test/", "/tests/", "test_", "_test.", ".test.",
@@ -121,17 +124,25 @@ class ReviewRun:
 
     def assess(self, head_violations: List[Violation],
                base_violations: List[Violation]) -> None:
-        """Admit a head violation as a Finding only when it is NEW (subject not
-        present in base) AND its location overlaps the changeset."""
-        base_ids = {v.identity() for v in base_violations}
+        """Admit new or worsened violations that overlap changed lines."""
+        base_by_id = {v.identity(): v for v in base_violations}
         for v in head_violations:
-            if v.identity() in base_ids:
+            previous = base_by_id.get(v.identity())
+            if previous is not None and not self._worsened(v, previous):
                 continue  # pre-existing subject -> stay silent
             if not self._changeset.covers(v.location):
                 continue  # not on changed lines -> out of review scope
             self._findings.append(
                 Finding(v.rule_id, v.location, WARN, v.message)
             )
+
+    @staticmethod
+    def _worsened(current: Violation, previous: Violation) -> bool:
+        return (
+            current.magnitude is not None
+            and previous.magnitude is not None
+            and current.magnitude > previous.magnitude
+        )
 
     def findings(self) -> List[Finding]:
         return list(self._findings)

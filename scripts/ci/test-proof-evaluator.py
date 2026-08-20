@@ -100,27 +100,57 @@ def bad_case(root: Path) -> None:
     )
 
 
+def worsen_method(root: Path) -> None:
+    write(
+        root,
+        "app/domain/calculation/model.py",
+        BASELINE_MODEL
+        + "        added_1 = 1\n"
+        + "        added_2 = 2\n",
+    )
+
+
+def prepare(root: Path) -> None:
+    root.mkdir()
+    baseline(root)
+
+
+def assert_clean(root: Path) -> None:
+    prepare(root)
+    clean_case(root)
+    result = evaluate(root)
+    assert result["violation_count"] == 0, result
+
+
+def assert_bad(root: Path) -> None:
+    prepare(root)
+    bad_case(root)
+    result = evaluate(root)
+    rules = {finding["rule"] for finding in result["findings"]}
+    expected = {
+        "invariant-outside-domain",
+        "missing-domain-behavior",
+        "missing-domain-test",
+        "missing-use-case-test",
+        "missing-api-test",
+    }
+    assert expected <= rules, result
+
+
+def assert_worsened(root: Path) -> None:
+    prepare(root)
+    clean_case(root)
+    worsen_method(root)
+    result = evaluate(root)
+    rules = {finding["rule"] for finding in result["findings"]}
+    assert "method-over-20-lines" in rules, result
+
+
 def main() -> int:
     with tempfile.TemporaryDirectory() as temp:
-        clean_root = Path(temp) / "clean"
-        clean_root.mkdir()
-        baseline(clean_root)
-        clean_case(clean_root)
-        clean_result = evaluate(clean_root)
-        assert clean_result["violation_count"] == 0, clean_result
-
-        bad_root = Path(temp) / "bad"
-        bad_root.mkdir()
-        baseline(bad_root)
-        bad_case(bad_root)
-        bad_result = evaluate(bad_root)
-        rules = {finding["rule"] for finding in bad_result["findings"]}
-        assert "invariant-outside-domain" in rules, bad_result
-        assert "missing-domain-behavior" in rules, bad_result
-        assert "missing-domain-test" in rules, bad_result
-        assert "missing-use-case-test" in rules, bad_result
-        assert "missing-api-test" in rules, bad_result
-
+        assert_clean(Path(temp) / "clean")
+        assert_bad(Path(temp) / "bad")
+        assert_worsened(Path(temp) / "worsened")
     print("proof evaluator self-test: PASS")
     return 0
 
