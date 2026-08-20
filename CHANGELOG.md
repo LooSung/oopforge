@@ -2,6 +2,20 @@
 
 모든 변경은 여기에 기록한다. [Keep a Changelog](https://keepachangelog.com/) 형식.
 
+## [0.10.0] - 2026-08-20
+
+### Added
+
+- **C4 반복 Proof 3짝** — Cursor `gpt-5.6-sol-high`로 유효한 control/OOPforge
+  짝 세 개를 공개했다. 1은 중립, 2·3은 메서드 길이에서 유리. 불리한 짝은
+  이 조건에서 관측되지 않았고 그 부재를 기록한다. 세 짝 모두 공개
+  mutable `voided_at` 유출이 남았다. 일반 개선율로 쓰지 않는다.
+- **Craft asciinema** — Assumptions·OOP Contract·검증 게이트를 보여주는
+  예시 세션을 README에 연결했다. 재구성 재생이며 라이브 tty가 아니다.
+- **C2+ 도메인 리뷰 확장** — 공개 mutable 도메인 필드 탐지, archlint
+  layered/CQRS 재사용, 타깃 프로젝트 Action 템플릿, 위반 JSON·교정
+  프롬프트로 자가교정 루프를 이었다.
+
 ## [0.9.10] - 2026-08-20
 
 ### Added
