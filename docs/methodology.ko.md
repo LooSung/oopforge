@@ -15,7 +15,9 @@ OOPforge는 **백엔드 OOP/DDD에 수직 특화된 방법론 + 아키텍처 강
 
 - 대상 스택: **Java(Spring) / Python(FastAPI)** 백엔드.
 - 푸는 문제: 제약이 없으면 AI 에이전트가 레이어/도메인 경계를 무너뜨린다(God Service, anemic domain).
-  명시적 제약(스킬 + 하드룰 + CI 강제 + 휴먼 체크포인트)을 주면 위반이 거의 0으로 떨어진다.
+  명시적 제약(스킬 + 하드룰 + CI 강제 + 휴먼 체크포인트)으로 위반과 재작업을
+  줄이는 것이 목표다. 현재 공개 proof는 제한된 조건의 초기 결과이며 일반
+  효과를 증명하지 않는다.
 - 핵심 지표는 토큰 절감이 아니라 **아키텍처 위반율**과 **재작업률**이다.
 
 용어 대응: skills = 문법, 하드룰 = 린트, `examples/` = 표준 구현, install·commands = 런타임.
@@ -139,7 +141,8 @@ DRY는 **지식(규칙)의 중복**을 없애는 것이지, 닮아 보이는 코
 - 테스트 없이 도메인 로직 커밋 금지.
 - **외과수술식 수정** — 요청에 필요한 것만; 드라이브바이 리팩터·포맷·주석 손질 금지. 이번 변경이 만든 orphan만 정리.
 - 레이어는 각각 별도 폴더(`controller/ service/ repository/ domain/`). Controller→Repository 직접 호출 금지.
-- CI(`scripts/ci/archlint.py` + import-linter/ArchUnit)가 위반 시 PR을 막는다.
+- CI는 layered/CQRS의 일부 구조 규칙을 위반하면 PR을 막는다. domain review는
+  기본 non-blocking이며 모든 하드룰을 자동 강제하지 않는다.
 
 ---
 

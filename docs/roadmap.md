@@ -26,6 +26,28 @@
 
 ---
 
+## 다음 릴리스
+
+### v0.13.0 — C1 fitness function 정합
+
+**목표:** reference 예제, 평가기, CI gate가 같은 OOPforge 규칙을 보고
+“아키텍처를 지킨다”는 약속을 실행 가능한 강제로 닫는다.
+
+- **Reference 기준선** — Java/Python 예제의 공개 mutable 상태, 메서드 길이,
+  presentation→repository 의존 등 알려진 위반을 교정하고 회귀 검사로 고정한다.
+- **Evaluator 단일화** — C4 proof 평가기와 C2+ domain review가 같은 detector와
+  finding ID를 재사용해 machine/human 판정 차이를 줄인다.
+- **Hexagonal 강제 확대** — plain hexagonal 예제에도 import-linter/ArchUnit
+  또는 동등한 경계 검사를 적용한다.
+- **차단 정책** — 저장소 CI와 adopter template에서 무엇을 필수 차단하고 무엇을
+  non-blocking 피드백으로 남길지 명시하고 검증한다.
+- **증거 갱신** — 정합된 reference와 evaluator로 고정 비교를 다시 실행하고,
+  일반 효과로 확대하지 않은 결과와 재현 artifact를 공개한다.
+
+**범위 밖:** saga, domain-events, MCP 서버, 언어 확장, marketplace 공개.
+
+---
+
 ## 장기 목표
 
 ### 백엔드 깊이
