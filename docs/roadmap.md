@@ -28,20 +28,21 @@
 
 ## 다음 릴리스
 
-### v0.15.0 — Production Readiness
+### v1.0.0 — Stable Core와 3-Harness 계약
 
-**목표:** 실제 배포 요청에만 adapter 중심 NFR gate를 적용하고, domain purity를
-유지한 채 두 언어에서 실행 가능한 경계 테스트로 증명한다.
+**목표:** Java/Python 핵심 방법론과 Claude/Codex/Cursor의 검증된 실행 경로를
+하나의 지원 계약과 자동 smoke 아래 안정화한다. 별도 RC는 두지 않는다.
 
-- **NFR gate** — 입력 검증, 오류 응답, API 멱등성, retry, 관측성, 감사 로그,
-  PII·secret 처리를 adapter 책임으로 정의한다.
-- **선택적 workflow** — Delivery Plan, Implement, Test, reviewer checklist에
-  release gate를 연결하되 Craft는 실제 배포 요청에만 선택한다.
-- **실행 reference** — Java/Python plain hexagonal 예제에 invalid input,
-  duplicate request, safe error, correlation/audit 경계 테스트를 추가한다.
-- **Domain purity** — framework·HTTP·로깅·멱등성 concern은 domain에 넣지 않는다.
+- **Canonical paths** — Claude symlink + `/oopforge:craft`, Codex global skill +
+  자연어 Craft, Cursor explicit `--plugin-dir`와 project-local skill을 고정한다.
+- **Harness smoke** — PR에서 packaging/static smoke를 차단하고 tag·scheduled
+  workflow에서 인증 가능한 live activation positive/negative control을 실행한다.
+- **Stable 실행 스택** — Craft, OOP discipline, continuity, feature/bug-fix
+  playbook 등 필수 경로를 `stable`로 승격한다.
+- **지원 계약** — README, AGENTS, 하네스 문서에 지원/비지원 경로와 호환성
+  정책을 하나로 맞추고 전체 gate 통과 후 `1.0.0`을 릴리스한다.
 
-**범위 밖:** saga, MCP 서버, 언어 확장, marketplace 공개.
+**범위 밖:** saga, MCP 서버, 추가 언어, marketplace, 독립 CLI.
 
 ---
 

@@ -118,6 +118,8 @@ Discovery → Design → Delivery Plan → Skeleton → Implement → Test
 지원 스택 식별자는 `java-spring-layered`, `java-spring-hexagonal`,
 `python-fastapi-layered`, `python-fastapi-clean`이다. 백엔드 스켈레톤에는
 OpenAPI/Swagger UI가 포함된다.
+Domain Events와 transactional outbox 전달은 핵심 패턴이다. Production
+Readiness gate는 명시적 배포 요청에만 선택한다.
 
 ### 세션 사이 작업 이어가기
 
@@ -197,7 +199,7 @@ calc.popEvents();
 ```bash
 git clone https://github.com/LooSung/oopforge ~/.oopforge
 cd ~/.oopforge
-git checkout v0.14.0
+git checkout v0.15.0
 chmod +x scripts/setup/*.sh
 ./scripts/setup/install.sh
 ./scripts/setup/doctor.sh

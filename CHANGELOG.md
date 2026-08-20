@@ -4,6 +4,25 @@
 
 ## [Unreleased]
 
+## [0.15.0] - 2026-08-20
+
+### Added
+
+- **Production Readiness gate** — 명시적 deploy/production 요청에만 입력 검증,
+  safe error, API 멱등성, retry/timeout, 관측성, audit, PII·secret 정책을
+  adapter 책임으로 적용하는 workflow를 추가했다.
+- **Java/Python NFR 경계 테스트** — plain hexagonal API에서 invalid input,
+  duplicate replay/conflict, safe domain/unexpected error, generated/provided
+  correlation ID, secret-free audit를 실행 테스트로 고정했다.
+
+### Changed
+
+- **조건부 workflow 연결** — Craft, Delivery Plan, Implement, Test, reviewer
+  checklist가 Production Readiness를 배포 신호가 있을 때만 선택한다.
+- **운영 adapter reference** — 두 언어의 in-memory 예제가 idempotency,
+  correlation, observability, audit를 domain 변경 없이 처리한다. 실제 배포에는
+  durable shared store로 교체해야 함을 문서화했다.
+
 ## [0.14.0] - 2026-08-20
 
 ### Added

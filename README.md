@@ -116,9 +116,9 @@ Each stage ends with a human checkpoint. Ask Craft to start at a named stage
 only when earlier decisions already exist. Refactoring stays outside the feature
 flow because it must preserve behavior.
 
-Supported stack identifiers are `java-spring-layered`,
-`java-spring-hexagonal`, `python-fastapi-layered`, and
-`python-fastapi-clean`. Backend skeletons include OpenAPI/Swagger UI.
+Supported stacks are `java-spring-layered`, `java-spring-hexagonal`,
+`python-fastapi-layered`, and `python-fastapi-clean`; skeletons include OpenAPI/Swagger UI.
+Domain Events and outbox are core; Production Readiness is opt-in for deployment requests.
 
 ### Resume work across sessions
 
@@ -206,7 +206,7 @@ release instead:
 ```bash
 git clone https://github.com/LooSung/oopforge ~/.oopforge
 cd ~/.oopforge
-git checkout v0.14.0
+git checkout v0.15.0
 chmod +x scripts/setup/*.sh
 ./scripts/setup/install.sh
 ./scripts/setup/doctor.sh
