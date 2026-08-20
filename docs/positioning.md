@@ -143,9 +143,12 @@ primary success metrics.
 The canonical experiment design and publication checklist live in the
 [proof protocol](proof/README.md). The
 [first valid paired result](proof/results/2026-08-20-cursor-gpt-5.6-sol-high.md)
-was neutral: both conditions introduced two attributable architecture violations
-and needed one rework round. Claims about reduced violation or rework rates remain
-goals until repeated evidence supports them.
+was neutral. The
+[second](proof/results/2026-08-20-cursor-gpt-5.6-sol-high-2.md) and
+[third](proof/results/2026-08-20-cursor-gpt-5.6-sol-high-3.md) were favorable
+on method length; all three leaked public mutable invariant state. See the
+[repeated-pair summary](proof/README.md#repeated-pair-summary). This is not a
+percentage improvement claim.
 
 ## Messaging guardrails
 

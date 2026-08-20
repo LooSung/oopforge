@@ -85,6 +85,10 @@ Use OOPforge craft: Email 값 객체 하나 추가해줘
 Use OOPforge craft: Email 값 객체 하나 추가해줘
 ```
 
+예시 Craft 세션(asciinema): [docs/assets/craft-demo.cast](docs/assets/craft-demo.cast).
+Assumptions, OOP Contract, 검증 게이트를 계산기 무효화 과제 위에서 보여 준다.
+라이브 인간 tty가 아니라 재구성한 재생이다.
+
 ### 5. 업데이트 (수동 — Release는 자동 설치되지 않음)
 
 GitHub Release를 올려도 **로컬 `~/.oopforge`는 자동으로 안 바뀐다.** 팩을 pull한 뒤 symlink를 갱신한다:
@@ -190,9 +194,13 @@ calculator/adapter/persistence/InMemoryCalculationRepository.java
 위 코드는 의도한 구조를 설명하지만, 그 자체로 개선율을 증명하지는 않는다.
 [Proof 프로토콜](docs/proof/README.md)은 재현 가능한 before/after 실행을 위해
 과제, 대조군, OOPforge 적용군, 평가 규칙과 공개 기준을 고정한다.
-[첫 번째 유효한 짝 실험](docs/proof/results/2026-08-20-cursor-gpt-5.6-sol-high.md)은
-중립이었다. 양쪽 모두 변경 귀속 아키텍처 위반 2건과 재작업 1회가 필요했다.
-한 번의 결과를 일반적인 효과 주장으로 확대하지 않는다.
+Cursor `gpt-5.6-sol-high`로 유효한 짝이 세 개 있다.
+[1](docs/proof/results/2026-08-20-cursor-gpt-5.6-sol-high.md)은 중립,
+[2](docs/proof/results/2026-08-20-cursor-gpt-5.6-sol-high-2.md)와
+[3](docs/proof/results/2026-08-20-cursor-gpt-5.6-sol-high-3.md)은
+메서드 길이에서 유리했다. 세 짝 모두 공개 mutable 불변 상태 유출이 남았다.
+[반복 짝 요약](docs/proof/README.md#repeated-pair-summary)을 본다.
+일반적인 효과 주장으로 확대하지 않는다.
 
 ---
 

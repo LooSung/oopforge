@@ -122,8 +122,30 @@ immediately when it detects this contamination.
 
 ## Results
 
-- [2026-08-20 — Cursor, GPT-5.6 Sol High](results/2026-08-20-cursor-gpt-5.6-sol-high.md)
-  — valid, neutral first pair
+- [2026-08-20 — Cursor, GPT-5.6 Sol High, pair 1](results/2026-08-20-cursor-gpt-5.6-sol-high.md)
+  — valid, neutral
+- [2026-08-20 — Cursor, GPT-5.6 Sol High, pair 2](results/2026-08-20-cursor-gpt-5.6-sol-high-2.md)
+  — valid, favorable on method length; shared public-mutable leak remains
+- [2026-08-20 — Cursor, GPT-5.6 Sol High, pair 3](results/2026-08-20-cursor-gpt-5.6-sol-high-3.md)
+  — valid, favorable on method length; shared public-mutable leak remains
+
+## Repeated-pair summary
+
+Three valid pairs, same model (`gpt-5.6-sol-high`), same starter, same task.
+
+| Pair | Outcome | Human production violations (control / OOPforge) | Rework fixes (control / OOPforge) |
+|---|---|---|---|
+| 1 | neutral | 2 / 2 | 2 / 2 |
+| 2 | favorable | 3 / 2 | 3 / 2 |
+| 3 | favorable | 3 / 2 | 3 / 2 |
+
+Unfavorable pairs were not observed under these conditions. That absence is
+recorded; it is not evidence that unfavorable runs cannot happen.
+
+Across all three pairs both conditions leaked public mutable `voided_at`.
+Pairs 2 and 3, evaluated with `METHOD_TOO_LONG`, showed fewer oversized
+production methods under OOPforge. Do not convert this table into a
+percentage improvement claim.
 
 ## Publish
 
@@ -136,6 +158,9 @@ After inspecting the raw artifacts:
 3. Link the result from `README.md` and `docs/positioning.md`.
 4. Keep both successful and unfavorable results.
 5. Do not convert a single run into a universal percentage claim.
+
+An illustrative Craft session is at
+[docs/assets/craft-demo.cast](../assets/craft-demo.cast).
 
 ## Validity threats
 

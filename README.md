@@ -82,6 +82,10 @@ Use OOPforge craft: Add a single Email value object
 Use OOPforge craft: Add a single Email value object
 ```
 
+Illustrative Craft session (asciinema): [docs/assets/craft-demo.cast](docs/assets/craft-demo.cast).
+It shows the required Assumptions, OOP Contract, and verification gates on the
+calculator void task. It is a reconstructed playback, not a live human tty.
+
 ### **5. Update (manual — Releases do not auto-install)**
 
 Publishing a GitHub Release does **not** update your machine. Pull the pack, then refresh symlinks:
@@ -202,9 +206,13 @@ Runnable reference: [examples/README.md](examples/README.md) — the same calcul
 The code above explains the intended structure; it is not by itself evidence of
 an improvement rate. The [proof protocol](docs/proof/README.md) fixes the task,
 control, treatment, evaluation rules, and publication standard for reproducible
-before/after runs. The [first valid paired result](docs/proof/results/2026-08-20-cursor-gpt-5.6-sol-high.md)
-was neutral: both runs introduced two attributable architecture violations and
-needed one rework round. One pair is not a general effectiveness claim.
+before/after runs. Three valid pairs on Cursor `gpt-5.6-sol-high` are published:
+[pair 1](docs/proof/results/2026-08-20-cursor-gpt-5.6-sol-high.md) was
+neutral; [pair 2](docs/proof/results/2026-08-20-cursor-gpt-5.6-sol-high-2.md)
+and [pair 3](docs/proof/results/2026-08-20-cursor-gpt-5.6-sol-high-3.md) were
+favorable on method length. All three leaked public mutable invariant state.
+See the [repeated-pair summary](docs/proof/README.md#repeated-pair-summary).
+This is not a general effectiveness claim.
 
 ---
 
@@ -407,10 +415,13 @@ oopforge/
 │   └── calculator-python-hexagonal-cqrs/  FastAPI hexagonal + CQRS
 ├── docs/
 │   ├── roadmap.md             Direction, priorities, non-goals
+│   ├── proof/                 C4 protocol and published pairs
+│   ├── assets/                Craft asciinema demo
 │   ├── guides/library-loan/   Step-by-step walkthrough (start here)
 │   ├── codex.md         Codex setup guide
 │   ├── cursor.md        Cursor setup guide
 │   └── claude-code.md   Claude Code setup guide
+├── templates/github/    Target-project domain-review Action
 ├── skills/
 │   ├── SKILL.md         Codex skill entry point
 │   ├── workflow/        Discovery → Design → Delivery Plan → Skeleton
@@ -431,8 +442,13 @@ oopforge/
 │   │                    review/ (read-only PR domain review)
 │   └── path-convention.md
 └── .github/workflows/   lint.yml, examples.yml, arch-lint.yml,
-                         domain-review.yml (CI)
+                         domain-review.yml, reusable-domain-review.yml
 ```
+
+Target backends can copy
+[`templates/github/oopforge-domain-review.yml`](templates/github/oopforge-domain-review.yml)
+or call `reusable-domain-review.yml`. Findings JSON includes a correction
+prompt so an agent can fix only the listed violations and re-run.
 
 ### **Agent instruction files**
 
