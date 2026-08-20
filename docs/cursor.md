@@ -19,6 +19,8 @@ chmod +x scripts/setup/*.sh
 ./scripts/setup/doctor.sh
 ```
 
+`doctor.sh` checks the pack but does not register Cursor or execute Craft.
+
 ## 2. Register the local plugin
 
 Link the installed pack into Cursor's local-plugin directory:
@@ -74,7 +76,28 @@ cursor-agent --plugin-dir ~/.cursor/plugins/local/oopforge \
 If you chose the project-local skill alternative, omit `--plugin-dir`. After
 `git pull` in `~/.oopforge`, restart `cursor-agent` to pick up changes.
 
-## 4. Example prompts
+## 4. Update or remove
+
+A GitHub Release does not update the local clone:
+
+```bash
+cd ~/.oopforge && git pull
+```
+
+Restart `cursor-agent` after the pull. Cursor links are not managed by
+`scripts/setup/install.sh`. To unregister them:
+
+```bash
+rm -f ~/.cursor/plugins/local/oopforge
+rm -f /path/to/your-backend-project/.cursor/skills/oopforge
+```
+
+The second command applies only if you created the project-local alternative.
+Also remove the matching `.cursor/skills/oopforge` line from
+`.git/info/exclude` if you added it during setup. The source pack at
+`~/.oopforge` is kept.
+
+## 5. Example prompts
 
 ```text
 Follow the OOPforge library loan walkthrough: docs/guides/library-loan/README.md
@@ -87,7 +110,7 @@ OOPforge Skeleton for place-order. Use skills/skeleton/backend-skeleton.md.
 Domain layer framework imports: 0.
 ```
 
-## 5. Recommended flow
+## 6. Recommended flow
 
 ```text
 Discovery → Design → Delivery Plan → Skeleton → Implement → Test
@@ -95,7 +118,7 @@ Discovery → Design → Delivery Plan → Skeleton → Implement → Test
 
 Do not skip stages for new domains. See [README](../README.md#the-basic-workflow).
 
-## 6. Reference example
+## 7. Reference example
 
 ```text
 Match the structure in examples/calculator-java-hexagonal/ — domain has zero framework imports.

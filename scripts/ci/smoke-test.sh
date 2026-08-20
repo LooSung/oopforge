@@ -47,4 +47,11 @@ test ! -e "$HOME/.claude/skills/oopforge"
 test ! -e "$HOME/.claude/commands/oopforge"
 test ! -e "$HOME/.codex/skills/oopforge"
 
+cyan "==> preserve unrelated symlink"
+mkdir -p "$HOME/other-skills" "$HOME/.codex/skills"
+ln -s "$HOME/other-skills" "$HOME/.codex/skills/oopforge"
+"$SETUP_DIR/uninstall.sh"
+test -L "$HOME/.codex/skills/oopforge"
+test "$(readlink "$HOME/.codex/skills/oopforge")" = "$HOME/other-skills"
+
 green "==> Smoke test passed"

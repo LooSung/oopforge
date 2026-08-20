@@ -8,33 +8,43 @@
 >
 > *Harness engineering that stops vibe coding from wrecking your backend.*
 
-**Forge small. Compose forever.** OOPforge defines OOP/DDD as a dialect your agent follows — skills are the grammar, hard rules are the lint, runnable `examples/` are the reference, and install + commands are the runtime. A methodology pack plus agent harness, not a general agent framework.
+**Forge small. Compose forever.** OOPforge is a portable OOP/DDD methodology
+pack and agent harness. Skills teach the grammar, hard rules act as lint,
+runnable examples provide references, and Craft selects the smallest workflow
+for the job.
 
-It gives Claude Code, Codex CLI, Cursor, and compatible agents a clear way to design around **domain models**, **aggregates**, **ports**, **adapters**, and **testable use cases** before writing code.
+Use it when a **Java (Spring)** or **Python (FastAPI)** backend needs explicit
+domain models, use-case boundaries, and reviewable architecture. It is not a
+general agent framework, UI toolkit, or automatic code generator.
 
-Specialized for **Java (Spring)** and **Python (FastAPI)** — pick **3-tier (Controller/Service/Repository)** or **hexagonal/clean**, with **OpenAPI/Swagger** built in.
-
-[Positioning and non-goals](docs/positioning.md) · [Reproducible proof protocol](docs/proof/README.md)
+[Positioning and non-goals](docs/positioning.md) ·
+[Reproducible proof protocol](docs/proof/README.md)
 
 [English](./README.md) · [한국어](./README.ko.md)
 
----
+## Quickstart
 
-## **Quickstart**
-
-### **1. Install**
+### 1. Install the latest `main`
 
 ```bash
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/LooSung/oopforge/main/scripts/setup/bootstrap.sh)"
 ```
 
-Check the install:
+The bootstrap clones or updates `~/.oopforge` and installs detected Claude Code
+and Codex links. It does not configure Cursor automatically.
+
+### 2. Check the pack and installed links
 
 ```bash
 ~/.oopforge/scripts/setup/doctor.sh
 ```
 
-### **2. Open your target project (not the pack)**
+`doctor.sh` validates the pack and available symlinks. A successful result does
+not prove that a running agent loaded Craft; use the harness-specific check in
+step 4. If it warns that your chosen Claude or Codex link is missing, run
+`INSTALL_CLAUDE=1 ~/.oopforge/scripts/setup/install.sh` or the Codex equivalent.
+
+### 3. Open your backend project
 
 OOPforge lives in `~/.oopforge`. Your app code lives in **your backend repo**. Always start the agent from that project:
 
@@ -42,89 +52,81 @@ OOPforge lives in `~/.oopforge`. Your app code lives in **your backend repo**. A
 cd /path/to/your-backend-project
 ```
 
-### **3. Restart / load your agent**
+### 4. Load Craft and make one request
 
-Restart Claude Code or Codex CLI so it picks up the new skills and commands.
+Choose the harness you actually use:
 
-**Cursor** integration is experimental. Register the local plugin and load it
-explicitly:
-
-```bash
-mkdir -p ~/.cursor/plugins/local
-ln -s ~/.oopforge ~/.cursor/plugins/local/oopforge
-cursor-agent --plugin-dir ~/.cursor/plugins/local/oopforge
-```
-
-### **4. Run Craft**
-
-Entry point is **Craft** on every harness; only **how you invoke it** differs:
-
-| Harness | Invoke |
+| Harness | Load and invoke Craft |
 |---|---|
-| **Claude Code** | `/oopforge:craft <request>` — registered slash command |
-| **Codex CLI** | `/skills` → pick **oopforge**, then prompt **without** a leading `/` (Codex reserves `/` for its own commands) |
-| **Cursor Agent CLI** | Load the local plugin explicitly, then `Use OOPforge craft: …` ([Cursor setup](docs/cursor.md)) |
+| **Claude Code** | Restart Claude Code, then `/oopforge:craft <request>` |
+| **Codex CLI** | Restart Codex, use `/skills` to select **oopforge**, then prompt without a leading `/` |
+| **Cursor Agent CLI** | Register and explicitly load the local plugin, then use `Use OOPforge craft: …` |
 
-**Claude Code:**
+Claude Code:
 
 ```text
 /oopforge:craft Add a single Email value object
 ```
 
-**Codex CLI** (after `/skills` → oopforge):
+Codex CLI:
 
 ```text
 Use OOPforge craft: Add a single Email value object
 ```
 
-**Cursor:**
-
-```text
-Use OOPforge craft: Add a single Email value object
-```
-
-Illustrative Craft session (asciinema): [docs/assets/craft-demo.cast](docs/assets/craft-demo.cast).
-It shows the required Assumptions, OOP Contract, and verification gates on the
-calculator void task. It is a reconstructed playback, not a live human tty.
-
-### **5. Update (manual — Releases do not auto-install)**
-
-Publishing a GitHub Release does **not** update your machine. Pull the pack, then refresh symlinks:
+Cursor Agent CLI requires one extra registration step:
 
 ```bash
-cd ~/.oopforge && git pull && ./scripts/setup/install.sh update
+mkdir -p ~/.cursor/plugins/local
+ln -s ~/.oopforge ~/.cursor/plugins/local/oopforge
+cd /path/to/your-backend-project
+cursor-agent --plugin-dir ~/.cursor/plugins/local/oopforge
 ```
 
-Then restart the agent. See [Installation](#installation) for troubleshooting.
+```text
+Use OOPforge craft: Add a single Email value object
+```
 
----
+For a fresh execution task, a loaded Craft flow identifies the smallest path
+and surfaces Assumptions and an OOP Contract before business logic. Advisory
+requests recommend a path without implementing. See the
+[illustrative Craft session](docs/assets/craft-demo.cast) and the exact setup
+guides for [Claude Code](docs/claude-code.md), [Codex](docs/codex.md), and
+[Cursor](docs/cursor.md).
 
-## **Advanced Usage**
+## The Basic Workflow
 
-For advisory requests, Craft recommends the smallest path without implementing (same on every harness).
+Craft is the single entry point. It selects a focused path for small changes and
+preserves the full sequence for a new domain or large feature:
 
-Advanced users may ask Craft to start at a specific workflow stage such as Discovery, Design, Delivery Plan, Skeleton, Implement, Test, or Refactor.
+```text
+Discovery → Design → Delivery Plan → Skeleton → Implement → Test
+```
 
-**Stack identifiers**:
-
-| Stack | Architecture | When |
+| Stage | Output | Do not do |
 |---|---|---|
-| `java-spring-layered` | 3-tier (Controller/Service/Repository) | Small services, MVP |
-| `java-spring-hexagonal` | Hexagonal (domain/application/adapter) | Complex domain, many adapters |
-| `python-fastapi-layered` | 3-tier (Router/Service/Repository) | Small services, MVP |
-| `python-fastapi-clean` | Clean (domain/application/infrastructure/presentation) | Complex domain |
+| **Discovery** | Glossary, contexts, actors, open questions | Code |
+| **Design** | Use-case signatures, aggregate outlines, ports | Implementation |
+| **Delivery Plan** | Scope, order, tests, release risks | Coding |
+| **Skeleton** | Packages, interfaces, empty classes | Business logic |
+| **Implement** | One tested use case at a time | Multiple use cases at once |
+| **Test** | Unit, integration, and E2E evidence | Untested domain logic |
 
-All backend skeletons ship with **OpenAPI/Swagger UI** enabled by default (springdoc / FastAPI built-in).
+Each stage ends with a human checkpoint. Ask Craft to start at a named stage
+only when earlier decisions already exist. Refactoring stays outside the feature
+flow because it must preserve behavior.
 
-Already installed? See [Installation](#installation) for manual setup, updates, and troubleshooting.
+Supported stack identifiers are `java-spring-layered`,
+`java-spring-hexagonal`, `python-fastapi-layered`, and
+`python-fastapi-clean`. Backend skeletons include OpenAPI/Swagger UI.
 
-**Remember:** a new [GitHub Release](https://github.com/LooSung/oopforge/releases) does not update `~/.oopforge` by itself — use Quickstart step 5.
+### Resume work across sessions
 
-Harness guides: [Claude Code](docs/claude-code.md) · [Codex](docs/codex.md) · [Cursor](docs/cursor.md)
+Execution tasks keep lightweight notes under `.craft/`. If unfinished work
+exists, Craft presents a Resume block before editing. When a session ends with
+work remaining, `.craft/next-session-prompt.md` records the next decision.
 
----
-
-## **How to use OOPforge**
+## Learn by example
 
 **New to the workflow?** Follow the step-by-step library loan guide:
 
@@ -135,15 +137,9 @@ Guide index: [EN](docs/guides/library-loan/README.md) · [KO](docs/guides/librar
 
 | Resource | Purpose |
 |---|---|
-| [Library loan guide](docs/guides/library-loan/README.md) | Full tutorial — how to use OOPforge end to end |
-| [Examples index](examples/README.md) | Runnable proof — same calculator, 6 examples |
-| [calculator-java-layered](examples/calculator-java-layered/) · [calculator-java-hexagonal](examples/calculator-java-hexagonal/) · [calculator-java-hexagonal-cqrs](examples/calculator-java-hexagonal-cqrs/) | Java 3-tier · hexagonal · hexagonal + CQRS |
-| [calculator-python-layered](examples/calculator-python-layered/) · [calculator-python-hexagonal](examples/calculator-python-hexagonal/) · [calculator-python-hexagonal-cqrs](examples/calculator-python-hexagonal-cqrs/) | FastAPI 3-tier · hexagonal · hexagonal + CQRS |
-| [Reviewer checklist](docs/reviewer-checklist.md) | Post-implement rule check |
-
-Each workflow stage ends with a **human checkpoint** — do not skip ahead.
-
----
+| [Library loan guide](docs/guides/library-loan/README.md) | End-to-end tutorial |
+| [Examples index](examples/README.md) | Six runnable calculator references |
+| [Reviewer checklist](docs/reviewer-checklist.md) | Post-implementation rule check |
 
 ## **Why OOPforge**
 
@@ -159,55 +155,42 @@ OOPforge is a **DDD / OOP specialized AI engineering pack** — not a general ag
 
 In short: **structure is the default**, so agents stop generating God Services.
 
----
+## Before / After
 
-## **Before / After**
+Most teams know the DDD diagram. The hard part is stopping an agent from
+collapsing the implementation into one service class.
 
-Most teams already know *what* DDD looks like in a diagram. The hard part is stopping the agent (or the team) from collapsing everything into a service class. OOPforge exists to make the **structure** the default.
-
-### Before (typical Spring service)
+### Before
 
 ```java
 @Service
 public class CalculatorService {
     public CalculationResponse calculate(CalculateRequest req) {
-        // parsing, computing, persistence, history, formatting — all in one class
         repository.save(toEntity(req));
         eventPublisher.publish(...);
     }
 }
 ```
 
-**Problems:** God Service · no domain model · business rules scattered · hard to unit test · AI agents copy the same pattern
+**Problems:** God Service · no domain model · scattered rules · hard-to-test code
 
-### After (OOPforge)
+### After
 
 ```java
-Calculation calc = Calculation.perform(id, operandA, operator, operandB);  // domain
-calculate.handle(command);                                  // use case
-calculationRepository.save(calc);                           // port
-calc.popEvents();                                           // CalculationPerformed
+Calculation calc = Calculation.perform(id, operandA, operator, operandB);
+calculate.handle(command);
+calculationRepository.save(calc);
+calc.popEvents();
 ```
 
-```text
-calculator/domain/Calculation.java   ← Aggregate Root (framework import 0)
-calculator/application/provided/Calculate.java
-calculator/application/required/CalculationRepository.java
-calculator/application/service/CalculateService.java
-calculator/adapter/web/CalculatorController.java
-calculator/adapter/persistence/InMemoryCalculationRepository.java
-```
+**Effects:** domain-first · clear boundaries · framework-free domain tests · a
+repeatable layout. See the runnable [examples](examples/README.md).
 
-**Effects:** domain-first · clear boundaries · domain tests without Spring · easier maintenance · agents follow a repeatable layout
+### Evidence and limits
 
-Runnable reference: [examples/README.md](examples/README.md) — the same calculator across layered, hexagonal, and CQRS stacks.
-
-### Evidence status
-
-The code above explains the intended structure; it is not by itself evidence of
-an improvement rate. The [proof protocol](docs/proof/README.md) fixes the task,
-control, treatment, evaluation rules, and publication standard for reproducible
-before/after runs. Three valid pairs on Cursor `gpt-5.6-sol-high` are published:
+The [proof protocol](docs/proof/README.md) fixes the task, control, treatment,
+evaluation rules, and publication standard. Three valid Cursor
+`gpt-5.6-sol-high` pairs are published:
 [pair 1](docs/proof/results/2026-08-20-cursor-gpt-5.6-sol-high.md) was
 neutral; [pair 2](docs/proof/results/2026-08-20-cursor-gpt-5.6-sol-high-2.md)
 and [pair 3](docs/proof/results/2026-08-20-cursor-gpt-5.6-sol-high-3.md) were
@@ -215,321 +198,102 @@ favorable on method length. All three leaked public mutable invariant state.
 See the [repeated-pair summary](docs/proof/README.md#repeated-pair-summary).
 This is not a general effectiveness claim.
 
----
+## Installation, updates, and removal
 
-## **Installation**
-
-### Setup commands
-
-Run from `~/.oopforge` or this repo root:
-
-```bash
-./scripts/setup/install.sh          # install symlinks
-./scripts/setup/doctor.sh           # check pack + links
-./scripts/setup/install.sh update   # refresh symlinks after git pull
-```
-
-### **Automatic**
-
-```bash
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/LooSung/oopforge/main/scripts/setup/bootstrap.sh)"
-```
-
-### **Manual**
+The Quickstart bootstrap tracks the latest `main`. To install a reproducible
+release instead:
 
 ```bash
 git clone https://github.com/LooSung/oopforge ~/.oopforge
 cd ~/.oopforge
+git checkout v0.12.1
 chmod +x scripts/setup/*.sh
 ./scripts/setup/install.sh
 ./scripts/setup/doctor.sh
 ```
 
-### **What gets installed**
+### Install targets
 
-`scripts/setup/install.sh` symlinks OOPforge into supported agent config directories:
-
-| Agent | Status | Install target |
-|---|---|---|
-| **Claude Code** | Supported | `~/.claude/{skills,commands}/oopforge` |
-| **Codex CLI** | Supported via skill entry point | `~/.codex/skills/oopforge` |
-| **Cursor Agent CLI** | Experimental | explicit local plugin or project-local skill |
-
-Because the install uses symlinks, a `git pull` in `~/.oopforge` updates skill content immediately for linked agents.
-
-### **Claude Code**
-
-`install.sh` links both skills and commands. Restart Claude Code, then use:
-
-```text
-/oopforge:craft <request>
-```
-
-### **Codex CLI**
-
-`install.sh` links `skills/SKILL.md` as the Codex skill entry point. Codex reserves `/` for built-ins — do **not** type `/oopforge:craft`. After `/skills` → **oopforge**:
-
-```text
-Use OOPforge craft: <request>
-```
-
-### **Cursor Agent CLI**
-
-Cursor can load the local plugin explicitly:
-
-```bash
-mkdir -p ~/.cursor/plugins/local
-ln -s ~/.oopforge ~/.cursor/plugins/local/oopforge
-cd /path/to/your-backend-project
-cursor-agent --plugin-dir ~/.cursor/plugins/local/oopforge
-```
-
-Then ask `Use OOPforge craft: <request>`. Clean headless smoke tests verified
-this explicit path. Directory auto-discovery and `/oopforge:craft` did not
-load Craft; the project-local skill remains a verified alternative.
-
-To refresh install paths (for example after a version adds new link targets), run:
-
-```bash
-cd ~/.oopforge && git pull && ./scripts/setup/install.sh update
-```
-
-`./scripts/setup/install.sh update` runs `scripts/setup/uninstall.sh` then reinstalls all OOPforge symlinks. Use `./scripts/setup/install.sh --force` to replace existing symlinks without a full uninstall.
-
-More setup details: [Claude Code](docs/claude-code.md) · [Codex](docs/codex.md) · [Cursor](docs/cursor.md)
-
----
-
-## **Troubleshooting**
-
-### Check installation
-
-```bash
-./scripts/setup/doctor.sh
-```
-
-### Reinstall (refresh symlinks)
-
-```bash
-./scripts/setup/uninstall.sh
-./scripts/setup/install.sh
-```
-
-Or after `git pull`:
-
-```bash
-cd ~/.oopforge && git pull && ./scripts/setup/install.sh update
-```
-
-### Dry run (see planned actions)
-
-```bash
-./scripts/setup/install.sh --dry-run
-INSTALL_CLAUDE=1 ./scripts/setup/install.sh --dry-run
-```
-
-### Force replace existing symlinks
-
-```bash
-./scripts/setup/install.sh --force
-```
-
-### Remove installation
-
-```bash
-./scripts/setup/uninstall.sh
-```
-
-### Run smoke test locally
-
-```bash
-./scripts/ci/smoke-test.sh
-```
-
----
-
-## **The Basic Workflow**
-
-OOPforge uses a small delivery loop. *Do not merge planning, implementation, and verification.*
-
-### **Recommended order**
-
-For a new domain or feature, use OOPforge in this order:
-
-```text
-Discovery → Design → Delivery Plan → Skeleton → Implement → Test
-```
-
-This keeps the agent from jumping into code before the domain language, boundaries, contracts, and verification plan are clear.
-
-**For smaller, focused tasks** (one value object, extending an existing domain, refactoring, code review) — start with `/oopforge:craft`. It picks the minimal path instead of forcing the full pipeline.
-
-| Stage | Output | Do not do |
-|---|---|---|
-| **1. Discovery** | Glossary, bounded contexts, actors, open questions | Code |
-| **2. Design** | Use-case signatures, aggregate outlines, ports | Implementation |
-| **3. Delivery Plan** | Scope, contract, implementation order, test/release plan | Coding |
-| **4. Skeleton** | Packages, interfaces, empty classes | Business logic |
-| **5. Implement** | One use case at a time | Multiple use cases at once |
-| **6. Test** | Unit, integration, E2E checks | Untested domain logic |
-
-Each stage ends with a human checkpoint before moving on.
-
-### **Where to start**
-
-- **Start here** → `/oopforge:craft <what you want>` — recommends or performs the smallest suitable OOP path.
-- Start at **Discovery** for a new domain or unclear feature.
-- Start at **Delivery Plan** if Discovery/Design already exist.
-- Start at **Implement** only when the contract and skeleton are already clear.
-- Use **Test** whenever you need TDD, regression coverage, or E2E verification.
-- Use **Refactor** separately when behavior must stay the same.
-
-**Refactor is intentionally outside the default feature flow.** Use it for existing or imported code that needs cleanup without behavior changes.
-
-Advanced users may invoke individual workflow stages through Craft, for example "Start at Discovery", "Create a delivery plan", or "Run the test workflow".
-
-### **Memory store (resume across sessions)**
-
-OOPforge keeps a lightweight memory so work survives between chats. Write it down, and pull it back when you need it.
-
-- Execution tasks auto-create `.craft/<kind>-<slug>.md` (for example `.craft/feature-member-management.md`). Advisory and tiny tasks do not.
-- If previous work exists, Craft **asks whether to continue it before writing code** — you do not have to mention `.craft/` or past sessions.
-- One session ships one decision. When that unit ends and work remains, Craft writes `.craft/next-session-prompt.md` without being asked. That file is the only "what's next"; the next chat reads it first.
-- `.craft/` is gitignored by default (personal notes). Override the location with an `OOPforge work dir: <path>` line in your project `AGENTS.md`.
-
-See [`skills/workflow/continuity.md`](skills/workflow/continuity.md).
-
----
-
-## **What's Inside**
-
-```text
-oopforge/
-├── examples/
-│   ├── README.md        Stack ↔ folder index
-│   ├── calculator-java-layered/      Java Spring 3-tier
-│   ├── calculator-java-hexagonal/    Java Spring hexagonal
-│   ├── calculator-java-hexagonal-cqrs/  Java Spring hexagonal + CQRS
-│   ├── calculator-python-layered/    FastAPI 3-tier
-│   ├── calculator-python-hexagonal/  FastAPI hexagonal/clean
-│   └── calculator-python-hexagonal-cqrs/  FastAPI hexagonal + CQRS
-├── docs/
-│   ├── roadmap.md             Direction, priorities, non-goals
-│   ├── proof/                 C4 protocol and published pairs
-│   ├── assets/                Craft asciinema demo
-│   ├── guides/library-loan/   Step-by-step walkthrough (start here)
-│   ├── codex.md         Codex setup guide
-│   ├── cursor.md        Cursor setup guide
-│   └── claude-code.md   Claude Code setup guide
-├── templates/github/    Target-project domain-review Action
-├── skills/
-│   ├── SKILL.md         Codex skill entry point
-│   ├── workflow/        Discovery → Design → Delivery Plan → Skeleton
-│   │                    → Implement → Test, plus Refactor
-│   ├── principles/      OOP decision principles
-│   ├── playbooks/       Craft task checklists
-│   ├── oop/             Domain model + use-case boundary
-│   ├── lang/            Backend stack selection (layered vs hexagonal/clean)
-│   └── skeleton/        Backend package structure + empty types
-├── commands/            Claude Code slash command entry point
-│                        + /oopforge:craft
-├── AGENTS.md            cross-agent repository instructions
-├── CLAUDE.md            Claude Code bootstrap instructions
-├── scripts/
-│   ├── setup/           bootstrap, install, uninstall, doctor
-│   │   └── lib/common.sh
-│   ├── ci/              lint-skills.sh, smoke-test.sh, archlint.py,
-│   │                    review/ (read-only PR domain review)
-│   └── path-convention.md
-└── .github/workflows/   lint.yml, examples.yml, arch-lint.yml,
-                         domain-review.yml, reusable-domain-review.yml
-```
-
-Target backends can copy
-[`templates/github/oopforge-domain-review.yml`](templates/github/oopforge-domain-review.yml)
-or call `reusable-domain-review.yml`. Findings JSON includes a correction
-prompt so an agent can fix only the listed violations and re-run.
-
-### **Agent instruction files**
-
-- **`AGENTS.md`** is the shared source of truth for Codex, Cursor, and other compatible agents.
-- **`CLAUDE.md`** is a thin Claude Code entry point that imports `AGENTS.md`.
-
----
-
-## **Hard Rules**
-
-The enforceable, measurable rules live in [`AGENTS.md`](./AGENTS.md). README keeps the user-facing overview; agents should use `AGENTS.md` as the source of truth for rule checks.
-
----
-
-## **Language Policy**
-
-| Area | Language |
+| Harness | Installed or registered path |
 |---|---|
-| README & docs | English (primary) + Korean only; other languages only on request |
-| `AGENTS.md`, shell scripts, CI | English |
-| Skill files (`skills/`) | **English (canonical)** — these are agent-facing instructions |
+| **Claude Code** | `~/.claude/skills/oopforge` and `~/.claude/commands/oopforge` |
+| **Codex CLI** | `~/.codex/skills/oopforge` |
+| **Cursor Agent CLI** | Manual local plugin or project-local skill; `install.sh` does not configure it |
 
-Skills, scripts, and agent instructions are English so the agent reads its native instruction language and contributors/CI share one vocabulary. Korean speakers read the methodology in one place: **[docs/methodology.ko.md](./docs/methodology.ko.md)** — a conceptual guide, not a per-skill mirror (mirrors drift; a concept guide stays stable).
+`install.sh` only creates Claude and Codex links when their config directories
+exist. Set `INSTALL_CLAUDE=1` or `INSTALL_CODEX=1` to create a missing target
+explicitly.
 
----
+### Update
 
-## **Philosophy**
+A GitHub Release does not update an existing clone. Pull the pack, refresh
+Claude/Codex link targets, and restart the agent:
 
-> **Model is replaceable. Workflow is permanent.**
+```bash
+cd ~/.oopforge && git pull && ./scripts/setup/install.sh update
+```
 
-Models change: Claude, GPT, OSS, and whatever comes next.
-But *workflow*, *contracts*, and *architectural discipline* last longer.
+That command is for a `main`-tracking clone. A release-pinned clone must
+`git fetch --tags`, check out the chosen newer tag, and then run
+`./scripts/setup/install.sh update`.
 
-OOPforge is not a model layer. It is a **development protocol layer**.
+Cursor's manually registered symlink is not managed by `install.sh`; after the
+pull, restart `cursor-agent`.
 
-### **Principles**
+### Verify and troubleshoot
 
-1. **Small** — one skill, one concept.
-2. **Clean** — domain code does not know frameworks.
-3. **Composable** — small pieces should combine over time.
-4. **Sustainable** — no mega-prompts; keep human checkpoints.
+Run these commands from `~/.oopforge`:
 
----
+```bash
+./scripts/setup/doctor.sh              # pack structure and installed links
+./scripts/setup/install.sh --dry-run   # planned link changes
+./scripts/setup/install.sh --force     # replace conflicting symlinks
+./scripts/ci/smoke-test.sh             # isolated Claude/Codex install lifecycle
+```
 
-## **Roadmap**
+These checks do not execute a live Craft response. Verify activation with the
+entry point documented in the relevant harness guide:
+[Claude Code](docs/claude-code.md) · [Codex](docs/codex.md) ·
+[Cursor](docs/cursor.md).
 
-Packaging phases:
+### Remove
 
-- **Phase 1** — Lightweight portable methodology pack using symlinks
-- **Phase 2** — Claude Code / Codex / Cursor marketplace publication (Cursor local packaging works today)
-- **Phase 3** — Standalone CLI built on Claude Agent SDK
+```bash
+./scripts/setup/uninstall.sh
+```
 
-Direction, priorities, and non-goals (short/medium/long term, language expansion, lint enforcement, anti-pattern catalog): **[docs/roadmap.md](./docs/roadmap.md)**
+This removes only OOPforge-managed Claude and Codex links. It deliberately
+keeps `~/.oopforge`, Cursor's `~/.cursor/plugins/local/oopforge` link, and any
+project-local `.cursor/skills/oopforge` link. Remove those paths manually if
+you want a complete uninstall.
 
----
+## What's included
 
-## **Inspiration**
+- `skills/` — workflow, OOP/DDD, stack, skeleton, and review instructions
+- `commands/` — Claude Code command entry point
+- `examples/` — six runnable Java/Python calculator references
+- `docs/` — harness guides, proof protocol, roadmap, and walkthroughs
+- `scripts/` — setup, lint, architecture checks, and smoke tests
+- `templates/github/` — reusable target-project domain review
 
-- Eric Evans, *Domain-Driven Design*
-- Vaughn Vernon, *Implementing Domain-Driven Design*
-- Robert C. Martin, *Clean Architecture*
-- Kent Beck, *Test-Driven Development: By Example*
+Agents use [`AGENTS.md`](./AGENTS.md) as the shared rule source;
+[`CLAUDE.md`](./CLAUDE.md) is the Claude Code adapter. Target backends can use
+[`templates/github/oopforge-domain-review.yml`](templates/github/oopforge-domain-review.yml)
+for CI enforcement.
 
----
+## Project policy
 
-## **Reference**
+The enforceable rules live in [`AGENTS.md`](./AGENTS.md). Skill files, scripts,
+CI, and agent instructions use English as their canonical language. Korean
+readers can use the conceptual
+[`docs/methodology.ko.md`](./docs/methodology.ko.md) guide instead of unstable
+per-skill translations.
 
-Reference only — OOPforge is an independent project; links here are for packaging and layout ideas, not dependencies or endorsements.
+OOPforge remains a backend OOP/DDD methodology layer, not a model wrapper or
+general orchestration framework. See the [roadmap](./docs/roadmap.md) for
+required future work and non-goals, and the
+[changelog](./CHANGELOG.md) for completed releases.
 
-- Multi-harness plugin structure: [obra/superpowers](https://github.com/obra/superpowers)
-- Skill routing and "smallest path" philosophy: [pstack by Lauren (Cursor)](https://cursor.com/en-US/lp-team/lauren)
-
----
-
-## **License**
+## License
 
 MIT
-
----
-
-## Review and sample outputs
-
-- [Library loan walkthrough](docs/guides/library-loan/README.md) — **recommended starting point**
-- [Reviewer checklist](docs/reviewer-checklist.md)

@@ -47,7 +47,9 @@ Discovery → Design → Delivery Plan → Skeleton → Implement → Test
 
 ## 3. Craft — 단일 진입점
 
-`/oopforge:craft <요청>`이 사용자 진입점이다. Craft는:
+**Craft**가 사용자 진입점이며 호출법은 하네스마다 다르다. Claude Code는
+`/oopforge:craft <요청>`, Codex와 Cursor Agent CLI는
+`Use OOPforge craft: <요청>`을 사용한다. Craft는:
 
 1. 요청을 분류해 **가장 작은 실행 경로**를 고른다.
 2. 결정이 비어 있으면(언어·아키텍처·영속성·CQRS 여부 등) **모호성 해소**로 채운다 —

@@ -10,11 +10,14 @@ Codex installs **skills only** — not Claude Code `commands/`. The string `/oop
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/LooSung/oopforge/main/scripts/setup/bootstrap.sh)"
 ```
 
-Restart Codex. Verify:
+Restart Codex. Check the pack and installed links:
 
 ```bash
 ~/.oopforge/scripts/setup/doctor.sh
 ```
+
+`doctor.sh` does not execute Craft. In Codex, run `/skills` and confirm that
+**oopforge** appears before using the natural-language entry point below.
 
 Installed path:
 

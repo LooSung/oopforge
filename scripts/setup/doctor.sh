@@ -93,6 +93,7 @@ check_file "skills/SKILL.md"
 check_file ".claude-plugin/plugin.json"
 check_file ".codex-plugin/plugin.json"
 check_file ".cursor-plugin/plugin.json"
+check_file ".cursor-plugin/skills/oopforge/SKILL.md"
 
 cyan "--- Harness commands"
 check_command "claude"
@@ -101,7 +102,7 @@ check_command "cursor-agent"
 
 cyan "--- Cursor Agent CLI"
 if command -v cursor-agent >/dev/null 2>&1; then
-  ok "CLI found; use --plugin-dir $PACK_DIR or a project-local skill link"
+  ok "CLI found; see docs/cursor.md for the verified --plugin-dir setup"
 else
   warn "cursor-agent not found (install Cursor CLI to use OOPforge with Cursor)"
 fi

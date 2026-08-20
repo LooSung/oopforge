@@ -8,10 +8,17 @@ OOPforge is **fully supported** on Claude Code via symlink install.
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/LooSung/oopforge/main/scripts/setup/bootstrap.sh)"
 ```
 
-Restart Claude Code. Verify:
+Restart Claude Code. Check the pack and installed links:
 
 ```bash
 ~/.oopforge/scripts/setup/doctor.sh
+```
+
+`doctor.sh` does not execute Craft. To verify activation, start Claude Code from
+the backend project and confirm that `/oopforge:craft` is registered:
+
+```text
+/oopforge:craft Advise only: which path fits adding one Email value object? Do not edit files.
 ```
 
 Installed paths:
@@ -19,9 +26,8 @@ Installed paths:
 - `~/.claude/skills/oopforge`
 - `~/.claude/commands/oopforge`
 
-Start Claude Code from the backend project you want to change. If you are
-maintaining OOPforge itself, start from the OOPforge repository and treat that
-repository as the work target.
+If you are maintaining OOPforge itself, start from the OOPforge repository and
+treat that repository as the work target.
 
 ## Slash commands
 
