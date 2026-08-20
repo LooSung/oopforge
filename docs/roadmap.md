@@ -28,18 +28,18 @@
 
 ## 다음 릴리스
 
-### v0.14.0 — Domain Events
+### v0.15.0 — Production Readiness
 
-**목표:** Aggregate가 기록한 이벤트를 버리지 않고, 내부 후속 처리와 외부 전달을
-명시적으로 분리하는 실행 계약을 Java/Python reference로 증명한다.
+**목표:** 실제 배포 요청에만 adapter 중심 NFR gate를 적용하고, domain purity를
+유지한 채 두 언어에서 실행 가능한 경계 테스트로 증명한다.
 
-- **이벤트 계약** — Domain Event와 Integration Event, save 후 `popEvents()`와
-  dispatch, handler 경계, 소비자 멱등성, contract versioning을 정의한다.
-- **스킬 책임 분리** — `domain-model`, `outbox`, `transaction-boundary`의 중복을
-  제거하고 새 `domain-events` 스킬로 실행 흐름을 연결한다.
-- **실행 reference** — Java/Python plain hexagonal 예제에 같은 event dispatch
-  경로와 domain/use-case/integration 테스트를 추가한다.
-- **외부 전달** — 경계 밖 전달은 outbox로만 연결하고 Saga는 도입하지 않는다.
+- **NFR gate** — 입력 검증, 오류 응답, API 멱등성, retry, 관측성, 감사 로그,
+  PII·secret 처리를 adapter 책임으로 정의한다.
+- **선택적 workflow** — Delivery Plan, Implement, Test, reviewer checklist에
+  release gate를 연결하되 Craft는 실제 배포 요청에만 선택한다.
+- **실행 reference** — Java/Python plain hexagonal 예제에 invalid input,
+  duplicate request, safe error, correlation/audit 경계 테스트를 추가한다.
+- **Domain purity** — framework·HTTP·로깅·멱등성 concern은 domain에 넣지 않는다.
 
 **범위 밖:** saga, MCP 서버, 언어 확장, marketplace 공개.
 
@@ -50,8 +50,6 @@
 ### 백엔드 깊이
 
 - `skills/oop/saga.md` — Aggregate/서비스를 가로지르는 프로세스와 보상 트랜잭션.
-- `skills/workflow/production-readiness.md` — 입력 검증, 오류 응답, 멱등성,
-  재시도, 관측성, 감사 로그, PII/시크릿을 어댑터에서 충족하는 NFR 게이트.
 
 ### 강제와 배포
 

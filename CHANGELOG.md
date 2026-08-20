@@ -4,6 +4,24 @@
 
 ## [Unreleased]
 
+## [0.14.0] - 2026-08-20
+
+### Added
+
+- **Domain Events 스킬** — Domain Event와 Integration Event, save 후
+  pop/dispatch, handler 경계, outbox 전달, message-ID 멱등성, schema versioning을
+  한 실행 계약으로 정의했다.
+- **Java/Python 실행 reference** — plain hexagonal 계산기가 같은 트랜잭션의
+  Aggregate 저장과 versioned outbox append, commit 후 relay, 멱등 소비자를
+  domain/use-case/integration 테스트로 증명한다.
+
+### Changed
+
+- **이벤트 책임 분리** — domain model, use-case boundary, transaction boundary,
+  outbox 스킬의 중복을 제거하고 Domain Events 스킬로 교차 연결했다.
+- **미사용 이벤트 제거** — layered/CQRS 계산기에서 소비자 없이 기록 후 버리던
+  이벤트를 제거해 필요한 구조만 남겼다.
+
 ## [0.13.0] - 2026-08-20
 
 ### Added
