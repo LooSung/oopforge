@@ -26,28 +26,6 @@
 
 ---
 
-## 남은 작업
-
-### v0.12.0 — 이식성과 위생 (현재)
-
-**B2 — Claude/Codex/Cursor 3개 하네스 동등 지원 + Agent Skills 스펙 정렬**
-
-- Claude, Codex, Cursor를 모두 1급 지원 대상으로 두고 설치·명령·스킬
-  로딩·깨끗한 세션 검증 기준을 맞춘다.
-- Cursor 공식 `.cursor-plugin/plugin.json`과
-  `~/.cursor/plugins/local/oopforge` 로컬 플러그인 경로를 검증한다.
-- `commands/craft.md`의 공식 command frontmatter를 맞추고
-  `.cursor-plugin/README.md`와 `docs/cursor.md`의 낡은 Phase 2 설명을 고친다.
-- 세 하네스 검증 후 `SKILL.md` frontmatter와 progressive disclosure를
-  표준화해 다른 Agent Skills 호환 환경으로 넓힌다.
-
-**B3 — 레포 위생**
-
-죽은·중복 스킬, 끊긴 링크, 빌드 산출물을 정리하고 문서 링크
-무결성 CI를 건다.
-
----
-
 ## 장기 목표
 
 ### 백엔드 깊이

@@ -4,6 +4,8 @@
 
 ## [Unreleased]
 
+## [0.12.0] - 2026-08-20
+
 ### Added
 
 - **Cursor 로컬 플러그인 어댑터** — Cursor 규약의
