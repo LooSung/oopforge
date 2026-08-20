@@ -4,18 +4,10 @@ from app.application.services.calculation.calculate_service import (
     CalculateCommand,
     CalculateService,
 )
-from app.infrastructure.repositories.calculation.in_memory_calculation_repository import (
-    InMemoryCalculationRepository,
-)
+from app.core.dependencies import get_calculate_service
 from app.presentation.api.calculation.request import CalculateRequest, CalculationResponse
 
 _router = APIRouter(prefix="/calculations", tags=["calculations"])
-_repository = InMemoryCalculationRepository()
-_service = CalculateService(_repository)
-
-
-def get_calculate_service() -> CalculateService:
-    return _service
 
 
 @_router.post("", response_model=CalculationResponse, status_code=status.HTTP_201_CREATED)

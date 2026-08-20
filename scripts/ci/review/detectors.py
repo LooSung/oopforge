@@ -5,17 +5,20 @@ Per-file detectors:
   - SKILL_FILE_TOO_LONG           skills/**/*.md > 200 lines
   - DOMAIN_FRAMEWORK_IMPORT       a file under a `domain/` folder imports a framework
   - METHOD_TOO_LONG               Python/Java method > 20 lines
-  - PUBLIC_MUTABLE_DOMAIN_FIELD   public domain field assigned in behavior
+  - PUBLIC_MUTABLE_DOMAIN_FIELD   public field on a mutable domain dataclass
+  - ARCHLINT_CONTROLLER_REPOSITORY presentation imports a repository directly
 
 Project-root archlint reuse lives in archlint_adapter.py.
 """
 from __future__ import annotations
 
+import ast
 import re
 from typing import Dict, List
 
 from .method_length import scan_methods
 from .model import (
+    ARCHLINT_CONTROLLER_REPOSITORY,
     CodeLocation,
     DOMAIN_FRAMEWORK_IMPORT,
     FILE_TOO_LONG,
@@ -35,10 +38,15 @@ _JAVA_FW = re.compile(
     r"^\s*import\s+(org\.springframework|jakarta\.persistence|"
     r"javax\.persistence|org\.hibernate)[\w.]*"
 )
-_PY_FW = re.compile(r"^\s*(?:from|import)\s+(fastapi|sqlalchemy|flask|django)\b")
-_DATACLASS = re.compile(r"^@dataclass(?:\((.*)\))?\s*$")
-_PY_FIELD = re.compile(r"^    ([A-Za-z][A-Za-z0-9_]*)\s*:")
-_SELF_ASSIGN = re.compile(r"\bself\.([A-Za-z][A-Za-z0-9_]*)\s*=")
+_PY_FW = re.compile(
+    r"^\s*(?:from|import)\s+(fastapi|pydantic|sqlalchemy|flask|django)\b"
+)
+_PY_REPOSITORY_IMPORT = re.compile(
+    r"^\s*(?:from|import)\s+([\w.]*repository[\w.]*)", re.IGNORECASE
+)
+_JAVA_REPOSITORY_IMPORT = re.compile(
+    r"^\s*import\s+([\w.]*repository[\w.]*)", re.IGNORECASE
+)
 _JAVA_PUBLIC_FIELD = re.compile(
     r"^\s*public\s+(?!static|class|interface|enum)[\w.<>,\s]+\s+([A-Za-z][A-Za-z0-9_]*)\s*[;=]"
 )
@@ -59,6 +67,10 @@ def _is_skill_file(path: str) -> bool:
 
 def _is_domain_file(path: str) -> bool:
     return "/domain/" in _norm(path) and _is_code_file(path)
+
+
+def _is_presentation_file(path: str) -> bool:
+    return "/presentation/" in _norm(path) and _is_code_file(path)
 
 
 def _line_count(content: str) -> int:
@@ -127,22 +139,42 @@ def _detect_method_too_long(path: str, content: str) -> List[Violation]:
     return out
 
 
+def _decorator_name(node: ast.expr) -> str:
+    target = node.func if isinstance(node, ast.Call) else node
+    if isinstance(target, ast.Name):
+        return target.id
+    return target.attr if isinstance(target, ast.Attribute) else ""
+
+
+def _is_frozen_dataclass(node: ast.ClassDef) -> bool | None:
+    for decorator in node.decorator_list:
+        if _decorator_name(decorator) != "dataclass":
+            continue
+        if not isinstance(decorator, ast.Call):
+            return False
+        return any(
+            item.arg == "frozen"
+            and isinstance(item.value, ast.Constant)
+            and item.value.value is True
+            for item in decorator.keywords
+        )
+    return None
+
+
 def _py_public_mutable_fields(content: str) -> Dict[str, int]:
+    try:
+        tree = ast.parse(content)
+    except SyntaxError:
+        return {}
     fields: Dict[str, int] = {}
-    assigned: set[str] = set()
-    watching = False
-    for idx, raw in enumerate(content.splitlines(), start=1):
-        deco = _DATACLASS.match(raw.strip())
-        if deco is not None:
-            watching = "frozen=True" not in (deco.group(1) or "")
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.ClassDef) or _is_frozen_dataclass(node) is not False:
             continue
-        if not watching:
-            continue
-        field = _PY_FIELD.match(raw)
-        if field:
-            fields[field.group(1)] = idx
-        assigned.update(_SELF_ASSIGN.findall(raw))
-    return {name: line for name, line in fields.items() if name in assigned}
+        for item in node.body:
+            if isinstance(item, ast.AnnAssign) and isinstance(item.target, ast.Name):
+                if not item.target.id.startswith("_"):
+                    fields[item.target.id] = item.lineno
+    return fields
 
 
 def _java_public_mutable_fields(content: str) -> Dict[str, int]:
@@ -165,11 +197,27 @@ def _detect_public_mutable_domain(path: str, content: str) -> List[Violation]:
             PUBLIC_MUTABLE_DOMAIN_FIELD,
             CodeLocation(path, LineRange(line, line)),
             subject_key=f"{path}::field:{name}",
-            message=f"domain field '{name}' is public and assigned in "
-                    f"behavior; callers can bypass the invariant.",
+            message=f"domain dataclass field '{name}' is publicly mutable; "
+                    f"callers can bypass the invariant.",
         )
         for name, line in fields.items()
     ]
+
+
+def _detect_presentation_repository(path: str, content: str) -> List[Violation]:
+    pattern = _PY_REPOSITORY_IMPORT if path.endswith(".py") else _JAVA_REPOSITORY_IMPORT
+    out: List[Violation] = []
+    for line, raw in enumerate(content.splitlines(), start=1):
+        match = pattern.match(raw)
+        if match:
+            out.append(Violation(
+                ARCHLINT_CONTROLLER_REPOSITORY,
+                CodeLocation(path, LineRange(line, line)),
+                subject_key=f"{path}::repository-import:{match.group(1).lower()}",
+                message="presentation code imports a repository directly; "
+                        "route through an application service.",
+            ))
+    return out
 
 
 def scan(files: Dict[str, str], catalog: RuleCatalog) -> List[Violation]:
@@ -188,4 +236,7 @@ def scan(files: Dict[str, str], catalog: RuleCatalog) -> List[Violation]:
             out.extend(_detect_method_too_long(path, content))
         if catalog.is_enabled(PUBLIC_MUTABLE_DOMAIN_FIELD) and _is_domain_file(path):
             out.extend(_detect_public_mutable_domain(path, content))
+        if (catalog.is_enabled(ARCHLINT_CONTROLLER_REPOSITORY)
+                and _is_presentation_file(path)):
+            out.extend(_detect_presentation_repository(path, content))
     return out

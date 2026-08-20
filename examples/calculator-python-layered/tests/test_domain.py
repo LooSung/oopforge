@@ -1,3 +1,5 @@
+from dataclasses import FrozenInstanceError
+
 import pytest
 
 from app.calculator.domain.calculation import (
@@ -16,6 +18,14 @@ def test_perform_computes_result_and_emits_event() -> None:
     assert len(events) == 1
     assert isinstance(events[0], CalculationPerformed)
     assert events[0].result == 5
+    assert calculation.pop_events() == []
+
+
+def test_calculation_state_is_read_only() -> None:
+    calculation = Calculation.perform(CalculationId.generate(), 2, Operator.ADD, 3)
+
+    with pytest.raises(FrozenInstanceError):
+        calculation.result = 99
 
 
 def test_division_by_zero_raises() -> None:

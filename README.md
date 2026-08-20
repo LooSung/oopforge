@@ -278,8 +278,8 @@ you want a complete uninstall.
 
 Agents use [`AGENTS.md`](./AGENTS.md) as the shared rule source;
 [`CLAUDE.md`](./CLAUDE.md) is the Claude Code adapter. Target backends can use
-[`templates/github/oopforge-domain-review.yml`](templates/github/oopforge-domain-review.yml)
-for CI enforcement.
+[`templates/github/oopforge-domain-review.yml`](templates/github/oopforge-domain-review.yml) for
+non-blocking PR feedback. Blocking gates are opt-in; see the [reviewer checklist](docs/reviewer-checklist.md#enforcement-policy).
 
 ## Project policy
 

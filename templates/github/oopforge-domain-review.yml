@@ -1,5 +1,8 @@
 # Copy this file to your backend as .github/workflows/oopforge-domain-review.yml
 # Pin oopforge_ref to a released tag once you depend on a stable pack.
+# This default template posts non-blocking feedback and artifacts. Findings do
+# not fail the job. For opt-in blocking gates, wire import-linter or ArchUnit as
+# documented in skills/skeleton/lint-enforcement.md and require that check.
 
 name: OOPforge domain review
 

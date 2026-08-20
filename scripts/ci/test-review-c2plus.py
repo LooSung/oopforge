@@ -38,11 +38,9 @@ def test_public_mutable_python():
         "@dataclass\n"
         "class Order:\n"
         "    voided_at: datetime | None = None\n"
-        "    def void(self, now):\n"
-        "        self.voided_at = now\n"
     }
     found = scan(leaking, catalog)
-    check("public mutable domain field fires",
+    check("constructor-only public dataclass field fires",
           any(v.rule_id == PUBLIC_MUTABLE_DOMAIN_FIELD for v in found))
     frozen = {
         "app/domain/order.py":
@@ -53,6 +51,22 @@ def test_public_mutable_python():
         "        return Money(self.amount)\n"
     }
     check("frozen dataclass stays silent", scan(frozen, catalog) == [])
+
+
+def test_presentation_repository():
+    catalog = RuleCatalog.defaults()
+    files = {
+        "app/presentation/router.py":
+        "from app.infrastructure.repository import OrderRepository\n"
+    }
+    found = scan(files, catalog)
+    check("presentation repository import uses canonical boundary ID",
+          any(v.rule_id == ARCHLINT_CONTROLLER_REPOSITORY for v in found))
+    tests = {
+        "tests/app/presentation/router.py":
+        "from app.infrastructure.repository import OrderRepository\n"
+    }
+    check("presentation detector excludes test files", scan(tests, catalog) == [])
 
 
 def test_file_level_admission():
@@ -117,6 +131,7 @@ def test_correction_delivery():
 def main():
     print("domain-review C2+ self-test:")
     test_public_mutable_python()
+    test_presentation_repository()
     test_file_level_admission()
     test_archlint_parse_and_modes()
     test_correction_delivery()

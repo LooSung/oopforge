@@ -4,6 +4,19 @@
 
 ## [Unreleased]
 
+## [0.13.0] - 2026-08-20
+
+### Changed
+
+- **Reference 정렬** — layered·hexagonal 예제의 경계 규칙과 문서를 같은
+  정본 템플릿에 맞췄다.
+- **Evaluator 통합** — proof 평가가 domain-review detector와 공통 finding ID를
+  재사용하며 schema v2로 공개 mutable 도메인 상태까지 기계 검출한다.
+- **Plain hexagonal 차단 게이트** — Python은 import-linter, Java는 Gradle의
+  ArchUnit으로 경계를 검사해 저장소 CI 실패 시 PR을 차단한다.
+- **Adopter 정책** — 기본 domain-review 템플릿은 non-blocking 피드백이며,
+  import-linter/ArchUnit 필수 상태 검사는 adopter가 명시적으로 opt-in한다.
+
 ## [0.12.2] - 2026-08-20
 
 ### Changed

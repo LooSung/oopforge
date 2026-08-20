@@ -47,7 +47,7 @@ class CalculationPerformed(DomainEvent):
     result: float
 
 
-@dataclass
+@dataclass(frozen=True)
 class Calculation:
     id: CalculationId
     operand_a: float
@@ -55,7 +55,12 @@ class Calculation:
     operand_b: float
     result: float
     performed_at: datetime
-    _events: list[DomainEvent] = field(default_factory=list)
+    _events: tuple[DomainEvent, ...] = field(
+        default_factory=tuple,
+        init=False,
+        repr=False,
+        compare=False,
+    )
 
     @staticmethod
     def perform(
@@ -65,7 +70,21 @@ class Calculation:
         operand_b: float,
     ) -> "Calculation":
         result = operator.apply(operand_a, operand_b)
-        calculation = Calculation(
+        calculation = Calculation._from_result(
+            calculation_id, operand_a, operator, operand_b, result
+        )
+        calculation._record(calculation._performed_event())
+        return calculation
+
+    @staticmethod
+    def _from_result(
+        calculation_id: CalculationId,
+        operand_a: float,
+        operator: Operator,
+        operand_b: float,
+        result: float,
+    ) -> "Calculation":
+        return Calculation(
             id=calculation_id,
             operand_a=operand_a,
             operator=operator,
@@ -73,20 +92,19 @@ class Calculation:
             result=result,
             performed_at=datetime.now(UTC),
         )
-        calculation._record(
-            CalculationPerformed(
-                event_id=str(uuid4()),
-                occurred_at=calculation.performed_at,
-                calculation_id=calculation_id,
-                result=result,
-            )
+
+    def _performed_event(self) -> CalculationPerformed:
+        return CalculationPerformed(
+            event_id=str(uuid4()),
+            occurred_at=self.performed_at,
+            calculation_id=self.id,
+            result=self.result,
         )
-        return calculation
 
     def pop_events(self) -> list[DomainEvent]:
         published = list(self._events)
-        self._events.clear()
+        object.__setattr__(self, "_events", ())
         return published
 
     def _record(self, event: DomainEvent) -> None:
-        self._events.append(event)
+        object.__setattr__(self, "_events", (*self._events, event))

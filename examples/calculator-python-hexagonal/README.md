@@ -22,7 +22,12 @@ Layered vs hexagonal — same calculator, two dependency styles. For the read/wr
 cd examples/calculator-python-hexagonal
 pip install -e ".[dev]"
 pytest
+lint-imports
 ```
+
+`lint-imports` enforces domain and application independence and rejects direct
+presentation-to-infrastructure imports. The architecture-lint workflow runs
+this check as a blocking repository gate.
 
 ## Run locally
 

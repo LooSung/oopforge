@@ -48,3 +48,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install -e ".[dev]"
           lint-imports
+
+      - name: Enforce import boundaries on the hexagonal Python example (import-linter)
+        working-directory: examples/calculator-python-hexagonal
+        run: |
+          pip install -e ".[dev]"
+          lint-imports

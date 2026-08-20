@@ -71,6 +71,10 @@ def test_import_detector():
     non_domain_fw = {"app/adapter/repo.py": "from sqlalchemy import Column\n"}
     check("framework import outside domain is ignored",
           detectors.scan(non_domain_fw, catalog) == [])
+    pydantic = {"app/domain/money.py": "from pydantic import BaseModel\n"}
+    check("pydantic domain import fires",
+          any(v.rule_id == DOMAIN_FRAMEWORK_IMPORT
+              for v in detectors.scan(pydantic, catalog)))
     excluded = {"examples/x/app/domain/order.py": "from sqlalchemy import Column\n"}
     check("excluded path is skipped", detectors.scan(excluded, catalog) == [])
 

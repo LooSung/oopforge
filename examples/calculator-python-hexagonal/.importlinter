@@ -1,0 +1,34 @@
+[importlinter]
+root_package = app
+
+[importlinter:contract:domain-independence]
+name = Domain must not depend on outer packages
+type = forbidden
+source_modules =
+    app.domain
+forbidden_modules =
+    app.application
+    app.core
+    app.infrastructure
+    app.presentation
+allow_indirect_imports = true
+
+[importlinter:contract:application-independence]
+name = Application must not depend on adapters or composition
+type = forbidden
+source_modules =
+    app.application
+forbidden_modules =
+    app.core
+    app.infrastructure
+    app.presentation
+allow_indirect_imports = true
+
+[importlinter:contract:no-presentation-repository]
+name = Presentation must not import infrastructure directly
+type = forbidden
+source_modules =
+    app.presentation
+forbidden_modules =
+    app.infrastructure
+allow_indirect_imports = true

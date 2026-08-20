@@ -27,6 +27,10 @@ cd examples/calculator-java-hexagonal
 ./gradlew bootRun
 ```
 
+`./gradlew test` includes ArchUnit checks that keep the domain free of Spring
+and Jakarta dependencies and prevent the application layer from depending on
+adapters. The examples workflow enforces these checks in CI.
+
 ```bash
 curl -X POST http://localhost:8080/calculations \
   -H 'Content-Type: application/json' \

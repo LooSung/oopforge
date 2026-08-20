@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
-"""Evaluate one C4 proof workspace with deterministic, task-specific checks."""
+"""Evaluate one C4 proof workspace using canonical domain-review checks."""
 
 from __future__ import annotations
 
 import json
-import re
 import subprocess
 import sys
 from pathlib import Path
@@ -12,32 +11,38 @@ from pathlib import Path
 CI_DIR = Path(__file__).resolve().parents[1] / "ci"
 sys.path.insert(0, str(CI_DIR))
 
-from review.method_length import scan_methods  # noqa: E402
-
-
-FRAMEWORK_IMPORT = re.compile(r"^\s*(?:from|import)\s+(fastapi|pydantic|sqlalchemy)\b", re.MULTILINE)
-REPOSITORY_IMPORT = re.compile(r"^\s*(?:from|import)\s+.*repository", re.MULTILINE)
-INVARIANT_TERMS = re.compile(
-    r"timedelta\s*\(\s*minutes\s*=\s*5|300\b|already\s+void|voided.*(?:raise|if)",
-    re.IGNORECASE,
+from review.changeset import parse_unified_diff  # noqa: E402
+from review.detectors import scan  # noqa: E402
+from review.model import ReviewRun, RuleCatalog  # noqa: E402
+from review.proof_adapter import (  # noqa: E402
+    coverage_checks,
+    missing_coverage_rule_ids,
+    scan_invariants,
+    unrelated_violations,
 )
 
 
-def changed_files(root: Path) -> list[Path]:
-    output = subprocess.check_output(
-        ["git", "diff", "--name-only", "--diff-filter=ACMR", "HEAD"],
+def git_output(root: Path, args: list[str]) -> str:
+    return subprocess.check_output(
+        ["git", *args],
         cwd=root,
         text=True,
     )
-    return [root / line for line in output.splitlines() if line]
 
 
-def text(path: Path) -> str:
-    return path.read_text(encoding="utf-8", errors="replace")
+def changed_paths(root: Path) -> list[str]:
+    output = git_output(
+        root, ["diff", "--name-only", "--diff-filter=ACMR", "HEAD"]
+    )
+    return [line for line in output.splitlines() if line]
 
 
-def relative(path: Path, root: Path) -> str:
-    return path.relative_to(root).as_posix()
+def current_files(root: Path, paths: list[str]) -> dict[str, str]:
+    return {
+        path: (root / path).read_text(encoding="utf-8", errors="replace")
+        for path in paths
+        if (root / path).is_file()
+    }
 
 
 def baseline_text(root: Path, rel: str) -> str:
@@ -51,109 +56,38 @@ def baseline_text(root: Path, rel: str) -> str:
     return result.stdout if result.returncode == 0 else ""
 
 
-def method_length_findings(content: str, rel: str) -> list[dict[str, object]]:
-    return [
-        {
-            "rule": "method-over-20-lines",
-            "file": rel,
-            "method": method.name,
-            "lines": method.length,
-        }
-        for method in scan_methods(rel, content)
-        if method.length > 20
-    ]
+def baseline_files(root: Path, paths: list[str]) -> dict[str, str]:
+    return {path: baseline_text(root, path) for path in paths}
 
 
-def content_findings(content: str, rel: str) -> list[dict[str, object]]:
-    findings = method_length_findings(content, rel)
-    line_count = len(content.splitlines())
-    if line_count > 300:
-        findings.append({"rule": "file-over-300-lines", "file": rel, "lines": line_count})
-    if rel.startswith("app/domain/") and FRAMEWORK_IMPORT.search(content):
-        findings.append({"rule": "domain-framework-import", "file": rel})
-    if rel.startswith("app/presentation/") and REPOSITORY_IMPORT.search(content):
-        findings.append({"rule": "presentation-repository-import", "file": rel})
-    if (
-        rel.startswith(("app/application/", "app/presentation/", "app/infrastructure/"))
-        and INVARIANT_TERMS.search(content)
-    ):
-        findings.append({"rule": "invariant-outside-domain", "file": rel})
-    return findings
-
-
-def finding_key(finding: dict[str, object]) -> tuple[object, ...]:
-    return finding.get("rule"), finding.get("file"), finding.get("method")
-
-
-def is_attributable(
-    current: dict[str, object], previous: dict[str, object] | None
-) -> bool:
-    if previous is None:
-        return True
-    return (
-        current.get("rule") == "method-over-20-lines"
-        and isinstance(current.get("lines"), int)
-        and isinstance(previous.get("lines"), int)
-        and current["lines"] > previous["lines"]
-    )
-
-
-def attributable_findings(
-    current: list[dict[str, object]],
-    previous: list[dict[str, object]],
+def architecture_findings(
+    root: Path,
+    paths: list[str],
+    current: dict[str, str],
 ) -> list[dict[str, object]]:
-    previous_by_key = {finding_key(item): item for item in previous}
-    return [
-        item for item in current
-        if is_attributable(item, previous_by_key.get(finding_key(item)))
-    ]
+    catalog = RuleCatalog.defaults()
+    previous = baseline_files(root, paths)
+    head = scan(current, catalog) + scan_invariants(current)
+    base = scan(previous, catalog) + scan_invariants(previous)
+    head.extend(unrelated_violations(paths))
+    changeset = parse_unified_diff(git_output(root, ["diff", "-U0", "HEAD"]))
+    run = ReviewRun.open("HEAD", "WORKTREE", changeset)
+    run.assess(head, base)
+    return [_finding_dict(item) for item in run.findings()]
 
 
-def architecture_findings(paths: list[Path], root: Path) -> list[dict[str, object]]:
-    findings: list[dict[str, object]] = []
-    for path in paths:
-        rel = relative(path, root)
-        if not path.exists() or path.is_dir():
-            continue
-        current = content_findings(text(path), rel)
-        previous = content_findings(baseline_text(root, rel), rel)
-        findings.extend(attributable_findings(current, previous))
-        if not rel.startswith(("app/", "tests/", ".craft/")) and rel not in {
-            ".gitignore",
-            "pyproject.toml",
-        }:
-            findings.append({"rule": "possible-unrelated-change", "file": rel})
-    return findings
-
-
-def coverage_checks(paths: list[Path], root: Path) -> dict[str, bool]:
-    changed = {relative(path, root): text(path).lower() for path in paths if path.exists()}
-    production = "\n".join(
-        content for name, content in changed.items() if name.startswith("app/")
-    )
-    tests = {name: content for name, content in changed.items() if name.startswith("tests/")}
+def _finding_dict(finding) -> dict[str, object]:
     return {
-        "domain_behavior": any(
-            "def void" in content
-            for name, content in changed.items()
-            if name.startswith("app/domain/")
-        ),
-        "injectable_time": bool(
-            re.search(
-                r"def\s+\w+\s*\([^)]*\b(now|current_time)\b|self\._?clock\b|\bClock\b",
-                production,
-            )
-        ),
-        "domain_test": any("void" in content and "domain" in name for name, content in tests.items()),
-        "use_case_test": any(
-            "void" in content and ("application" in name or "service" in name)
-            for name, content in tests.items()
-        ),
-        "api_test": any(
-            "void" in content and ("api" in name or "router" in name)
-            for name, content in tests.items()
-        ),
+        "rule_id": finding.rule_id,
+        "file": finding.location.path,
+        "line_start": finding.location.lines.start,
+        "line_end": finding.location.lines.end,
+        "message": finding.message,
     }
+
+
+def _missing_findings(checks: dict[str, bool]) -> list[dict[str, object]]:
+    return [{"rule_id": rule_id} for rule_id in missing_coverage_rule_ids(checks)]
 
 
 def main() -> int:
@@ -161,15 +95,15 @@ def main() -> int:
         print("usage: evaluate-run.py <workspace>", file=sys.stderr)
         return 2
     root = Path(sys.argv[1]).resolve()
-    paths = changed_files(root)
-    checks = coverage_checks(paths, root)
-    findings = architecture_findings(paths, root)
-    for name, passed in checks.items():
-        if not passed:
-            findings.append({"rule": f"missing-{name.replace('_', '-')}"})
+    paths = changed_paths(root)
+    current = current_files(root, paths)
+    checks = coverage_checks(current)
+    findings = architecture_findings(root, paths, current)
+    findings.extend(_missing_findings(checks))
     result = {
+        "schema": "oopforge.proof-evaluation.v2",
         "workspace": str(root),
-        "changed_files": [relative(path, root) for path in paths],
+        "changed_files": paths,
         "checks": checks,
         "violation_count": len(findings),
         "findings": findings,

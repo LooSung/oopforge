@@ -5,12 +5,30 @@ from __future__ import annotations
 
 import json
 import subprocess
+import sys
 import tempfile
 from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[2]
 EVALUATOR = ROOT / "scripts/proof/evaluate-run.py"
+sys.path.insert(0, str(ROOT / "scripts/ci"))
+
+from review.detectors import scan  # noqa: E402
+from review.model import (  # noqa: E402
+    ARCHLINT_CONTROLLER_REPOSITORY,
+    METHOD_TOO_LONG,
+    PUBLIC_MUTABLE_DOMAIN_FIELD,
+    RuleCatalog,
+)
+from review.proof_adapter import (  # noqa: E402
+    INVARIANT_OUTSIDE_DOMAIN,
+    MISSING_API_TEST,
+    MISSING_DOMAIN_BEHAVIOR,
+    MISSING_DOMAIN_TEST,
+    MISSING_USE_CASE_TEST,
+)
+
 BASELINE_MODEL = (
     "class Calculation:\n"
     "    def perform(self):\n"
@@ -126,13 +144,13 @@ def assert_bad(root: Path) -> None:
     prepare(root)
     bad_case(root)
     result = evaluate(root)
-    rules = {finding["rule"] for finding in result["findings"]}
+    rules = {finding["rule_id"] for finding in result["findings"]}
     expected = {
-        "invariant-outside-domain",
-        "missing-domain-behavior",
-        "missing-domain-test",
-        "missing-use-case-test",
-        "missing-api-test",
+        INVARIANT_OUTSIDE_DOMAIN,
+        MISSING_DOMAIN_BEHAVIOR,
+        MISSING_DOMAIN_TEST,
+        MISSING_USE_CASE_TEST,
+        MISSING_API_TEST,
     }
     assert expected <= rules, result
 
@@ -142,8 +160,57 @@ def assert_worsened(root: Path) -> None:
     clean_case(root)
     worsen_method(root)
     result = evaluate(root)
-    rules = {finding["rule"] for finding in result["findings"]}
-    assert "method-over-20-lines" in rules, result
+    rules = {finding["rule_id"] for finding in result["findings"]}
+    assert METHOD_TOO_LONG in rules, result
+
+
+def common_rule_files() -> dict[str, str]:
+    return {
+        "app/domain/order.py":
+        "from dataclasses import dataclass\n\n"
+        "@dataclass\n"
+        "class Order:\n"
+        "    status: str\n",
+        "app/presentation/admin.py":
+        "from app.infrastructure.repository import OrderRepository\n",
+    }
+
+
+def assert_common_id_parity(root: Path) -> None:
+    prepare(root)
+    clean_case(root)
+    shared_files = common_rule_files()
+    for path, content in shared_files.items():
+        write(root, path, content)
+    expected = {item.rule_id for item in scan(shared_files, RuleCatalog.defaults())}
+    result = evaluate(root)
+    actual = {
+        item["rule_id"] for item in result["findings"]
+        if item["rule_id"] in expected
+    }
+    assert result["schema"] == "oopforge.proof-evaluation.v2", result
+    assert actual == expected, (actual, expected, result)
+    canonical = {PUBLIC_MUTABLE_DOMAIN_FIELD, ARCHLINT_CONTROLLER_REPOSITORY}
+    assert expected == canonical
+
+
+def assert_test_files_excluded(root: Path) -> None:
+    prepare(root)
+    clean_case(root)
+    path = "tests/domain/test_bad_model.py"
+    write(
+        root,
+        path,
+        "from fastapi import Depends\n"
+        "from dataclasses import dataclass\n\n"
+        "@dataclass\n"
+        "class TestOrder:\n"
+        "    status: str\n\n"
+        "def oversized():\n"
+        + "".join(f"    value_{index} = {index}\n" for index in range(21)),
+    )
+    result = evaluate(root)
+    assert all(item.get("file") != path for item in result["findings"]), result
 
 
 def main() -> int:
@@ -151,6 +218,8 @@ def main() -> int:
         assert_clean(Path(temp) / "clean")
         assert_bad(Path(temp) / "bad")
         assert_worsened(Path(temp) / "worsened")
+        assert_common_id_parity(Path(temp) / "parity")
+        assert_test_files_excluded(Path(temp) / "test-exclusion")
     print("proof evaluator self-test: PASS")
     return 0
 

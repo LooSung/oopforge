@@ -70,11 +70,12 @@ Count violations after the first agent response:
 1. Business invariant outside the domain model.
 2. Framework import under `app/domain`.
 3. Presentation layer directly importing a repository.
-4. Application service containing state-transition decisions instead of
+4. Public mutable state that lets callers bypass domain invariants.
+5. Application service containing state-transition decisions instead of
    orchestration.
-5. Missing injectable clock for the five-minute rule.
-6. Missing domain, use-case, or API coverage.
-7. Unrelated file changes.
+6. Missing injectable clock for the five-minute rule.
+7. Missing domain, use-case, or API coverage.
+8. Unrelated file changes.
 
 Lower is better. A rule is counted once per affected file unless the evaluator
 states otherwise.
@@ -89,6 +90,32 @@ states otherwise.
 
 Elapsed time and token usage may be recorded as context, but they are not
 success metrics.
+
+## Evaluation schema v2
+
+`scripts/proof/evaluate-run.py` emits
+`"schema": "oopforge.proof-evaluation.v2"` with:
+
+- `workspace` and `changed_files` for the evaluated worktree;
+- `checks` for domain behavior, injectable time, and domain/use-case/API tests;
+- `violation_count` and `findings`; located findings contain `rule_id`, file,
+  line range, and message, while missing-coverage findings contain `rule_id`.
+
+The evaluator now reuses the domain review's canonical detectors and
+new-or-worsened diff semantics. Finding IDs emitted by both paths are preserved
+without a proof-specific rename:
+
+- `FILE_TOO_LONG`, `SKILL_FILE_TOO_LONG`, `DOMAIN_FRAMEWORK_IMPORT`,
+  `METHOD_TOO_LONG`, and `PUBLIC_MUTABLE_DOMAIN_FIELD`;
+- `ARCHLINT_CONTROLLER_REPOSITORY`.
+
+In particular, `PUBLIC_MUTABLE_DOMAIN_FIELD` and
+`ARCHLINT_CONTROLLER_REPOSITORY` have explicit proof/domain-review parity
+coverage. Public mutable invariant state is therefore machine-covered in v2.
+Task-specific findings keep separate IDs:
+`INVARIANT_OUTSIDE_DOMAIN`, `POSSIBLE_UNRELATED_CHANGE`,
+`MISSING_DOMAIN_BEHAVIOR`, `MISSING_INJECTABLE_TIME`,
+`MISSING_DOMAIN_TEST`, `MISSING_USE_CASE_TEST`, and `MISSING_API_TEST`.
 
 ## Run
 
@@ -122,6 +149,14 @@ OOPforge installation and restore it before normal work. The script stops
 immediately when it detects this contamination.
 
 ## Results
+
+The three published pairs below are historical results produced before schema
+v2. Their recorded machine counts and evaluator-limit notes remain accurate for
+the evaluator used at the time: pair 1 missed public mutable state and worsened
+method length; pairs 2 and 3 detected method length but still missed public
+mutable state. Schema v2 now covers those shared detector cases, but the old
+workspaces were not re-evaluated and the result files were not rewritten. This
+documentation update is not a new proof run or a new effectiveness result.
 
 - [2026-08-20 — Cursor, GPT-5.6 Sol High, pair 1](results/2026-08-20-cursor-gpt-5.6-sol-high.md)
   — valid, neutral

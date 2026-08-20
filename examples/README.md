@@ -32,7 +32,16 @@ cd examples/calculator-python-hexagonal-cqrs && pip install -e ".[dev]" && pytes
 
 ## Enforced in CI
 
-`scripts/ci/archlint.py` runs in `.github/workflows/arch-lint.yml` against the layered/CQRS examples — the v0.7 layer-layout and CQRS Hard Rules block the PR if violated.
+- `scripts/ci/archlint.py` checks the layered and CQRS examples.
+- import-linter checks both plain Python layered and hexagonal dependency
+  boundaries. For the hexagonal example this means domain independence,
+  application independence, and no presentation-to-infrastructure import.
+- Gradle tests run ArchUnit for both plain Java layered and hexagonal examples.
+  The hexagonal checks keep the domain framework-free and the application
+  independent of adapters.
+
+These checks run in `.github/workflows/arch-lint.yml` or
+`.github/workflows/examples.yml` and block this repository's PRs on failure.
 
 ## OOPforge workflow
 

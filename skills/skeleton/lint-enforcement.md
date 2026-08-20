@@ -9,20 +9,34 @@ stability: stable
 
 ## When to use
 
-When you want to enforce layer/boundary rules **via the build, not docs**. Self-checks and reviews can be missed, so block the core project rules automatically with tools.
+When layer or boundary rules must be enforced **by the build, not only docs**.
+Self-checks and reviews can be missed, so use executable dependency rules.
 
 Stack it in two layers:
 
-1. **Fast stdlib gate** — `scripts/ci/archlint.py` (0 dependencies, blocks the PR). Instantly checks layer-folder existence, the router->repository ban, and CQRS rules.
-2. **Standard tools** — `import-linter` for Python, `ArchUnit` for Java. Analyze the actual import graph to prove the same rules once more.
+1. **Fast stdlib gate** — `scripts/ci/archlint.py` checks layered folder
+   layout, direct router-to-repository imports, and CQRS rules.
+2. **Standard tools** — import-linter for Python and ArchUnit for Java inspect
+   the actual dependency graph.
 
-Do not invent a new tool; copy the example configs below as the **canonical template**.
+Do not invent a new tool. Copy the matching example below as the **canonical
+template**, then change only its package names.
+
+## Canonical templates
+
+| Stack | Canonical file | Enforced boundaries |
+|---|---|---|
+| Python layered | `examples/calculator-python-layered/.importlinter` | layer direction; no direct router-to-repository import |
+| Python hexagonal | `examples/calculator-python-hexagonal/.importlinter` | domain independence; application independence; no presentation-to-infrastructure import |
+| Java layered | `examples/calculator-java-layered/src/test/java/com/oopforge/example/layered/calculator/ArchitectureTest.java` | layer direction; service-only repository access; framework-free domain |
+| Java hexagonal | `examples/calculator-java-hexagonal/src/test/java/com/oopforge/example/calculator/ArchitectureTest.java` | framework-free domain; application-to-adapter ban |
 
 ## Python — import-linter
 
-Template: `examples/calculator-python-layered/.importlinter`
+Put `.importlinter` at the project root and add `import-linter>=2.1` to dev
+dependencies.
 
-Put `.importlinter` at the project root and add `import-linter>=2.1` to dev dependencies.
+### Layered shape
 
 ```ini
 [importlinter]
@@ -47,25 +61,64 @@ forbidden_modules =
 allow_indirect_imports = true
 ```
 
-- The `layers` contract fails if a lower layer imports a higher one (e.g., domain->service is banned).
-- The `forbidden` contract fails if the router imports the repository **directly**. `allow_indirect_imports = true` allows the normal indirect path (router->service->repository) and catches only direct violations.
+- `layers` rejects lower-to-higher imports.
+- `allow_indirect_imports = true` permits router -> service -> repository while
+  rejecting a direct router -> repository import.
 
-Run:
+### Hexagonal shape
 
-```bash
-pip install -e ".[dev]"
-lint-imports
+```ini
+[importlinter]
+root_package = app
+
+[importlinter:contract:domain-independence]
+name = Domain must not depend on outer packages
+type = forbidden
+source_modules =
+    app.domain
+forbidden_modules =
+    app.application
+    app.core
+    app.infrastructure
+    app.presentation
+allow_indirect_imports = true
+
+[importlinter:contract:application-independence]
+name = Application must not depend on adapters or composition
+type = forbidden
+source_modules =
+    app.application
+forbidden_modules =
+    app.core
+    app.infrastructure
+    app.presentation
+allow_indirect_imports = true
+
+[importlinter:contract:no-presentation-repository]
+name = Presentation must not import infrastructure directly
+type = forbidden
+source_modules =
+    app.presentation
+forbidden_modules =
+    app.infrastructure
+allow_indirect_imports = true
 ```
+
+- Domain and application code cannot depend on outer implementation packages.
+- Presentation reaches infrastructure through application wiring, not direct
+  imports.
+
+Run `pip install -e ".[dev]" && lint-imports`.
 
 ## Java — ArchUnit
 
-Template: `examples/calculator-java-layered/src/test/java/.../calculator/ArchitectureTest.java`
-
-Adding only the test dependency naturally includes it in `./gradlew test` — no separate CI step needed.
+Add the test dependency; architecture rules then run inside `./gradlew test`.
 
 ```kotlin
 testImplementation("com.tngtech.archunit:archunit-junit5:1.3.0")
 ```
+
+### Layered shape
 
 ```java
 layeredArchitecture().consideringOnlyDependenciesInLayers()
@@ -80,17 +133,41 @@ layeredArchitecture().consideringOnlyDependenciesInLayers()
     .check(classes);
 ```
 
-- Making `Repository` accessible only by `Service` blocks direct controller->repository calls.
-- Check 0 domain framework dependencies as a separate rule (`noClasses().that().resideInAPackage("..domain..").should().dependOnClassesThat().resideInAnyPackage("org.springframework..", "jakarta..")`).
+- Repository access through Service blocks direct controller access.
+- Add a separate `noClasses()` rule for domain dependencies on
+  `org.springframework..`, `jakarta..`, and other project frameworks.
 
-## CI wiring
+### Hexagonal shape
 
-- `archlint.py`: blocks PRs on the layered/CQRS examples in `.github/workflows/arch-lint.yml`.
-- `import-linter`: add as a `lint-imports` step in the same workflow (run after installing the example).
-- `ArchUnit`: included in `./gradlew test`, so the examples workflow enforces it as-is.
+```java
+noClasses()
+    .that().resideInAPackage(BASE + ".domain..")
+    .should().dependOnClassesThat().resideInAnyPackage(
+        "org.springframework..", "jakarta..")
+    .check(classes);
+
+noClasses()
+    .that().resideInAPackage(BASE + ".application..")
+    .should().dependOnClassesThat().resideInAPackage(BASE + ".adapter..")
+    .check(classes);
+```
+
+## CI and blocking policy
+
+- In OOPforge itself, `lint`, `arch-lint`, and `examples` are repository
+  blocking gates. `arch-lint` runs import-linter for both plain Python layered
+  and hexagonal examples; `examples` runs ArchUnit through Gradle tests.
+- The adopter template
+  `templates/github/oopforge-domain-review.yml` is **non-blocking by default**.
+  It posts findings and artifacts with a neutral verdict.
+- Adopter blocking is **opt-in**: run the copied import-linter contract or
+  ArchUnit test in CI and mark that concrete lint/test job as required in
+  branch protection. Requiring the feedback-only review job does not make its
+  findings fail.
 
 ## Prohibited
 
-- Do not leave a rule as a README sentence only and drop build enforcement.
-- Do not remove `allow_indirect_imports` from the import-linter `forbidden` contract and break normal indirect paths.
-- Do not write ArchUnit layer packages (`definedBy`) differently from the actual folders, letting the rule pass vacuously.
+- Do not describe an adopter's default domain review as blocking.
+- Do not remove `allow_indirect_imports` and break valid indirect paths.
+- Do not let ArchUnit package patterns differ from real folders and pass
+  vacuously.
