@@ -28,7 +28,7 @@
 
 ## 남은 작업
 
-### 현재
+### v0.10.0 — 증명과 강제 연결 (현재)
 
 **C4 — 반복 Proof + Craft 데모**
 
@@ -41,20 +41,30 @@
 - 유리·중립·불리한 결과를 모두 포함해 요약한다.
 - README에 Craft GIF/asciinema를 연결한다.
 
-### 다음
+**C2+ — 도메인 리뷰 자동화 확장**
 
-1. **C2+ — 도메인 리뷰 자동화 확장**
-   - 안티패턴 탐지, archlint layered/CQRS 재사용, 타깃 프로젝트 Action
-     템플릿, 위반 피드백 기반 자가교정.
-2. **A1 — Transactional Outbox**
-   - DB 쓰기와 이벤트 발행을 같은 트랜잭션에 묶고 relay/CDC 전달,
-     ghost/lost 이벤트 방지를 가르친다.
-3. **B2 — Agent Skills 스펙 정렬**
-   - `SKILL.md` frontmatter와 progressive disclosure를 표준화해
-     Claude/Codex/Cursor 밖에서도 읽히게 한다.
-4. **B3 — 레포 위생**
-   - 죽은·중복 스킬, 끊긴 링크, 빌드 산출물을 정리하고 문서 링크
-     무결성 CI를 건다.
+- 안티패턴 탐지와 archlint layered/CQRS 검사를 재사용한다.
+- 타깃 프로젝트 Action 템플릿을 제공한다.
+- 위반 피드백 기반 자가교정 루프를 연결한다.
+
+### v0.11.0 — 백엔드 깊이 (다음)
+
+**A1 — Transactional Outbox**
+
+DB 쓰기와 이벤트 발행을 같은 트랜잭션에 묶고 relay/CDC 전달,
+ghost/lost 이벤트 방지를 가르친다.
+
+### v0.12.0 — 이식성과 위생
+
+**B2 — Agent Skills 스펙 정렬**
+
+`SKILL.md` frontmatter와 progressive disclosure를 표준화해
+Claude/Codex/Cursor 밖에서도 읽히게 한다.
+
+**B3 — 레포 위생**
+
+죽은·중복 스킬, 끊긴 링크, 빌드 산출물을 정리하고 문서 링크
+무결성 CI를 건다.
 
 ---
 
