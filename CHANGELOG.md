@@ -2,7 +2,7 @@
 
 모든 변경은 여기에 기록한다. [Keep a Changelog](https://keepachangelog.com/) 형식.
 
-## [Unreleased]
+## [0.9.9] - 2026-08-20
 
 ### Added
 
