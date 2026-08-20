@@ -46,6 +46,26 @@ Use this checklist after an agent generates or refactors code with OOPforge.
 - [ ] Persistence models do not leak into domain objects.
 - [ ] External system failures are mapped at adapter boundaries.
 
+## Production adapters (explicit opt-in only)
+
+Use this section only when the user explicitly requested deployment, production,
+or operational readiness and the
+[Production Readiness gate](../skills/workflow/production-readiness.md) applies.
+
+- [ ] Inbound adapters reject invalid wire shape, size, format, and required fields.
+- [ ] Inbound adapters expose stable safe errors without internals, PII, or secrets.
+- [ ] API idempotency is coordinated at the boundary and backed by an adapter;
+      duplicate requests do not repeat side effects.
+- [ ] Outbound adapters own bounded retries and explicit timeout budgets.
+- [ ] Middleware/adapters propagate correlation context and emit useful telemetry.
+- [ ] Required audit records include actor, action, target, result, and correlation ID.
+- [ ] Configuration and adapters keep secrets out of code, logs, errors, and audit;
+      telemetry minimizes or redacts PII.
+- [ ] Domain files contain no framework, retry, telemetry, audit, idempotency, or
+      other operational NFR concerns.
+- [ ] Boundary tests cover invalid input, duplicates, safe errors, and
+      correlation/audit propagation.
+
 ## Tests
 
 - [ ] Domain rules are tested without framework bootstrapping.

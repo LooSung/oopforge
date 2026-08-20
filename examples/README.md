@@ -44,6 +44,10 @@ cd examples/calculator-python-hexagonal-cqrs && pip install -e ".[dev]" && pytes
 - The plain hexagonal test suites prove save → pop → dispatch ordering, atomic
   state/outbox rollback, versioned integration payloads, and message-ID
   idempotency. Simpler layered/CQRS examples do not record unused events.
+- Their HTTP adapters also provide executable production-boundary examples:
+  validation, safe errors, idempotent POST replay/conflict, correlation IDs,
+  and secret-free audit records. The stores are intentionally in-memory
+  references; replace them with durable adapters before real deployment.
 
 These checks run in `.github/workflows/arch-lint.yml` or
 `.github/workflows/examples.yml` and block this repository's PRs on failure.

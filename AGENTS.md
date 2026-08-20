@@ -63,6 +63,7 @@ Use this table to decide **which skill to read first**. Workflow stage always wi
 | Skeleton | Packages, empty types | `skills/workflow/skeleton.md` + `skills/skeleton/backend-skeleton.md` (stack via `skills/lang/backend-stack.md`) |
 | Implement | One use case + tests | `skills/workflow/implement.md` + `skills/oop/use-case-boundary.md` |
 | Test | Unit / integration / E2E | `skills/workflow/test.md` |
+| Production Gate (explicit opt-in only) | Adapter-boundary NFR evidence for deployment, production, or operational readiness | `skills/workflow/production-readiness.md` |
 | Refactor | Behavior-preserving cleanup | `skills/workflow/refactor.md` |
 | Continuity | Resume work across sessions | `skills/workflow/continuity.md` |
 | Code review | Detect rule violations | Hard Rules below + `skills/antipatterns/` + `examples/calculator-java-hexagonal/` |
@@ -77,6 +78,7 @@ Use this table to decide **which skill to read first**. Workflow stage always wi
 | One Aggregate per transaction / multi-Aggregate writes | `skills/oop/transaction-boundary.md` |
 | Publishing an event or notifying another system in the same commit | `skills/oop/outbox.md` |
 | Read/write split, complex query off the domain (CQRS) | `skills/oop/cqrs.md` |
+| Explicit deployment, production, or operational-readiness request | `skills/workflow/production-readiness.md` (add to the normal path; never infer from an ordinary feature) |
 | Backend stack selection | `skills/lang/backend-stack.md` |
 | Backend package structure / skeleton | `skills/skeleton/backend-skeleton.md` |
 | Anemic domain | `skills/antipatterns/anemic-domain.md` |
@@ -113,6 +115,7 @@ Before changing behavior, read the relevant skill file:
 - Craft playbooks: `skills/playbooks/feature.md` · `skills/playbooks/bug-fix.md`
 - Delivery planning: `skills/workflow/delivery-plan.md`
 - Testing: `skills/workflow/test.md`
+- Production readiness (explicit opt-in only): `skills/workflow/production-readiness.md`
 - Refactoring existing or external code: `skills/workflow/refactor.md`
 - Anti-patterns: `skills/antipatterns/` (`flat-package`, `anemic-domain`, `controller-fat`, `repository-with-business-logic`, `god-aggregate`)
 - Resuming work across sessions (persist + restore context): `skills/workflow/continuity.md`

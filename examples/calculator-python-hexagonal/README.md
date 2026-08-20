@@ -21,6 +21,12 @@ The calculate transaction saves the Aggregate, drains its event once, and
 dispatches a handler that appends immutable `CalculationPerformedV1` to the
 outbox. The relay runs after commit and its consumer deduplicates by message ID.
 
+The HTTP adapter validates finite operands and request shape, emits safe errors,
+replays matching `Idempotency-Key` requests, rejects key conflicts, echoes
+`X-Correlation-Id`, and records a secret-free audit entry. Its idempotency,
+audit, repository, and outbox stores are process-local reference adapters; use
+durable shared adapters for a real multi-instance deployment.
+
 ## Run tests
 
 ```bash

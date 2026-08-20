@@ -53,9 +53,21 @@ Make domain objects own their responsibilities and keep the application service 
 | Anemic domain, fat controller, smart repository, god Aggregate, flat package | matching file under `skills/antipatterns/` |
 | Read/write model split, lifting complex queries off the domain, applying CQRS | `skills/oop/cqrs.md` |
 | New domain or large feature | the full existing workflow starting at `skills/workflow/discovery.md` |
+| User explicitly asks to deploy or asks about deployment, production, or operational readiness | select the normal task path, then add the `skills/workflow/production-readiness.md` gate |
 | Not a backend OOP change (environment, tooling, docs, ops, investigation) | say so in one line; skip Assumptions and OOP Contract; keep Verification and Scope drift |
 | Advisory request that wants a recommendation only | recommend the smallest path and do not implement |
 | Execution request but a decision is missing ("make a calculator") | fill the decision via **Ambiguity resolution** below, then select a path |
+
+## Production Gate opt-in
+
+Activate `skills/workflow/production-readiness.md` only when the user explicitly
+asks to deploy or asks about deployment, production, or operational readiness.
+A normal feature or API request must not activate it. Generic "ready" language,
+release notes, deploy-risk fields in a plan, validation, security, or
+observability alone are not opt-in signals.
+
+The gate supplements the normal execution path; it never moves operational NFR
+concerns into the domain model.
 
 ## Ambiguity resolution (before implementation)
 
@@ -111,6 +123,8 @@ Transaction Boundary:
 - Check comment discipline: no narration comments; names explain what, comments explain why.
 - If the use case writes domain state, confirm Transaction Boundary names one Aggregate (`skills/oop/transaction-boundary.md`).
 - If broader review is needed, run the per-layer checks in `docs/reviewer-checklist.md`.
+- If and only if the Production Gate was explicitly activated, complete
+  `skills/workflow/production-readiness.md` and report its blockers or accepted risks.
 - Run the necessary tests and record reproducible commands, toolchain identity (interpreter path/version, required env vars), and results.
 - For any failed or skipped verification, leave a reason and the risk.
 

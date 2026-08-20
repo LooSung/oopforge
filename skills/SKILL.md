@@ -44,6 +44,9 @@ Natural language also works, for example: "Use OOPforge Discovery for the paymen
 4. Keep the normal order for new work: Discovery -> Design -> Delivery Plan -> Skeleton -> Implement -> Test.
 5. Ask for human approval before moving from one workflow stage to the next.
 6. Do not merge planning, implementation, and verification in a single step unless the user explicitly asks.
+7. Add `workflow/production-readiness.md` only when the user explicitly asks
+   about deployment, production, or operational readiness; ordinary feature
+   requests never activate it.
 
 ## Supporting Skills
 
@@ -58,6 +61,9 @@ Core OOP:
 Backend stack and skeleton:
 - Stack selection (layered or hexagonal/clean): `lang/backend-stack.md`
 - Package structure / skeleton: `skeleton/backend-skeleton.md`
+
+Conditional workflow:
+- Production readiness (explicit opt-in only): `workflow/production-readiness.md`
 
 Anti-patterns:
 - Flat package: `antipatterns/flat-package.md`

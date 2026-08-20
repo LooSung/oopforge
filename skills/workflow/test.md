@@ -22,6 +22,19 @@ You may write them first with TDD or as regression tests after implementation.
 - [ ] Include failure/boundary/authorization/duplicate-execution cases
 - [ ] Record the run commands and results
 
+## Conditional Production Gate
+
+Only when the user explicitly asks about deployment, production, or operational
+readiness:
+
+- [ ] Run the invalid-input, duplicate-request, safe-error, and
+      correlation/audit boundary checklist in the
+      [Production Readiness gate](production-readiness.md).
+- [ ] Record reproducible commands, results, blockers, and accepted operational
+      risks for that gate.
+
+Do not infer this gate from an ordinary feature or test request.
+
 ## Test priority
 
 | Test | Purpose | Example tools |

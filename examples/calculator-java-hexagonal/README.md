@@ -25,6 +25,12 @@ dispatches a handler that appends `CalculationPerformedV1` to the same
 in-memory transaction. The relay runs after commit; its consumer deduplicates
 by outbox message ID.
 
+The web adapter validates requests, maps failures to safe JSON, replays matching
+`Idempotency-Key` requests, rejects key conflicts, echoes `X-Correlation-Id`,
+and records a secret-free audit entry. Idempotency, audit, repository, and
+outbox stores are in-memory reference adapters, not multi-instance production
+storage.
+
 ## Run
 
 ```bash

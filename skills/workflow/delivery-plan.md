@@ -28,6 +28,19 @@ Merge the existing tech spec and kickoff docs into **one execution plan**.
 - [ ] Draft commit/push/MR/release notes
 - [ ] Rollback or revert strategy
 
+## Conditional Production Gate
+
+Only when the user explicitly asks about deployment, production, or operational
+readiness:
+
+- [ ] Apply the single
+      [Production Readiness gate](production-readiness.md); an ordinary feature
+      plan must not activate it.
+- [ ] Add adapter owners, acceptance evidence, blockers, and accepted
+      operational risks to the delivery plan.
+
+Omit this section from ordinary plans.
+
 ## Output
 
 Save to `docs/delivery-plan.md` or `docs/<domain>/delivery-plan.md`:
@@ -75,6 +88,12 @@ Save to `docs/delivery-plan.md` or `docs/<domain>/delivery-plan.md`:
 - MR notes:
 - Deploy risks:
 - Rollback:
+
+## Production Gate (only when explicitly requested)
+- Deployment context:
+- Adapter owners:
+- Acceptance evidence:
+- Blockers / accepted operational risks:
 
 ## Open Questions
 - 

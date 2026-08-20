@@ -31,6 +31,21 @@ Do not implement several use cases at once.
 
 Writing the domain first prevents leaking into the framework.
 
+## Conditional Production Gate
+
+Only when the user explicitly asks about deployment, production, or operational
+readiness:
+
+- [ ] Read and apply the
+      [Production Readiness gate](production-readiness.md).
+- [ ] Implement only the adapter, middleware, configuration, or application-port
+      work assigned by that gate.
+- [ ] Keep validation protocol rules, safe-error mapping, idempotency, retries,
+      timeouts, telemetry, audit, PII handling, and secrets out of the domain.
+- [ ] Record unmet controls as deployment blockers or accepted operational risks.
+
+Do not add this gate to an ordinary feature implementation.
+
 ## Just before writing: climb the ladder
 
 Before writing each piece, climb the `skills/principles/oop-discipline.md` #7
