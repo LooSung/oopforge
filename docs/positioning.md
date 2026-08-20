@@ -140,11 +140,12 @@ Positioning claims should be supported by reproducible before/after runs using:
 Token usage and elapsed time may be recorded as context, but they are not the
 primary success metrics.
 
-Until such runs are published, statements about reduced violation or rework
-rates must be presented as goals rather than measured results.
-
 The canonical experiment design and publication checklist live in the
-[proof protocol](proof/README.md).
+[proof protocol](proof/README.md). The
+[first valid paired result](proof/results/2026-08-20-cursor-gpt-5.6-sol-high.md)
+was neutral: both conditions introduced two attributable architecture violations
+and needed one rework round. Claims about reduced violation or rework rates remain
+goals until repeated evidence supports them.
 
 ## Messaging guardrails
 

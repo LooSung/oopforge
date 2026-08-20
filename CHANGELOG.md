@@ -2,6 +2,15 @@
 
 모든 변경은 여기에 기록한다. [Keep a Changelog](https://keepachangelog.com/) 형식.
 
+## [Unreleased]
+
+### Added
+
+- **첫 C4 비교 실험 결과** — Cursor `gpt-5.6-sol-high`로 control/OOPforge 짝
+  실험을 실행하고 중립 결과를 공개했다. 양쪽 모두 테스트 14개를 통과했지만
+  변경 귀속 아키텍처 위반 2건과 재작업 1회가 필요했다. 단일 실행을 개선율로
+  일반화하지 않는다.
+
 ## [0.9.8] - 2026-08-20
 
 ### Added

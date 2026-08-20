@@ -202,7 +202,9 @@ Runnable reference: [examples/README.md](examples/README.md) — the same calcul
 The code above explains the intended structure; it is not by itself evidence of
 an improvement rate. The [proof protocol](docs/proof/README.md) fixes the task,
 control, treatment, evaluation rules, and publication standard for reproducible
-before/after runs. Measured results will be linked here after a valid paired run.
+before/after runs. The [first valid paired result](docs/proof/results/2026-08-20-cursor-gpt-5.6-sol-high.md)
+was neutral: both runs introduced two attributable architecture violations and
+needed one rework round. One pair is not a general effectiveness claim.
 
 ---
 

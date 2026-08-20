@@ -120,6 +120,11 @@ the control from a clean OS profile/VM or temporarily remove the user-level
 OOPforge installation and restore it before normal work. The script stops
 immediately when it detects this contamination.
 
+## Results
+
+- [2026-08-20 — Cursor, GPT-5.6 Sol High](results/2026-08-20-cursor-gpt-5.6-sol-high.md)
+  — valid, neutral first pair
+
 ## Publish
 
 After inspecting the raw artifacts:
