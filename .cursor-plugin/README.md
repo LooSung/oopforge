@@ -1,6 +1,8 @@
 # Cursor Plugin Manifest
 
-`.cursor-plugin/plugin.json` is the experimental Cursor marketplace manifest.
+`.cursor-plugin/plugin.json` packages the verified explicit local-plugin path.
+Marketplace publication remains experimental and outside the 1.x support
+contract.
 
 ## Use today
 
@@ -28,11 +30,11 @@ Test conditions:
 - this repository linked at `~/.cursor/plugins/local/oopforge`;
 - fresh one-shot sessions with positive and negative controls.
 
-The explicit plugin run automatically read the packaged adapter,
-`skills/SKILL.md`, `workflow/craft.md`, and `principles/oop-discipline.md`.
-Directory discovery without `--plugin-dir` returned `OOPFORGE_NOT_LOADED`, and
-`/oopforge:craft` did not expand as a headless Cursor command.
+The explicit plugin run automatically reads the packaged skill adapter and
+canonical Craft files. Directory discovery without `--plugin-dir` returned
+`OOPFORGE_NOT_LOADED`; `/oopforge:craft` remains unsupported in headless Cursor.
 
 Result: the explicit local-plugin command and the project-local skill link are
-verified. Marketplace publication and bootstrap integration remain future
-work.
+supported 1.x paths. `scripts/ci/harness-smoke.sh live cursor` now repeats both
+positive controls and the isolated negative control. Marketplace publication
+and bootstrap integration remain future work.

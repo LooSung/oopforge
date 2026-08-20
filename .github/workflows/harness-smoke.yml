@@ -1,0 +1,122 @@
+name: Harness Smoke
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - "v*"
+  pull_request:
+  schedule:
+    - cron: "17 3 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  static:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Static packaging smoke
+        run: ./scripts/ci/harness-smoke.sh static
+
+  claude-live:
+    if: >-
+      startsWith(github.ref, 'refs/tags/') ||
+      github.event_name == 'schedule' ||
+      github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Require Claude credential
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+        run: |
+          if [ -z "$ANTHROPIC_API_KEY" ] && [ -z "$CLAUDE_CODE_OAUTH_TOKEN" ]; then
+            echo "Missing ANTHROPIC_API_KEY or CLAUDE_CODE_OAUTH_TOKEN" >&2
+            exit 1
+          fi
+
+      - name: Install Claude Code
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Install canonical links
+        run: INSTALL_CLAUDE=1 ./scripts/setup/install.sh
+
+      - name: Live activation and isolation
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+        run: |
+          claude --version
+          ./scripts/ci/harness-smoke.sh live claude
+
+  codex-live:
+    if: >-
+      startsWith(github.ref, 'refs/tags/') ||
+      github.event_name == 'schedule' ||
+      github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Require Codex credential
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          if [ -z "$OPENAI_API_KEY" ]; then
+            echo "Missing OPENAI_API_KEY" >&2
+            exit 1
+          fi
+
+      - name: Install Codex CLI
+        run: npm install -g @openai/codex
+
+      - name: Live activation and isolation
+        env:
+          CODEX_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          codex --version
+          ./scripts/ci/harness-smoke.sh live codex
+
+  cursor-live:
+    if: >-
+      startsWith(github.ref, 'refs/tags/') ||
+      github.event_name == 'schedule' ||
+      github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Require Cursor credential
+        env:
+          CURSOR_API_KEY: ${{ secrets.CURSOR_API_KEY }}
+        run: |
+          if [ -z "$CURSOR_API_KEY" ]; then
+            echo "Missing CURSOR_API_KEY" >&2
+            exit 1
+          fi
+
+      - name: Install Cursor Agent CLI
+        run: |
+          curl https://cursor.com/install -fsS | bash
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          if [ ! -e "$HOME/.local/bin/cursor-agent" ]; then
+            ln -s "$HOME/.local/bin/agent" "$HOME/.local/bin/cursor-agent"
+          fi
+
+      - name: Live activation and isolation
+        env:
+          CURSOR_API_KEY: ${{ secrets.CURSOR_API_KEY }}
+        run: |
+          cursor-agent --version
+          ./scripts/ci/harness-smoke.sh live cursor

@@ -2,7 +2,7 @@
 name: playbook-bug-fix
 description: Execution playbook to reproduce a domain bug with a failing test and resolve it with the smallest change.
 tags: [playbook, bug-fix, tdd]
-stability: experimental
+stability: stable
 ---
 
 # Playbook — Bug Fix

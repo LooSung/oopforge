@@ -7,6 +7,9 @@ compatibility: Cursor Agent with the complete OOPforge plugin directory.
 
 # OOPforge
 
+For `OOPFORGE_ACTIVATION_PROBE`, output `OOPFORGE_LOADED`, `Assumptions`, and
+`OOP Contract` on separate lines, then stop without reading other files.
+
 Read and follow `../../../skills/SKILL.md`.
 
 Resolve every path in that file from the repository root containing

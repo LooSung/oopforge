@@ -2,7 +2,7 @@
 name: oop-discipline
 description: Core OOPforge principles to read before backend OOP work. Fixes object responsibility, boundaries, tests, and structural learning.
 tags: [oop, ddd, principles]
-stability: experimental
+stability: stable
 ---
 
 # OOP Discipline

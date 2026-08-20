@@ -1,6 +1,8 @@
 # Claude Code Setup
 
-OOPforge is **fully supported** on Claude Code via symlink install.
+OOPforge 1.x supports Claude Code through the symlink-installed skill and
+`/oopforge:craft` command defined in the
+[support contract](./support-contract.md).
 
 ## Install
 
@@ -20,6 +22,15 @@ the backend project and confirm that `/oopforge:craft` is registered:
 ```text
 /oopforge:craft Advise only: which path fits adding one Email value object? Do not edit files.
 ```
+
+Maintainers can run the authenticated positive/negative check with:
+
+```bash
+./scripts/ci/harness-smoke.sh live claude
+```
+
+CI runs the same contract on tags and the weekly schedule. Missing credentials
+fail that gate instead of being treated as a skipped success.
 
 Installed paths:
 
@@ -57,4 +68,4 @@ Use examples/calculator-java-hexagonal as the structural reference for the calcu
 ## Related
 
 - [Codex setup](./codex.md) (Codex skill entry point and slash-like prompts)
-- [Cursor setup](./cursor.md) (experimental local plugin or project-local skill)
+- [Cursor setup](./cursor.md) (explicit local plugin or project-local skill)

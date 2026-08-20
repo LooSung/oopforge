@@ -1,7 +1,8 @@
-# Cursor Setup (Experimental)
+# Cursor Setup
 
-Use OOPforge with **Cursor Agent CLI** (`cursor-agent`) through an explicit
-local plugin directory or a project-local skill. There is no
+OOPforge 1.x supports **Cursor Agent CLI** (`cursor-agent`) through an explicit
+local plugin directory or a project-local skill. These are the canonical paths
+in the [support contract](./support-contract.md). There is no
 `scripts/setup/install.sh` target for Cursor.
 
 ## 1. Install OOPforge
@@ -33,7 +34,8 @@ ln -s ~/.oopforge ~/.cursor/plugins/local/oopforge
 Pass this directory explicitly when starting Cursor Agent. Headless sessions
 did not discover it from the directory alone.
 
-Project-local skill links remain a verified alternative:
+Project-local skill links remain a supported alternative. Because the symlink
+target is outside the project, include the pack with `--add-dir`:
 
 ```bash
 cd /path/to/your-backend-project
@@ -73,7 +75,8 @@ cursor-agent --plugin-dir ~/.cursor/plugins/local/oopforge \
   -p "Use OOPforge Discovery: order domain. No code yet."
 ```
 
-If you chose the project-local skill alternative, omit `--plugin-dir`. After
+If you chose the project-local skill alternative, start with
+`cursor-agent --add-dir ~/.oopforge` and omit `--plugin-dir`. After
 `git pull` in `~/.oopforge`, restart `cursor-agent` to pick up changes.
 
 ## 4. Update or remove
@@ -130,36 +133,26 @@ Match the structure in examples/calculator-java-hexagonal/ — domain has zero f
   `--plugin-dir ~/.cursor/plugins/local/oopforge`; the local directory alone
   returned `OOPFORGE_NOT_LOADED`.
 - **Natural-language entry point** — use `Use OOPforge craft: …`.
-  `/oopforge:craft` did not expand as a Cursor headless command.
+  `/oopforge:craft` is not a supported Cursor headless command.
+- **External symlink target** — project-local symlink startup includes
+  `--add-dir ~/.oopforge` so headless mode may read the pack.
 - **No bootstrap auto-link** — unlike Claude Code / Codex, `install.sh` does not configure Cursor.
 - **Marketplace** — local packaging is verified; marketplace publication is
   separate future work.
 
 ### Local plugin smoke evidence
 
-The result above was reproduced with Cursor Agent `2026.08.11-e8db854` in an
-empty workspace after temporarily isolating other OOPforge links:
+Maintainers can reproduce explicit-plugin, project-local, and no-skill controls
+with an authenticated Cursor CLI:
 
 ```bash
-mkdir -p /tmp/oopforge-cursor-plugin-smoke
-ln -s ~/.oopforge ~/.cursor/plugins/local/oopforge
-PROBE="Use OOPforge craft for an advisory-only Java value-object question. \
-If no OOPforge skill is automatically available, output OOPFORGE_NOT_LOADED \
-and stop. Do not search the filesystem for OOPforge."
-cursor-agent --print --mode ask --trust \
-  --workspace /tmp/oopforge-cursor-plugin-smoke \
-  --plugin-dir ~/.cursor/plugins/local/oopforge \
-  "$PROBE"
-cursor-agent --print --mode ask --trust \
-  --workspace /tmp/oopforge-cursor-plugin-smoke \
-  "$PROBE"
+./scripts/ci/harness-smoke.sh live cursor
 ```
 
-With `--plugin-dir`, the probe automatically read the packaged adapter,
-`skills/SKILL.md`, `workflow/craft.md`, and `principles/oop-discipline.md`.
-Without the flag it returned `OOPFORGE_NOT_LOADED`. The project-local skill
-alternative passed the same positive control, while a no-skill workspace
-returned `OOPFORGE_NOT_LOADED`.
+The check requires `OOPFORGE_LOADED`, Assumptions, and OOP Contract from both
+supported paths. Its isolated no-skill workspace must return
+`OOPFORGE_NOT_LOADED`. CI runs this contract on tags and the weekly schedule;
+a missing `CURSOR_API_KEY` fails the gate.
 
 ## Related
 

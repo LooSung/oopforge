@@ -2,7 +2,7 @@
 name: workflow-craft
 description: OOPforge execution orchestrator that classifies an existing backend OOP task and runs it via the smallest appropriate path.
 tags: [workflow, oop, ddd]
-stability: experimental
+stability: stable
 ---
 
 # Workflow — Craft

@@ -2,7 +2,7 @@
 name: oop-outbox
 description: Commit the state change and the outgoing event in one transaction, then deliver from that record — preventing ghost and lost events.
 tags: [oop, ddd, transaction, messaging, outbox]
-stability: experimental
+stability: stable
 ---
 
 # OOP — Transactional Outbox

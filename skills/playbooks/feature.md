@@ -2,7 +2,7 @@
 name: playbook-feature
 description: Execution playbook for adding one use case to an existing domain under OOPforge rules.
 tags: [playbook, feature, oop]
-stability: experimental
+stability: stable
 ---
 
 # Playbook — Feature

@@ -17,8 +17,8 @@
 유스케이스 경계, 리뷰 가능한 아키텍처가 필요할 때 사용한다. 범용 에이전트
 프레임워크, UI 도구, 자동 코드 생성기는 아니다.
 
-[포지셔닝과 비-목표](docs/positioning.md) ·
-[재현 가능한 Proof 프로토콜](docs/proof/README.md)
+[포지셔닝](docs/positioning.md) · [1.x 지원 계약](docs/support-contract.md) ·
+[Proof 프로토콜](docs/proof/README.md)
 
 [English](./README.md) · [한국어](./README.ko.md)
 
@@ -60,18 +60,18 @@ cd /path/to/your-backend-project
 |---|---|
 | **Claude Code** | Claude Code 재시작 후 `/oopforge:craft <요청>` |
 | **Codex CLI** | Codex 재시작 후 `/skills`에서 **oopforge**를 고르고 `/` 없이 요청 |
-| **Cursor Agent CLI** | 로컬 플러그인을 등록·명시 로드한 뒤 `Use OOPforge craft: …` |
+| **Cursor Agent CLI** | 로컬 플러그인을 명시 로드한 뒤 `Use OOPforge craft: …` |
 
 Claude Code:
 
 ```text
-/oopforge:craft Email 값 객체 하나 추가해줘
+Use OOPforge craft: Email 값 객체 하나 추가해줘
 ```
 
 Codex CLI:
 
 ```text
-Use OOPforge craft: Email 값 객체 하나 추가해줘
+/oopforge:craft Email 값 객체 하나 추가해줘
 ```
 
 Cursor Agent CLI는 등록 단계가 하나 더 필요하다:
@@ -184,13 +184,13 @@ calc.popEvents();
 ### 증거와 한계
 
 [Proof 프로토콜](docs/proof/README.md)은 과제, 대조군, OOPforge 적용군,
-평가 규칙과 공개 기준을 고정한다. Cursor `gpt-5.6-sol-high`의 유효한 세 짝
-중 [1](docs/proof/results/2026-08-20-cursor-gpt-5.6-sol-high.md)은 중립,
+평가 규칙과 공개 기준을 고정한다. Cursor `gpt-5.6-sol-high`의 유효한 네 짝
+중 첫 세 짝의 [1](docs/proof/results/2026-08-20-cursor-gpt-5.6-sol-high.md)은 중립,
 [2](docs/proof/results/2026-08-20-cursor-gpt-5.6-sol-high-2.md)와
 [3](docs/proof/results/2026-08-20-cursor-gpt-5.6-sol-high-3.md)은 메서드
 길이에서 유리했다. 세 짝 모두 공개 mutable 불변 상태 유출이 남았다.
-[반복 짝 요약](docs/proof/README.md#repeated-pair-summary)을 참고한다.
-이는 일반적인 효과 주장이 아니다.
+[4](docs/proof/results/2026-08-20-cursor-gpt-5.6-sol-high-4.md)는 정렬된
+starter에서 중립이었다. 이는 일반적인 효과 주장이 아니다.
 
 ## 설치, 업데이트, 제거
 

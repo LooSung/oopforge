@@ -2,7 +2,7 @@
 name: oop-transaction-boundary
 description: Keep one Aggregate modification per transaction; treat multi-Aggregate writes as a consistency design signal.
 tags: [oop, ddd, transaction, aggregate]
-stability: experimental
+stability: stable
 ---
 
 # OOP — Transaction Boundary

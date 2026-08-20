@@ -2,7 +2,7 @@
 name: oop-domain-events
 description: Record domain facts in an Aggregate, dispatch them at the application boundary, and translate external messages safely.
 tags: [oop, ddd, domain-event, integration-event]
-stability: experimental
+stability: stable
 ---
 
 # OOP — Domain Events

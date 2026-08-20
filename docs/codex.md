@@ -1,6 +1,8 @@
 # Codex Setup
 
-OOPforge is supported on Codex through a skill entry point at `skills/SKILL.md`.
+OOPforge 1.x supports Codex through the global skill entry point at
+`skills/SKILL.md`. This is the canonical path in the
+[support contract](./support-contract.md).
 
 Codex installs **skills only** — not Claude Code `commands/`. The string `/oopforge:craft` is **not** a Codex slash command; Codex reserves `/` for built-ins such as `/skills` and `/model`.
 
@@ -64,6 +66,15 @@ codex exec "Use OOPforge craft: Add a single Email value object"
 
 The `oopforge` skill routes Craft requests to `workflow/craft.md` and the smallest OOP path.
 
+Maintainers can run the authenticated positive/negative check with:
+
+```bash
+./scripts/ci/harness-smoke.sh live codex
+```
+
+CI runs the same contract on tags and the weekly schedule. Missing
+`OPENAI_API_KEY` fails that gate instead of being treated as a skipped success.
+
 ## Why not `/oopforge:craft`?
 
 | Harness | `/oopforge:craft` |
@@ -84,4 +95,4 @@ Skill content updates immediately via symlinks; restart Codex when the skill ent
 ## Related
 
 - [Claude Code setup](./claude-code.md) — slash command `/oopforge:craft`
-- [Cursor setup](./cursor.md) (experimental local plugin or project-local skill)
+- [Cursor setup](./cursor.md) (explicit local plugin or project-local skill)

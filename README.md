@@ -17,8 +17,8 @@ Use it when a **Java (Spring)** or **Python (FastAPI)** backend needs explicit
 domain models, use-case boundaries, and reviewable architecture. It is not a
 general agent framework, UI toolkit, or automatic code generator.
 
-[Positioning and non-goals](docs/positioning.md) ·
-[Reproducible proof protocol](docs/proof/README.md)
+[Positioning](docs/positioning.md) · [1.x support contract](docs/support-contract.md) ·
+[Proof protocol](docs/proof/README.md)
 
 [English](./README.md) · [한국어](./README.ko.md)
 
@@ -60,18 +60,18 @@ Choose the harness you actually use:
 |---|---|
 | **Claude Code** | Restart Claude Code, then `/oopforge:craft <request>` |
 | **Codex CLI** | Restart Codex, use `/skills` to select **oopforge**, then prompt without a leading `/` |
-| **Cursor Agent CLI** | Register and explicitly load the local plugin, then use `Use OOPforge craft: …` |
+| **Cursor Agent CLI** | Explicitly load the local plugin, then use `Use OOPforge craft: …` |
 
 Claude Code:
 
 ```text
-/oopforge:craft Add a single Email value object
+Use OOPforge craft: Add a single Email value object
 ```
 
 Codex CLI:
 
 ```text
-Use OOPforge craft: Add a single Email value object
+/oopforge:craft Add a single Email value object
 ```
 
 Cursor Agent CLI requires one extra registration step:
@@ -189,14 +189,14 @@ repeatable layout. See the runnable [examples](examples/README.md).
 ### Evidence and limits
 
 The [proof protocol](docs/proof/README.md) fixes the task, control, treatment,
-evaluation rules, and publication standard. Three valid Cursor
-`gpt-5.6-sol-high` pairs are published:
+evaluation rules, and publication standard. Four valid Cursor
+`gpt-5.6-sol-high` pairs are published. In the first three,
 [pair 1](docs/proof/results/2026-08-20-cursor-gpt-5.6-sol-high.md) was
 neutral; [pair 2](docs/proof/results/2026-08-20-cursor-gpt-5.6-sol-high-2.md)
 and [pair 3](docs/proof/results/2026-08-20-cursor-gpt-5.6-sol-high-3.md) were
 favorable on method length. All three leaked public mutable invariant state.
-See the [repeated-pair summary](docs/proof/README.md#repeated-pair-summary).
-This is not a general effectiveness claim.
+[Pair 4](docs/proof/results/2026-08-20-cursor-gpt-5.6-sol-high-4.md) was neutral
+on the aligned starter. This is not a general effectiveness claim.
 
 ## Installation, updates, and removal
 

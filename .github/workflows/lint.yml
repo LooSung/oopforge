@@ -28,12 +28,14 @@ jobs:
           bash -n scripts/setup/lib/common.sh
           bash -n scripts/ci/lint-skills.sh
           bash -n scripts/ci/smoke-test.sh
+          bash -n scripts/ci/harness-smoke.sh
 
       - name: Shellcheck
         run: |
           shellcheck scripts/setup/bootstrap.sh \
             scripts/setup/install.sh scripts/setup/uninstall.sh scripts/setup/doctor.sh \
-            scripts/setup/lib/common.sh scripts/ci/lint-skills.sh scripts/ci/smoke-test.sh
+            scripts/setup/lib/common.sh scripts/ci/lint-skills.sh scripts/ci/smoke-test.sh \
+            scripts/ci/harness-smoke.sh
 
       - name: Lint skills and repository
         run: |

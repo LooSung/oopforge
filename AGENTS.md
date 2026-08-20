@@ -99,6 +99,13 @@ Reference implementation: [examples/README.md](examples/README.md) — Java/Pyth
 `layered`, `hexagonal`, and `hexagonal-cqrs` calculators (same domain, different
 architectures).
 
+## 1.x Support Contract
+
+Canonical harness paths, supported stacks, compatibility, and exclusions are
+defined in `docs/support-contract.md`. Stable skill membership is machine-readable
+in `skills/stability.json`; new advanced skills default to experimental until
+reference and automated evidence exist.
+
 ## Skill Selection
 
 Before changing behavior, read the relevant skill file:
@@ -162,7 +169,10 @@ These limits are intentionally measurable. They come from review focus and agent
 - Do not add runtime dependencies for installer scripts unless there is no simpler shell-based alternative.
 - Update `CHANGELOG.md` for user-visible changes.
 - When changing install behavior, verify with a clean temporary `HOME`.
-- Do not claim a harness integration works until documented setup steps and a clean-session smoke test prove it. Cursor's verified paths are the project-local skill and explicit `--plugin-dir`; directory auto-discovery and `/oopforge:craft` remain unverified.
+- Do not claim a harness integration works until documented setup steps and a
+  clean-session positive/negative smoke prove it. See `docs/support-contract.md`.
+- PRs block on static harness packaging. Tag and scheduled live smoke must fail,
+  not skip successfully, when a required provider credential is absent.
 
 ## What Not To Do
 

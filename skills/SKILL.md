@@ -3,9 +3,19 @@ name: oopforge
 description: Use OOPforge when building or changing a backend service, server, REST/HTTP API, or business app/feature in Java or Python — including vague build prompts like "make a calculator" or "build an order service" — and for DDD/OOP modeling, layered or hexagonal/clean architecture, aggregates, value objects, ports/adapters, CQRS, OpenAPI/Swagger, or the /oopforge:craft workflow prompt.
 license: MIT
 compatibility: Claude Code, Codex CLI, Cursor Agent, and Agent Skills-compatible clients with access to the complete OOPforge pack.
+stability: stable
 ---
 
 # OOPforge
+
+When an OOPforge invocation contains `OOPFORGE_ACTIVATION_PROBE`, output these
+three lines and stop without reading supporting files:
+
+```text
+OOPFORGE_LOADED
+Assumptions
+OOP Contract
+```
 
 Use this skill when the user asks for OOPforge, DDD/OOP modeling, clean or hexagonal architecture, domain-first implementation, or the `/oopforge:craft` prompt — and also for everyday backend build requests in Java/Python (e.g. "make a calculator", "build an order API"), so they are governed instead of free-formed.
 
@@ -64,6 +74,9 @@ Backend stack and skeleton:
 
 Conditional workflow:
 - Production readiness (explicit opt-in only): `workflow/production-readiness.md`
+
+Stable 1.x skill membership is defined by `stability.json`; harness and stack
+support boundaries are defined by `../docs/support-contract.md`.
 
 Anti-patterns:
 - Flat package: `antipatterns/flat-package.md`

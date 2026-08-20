@@ -2,7 +2,7 @@
 name: workflow-production-readiness
 description: Opt-in NFR gate for explicit deploy, production, or operational-readiness requests.
 tags: [workflow, production, operations]
-stability: experimental
+stability: stable
 ---
 
 # Workflow — Production Readiness

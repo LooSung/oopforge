@@ -1,0 +1,35 @@
+{
+  "schema": "oopforge.skill-stability.v1",
+  "stable": [
+    "skills/SKILL.md",
+    "skills/lang/backend-stack.md",
+    "skills/oop/cqrs.md",
+    "skills/oop/domain-events.md",
+    "skills/oop/domain-model.md",
+    "skills/oop/outbox.md",
+    "skills/oop/transaction-boundary.md",
+    "skills/oop/use-case-boundary.md",
+    "skills/playbooks/bug-fix.md",
+    "skills/playbooks/feature.md",
+    "skills/principles/oop-discipline.md",
+    "skills/skeleton/backend-skeleton.md",
+    "skills/skeleton/lint-enforcement.md",
+    "skills/workflow/continuity.md",
+    "skills/workflow/craft.md",
+    "skills/workflow/delivery-plan.md",
+    "skills/workflow/design.md",
+    "skills/workflow/discovery.md",
+    "skills/workflow/implement.md",
+    "skills/workflow/production-readiness.md",
+    "skills/workflow/refactor.md",
+    "skills/workflow/skeleton.md",
+    "skills/workflow/test.md"
+  ],
+  "experimental": [
+    "skills/antipatterns/anemic-domain.md",
+    "skills/antipatterns/controller-fat.md",
+    "skills/antipatterns/flat-package.md",
+    "skills/antipatterns/god-aggregate.md",
+    "skills/antipatterns/repository-with-business-logic.md"
+  ]
+}

@@ -2,7 +2,7 @@
 name: oop-cqrs
 description: Apply medium-level CQRS — split read (Query) from write (Command) while sharing the store — on layered/hexagonal. Includes entry criteria and prohibitions.
 tags: [cqrs, oop, ddd, layered, hexagonal]
-stability: experimental
+stability: stable
 ---
 
 # OOP — CQRS (medium)

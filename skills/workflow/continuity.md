@@ -2,7 +2,7 @@
 name: workflow-continuity
 description: Restore previous work at Craft start, cut a session at one decision, and write a next-session prompt without being asked.
 tags: [workflow, memory, continuity]
-stability: experimental
+stability: stable
 ---
 
 # Workflow — Continuity
