@@ -49,6 +49,7 @@ Natural language also works, for example: "Use OOPforge Discovery for the paymen
 
 Core OOP:
 - Domain model: `oop/domain-model.md`
+- Domain Events and Integration Events: `oop/domain-events.md`
 - Use-case boundary: `oop/use-case-boundary.md`
 - Transaction boundary (one Aggregate per TX): `oop/transaction-boundary.md`
 - Transactional Outbox (state change + event in one commit): `oop/outbox.md`

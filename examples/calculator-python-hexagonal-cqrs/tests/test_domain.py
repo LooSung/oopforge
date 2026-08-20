@@ -2,17 +2,14 @@ from dataclasses import FrozenInstanceError
 
 import pytest
 
-from app.domain.calculation.model import Calculation, CalculationPerformed, Operator
+from app.domain.calculation.model import Calculation, Operator
 from app.domain.calculation.value import CalculationId
 
 
-def test_addition_emits_event() -> None:
+def test_addition_computes_result() -> None:
     calc = Calculation.perform(CalculationId.generate(), 2, Operator.ADD, 3)
+
     assert calc.result == 5
-    events = calc.pop_events()
-    assert len(events) == 1
-    assert isinstance(events[0], CalculationPerformed)
-    assert calc.pop_events() == []
 
 
 def test_calculation_state_is_read_only() -> None:

@@ -15,9 +15,15 @@ Same calculator as [`calculator-java-layered`](../calculator-java-layered/), but
 | Application | `calculator/application/required/CalculationRepository.java` | Outbound port |
 | Application | `calculator/application/service/CalculateService.java` | Use case |
 | Adapter | `calculator/adapter/web/CalculatorController.java` | REST → use case |
-| Adapter | `calculator/adapter/persistence/InMemoryCalculationRepository.java` | Port implementation |
+| Adapter | `calculator/adapter/persistence/InMemoryTransactionalAdapter.java` | Atomic repository + outbox |
+| Adapter | `calculator/adapter/messaging/OutboxRelay.java` | At-least-once external delivery |
 
 Domain classes have **zero** Spring imports.
+
+The calculate transaction saves the Aggregate, drains its event once, and
+dispatches a handler that appends `CalculationPerformedV1` to the same
+in-memory transaction. The relay runs after commit; its consumer deduplicates
+by outbox message ID.
 
 ## Run
 

@@ -71,7 +71,8 @@ Use this table to decide **which skill to read first**. Workflow stage always wi
 
 | Task | Skill |
 |---|---|
-| Aggregate, Value Object, Domain Event | `skills/oop/domain-model.md` |
+| Aggregate, Value Object | `skills/oop/domain-model.md` |
+| Domain vs Integration Event, recording, dispatch, handlers, message evolution | `skills/oop/domain-events.md` |
 | Use case / application service / Repository port | `skills/oop/use-case-boundary.md` |
 | One Aggregate per transaction / multi-Aggregate writes | `skills/oop/transaction-boundary.md` |
 | Publishing an event or notifying another system in the same commit | `skills/oop/outbox.md` |
@@ -92,13 +93,16 @@ Use this table to decide **which skill to read first**. Workflow stage always wi
 | Claude Code | `docs/claude-code.md` |
 | Cursor | `docs/cursor.md` |
 
-Reference implementation: [examples/README.md](examples/README.md) — `calculator-java-layered`, `calculator-java-hexagonal`, `calculator-python-layered`, `calculator-python-hexagonal`, `calculator-python-hexagonal-cqrs` (same calculator domain, different architectures).
+Reference implementation: [examples/README.md](examples/README.md) — Java/Python
+`layered`, `hexagonal`, and `hexagonal-cqrs` calculators (same domain, different
+architectures).
 
 ## Skill Selection
 
 Before changing behavior, read the relevant skill file:
 
 - Domain model: `skills/oop/domain-model.md`
+- Domain Events and Integration Events: `skills/oop/domain-events.md`
 - Use-case boundary: `skills/oop/use-case-boundary.md`
 - Transaction boundary (one Aggregate per TX): `skills/oop/transaction-boundary.md`
 - Transactional Outbox (state change + event in one commit): `skills/oop/outbox.md`

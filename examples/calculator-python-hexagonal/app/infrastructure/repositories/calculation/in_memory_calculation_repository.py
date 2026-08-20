@@ -11,3 +11,9 @@ class InMemoryCalculationRepository:
 
     def find_by_id(self, calculation_id: CalculationId) -> Calculation | None:
         return self._store.get(calculation_id)
+
+    def snapshot(self) -> dict[CalculationId, Calculation]:
+        return dict(self._store)
+
+    def restore(self, snapshot: dict[CalculationId, Calculation]) -> None:
+        self._store = dict(snapshot)

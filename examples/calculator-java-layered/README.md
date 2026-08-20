@@ -13,7 +13,7 @@ com/oopforge/example/layered/calculator/
 ├── controller/   CalculatorController · dto/ (CalculateRequest, CalculationResponse)
 ├── service/      CalculatorService
 ├── repository/   CalculationRepository · InMemoryCalculationRepository
-└── domain/       Calculation (aggregate) · Operator · events  (0 framework imports)
+└── domain/       Calculation (aggregate) · Operator · CalculationId  (0 framework imports)
 ```
 
 ## Run

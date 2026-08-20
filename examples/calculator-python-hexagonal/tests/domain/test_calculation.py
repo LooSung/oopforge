@@ -7,13 +7,16 @@ from app.domain.calculation.value import CalculationId
 
 
 def test_perform_computes_result_and_emits_event() -> None:
-    calculation = Calculation.perform(CalculationId.generate(), 2, Operator.ADD, 3)
+    calculation_id = CalculationId.generate()
+    calculation = Calculation.perform(calculation_id, 2, Operator.ADD, 3)
 
     assert calculation.result == 5
     events = calculation.pop_events()
     assert len(events) == 1
     assert isinstance(events[0], CalculationPerformed)
+    assert events[0].calculation_id == calculation_id
     assert events[0].result == 5
+    assert events[0].occurred_at == calculation.performed_at
     assert calculation.pop_events() == []
 
 

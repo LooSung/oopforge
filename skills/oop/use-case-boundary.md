@@ -20,7 +20,8 @@ Read it first when filling Use Case, Required Ports, and Transaction Boundary in
 - [ ] State the transaction boundary explicitly.
 - [ ] Inject external dependencies via port interfaces.
 - [ ] Take input as a command/request DTO and return an ID or result.
-- [ ] Retrieve and publish domain events from the Aggregate.
+- [ ] If the Aggregate records events, follow the lifecycle in
+      `skills/oop/domain-events.md`.
 
 ## Repository Port
 
@@ -49,3 +50,8 @@ Inbound adapter
 - Do not let the repository own transaction start/commit or external API calls.
 - Do not expose a persistence model or API DTO on the port interface.
 - Do not modify several Aggregates in one transaction — see `skills/oop/transaction-boundary.md`.
+
+## Related
+
+- `skills/oop/domain-events.md` — save, pop, dispatch, and handler boundary
+- `skills/oop/outbox.md` — durable delivery outside the process

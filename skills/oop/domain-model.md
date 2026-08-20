@@ -1,6 +1,6 @@
 ---
 name: oop-domain-model
-description: Core domain-model rules for designing an Aggregate, Value Object, and Domain Event within one boundary.
+description: Core domain-model rules for designing an Aggregate and Value Object within one consistency boundary.
 tags: [oop, ddd, domain-model]
 stability: stable
 ---
@@ -9,7 +9,7 @@ stability: stable
 
 ## When to use
 
-Use this when deciding a domain object's responsibilities, state changes, invariants, and events.
+Use this when deciding a domain object's responsibilities, state changes, and invariants.
 Read it first when filling Aggregate Root, Domain Invariants, and State Transition in Craft's OOP Contract.
 
 ## Aggregate Root
@@ -30,14 +30,11 @@ Read it first when filling Aggregate Root, Domain Invariants, and State Transiti
 - [ ] Reduce primitive obsession. e.g., `Email` instead of `String email`.
 - [ ] Do not share an API DTO or ORM entity as a domain Value Object.
 
-## Domain Event
+## Event responsibility
 
-- [ ] Make an Event only for a meaningful fact that has already happened in the domain.
-- [ ] Name it in past tense. e.g., `OrderPlaced`, `PaymentApproved`.
-- [ ] Include the Aggregate ID and the time it occurred.
-- [ ] Keep the payload to the minimum information needed.
-- [ ] Record it inside the Aggregate; the application service retrieves and publishes it after saving.
-- [ ] External message dispatch is owned by an adapter or infrastructure, not the domain.
+An Aggregate may record a meaningful fact as part of accepted behavior.
+Use `skills/oop/domain-events.md` for Domain vs Integration Event,
+recording, dispatch, handlers, and external delivery.
 
 ## Decision criteria
 
@@ -45,7 +42,7 @@ Read it first when filling Aggregate Root, Domain Invariants, and State Transiti
 |---|---|
 | Is there a state-change rule? | Aggregate behavior method |
 | Is the value itself the meaning, with no identity? | Value Object |
-| Is it a fact another boundary must know? | Domain Event |
+| Did accepted behavior produce a fact others may react to? | Domain Event (`skills/oop/domain-events.md`) |
 | Does a plain constructor bypass invariants? | Factory method |
 
 ## Prohibited

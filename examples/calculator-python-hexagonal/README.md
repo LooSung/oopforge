@@ -9,12 +9,17 @@ Domain has **zero** framework imports; the use case depends on a repository **po
 ```text
 app/
 ├── domain/calculation/        model.py (Calculation, Operator, events) · value.py (CalculationId) · repository.py (port)
-├── application/services/calculation/   calculate_service.py (use case)
-├── infrastructure/repositories/calculation/  in_memory_calculation_repository.py (adapter)
+├── application/               domain_events.py · outbox.py · transactions.py · services/calculation/
+├── infrastructure/            in_memory_transaction.py · in_memory_outbox.py · event_relay.py
+│   └── repositories/calculation/  in_memory_calculation_repository.py
 └── presentation/api/calculation/       router.py · request.py
 ```
 
 Layered vs hexagonal — same calculator, two dependency styles. For the read/write split layered on top of this, see [`calculator-python-hexagonal-cqrs`](../calculator-python-hexagonal-cqrs/).
+
+The calculate transaction saves the Aggregate, drains its event once, and
+dispatches a handler that appends immutable `CalculationPerformedV1` to the
+outbox. The relay runs after commit and its consumer deduplicates by message ID.
 
 ## Run tests
 

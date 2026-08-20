@@ -19,7 +19,6 @@ public class CalculatorService {
         CalculationId id = CalculationId.generate();
         Calculation calculation = Calculation.perform(id, command.operandA(), command.operator(), command.operandB());
         calculationRepository.save(calculation);
-        calculation.popEvents();
         return new CalculationResult(
                 id.value().toString(),
                 calculation.operandA(),

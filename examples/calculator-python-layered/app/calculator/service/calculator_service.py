@@ -20,7 +20,6 @@ class CalculatorService:
     def calculate(self, operand_a: float, operator: Operator, operand_b: float) -> CalculationResult:
         calculation = Calculation.perform(CalculationId.generate(), operand_a, operator, operand_b)
         self._repository.save(calculation)
-        calculation.pop_events()
         return CalculationResult(
             calculation_id=str(calculation.id.value),
             operand_a=calculation.operand_a,

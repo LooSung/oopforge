@@ -18,7 +18,10 @@ class CalculationTest {
         List<DomainEvent> events = calculation.popEvents();
         assertThat(events).hasSize(1);
         assertThat(events.get(0)).isInstanceOf(CalculationPerformed.class);
-        assertThat(((CalculationPerformed) events.get(0)).result()).isEqualTo(5.0);
+        CalculationPerformed event = (CalculationPerformed) events.get(0);
+        assertThat(event.calculationId()).isEqualTo(calculation.id());
+        assertThat(event.result()).isEqualTo(5.0);
+        assertThat(calculation.popEvents()).isEmpty();
     }
 
     @Test

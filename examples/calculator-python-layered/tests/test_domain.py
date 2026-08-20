@@ -5,20 +5,14 @@ import pytest
 from app.calculator.domain.calculation import (
     Calculation,
     CalculationId,
-    CalculationPerformed,
     Operator,
 )
 
 
-def test_perform_computes_result_and_emits_event() -> None:
+def test_perform_computes_result() -> None:
     calculation = Calculation.perform(CalculationId.generate(), 2, Operator.ADD, 3)
 
     assert calculation.result == 5
-    events = calculation.pop_events()
-    assert len(events) == 1
-    assert isinstance(events[0], CalculationPerformed)
-    assert events[0].result == 5
-    assert calculation.pop_events() == []
 
 
 def test_calculation_state_is_read_only() -> None:

@@ -2,8 +2,6 @@ package com.oopforge.example.layered.calculator.domain;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -14,11 +12,6 @@ class CalculationTest {
         Calculation calculation = Calculation.perform(CalculationId.generate(), 2, Operator.ADD, 3);
 
         assertThat(calculation.result()).isEqualTo(5.0);
-
-        List<DomainEvent> events = calculation.popEvents();
-        assertThat(events).hasSize(1);
-        assertThat(events.get(0)).isInstanceOf(CalculationPerformed.class);
-        assertThat(((CalculationPerformed) events.get(0)).result()).isEqualTo(5.0);
     }
 
     @Test

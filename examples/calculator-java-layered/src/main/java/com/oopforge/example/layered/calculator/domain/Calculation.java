@@ -1,7 +1,5 @@
 package com.oopforge.example.layered.calculator.domain;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public final class Calculation {
@@ -11,7 +9,6 @@ public final class Calculation {
     private final Operator operator;
     private final double operandB;
     private final double result;
-    private final List<DomainEvent> events = new ArrayList<>();
 
     private Calculation(CalculationId id, double operandA, Operator operator, double operandB, double result) {
         this.id = id;
@@ -26,9 +23,7 @@ public final class Calculation {
         Objects.requireNonNull(operator, "operator");
 
         double result = operator.apply(operandA, operandB);
-        Calculation calculation = new Calculation(id, operandA, operator, operandB, result);
-        calculation.record(new CalculationPerformed(id, result));
-        return calculation;
+        return new Calculation(id, operandA, operator, operandB, result);
     }
 
     public CalculationId id() {
@@ -49,15 +44,5 @@ public final class Calculation {
 
     public double result() {
         return result;
-    }
-
-    public List<DomainEvent> popEvents() {
-        List<DomainEvent> published = List.copyOf(events);
-        events.clear();
-        return published;
-    }
-
-    private void record(DomainEvent event) {
-        events.add(event);
     }
 }

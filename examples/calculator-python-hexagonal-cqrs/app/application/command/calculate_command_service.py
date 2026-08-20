@@ -13,5 +13,4 @@ class CalculateCommandService:
         calculation_id = CalculationId.generate()
         calculation = Calculation.perform(calculation_id, operand_a, operator, operand_b)
         self._calculation_repository.save(calculation)
-        calculation.pop_events()
         return calculation_id

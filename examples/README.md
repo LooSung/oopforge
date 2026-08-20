@@ -14,7 +14,9 @@ One domain — a **calculator with history** — implemented across architecture
 ## How to read them
 
 1. **Start with `*-layered`** — the simplest: `calculate(a, op, b)` returns the result. Each layer is its own folder.
-2. **Compare with `*-hexagonal`** — same calculator, but the use case depends on a repository **port** and the domain has zero framework imports.
+2. **Compare with `*-hexagonal`** — same calculator, but the use case depends on ports,
+   the domain has zero framework imports, and `CalculationPerformed` travels through
+   synchronous dispatch into a versioned transactional outbox.
 3. **Then `*-hexagonal-cqrs`** — add **history** by laying CQRS *on top of* hexagonal: the command returns only an ID via the write port; queries read `HistorySummary` projections via a separate read port.
 
 > Two different axes: `layered` vs `hexagonal` is **structure** (how dependencies are arranged); `CQRS` is a **pattern** (split read/write) you overlay on either. So it's not a third peer architecture — and it's not "3-tier vs 4-tier" either; hexagonal is not a tier count. We ship CQRS on hexagonal because its ports map cleanly to command/query sides.
@@ -39,6 +41,9 @@ cd examples/calculator-python-hexagonal-cqrs && pip install -e ".[dev]" && pytes
 - Gradle tests run ArchUnit for both plain Java layered and hexagonal examples.
   The hexagonal checks keep the domain framework-free and the application
   independent of adapters.
+- The plain hexagonal test suites prove save → pop → dispatch ordering, atomic
+  state/outbox rollback, versioned integration payloads, and message-ID
+  idempotency. Simpler layered/CQRS examples do not record unused events.
 
 These checks run in `.github/workflows/arch-lint.yml` or
 `.github/workflows/examples.yml` and block this repository's PRs on failure.

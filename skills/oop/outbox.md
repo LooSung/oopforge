@@ -35,13 +35,13 @@ writes already happened.
 - [ ] Losing or duplicating the message would be a business incident, not a nuisance.
 
 If nothing outside the transaction consumes the event, do not build an outbox.
-An in-process call or a plain domain event is the smaller rung
+In-process Domain Event dispatch is the smaller rung
 (`skills/principles/oop-discipline.md` #7).
 
 ## Rule
 
-**One transaction, one store.** Write the outgoing message as a row in the same
-database, in the same transaction as the Aggregate save. Nothing else publishes.
+**One transaction, one store.** Write the Integration Event as a row in the
+same database and transaction as the Aggregate save. Nothing else publishes.
 
 ```text
 placeOrder TX:
@@ -64,20 +64,22 @@ not a second consistency boundary. It has no invariants, no behavior, and no
 one loads it as a domain object.
 
 If you find yourself adding business rules to outbox rows, you are building a
-process manager — that is a saga, and a different skill.
+workflow engine. That responsibility is outside this delivery mechanism.
 
 ## Where each piece lives
 
 | Piece | Layer | Note |
 |---|---|---|
-| The event itself (name, payload facts) | domain | a Domain Event; no framework imports |
+| Domain Event | domain | recorded by Aggregate behavior; no framework imports |
+| Integration Event mapping | application | external contract derived only when needed |
 | Appending it | application service | via a required port, inside the use case's TX |
 | `OutboxPort` / `OutboxRepository` | application (required port) | interface only |
 | Table write | adapter / infrastructure | same DataSource/session as the Aggregate repository |
 | Relay or CDC | infrastructure | separate process; never imported by the domain |
 
-The application service orchestrates: load Aggregate, call behavior, save,
-append, commit. It does not decide the payload — the domain event does.
+The save/pop/dispatch lifecycle and handler boundary belong to
+`skills/oop/domain-events.md`. This skill owns the atomic outbox append and
+delivery after commit.
 
 ## Row shape (keep it minimal)
 
@@ -85,7 +87,8 @@ append, commit. It does not decide the payload — the domain event does.
 id            — outbox row id
 aggregate_id  — ordering key, and where the event came from
 event_type    — OrderPlaced
-payload       — serialized facts, versioned
+schema_version — external contract version
+payload       — serialized facts
 occurred_at   — when the domain decided, not when it shipped
 published_at  — null until the relay confirms
 attempts      — for backoff and poison detection
@@ -111,8 +114,8 @@ it until an existing pipeline makes it the cheaper rung.
 A crash between publish and `mark published` re-sends the message. This is
 inherent — do not claim exactly-once.
 
-- **Consumers must be idempotent.** Dedupe on the outbox row id, carried as a
-  message id, and make the handler safe to run twice.
+- Carry the outbox row ID as `message_id`; consumer idempotency and schema
+  compatibility follow `skills/oop/domain-events.md`.
 - **Ordering holds per `aggregate_id` only.** Do not design for global order.
 - Mark rows published **after** the broker acknowledges, never before.
 - Cap `attempts` and move poison rows aside; a stuck row must not block the rest.
@@ -134,25 +137,26 @@ Consumer idempotency: <what the consumer dedupes on>
 - [ ] No broker, HTTP, or queue call happens between transaction start and commit.
 - [ ] The domain layer imports nothing from the broker or the relay.
 - [ ] The outbox adapter shares the Aggregate repository's connection/session — not a second one.
-- [ ] Payload carries the facts as of `occurred_at`, and has a version.
+- [ ] The Integration Event follows the message contract in `skills/oop/domain-events.md`.
 - [ ] Rows are marked published only after broker acknowledgement.
 - [ ] A test proves a rolled-back use case leaves **no** outbox row.
 - [ ] A test proves a failed publish leaves the row unpublished and retryable.
 
 ## Prohibited
 
-- **Do not publish from the domain** — the domain records the event; the adapter ships it.
+- **Do not publish from the domain** — follow `skills/oop/domain-events.md`.
 - **Do not call the broker inside the transaction** — that reintroduces the dual write and holds locks.
 - **Do not open a separate transaction or connection for the outbox insert** — one commit or none.
 - **Do not delete rows at publish time** before acknowledgement; mark published, purge later.
 - **Do not promise exactly-once** — deduplicate at the consumer instead.
 - **Do not route internal, same-process calls through the outbox** — that is indirection, not durability.
-- **Do not grow outbox rows into a workflow engine** — cross-Aggregate processes and compensation are saga work.
+- **Do not grow outbox rows into a workflow engine** — coordination is a separate design.
 
 ## Related
 
 - `skills/oop/transaction-boundary.md` — one Aggregate per transaction
-- `skills/oop/domain-model.md` — Domain Event as the thing being published
+- `skills/oop/domain-events.md` — event lifecycle and Integration Event contract
+- `skills/oop/domain-model.md` — Aggregate behavior and invariants
 - `skills/oop/use-case-boundary.md` — required port, explicit transaction
 - `skills/principles/oop-discipline.md` — #7 ladder, #5 reference by ID
 - `skills/workflow/craft.md` — OOP Contract
