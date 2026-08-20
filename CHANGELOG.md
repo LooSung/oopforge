@@ -4,6 +4,19 @@
 
 ## [Unreleased]
 
+## [0.12.2] - 2026-08-20
+
+### Changed
+
+- **v0.13.0 C1 릴리스 범위** — reference 예제, proof/domain-review evaluator,
+  hexagonal 경계 검사, CI 차단 정책과 재현 artifact를 같은 규칙으로 정렬하는
+  다음 minor 릴리스를 로드맵에 고정했다.
+
+### Fixed
+
+- **증거보다 강한 방법론 표현** — 제한된 공개 proof를 일반 효과처럼 읽히게 한
+  문구와 모든 하드룰이 CI에서 차단된다는 설명을 실제 검증·차단 범위에 맞췄다.
+
 ## [0.12.1] - 2026-08-20
 
 ### Changed
