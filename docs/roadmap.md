@@ -84,5 +84,18 @@
 
 ## 장기
 
+### 언어 확장 선행 조건 (이 순서로 끝낸 뒤에 확장)
+
+언어 확장은 "**검증되고 강제되는 수직**"을 복제하는 일이다. 원본(Java/Python)이 증명·강제·정리되기 전에 언어를 늘리면 미검증·미강제 방법론을 N배로 곱해 유지보수·드리프트만 폭증한다. 아래를 순서대로 끝낸 뒤 확장한다.
+
+1. **C4 — 반복 proof 공개** — 한 스택에서 위반율·재작업률이 실제로 낮아진다는 재현 가능한 증거 확보. 증거 없이 확장하면 근거 없는 주장을 4배 복제하는 것. **1번 게이트.**
+2. **B3 — 레포 위생 + 문서 링크 무결성 CI** — 확장 = 문서·예제 N배 = 드리프트 표면 N배. 확장 전에 정리하고 링크 무결성 CI를 걸어 승수를 줄인다.
+3. **C1 — fitness function 확장(헥사고날 import-linter/ArchUnit + archlint 패턴) + C2+ 탐지기 확장** — 새 언어마다 "layered + hexagonal + runnable"을 요구하므로, 헥사고날까지 **강제 템플릿**을 성숙시켜 "예제만 있는 확장"이 아니라 "강제·증명이 딸려오는 확장"이 되게 한다.
+4. **B2 — SKILL.md frontmatter 표준화** — 팩 표면이 커질수록 커지는 이식성 이득. 저비용, 확장 전에 끊어둔다.
+
+축 A(outbox/saga/domain-events/production-readiness)는 현재 스택의 **깊이(콘텐츠)**로, 패턴이 언어 중립이라 확장의 게이트는 아니다(해자 강화 차원에서 병행 가능).
+
+### 확장 대상
+
 - **언어 확장** (수직 정체성 유지 선에서만, 각 언어 layered + hexagonal + runnable 예제 필수): Kotlin Spring → TypeScript NestJS → Go → C# .NET
 - **패키징**: Phase 1 symlink 팩(현재) → Phase 2 플러그인 마켓플레이스 + MCP 서버 모드 → Phase 3 Claude Agent SDK 기반 독립 CLI
