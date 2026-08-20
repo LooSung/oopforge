@@ -1,8 +1,8 @@
 # Codex Setup
 
-OOPforge 1.x supports Codex through the global skill entry point at
+OOPforge supports Codex through the global skill entry point at
 `skills/SKILL.md`. This is the canonical path in the
-[support contract](./support-contract.md).
+[support scope](./support-contract.md).
 
 Codex installs **skills only** — not Claude Code `commands/`. The string `/oopforge:craft` is **not** a Codex slash command; Codex reserves `/` for built-ins such as `/skills` and `/model`.
 
@@ -72,8 +72,8 @@ Maintainers can run the authenticated positive/negative check with:
 ./scripts/ci/harness-smoke.sh live codex
 ```
 
-CI runs the same contract on tags and the weekly schedule. Missing
-`OPENAI_API_KEY` fails that gate instead of being treated as a skipped success.
+This optional local check uses the maintainer's existing Codex authentication;
+the repository does not require provider secrets.
 
 ## Why not `/oopforge:craft`?
 

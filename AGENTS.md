@@ -99,12 +99,12 @@ Reference implementation: [examples/README.md](examples/README.md) — Java/Pyth
 `layered`, `hexagonal`, and `hexagonal-cqrs` calculators (same domain, different
 architectures).
 
-## 1.x Support Contract
+## Support Scope
 
 Canonical harness paths, supported stacks, compatibility, and exclusions are
-defined in `docs/support-contract.md`. Stable skill membership is machine-readable
-in `skills/stability.json`; new advanced skills default to experimental until
-reference and automated evidence exist.
+defined in `docs/support-contract.md`. Skill maturity is machine-readable in
+`skills/stability.json`; new advanced skills default to experimental until
+usage, references, and checks justify promoting them.
 
 ## Skill Selection
 
@@ -171,8 +171,8 @@ These limits are intentionally measurable. They come from review focus and agent
 - When changing install behavior, verify with a clean temporary `HOME`.
 - Do not claim a harness integration works until documented setup steps and a
   clean-session positive/negative smoke prove it. See `docs/support-contract.md`.
-- PRs block on static harness packaging. Tag and scheduled live smoke must fail,
-  not skip successfully, when a required provider credential is absent.
+- PRs block on static harness packaging. Run authenticated live smoke locally
+  when changing a harness load path; repository provider secrets are not required.
 
 ## What Not To Do
 

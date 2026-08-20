@@ -48,8 +48,8 @@ request through Craft. The business requirements are otherwise identical.
 
 Project-local skill delivery was used because, when these pairs were run, clean
 headless smoke tests had not proved that `cursor-agent --plugin-dir` loaded
-Craft. OOPforge 1.x later verified both Cursor paths; see the
-[support contract](../support-contract.md). That packaging evidence is separate
+Craft. OOPforge later verified both Cursor paths; see the
+[support scope](../support-contract.md). That packaging evidence is separate
 from this experiment, which measures the methodology.
 
 ## Fixed conditions
@@ -118,9 +118,9 @@ Task-specific findings keep separate IDs:
 `MISSING_DOMAIN_BEHAVIOR`, `MISSING_INJECTABLE_TIME`,
 `MISSING_DOMAIN_TEST`, `MISSING_USE_CASE_TEST`, and `MISSING_API_TEST`.
 
-The 1.x support contract requires reference gates, domain review, and this
-evaluator to preserve these common IDs. `scripts/ci/test-proof-evaluator.py`
-and the domain-review self-tests block drift in CI.
+Reference gates, domain review, and this evaluator preserve these common IDs.
+`scripts/ci/test-proof-evaluator.py` and the domain-review self-tests block
+drift in CI.
 
 ## Run
 

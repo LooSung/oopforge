@@ -1,8 +1,8 @@
 # Cursor Setup
 
-OOPforge 1.x supports **Cursor Agent CLI** (`cursor-agent`) through an explicit
+OOPforge supports **Cursor Agent CLI** (`cursor-agent`) through an explicit
 local plugin directory or a project-local skill. These are the canonical paths
-in the [support contract](./support-contract.md). There is no
+in the [support scope](./support-contract.md). There is no
 `scripts/setup/install.sh` target for Cursor.
 
 ## 1. Install OOPforge
@@ -151,8 +151,8 @@ with an authenticated Cursor CLI:
 
 The check requires `OOPFORGE_LOADED`, Assumptions, and OOP Contract from both
 supported paths. Its isolated no-skill workspace must return
-`OOPFORGE_NOT_LOADED`. CI runs this contract on tags and the weekly schedule;
-a missing `CURSOR_API_KEY` fails the gate.
+`OOPFORGE_NOT_LOADED`. Run it locally when changing Cursor packaging; the
+repository does not require a `CURSOR_API_KEY` secret.
 
 ## Related
 

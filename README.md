@@ -17,7 +17,7 @@ Use it when a **Java (Spring)** or **Python (FastAPI)** backend needs explicit
 domain models, use-case boundaries, and reviewable architecture. It is not a
 general agent framework, UI toolkit, or automatic code generator.
 
-[Positioning](docs/positioning.md) · [1.x support contract](docs/support-contract.md) ·
+[Positioning](docs/positioning.md) · [Support scope](docs/support-contract.md) ·
 [Proof protocol](docs/proof/README.md)
 
 [English](./README.md) · [한국어](./README.ko.md)

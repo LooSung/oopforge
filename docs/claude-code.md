@@ -1,8 +1,8 @@
 # Claude Code Setup
 
-OOPforge 1.x supports Claude Code through the symlink-installed skill and
+OOPforge supports Claude Code through the symlink-installed skill and
 `/oopforge:craft` command defined in the
-[support contract](./support-contract.md).
+[support scope](./support-contract.md).
 
 ## Install
 
@@ -29,8 +29,8 @@ Maintainers can run the authenticated positive/negative check with:
 ./scripts/ci/harness-smoke.sh live claude
 ```
 
-CI runs the same contract on tags and the weekly schedule. Missing credentials
-fail that gate instead of being treated as a skipped success.
+This optional local check uses the maintainer's existing Claude authentication;
+the repository does not require provider secrets.
 
 Installed paths:
 

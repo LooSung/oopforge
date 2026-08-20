@@ -75,7 +75,7 @@ Backend stack and skeleton:
 Conditional workflow:
 - Production readiness (explicit opt-in only): `workflow/production-readiness.md`
 
-Stable 1.x skill membership is defined by `stability.json`; harness and stack
+Skill maturity is recorded in `stability.json`; current harness and stack
 support boundaries are defined by `../docs/support-contract.md`.
 
 Anti-patterns:

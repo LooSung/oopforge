@@ -28,19 +28,19 @@
 
 ## 다음 릴리스
 
-### v1.0.0 — Stable Core와 3-Harness 계약
+### v1.0.0 — Stable Core와 검증된 3-Harness 경로
 
 **목표:** Java/Python 핵심 방법론과 Claude/Codex/Cursor의 검증된 실행 경로를
-하나의 지원 계약과 자동 smoke 아래 안정화한다. 별도 RC는 두지 않는다.
+명확한 지원 범위와 정적 검사 아래 안정화한다. 별도 RC는 두지 않는다.
 
 - **Canonical paths** — Claude symlink + `/oopforge:craft`, Codex global skill +
   자연어 Craft, Cursor explicit `--plugin-dir`와 project-local skill을 고정한다.
-- **Harness smoke** — PR에서 packaging/static smoke를 차단하고 tag·scheduled
-  workflow에서 인증 가능한 live activation positive/negative control을 실행한다.
+- **Harness smoke** — PR에서 packaging/static smoke를 차단하고, load path 변경
+  시 maintainer가 로컬 인증으로 live positive/negative control을 실행한다.
 - **Stable 실행 스택** — Craft, OOP discipline, continuity, feature/bug-fix
-  playbook 등 필수 경로를 `stable`로 승격한다.
-- **지원 계약** — README, AGENTS, 하네스 문서에 지원/비지원 경로와 호환성
-  정책을 하나로 맞추고 전체 gate 통과 후 `1.0.0`을 릴리스한다.
+  playbook 등 확립된 경로를 `stable`로 표시한다.
+- **지원 범위** — README, AGENTS, 하네스 문서의 지원/비지원 경로를 하나로
+  맞추고 정적 gate와 로컬 검증 후 `1.0.0`을 릴리스한다.
 
 **범위 밖:** saga, MCP 서버, 추가 언어, marketplace, 독립 CLI.
 

@@ -1,25 +1,19 @@
 # Skill stability
 
-OOPforge 1.x treats every skill listed under `stable` in
-[`skills/stability.json`](../skills/stability.json) as part of the public
-methodology contract. This includes Craft, OOP discipline, continuity, workflow
-stages, feature and bug-fix playbooks, domain modeling, Domain Events, outbox,
-CQRS, Production Readiness, and skeleton guidance.
+[`skills/stability.json`](../skills/stability.json) separates established skills
+from guidance that is still being explored. The registry also lets static checks
+catch missing or unlisted skill files.
 
 For stable skills:
 
-- existing workflow meaning and required checkpoints remain compatible
-  throughout 1.x;
-- new optional guidance may be added in a minor release;
-- corrections that preserve the contract ship as patches;
-- removing or changing a required stage, hard rule, or canonical path requires
-  the next major version.
+- avoid unnecessary behavioral churn;
+- document user-visible changes and migration steps;
+- keep the skill covered by relevant references or checks.
 
-New advanced skills start as `experimental` until an executable reference and
-the relevant automated checks exist. Experimental skills may change in a minor
-release and are never silently included in the stable execution path. The five
-standalone anti-pattern guides remain experimental in 1.0; stable hard rules
-and review detectors still enforce the overlapping measurable violations.
+`stable` is a maintenance signal, not a service-level or major-version
+guarantee. New advanced skills start as `experimental` until enough usage,
+reference material, and checks exist. Experimental skills may change more
+freely and are not silently added to the default execution path.
 
 `scripts/ci/harness-smoke.sh static` checks that every shipped skill is listed
 exactly once and that every listed path exists.

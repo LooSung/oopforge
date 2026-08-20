@@ -17,7 +17,7 @@
 유스케이스 경계, 리뷰 가능한 아키텍처가 필요할 때 사용한다. 범용 에이전트
 프레임워크, UI 도구, 자동 코드 생성기는 아니다.
 
-[포지셔닝](docs/positioning.md) · [1.x 지원 계약](docs/support-contract.md) ·
+[포지셔닝](docs/positioning.md) · [지원 범위](docs/support-contract.md) ·
 [Proof 프로토콜](docs/proof/README.md)
 
 [English](./README.md) · [한국어](./README.ko.md)

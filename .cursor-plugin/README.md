@@ -1,8 +1,8 @@
 # Cursor Plugin Manifest
 
 `.cursor-plugin/plugin.json` packages the verified explicit local-plugin path.
-Marketplace publication remains experimental and outside the 1.x support
-contract.
+Marketplace publication remains experimental and outside the current support
+scope.
 
 ## Use today
 
@@ -35,6 +35,6 @@ canonical Craft files. Directory discovery without `--plugin-dir` returned
 `OOPFORGE_NOT_LOADED`; `/oopforge:craft` remains unsupported in headless Cursor.
 
 Result: the explicit local-plugin command and the project-local skill link are
-supported 1.x paths. `scripts/ci/harness-smoke.sh live cursor` now repeats both
-positive controls and the isolated negative control. Marketplace publication
-and bootstrap integration remain future work.
+currently supported paths. Maintainers can reproduce both positive controls and
+the isolated negative control with `scripts/ci/harness-smoke.sh live cursor`.
+Marketplace publication and bootstrap integration remain future work.
