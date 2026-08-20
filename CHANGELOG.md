@@ -2,6 +2,18 @@
 
 모든 변경은 여기에 기록한다. [Keep a Changelog](https://keepachangelog.com/) 형식.
 
+## [0.11.0] - 2026-08-20
+
+### Added
+
+- **Transactional Outbox 스킬 (`skills/oop/outbox.md`)** — 상태 변경과 나가는
+  이벤트를 같은 트랜잭션 한 커밋에 넣고, 전달은 그 기록에서 따로 한다.
+  publish-후-commit이 만드는 ghost 이벤트와 commit-후-publish가 만드는 lost
+  이벤트를 실패 표로 가르치고, outbox 행이 **두 번째 Aggregate가 아님**을 못
+  박아 "한 TX 한 Aggregate"와 충돌하지 않게 했다. 전달 기본값은 폴링 relay,
+  CDC는 이미 로그 기반 파이프라인이 있을 때만. at-least-once만 약속하고
+  중복 제거는 소비자 멱등성으로 넘긴다. saga·이벤트 스키마 버저닝은 범위 밖(장기).
+
 ## [0.10.0] - 2026-08-20
 
 ### Added
