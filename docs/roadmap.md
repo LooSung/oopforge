@@ -28,23 +28,20 @@
 
 ## 다음 릴리스
 
-### v0.13.0 — C1 fitness function 정합
+### v0.14.0 — Domain Events
 
-**목표:** reference 예제, 평가기, CI gate가 같은 OOPforge 규칙을 보고
-“아키텍처를 지킨다”는 약속을 실행 가능한 강제로 닫는다.
+**목표:** Aggregate가 기록한 이벤트를 버리지 않고, 내부 후속 처리와 외부 전달을
+명시적으로 분리하는 실행 계약을 Java/Python reference로 증명한다.
 
-- **Reference 기준선** — Java/Python 예제의 공개 mutable 상태, 메서드 길이,
-  presentation→repository 의존 등 알려진 위반을 교정하고 회귀 검사로 고정한다.
-- **Evaluator 단일화** — C4 proof 평가기와 C2+ domain review가 같은 detector와
-  finding ID를 재사용해 machine/human 판정 차이를 줄인다.
-- **Hexagonal 강제 확대** — plain hexagonal 예제에도 import-linter/ArchUnit
-  또는 동등한 경계 검사를 적용한다.
-- **차단 정책** — 저장소 CI와 adopter template에서 무엇을 필수 차단하고 무엇을
-  non-blocking 피드백으로 남길지 명시하고 검증한다.
-- **증거 갱신** — 정합된 reference와 evaluator로 고정 비교를 다시 실행하고,
-  일반 효과로 확대하지 않은 결과와 재현 artifact를 공개한다.
+- **이벤트 계약** — Domain Event와 Integration Event, save 후 `popEvents()`와
+  dispatch, handler 경계, 소비자 멱등성, contract versioning을 정의한다.
+- **스킬 책임 분리** — `domain-model`, `outbox`, `transaction-boundary`의 중복을
+  제거하고 새 `domain-events` 스킬로 실행 흐름을 연결한다.
+- **실행 reference** — Java/Python plain hexagonal 예제에 같은 event dispatch
+  경로와 domain/use-case/integration 테스트를 추가한다.
+- **외부 전달** — 경계 밖 전달은 outbox로만 연결하고 Saga는 도입하지 않는다.
 
-**범위 밖:** saga, domain-events, MCP 서버, 언어 확장, marketplace 공개.
+**범위 밖:** saga, MCP 서버, 언어 확장, marketplace 공개.
 
 ---
 
@@ -53,8 +50,6 @@
 ### 백엔드 깊이
 
 - `skills/oop/saga.md` — Aggregate/서비스를 가로지르는 프로세스와 보상 트랜잭션.
-- `skills/oop/domain-events.md` — 내부/통합 이벤트, idempotent consumer,
-  이벤트 스키마 버저닝과 upcaster.
 - `skills/workflow/production-readiness.md` — 입력 검증, 오류 응답, 멱등성,
   재시도, 관측성, 감사 로그, PII/시크릿을 어댑터에서 충족하는 NFR 게이트.
 

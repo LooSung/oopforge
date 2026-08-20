@@ -6,6 +6,12 @@
 
 ## [0.13.0] - 2026-08-20
 
+### Added
+
+- **정합 proof pair 4** — 교정된 reference와 schema-v2 evaluator로 같은 고정
+  작업을 다시 실행했다. 두 조건 모두 기계·사람 판정 0건으로 일치했으며 원시
+  비교 artifact는 GitHub Release에 첨부한다.
+
 ### Changed
 
 - **Reference 정렬** — layered·hexagonal 예제의 경계 규칙과 문서를 같은

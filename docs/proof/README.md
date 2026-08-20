@@ -150,13 +150,11 @@ immediately when it detects this contamination.
 
 ## Results
 
-The three published pairs below are historical results produced before schema
+The first three published pairs are historical results produced before schema
 v2. Their recorded machine counts and evaluator-limit notes remain accurate for
 the evaluator used at the time: pair 1 missed public mutable state and worsened
 method length; pairs 2 and 3 detected method length but still missed public
-mutable state. Schema v2 now covers those shared detector cases, but the old
-workspaces were not re-evaluated and the result files were not rewritten. This
-documentation update is not a new proof run or a new effectiveness result.
+mutable state. The old workspaces were not re-evaluated or rewritten.
 
 - [2026-08-20 — Cursor, GPT-5.6 Sol High, pair 1](results/2026-08-20-cursor-gpt-5.6-sol-high.md)
   — valid, neutral
@@ -164,24 +162,29 @@ documentation update is not a new proof run or a new effectiveness result.
   — valid, favorable on method length; shared public-mutable leak remains
 - [2026-08-20 — Cursor, GPT-5.6 Sol High, pair 3](results/2026-08-20-cursor-gpt-5.6-sol-high-3.md)
   — valid, favorable on method length; shared public-mutable leak remains
+- [2026-08-20 — Cursor, GPT-5.6 Sol High, pair 4](results/2026-08-20-cursor-gpt-5.6-sol-high-4.md)
+  — valid, neutral; aligned starter and schema-v2 evaluator
 
 ## Repeated-pair summary
 
-Three valid pairs, same model (`gpt-5.6-sol-high`), same starter, same task.
+Four valid pairs, same model (`gpt-5.6-sol-high`) and task. Pair 4 uses the
+v0.13-aligned version of the same starter and schema-v2 evaluator.
 
 | Pair | Outcome | Human production violations (control / OOPforge) | Rework fixes (control / OOPforge) |
 |---|---|---|---|
 | 1 | neutral | 2 / 2 | 2 / 2 |
 | 2 | favorable | 3 / 2 | 3 / 2 |
 | 3 | favorable | 3 / 2 | 3 / 2 |
+| 4 | neutral | 0 / 0 | 0 / 0 |
 
 Unfavorable pairs were not observed under these conditions. That absence is
 recorded; it is not evidence that unfavorable runs cannot happen.
 
-Across all three pairs both conditions leaked public mutable `voided_at`.
-Pairs 2 and 3, evaluated with `METHOD_TOO_LONG`, showed fewer oversized
-production methods under OOPforge. Do not convert this table into a
-percentage improvement claim.
+Across the first three pairs both conditions leaked public mutable
+`voided_at`. Pairs 2 and 3, evaluated with `METHOD_TOO_LONG`, showed fewer
+oversized production methods under OOPforge. Pair 4 started from the corrected
+reference and schema v2 found no violation in either condition; human review
+agreed. Do not convert this table into a percentage improvement claim.
 
 ## Publish
 
