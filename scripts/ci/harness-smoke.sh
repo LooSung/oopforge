@@ -35,10 +35,10 @@ require_command() {
 require_link_target() {
   local link="$1"
   local expected="$2"
-  [ -L "$link" ] && [ "$(readlink "$link")" = "$expected" ] || {
+  if [ ! -L "$link" ] || [ "$(readlink "$link")" != "$expected" ]; then
     red "FAIL expected link: $link -> $expected"
     exit 1
-  }
+  fi
 }
 
 run_timed() {
