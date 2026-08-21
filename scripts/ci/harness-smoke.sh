@@ -152,10 +152,10 @@ live_claude() {
     cd "$run_dir"
     probe_step "Claude command positive"
     run_timed claude -p --no-session-persistence --permission-mode plan \
-      --tools "" "/oopforge:craft $ACTIVATION_TOKEN" >"$positive"
+      --tools "" >"$positive" <<<"/oopforge:craft $ACTIVATION_TOKEN"
     probe_step "Claude safe-mode negative"
     run_timed claude --safe-mode -p --no-session-persistence \
-      --permission-mode plan --tools "" "$NEGATIVE_PROBE" >"$negative"
+      --permission-mode plan --tools "" >"$negative" <<<"$NEGATIVE_PROBE"
   )
   assert_positive "$positive"
   assert_negative "$negative"
@@ -202,10 +202,6 @@ run_cursor() {
 
 live_cursor() {
   require_command cursor-agent
-  if [ -z "${CURSOR_API_KEY:-}" ]; then
-    red "FAIL Cursor live smoke requires CURSOR_API_KEY for HOME isolation"
-    exit 1
-  fi
   cursor-agent --version >&2
   local run_dir plugin_workspace local_workspace clean_workspace
   local plugin_output local_output negative_output
