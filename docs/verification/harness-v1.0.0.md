@@ -2,7 +2,7 @@
 
 ## Candidate
 
-- Commit: `79f2264`
+- Commit: `e5d7dd2`
 - Date: 2026-08-21
 - Policy: local authenticated checks; no repository provider secrets
 
