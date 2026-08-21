@@ -2,23 +2,7 @@
 
 모든 변경은 여기에 기록한다. [Keep a Changelog](https://keepachangelog.com/) 형식.
 
-## [1.0.0] - 2026-08-21
-
-### Added
-
-- **3-Harness 지원 범위** — Claude Code, Codex CLI, Cursor Agent CLI의 현재
-  로드 경로와 호출 방식을 하나의 지원 범위로 문서화했다.
-- **스킬 성숙도 레지스트리** — 배포되는 모든 스킬을 `stable` 또는
-  `experimental`로 등록하고 정적 검사로 누락과 중복을 차단한다.
-- **재현 가능한 활성화 검사** — 각 하네스의 positive control과 격리된
-  no-skill negative control을 로컬에서 실행할 수 있게 했다.
-
-### Changed
-
-- **가벼운 하네스 검증** — CI는 자격 증명 없는 정적 패키징 검사만 실행하고,
-  실제 Claude/Codex/Cursor 호출은 maintainer의 선택적 로컬 검증으로 남겼다.
-- **지원 범위 표현 완화** — `stable`을 메이저 버전 동결이나 서비스 수준
-  계약이 아닌, 문서화와 검증을 요구하는 스킬 성숙도 신호로 정의했다.
+## [Unreleased]
 
 ## [0.15.0] - 2026-08-20
 
