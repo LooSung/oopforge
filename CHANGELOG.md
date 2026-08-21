@@ -4,8 +4,16 @@
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-08-21
+
 ### Added
 
+- **3-Harness 지원 범위** — Claude Code, Codex CLI, Cursor Agent CLI의 canonical
+  로드 경로와 Craft 호출을 문서화하고 같은 후보에서 재검증했다.
+- **스킬 성숙도 레지스트리** — 배포되는 모든 스킬을 `stable` 또는
+  `experimental`로 등록하고 정적 검사로 누락과 중복을 차단한다.
+- **재현 가능한 활성화 검사** — 세 하네스의 positive control, 격리된
+  negative control, advisory Craft 라우팅 증거를 기록했다.
 - **v1 핵심 호환성 계약** — canonical load path, Craft 호출, 단계·체크포인트,
   Hard Rule, OOP Contract, stable 기본 경로의 1.x SemVer 경계를 명시했다.
 - **강제 timeout 실행기** — 로컬 하네스 프로브가 자식 프로세스와 함께 제한

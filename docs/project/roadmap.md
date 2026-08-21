@@ -28,23 +28,19 @@
 
 ---
 
-## 다음 릴리스
+## v1.x 유지보수
 
-### v1.0.0 — 검증된 코어 사용 계약과 3-Harness 경로
+### 검증된 코어 계약 유지
 
-**목표:** Java/Python 핵심 방법론과 Claude/Codex/Cursor의 검증된 실행 경로를
-좁은 1.x 호환성 계약과 재현 가능한 검증 아래 안정화한다. 별도 RC는 두지 않는다.
+**목표:** v1.0.0에서 고정한 Java/Python 핵심 방법론과
+Claude/Codex/Cursor 실행 경로를 1.x 호환성 계약 안에서 유지한다.
 
-- **Canonical paths** — Claude symlink + `/oopforge:craft`, Codex global skill +
-  자연어 Craft, Cursor explicit `--plugin-dir`와 project-local skill을 고정한다.
-- **Core contract** — 단계·휴먼 체크포인트·Hard Rule·OOP Contract·stable
-  기본 경로의 1.x 호환성 범위를 명시한다.
-- **Harness evidence** — 같은 후보 SHA에서 세 하네스의 positive/negative와
-  advisory Craft 라우팅을 검증하고 CLI 버전과 결과를 기록한다.
-- **Documentation ownership** — setup, reference, project, verification 문서의
-  책임을 분리하고 모든 내부 링크를 정적 검사한다.
-- **Release gate** — 전체 lint, architecture checks, 여섯 reference 테스트,
-  PR checks가 통과한 뒤에만 `v1.0.0`을 발행한다.
+- **Harness drift** — vendor CLI 변경 시 세 하네스의 positive/negative와
+  advisory Craft 라우팅 증거를 함께 갱신한다.
+- **Compatible evolution** — stable 스킬, 검사, 예시를 코어 계약을 깨지 않는
+  minor/patch 범위에서 개선한다.
+- **Documentation ownership** — setup, reference, project, verification 책임과
+  내부 링크 무결성을 유지한다.
 
 **범위 밖:** saga, MCP 서버, 추가 언어, marketplace, 독립 CLI.
 
