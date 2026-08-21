@@ -11,6 +11,7 @@ on:
     paths:
       - 'examples/**'
       - '.github/workflows/examples.yml'
+  workflow_dispatch:
   schedule:
     # Weekly run catches upstream dependency drift even without example changes.
     - cron: '0 0 * * 1'

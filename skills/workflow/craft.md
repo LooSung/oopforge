@@ -122,7 +122,8 @@ Transaction Boundary:
 - Confirm anything a person was asked to approve was written in their words, not Contract jargon (`oop-discipline` #14).
 - Check comment discipline: no narration comments; names explain what, comments explain why.
 - If the use case writes domain state, confirm Transaction Boundary names one Aggregate (`skills/oop/transaction-boundary.md`).
-- If broader review is needed, run the per-layer checks in `docs/reviewer-checklist.md`.
+- If broader review is needed, run the per-layer checks in
+  `docs/reference/reviewer-checklist.md`.
 - If and only if the Production Gate was explicitly activated, complete
   `skills/workflow/production-readiness.md` and report its blockers or accepted risks.
 - Run the necessary tests and record reproducible commands, toolchain identity (interpreter path/version, required env vars), and results.

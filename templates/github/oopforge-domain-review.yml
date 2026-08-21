@@ -1,5 +1,5 @@
 # Copy this file to your backend as .github/workflows/oopforge-domain-review.yml
-# Pin oopforge_ref to a released tag once you depend on a stable pack.
+# This v1 template pins the reusable workflow and checkout to the same release.
 # This default template posts non-blocking feedback and artifacts. Findings do
 # not fail the job. For opt-in blocking gates, wire import-linter or ArchUnit as
 # documented in skills/skeleton/lint-enforcement.md and require that check.
@@ -15,6 +15,6 @@ permissions:
 
 jobs:
   domain-review:
-    uses: LooSung/oopforge/.github/workflows/reusable-domain-review.yml@main
+    uses: LooSung/oopforge/.github/workflows/reusable-domain-review.yml@v1.0.0
     with:
-      oopforge_ref: main
+      oopforge_ref: v1.0.0

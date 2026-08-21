@@ -91,9 +91,9 @@ Use this table to decide **which skill to read first**. Workflow stage always wi
 
 | Harness | Guide |
 |---|---|
-| Codex | `docs/codex.md` |
-| Claude Code | `docs/claude-code.md` |
-| Cursor | `docs/cursor.md` |
+| Codex | `docs/setup/codex.md` |
+| Claude Code | `docs/setup/claude-code.md` |
+| Cursor | `docs/setup/cursor.md` |
 
 Reference implementation: [examples/README.md](examples/README.md) — Java/Python
 `layered`, `hexagonal`, and `hexagonal-cqrs` calculators (same domain, different
@@ -102,9 +102,10 @@ architectures).
 ## Support Scope
 
 Canonical harness paths, supported stacks, compatibility, and exclusions are
-defined in `docs/support-contract.md`. Skill maturity is machine-readable in
-`skills/stability.json`; new advanced skills default to experimental until
-usage, references, and checks justify promoting them.
+defined in `docs/reference/support-scope.md`. Skill maturity is machine-readable
+in `skills/stability.json` and explained in
+`docs/reference/skill-stability.md`; new advanced skills default to experimental
+until usage, references, and checks justify promoting them.
 
 ## Skill Selection
 
@@ -126,7 +127,7 @@ Before changing behavior, read the relevant skill file:
 - Refactoring existing or external code: `skills/workflow/refactor.md`
 - Anti-patterns: `skills/antipatterns/` (`flat-package`, `anemic-domain`, `controller-fat`, `repository-with-business-logic`, `god-aggregate`)
 - Resuming work across sessions (persist + restore context): `skills/workflow/continuity.md`
-- Roadmap / direction: `docs/roadmap.md`
+- Roadmap / direction: `docs/project/roadmap.md`
 
 ## Hard Rules
 
@@ -170,7 +171,8 @@ These limits are intentionally measurable. They come from review focus and agent
 - Update `CHANGELOG.md` for user-visible changes.
 - When changing install behavior, verify with a clean temporary `HOME`.
 - Do not claim a harness integration works until documented setup steps and a
-  clean-session positive/negative smoke prove it. See `docs/support-contract.md`.
+  clean-session positive/negative smoke prove it. See
+  `docs/reference/support-scope.md`.
 - PRs block on static harness packaging. Run authenticated live smoke locally
   when changing a harness load path; repository provider secrets are not required.
 

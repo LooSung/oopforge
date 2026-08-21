@@ -49,7 +49,7 @@ request through Craft. The business requirements are otherwise identical.
 Project-local skill delivery was used because, when these pairs were run, clean
 headless smoke tests had not proved that `cursor-agent --plugin-dir` loaded
 Craft. OOPforge later verified both Cursor paths; see the
-[support scope](../support-contract.md). That packaging evidence is separate
+[support scope](../reference/support-scope.md). That packaging evidence is separate
 from this experiment, which measures the methodology.
 
 ## Fixed conditions
@@ -199,7 +199,7 @@ After inspecting the raw artifacts:
    `docs/proof/results/<date>-cursor-<model>.md`.
 2. Record the exact model, agent version, source commit, commands, violations,
    test results, and rework.
-3. Link the result from `README.md` and `docs/positioning.md`.
+3. Link the result from `README.md` and `docs/project/positioning.md`.
 4. Keep both successful and unfavorable results.
 5. Do not convert a single run into a universal percentage claim.
 

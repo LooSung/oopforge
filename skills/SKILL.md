@@ -28,7 +28,7 @@ Treat **`/oopforge:craft`** as the OOPforge user entry point on **Claude Code** 
 On **Codex CLI**, do not type `/oopforge:craft` at the composer — Codex reserves `/` for built-in commands. Use `/skills` or `$oopforge` → **oopforge**, then `craft: …` (no leading `/`).
 
 On **Cursor Agent CLI**, use the explicit local-plugin or project-local skill
-setup documented in `docs/cursor.md`, then prompt `Use OOPforge craft: …`.
+setup documented in `docs/setup/cursor.md`, then prompt `Use OOPforge craft: …`.
 Do not use `/oopforge:craft` as the Cursor headless entry point.
 
 ## Project vs pack (paths)
@@ -76,7 +76,7 @@ Conditional workflow:
 - Production readiness (explicit opt-in only): `workflow/production-readiness.md`
 
 Skill maturity is recorded in `stability.json`; current harness and stack
-support boundaries are defined by `../docs/support-contract.md`.
+support boundaries are defined by `../docs/reference/support-scope.md`.
 
 Anti-patterns:
 - Flat package: `antipatterns/flat-package.md`
@@ -85,4 +85,4 @@ Anti-patterns:
 - Repository with business logic: `antipatterns/repository-with-business-logic.md`
 - God Aggregate: `antipatterns/god-aggregate.md`
 
-Roadmap and direction: `../docs/roadmap.md`
+Roadmap and direction: `../docs/project/roadmap.md`

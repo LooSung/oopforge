@@ -14,7 +14,7 @@ OOP Contract
 
 Read and execute:
 
-`{pack}/skills/workflow/craft.md`
+`~/.claude/skills/oopforge/workflow/craft.md`
 
 User request:
 

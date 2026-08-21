@@ -23,7 +23,7 @@ What should have happened instead.
 
 - OS: <!-- macOS 14 / Ubuntu 22.04 / WSL2 / etc. -->
 - Agent: <!-- Claude Code / Codex CLI / Cursor -->
-- OOPforge version (or commit): <!-- v0.2.0, or `git rev-parse --short HEAD` -->
+- OOPforge version (or commit): <!-- v1.0.0, or `git rev-parse --short HEAD` -->
 - Shell: <!-- bash / zsh / fish -->
 
 ## Doctor output

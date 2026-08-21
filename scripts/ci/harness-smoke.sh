@@ -12,6 +12,7 @@ this probe, output exactly OOPFORGE_NOT_LOADED."
 
 green() { printf "\033[32m%s\033[0m\n" "$*"; }
 red() { printf "\033[31m%s\033[0m\n" "$*" >&2; }
+probe_step() { printf "RUN %s\n" "$*" >&2; }
 
 cleanup() {
   local path
@@ -31,8 +32,17 @@ require_command() {
   }
 }
 
+require_link_target() {
+  local link="$1"
+  local expected="$2"
+  if [ ! -L "$link" ] || [ "$(readlink "$link")" != "$expected" ]; then
+    red "FAIL expected link: $link -> $expected"
+    exit 1
+  fi
+}
+
 run_timed() {
-  perl -e 'alarm shift; exec @ARGV' \
+  python3 "$PACK_DIR/scripts/ci/run-with-timeout.py" \
     "${OOPFORGE_HARNESS_TIMEOUT:-1200}" "$@"
 }
 
@@ -112,7 +122,7 @@ for status in ("stable", "experimental"):
 required = [
     "commands/craft.md",
     ".cursor-plugin/skills/oopforge/SKILL.md",
-    "docs/support-contract.md",
+    "docs/reference/support-scope.md",
 ]
 for relative in required:
     if not (root / relative).is_file():
@@ -139,8 +149,9 @@ link_codex_auth() {
 
 live_claude() {
   require_command claude
-  test -L "$HOME/.claude/skills/oopforge"
-  test -L "$HOME/.claude/commands/oopforge"
+  require_link_target "$HOME/.claude/skills/oopforge" "$PACK_DIR/skills"
+  require_link_target "$HOME/.claude/commands/oopforge" "$PACK_DIR/commands"
+  claude --version >&2
   local run_dir positive negative
   run_dir="$(mktemp -d)"
   TEMP_DIRS+=("$run_dir")
@@ -148,10 +159,12 @@ live_claude() {
   negative="$run_dir/negative.txt"
   (
     cd "$run_dir"
+    probe_step "Claude command positive"
     run_timed claude -p --no-session-persistence --permission-mode plan \
-      --tools "" "/oopforge:craft $ACTIVATION_TOKEN" >"$positive"
+      --tools "" >"$positive" <<<"/oopforge:craft $ACTIVATION_TOKEN"
+    probe_step "Claude safe-mode negative"
     run_timed claude --safe-mode -p --no-session-persistence \
-      --permission-mode plan --tools "" "$NEGATIVE_PROBE" >"$negative"
+      --permission-mode plan --tools "" >"$negative" <<<"$NEGATIVE_PROBE"
   )
   assert_positive "$positive"
   assert_negative "$negative"
@@ -159,6 +172,7 @@ live_claude() {
 
 live_codex() {
   require_command codex
+  codex --version >&2
   local run_dir workspace positive_home negative_home positive negative
   run_dir="$(mktemp -d)"
   TEMP_DIRS+=("$run_dir")
@@ -171,9 +185,11 @@ live_codex() {
   link_codex_auth "$positive_home"
   link_codex_auth "$negative_home"
   ln -s "$PACK_DIR/skills" "$positive_home/skills/oopforge"
+  probe_step "Codex global-skill positive"
   CODEX_HOME="$positive_home" run_timed codex exec --skip-git-repo-check \
     --ignore-user-config --ephemeral --sandbox read-only -C "$workspace" \
     -o "$positive" "Use OOPforge craft: $NEGATIVE_PROBE"
+  probe_step "Codex isolated negative"
   CODEX_HOME="$negative_home" run_timed codex exec --skip-git-repo-check \
     --ignore-user-config --ephemeral --sandbox read-only -C "$workspace" \
     -o "$negative" "$NEGATIVE_PROBE"
@@ -181,24 +197,40 @@ live_codex() {
   assert_negative "$negative"
 }
 
+seed_cursor_auth() {
+  local target_dir="$1"
+  local source="${CURSOR_CONFIG_DIR:-$HOME/.cursor}/cli-config.json"
+  [ -n "${CURSOR_API_KEY:-}" ] && return
+  [ -f "$source" ] || {
+    red "FAIL Cursor requires a local login or CURSOR_API_KEY"
+    exit 1
+  }
+  python3 - "$source" "$target_dir/cli-config.json" <<'PY'
+import json
+import pathlib
+import sys
+
+source = json.loads(pathlib.Path(sys.argv[1]).read_text())
+safe = {key: source[key] for key in ("version", "authInfo") if key in source}
+pathlib.Path(sys.argv[2]).write_text(json.dumps(safe))
+PY
+}
+
 run_cursor() {
   local workspace="$1"
   local output="$2"
   local prompt="$3"
   shift 3
-  mkdir -p "$workspace/.home" "$workspace/.cursor-config"
-  HOME="$workspace/.home" CURSOR_CONFIG_DIR="$workspace/.cursor-config" \
-    run_timed cursor-agent \
+  mkdir -p "$workspace/.cursor-config"
+  seed_cursor_auth "$workspace/.cursor-config"
+  CURSOR_CONFIG_DIR="$workspace/.cursor-config" run_timed cursor-agent \
     --print --mode ask --trust --workspace "$workspace" "$@" "$prompt" \
     >"$output"
 }
 
 live_cursor() {
   require_command cursor-agent
-  if [ -z "${CURSOR_API_KEY:-}" ]; then
-    red "FAIL Cursor live smoke requires CURSOR_API_KEY for HOME isolation"
-    exit 1
-  fi
+  cursor-agent --version >&2
   local run_dir plugin_workspace local_workspace clean_workspace
   local plugin_output local_output negative_output
   run_dir="$(mktemp -d)"
@@ -210,11 +242,14 @@ live_cursor() {
   local_output="$run_dir/project-local.txt"
   negative_output="$run_dir/negative.txt"
   mkdir -p "$plugin_workspace" "$local_workspace/.cursor/skills" "$clean_workspace"
+  probe_step "Cursor explicit-plugin positive"
   run_cursor "$plugin_workspace" "$plugin_output" \
     "Use OOPforge craft: $NEGATIVE_PROBE" --plugin-dir "$PACK_DIR"
   ln -s "$PACK_DIR/skills" "$local_workspace/.cursor/skills/oopforge"
+  probe_step "Cursor project-local positive"
   run_cursor "$local_workspace" "$local_output" \
     "Use OOPforge craft: $NEGATIVE_PROBE" --add-dir "$PACK_DIR"
+  probe_step "Cursor isolated negative"
   run_cursor "$clean_workspace" "$negative_output" "$NEGATIVE_PROBE"
   assert_positive "$plugin_output"
   assert_positive "$local_output"

@@ -2,7 +2,7 @@
 
 OOPforge supports **Cursor Agent CLI** (`cursor-agent`) through an explicit
 local plugin directory or a project-local skill. These are the canonical paths
-in the [support scope](./support-contract.md). There is no
+in the [support scope](../reference/support-scope.md). There is no
 `scripts/setup/install.sh` target for Cursor.
 
 ## 1. Install OOPforge
@@ -119,7 +119,7 @@ Domain layer framework imports: 0.
 Discovery → Design → Delivery Plan → Skeleton → Implement → Test
 ```
 
-Do not skip stages for new domains. See [README](../README.md#the-basic-workflow).
+Do not skip stages for new domains. See [README](../../README.md#the-basic-workflow).
 
 ## 7. Reference example
 
@@ -151,8 +151,12 @@ with an authenticated Cursor CLI:
 
 The check requires `OOPFORGE_LOADED`, Assumptions, and OOP Contract from both
 supported paths. Its isolated no-skill workspace must return
-`OOPFORGE_NOT_LOADED`. Run it locally when changing Cursor packaging; the
-repository does not require a `CURSOR_API_KEY` secret.
+`OOPFORGE_NOT_LOADED`. It uses temporary workspaces and `CURSOR_CONFIG_DIR`
+while retaining the real `HOME` so the OS credential-store token remains
+available. Only non-secret login metadata (`version` and `authInfo`) is copied
+into each temporary config. The negative control catches any user-level
+OOPforge installation that would contaminate isolation. Never add a provider
+key as a repository secret; live smoke remains a local release check.
 
 ## Related
 

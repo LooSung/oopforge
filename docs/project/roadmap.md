@@ -1,6 +1,8 @@
 # OOPforge — Roadmap
 
-**미래 지향** 문서다. 완료된 변경의 상세 이력은 [`CHANGELOG.md`](../CHANGELOG.md)에 있다. 여기에는 **"이건 반드시 한다"**만 남긴다 — 하고 싶은 것이 아니라 정체성을 지키며 성장하는 데 꼭 필요한 것.
+**미래 지향** 문서다. 완료된 변경의 상세 이력은
+[`CHANGELOG.md`](../../CHANGELOG.md)에 있다. 여기에는 **"이건 반드시 한다"**만
+남긴다 — 하고 싶은 것이 아니라 정체성을 지키며 성장하는 데 꼭 필요한 것.
 
 ---
 
@@ -26,21 +28,19 @@
 
 ---
 
-## 다음 릴리스
+## v1.x 유지보수
 
-### v1.0.0 — Stable Core와 검증된 3-Harness 경로
+### 검증된 코어 계약 유지
 
-**목표:** Java/Python 핵심 방법론과 Claude/Codex/Cursor의 검증된 실행 경로를
-명확한 지원 범위와 정적 검사 아래 안정화한다. 별도 RC는 두지 않는다.
+**목표:** v1.0.0에서 고정한 Java/Python 핵심 방법론과
+Claude/Codex/Cursor 실행 경로를 1.x 호환성 계약 안에서 유지한다.
 
-- **Canonical paths** — Claude symlink + `/oopforge:craft`, Codex global skill +
-  자연어 Craft, Cursor explicit `--plugin-dir`와 project-local skill을 고정한다.
-- **Harness smoke** — PR에서 packaging/static smoke를 차단하고, load path 변경
-  시 maintainer가 로컬 인증으로 live positive/negative control을 실행한다.
-- **Stable 실행 스택** — Craft, OOP discipline, continuity, feature/bug-fix
-  playbook 등 확립된 경로를 `stable`로 표시한다.
-- **지원 범위** — README, AGENTS, 하네스 문서의 지원/비지원 경로를 하나로
-  맞추고 정적 gate와 로컬 검증 후 `1.0.0`을 릴리스한다.
+- **Harness drift** — vendor CLI 변경 시 세 하네스의 positive/negative와
+  advisory Craft 라우팅 증거를 함께 갱신한다.
+- **Compatible evolution** — stable 스킬, 검사, 예시를 코어 계약을 깨지 않는
+  minor/patch 범위에서 개선한다.
+- **Documentation ownership** — setup, reference, project, verification 책임과
+  내부 링크 무결성을 유지한다.
 
 **범위 밖:** saga, MCP 서버, 추가 언어, marketplace, 독립 CLI.
 

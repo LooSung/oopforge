@@ -45,6 +45,9 @@ jobs:
       - name: Self-test documentation links
         run: python3 scripts/ci/test-doc-links.py
 
+      - name: Self-test hard timeout runner
+        run: python3 scripts/ci/test-run-with-timeout.py
+
       - name: Self-test proof evaluator
         run: python3 scripts/ci/test-proof-evaluator.py
 

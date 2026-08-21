@@ -2,7 +2,7 @@
 
 OOPforge supports Claude Code through the symlink-installed skill and
 `/oopforge:craft` command defined in the
-[support scope](./support-contract.md).
+[support scope](../reference/support-scope.md).
 
 ## Install
 
@@ -30,7 +30,9 @@ Maintainers can run the authenticated positive/negative check with:
 ```
 
 This optional local check uses the maintainer's existing Claude authentication;
-the repository does not require provider secrets.
+the repository does not require provider secrets. The check also requires the
+installed skill and command symlinks to point at the candidate pack, preventing
+a stale `~/.oopforge` checkout from producing release evidence.
 
 Installed paths:
 
@@ -48,8 +50,8 @@ treat that repository as the work target.
 /oopforge:craft Refactor imported billing module without changing behavior
 ```
 
-**First time?** Follow the [library loan walkthrough](./guides/library-loan/README.md) step by step.
-Localized index: [KO](./guides/library-loan/README.ko.md)
+**First time?** Follow the [library loan walkthrough](../guides/library-loan/README.md) step by step.
+Localized index: [KO](../guides/library-loan/README.ko.md)
 
 ## Update after pull
 

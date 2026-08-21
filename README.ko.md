@@ -17,7 +17,7 @@
 유스케이스 경계, 리뷰 가능한 아키텍처가 필요할 때 사용한다. 범용 에이전트
 프레임워크, UI 도구, 자동 코드 생성기는 아니다.
 
-[포지셔닝](docs/positioning.md) · [지원 범위](docs/support-contract.md) ·
+[포지셔닝](docs/project/positioning.md) · [지원 범위](docs/reference/support-scope.md) ·
 [Proof 프로토콜](docs/proof/README.md)
 
 [English](./README.md) · [한국어](./README.ko.md)
@@ -65,13 +65,13 @@ cd /path/to/your-backend-project
 Claude Code:
 
 ```text
-Use OOPforge craft: Email 값 객체 하나 추가해줘
+/oopforge:craft Email 값 객체 하나 추가해줘
 ```
 
 Codex CLI:
 
 ```text
-/oopforge:craft Email 값 객체 하나 추가해줘
+Use OOPforge craft: Email 값 객체 하나 추가해줘
 ```
 
 Cursor Agent CLI는 등록 단계가 하나 더 필요하다:
@@ -90,8 +90,8 @@ Use OOPforge craft: Email 값 객체 하나 추가해줘
 새 실행 작업에서 Craft가 로드되면 가장 작은 경로를 고르고 비즈니스 로직 전에
 Assumptions와 OOP Contract를 제시한다. 자문 요청은 구현하지 않고 경로만
 추천한다. [예시 Craft 세션](docs/assets/craft-demo.cast)과
-[Claude Code](./docs/claude-code.md) · [Codex](./docs/codex.md) ·
-[Cursor](./docs/cursor.md) 설정을 참고한다.
+[Claude Code](./docs/setup/claude-code.md) · [Codex](./docs/setup/codex.md) ·
+[Cursor](./docs/setup/cursor.md) 설정을 참고한다.
 
 ## 기본 워크플로
 
@@ -135,7 +135,7 @@ Craft가 편집 전에 Resume 블록을 제시한다. 세션이 끝났는데 일
 |---|---|
 | [도서관 대출 가이드](docs/guides/library-loan/README.ko.md) | 전체 워크플로 튜토리얼 |
 | [Examples index](examples/README.md) | 실행 가능한 계산기 예제 6종 |
-| [Reviewer checklist](docs/reviewer-checklist.md) | 구현 후 규칙 점검 |
+| [Reviewer checklist](docs/reference/reviewer-checklist.md) | 구현 후 규칙 점검 |
 
 ## 왜 OOPforge인가
 
@@ -199,7 +199,7 @@ starter에서 중립이었다. 이는 일반적인 효과 주장이 아니다.
 ```bash
 git clone https://github.com/LooSung/oopforge ~/.oopforge
 cd ~/.oopforge
-git checkout v0.15.0
+git checkout v1.0.0
 chmod +x scripts/setup/*.sh
 ./scripts/setup/install.sh
 ./scripts/setup/doctor.sh
@@ -244,8 +244,8 @@ Claude·Codex는 에이전트를 재시작한다. Cursor의 수동 등록 링크
 ```
 
 이 검사는 실제 Craft 응답을 실행하지 않는다. 활성화는 사용하는 하네스의
-진입점으로 확인한다: [Claude Code](./docs/claude-code.md) ·
-[Codex](./docs/codex.md) · [Cursor](./docs/cursor.md).
+진입점으로 확인한다: [Claude Code](./docs/setup/claude-code.md) ·
+[Codex](./docs/setup/codex.md) · [Cursor](./docs/setup/cursor.md).
 
 ### 제거
 
@@ -273,8 +273,8 @@ Claude·Codex는 에이전트를 재시작한다. Cursor의 수동 등록 링크
 
 skill, script, CI, agent instruction은 영어를 정본으로 사용한다. 한국어
 독자는 skill별 복제본 대신
-[`docs/methodology.ko.md`](./docs/methodology.ko.md)를 사용한다.
-필수 미래 작업과 비-목표는 [로드맵](./docs/roadmap.md), 완료된 릴리스는
+[`docs/reference/methodology.ko.md`](./docs/reference/methodology.ko.md)를 사용한다.
+필수 미래 작업과 비-목표는 [로드맵](./docs/project/roadmap.md), 완료된 릴리스는
 [변경 이력](./CHANGELOG.md)에서 확인한다.
 
 ## 라이선스
