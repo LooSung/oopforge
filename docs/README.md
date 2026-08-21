@@ -24,6 +24,6 @@ Use this index to find the smallest document for the job.
 
 - [Library loan walkthrough](guides/library-loan/README.md)
 - [Methodology proof](proof/README.md)
-- [Harness verification](verification/)
+- [Harness verification](verification/README.md)
 
 Agent-facing canonical instructions remain under [`../skills/`](../skills/).
