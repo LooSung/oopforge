@@ -2,7 +2,7 @@
 
 OOPforge supports Codex through the global skill entry point at
 `skills/SKILL.md`. This is the canonical path in the
-[support scope](./support-contract.md).
+[support scope](../reference/support-scope.md).
 
 Codex installs **skills only** — not Claude Code `commands/`. The string `/oopforge:craft` is **not** a Codex slash command; Codex reserves `/` for built-ins such as `/skills` and `/model`.
 

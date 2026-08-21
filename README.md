@@ -17,7 +17,7 @@ Use it when a **Java (Spring)** or **Python (FastAPI)** backend needs explicit
 domain models, use-case boundaries, and reviewable architecture. It is not a
 general agent framework, UI toolkit, or automatic code generator.
 
-[Positioning](docs/positioning.md) · [Support scope](docs/support-contract.md) ·
+[Positioning](docs/project/positioning.md) · [Support scope](docs/reference/support-scope.md) ·
 [Proof protocol](docs/proof/README.md)
 
 [English](./README.md) · [한국어](./README.ko.md)
@@ -65,13 +65,13 @@ Choose the harness you actually use:
 Claude Code:
 
 ```text
-Use OOPforge craft: Add a single Email value object
+/oopforge:craft Add a single Email value object
 ```
 
 Codex CLI:
 
 ```text
-/oopforge:craft Add a single Email value object
+Use OOPforge craft: Add a single Email value object
 ```
 
 Cursor Agent CLI requires one extra registration step:
@@ -91,8 +91,8 @@ For a fresh execution task, a loaded Craft flow identifies the smallest path
 and surfaces Assumptions and an OOP Contract before business logic. Advisory
 requests recommend a path without implementing. See the
 [illustrative Craft session](docs/assets/craft-demo.cast) and the exact setup
-guides for [Claude Code](docs/claude-code.md), [Codex](docs/codex.md), and
-[Cursor](docs/cursor.md).
+guides for [Claude Code](docs/setup/claude-code.md), [Codex](docs/setup/codex.md), and
+[Cursor](docs/setup/cursor.md).
 
 ## The Basic Workflow
 
@@ -139,7 +139,7 @@ Guide index: [EN](docs/guides/library-loan/README.md) · [KO](docs/guides/librar
 |---|---|
 | [Library loan guide](docs/guides/library-loan/README.md) | End-to-end tutorial |
 | [Examples index](examples/README.md) | Six runnable calculator references |
-| [Reviewer checklist](docs/reviewer-checklist.md) | Post-implementation rule check |
+| [Reviewer checklist](docs/reference/reviewer-checklist.md) | Post-implementation rule check |
 
 ## **Why OOPforge**
 
@@ -253,8 +253,8 @@ Run these commands from `~/.oopforge`:
 
 These checks do not execute a live Craft response. Verify activation with the
 entry point documented in the relevant harness guide:
-[Claude Code](docs/claude-code.md) · [Codex](docs/codex.md) ·
-[Cursor](docs/cursor.md).
+[Claude Code](docs/setup/claude-code.md) · [Codex](docs/setup/codex.md) ·
+[Cursor](docs/setup/cursor.md).
 
 ### Remove
 
@@ -279,18 +279,18 @@ you want a complete uninstall.
 Agents use [`AGENTS.md`](./AGENTS.md) as the shared rule source;
 [`CLAUDE.md`](./CLAUDE.md) is the Claude Code adapter. Target backends can use
 [`templates/github/oopforge-domain-review.yml`](templates/github/oopforge-domain-review.yml) for
-non-blocking PR feedback. Blocking gates are opt-in; see the [reviewer checklist](docs/reviewer-checklist.md#enforcement-policy).
+non-blocking PR feedback. Blocking gates are opt-in; see the [reviewer checklist](docs/reference/reviewer-checklist.md#enforcement-policy).
 
 ## Project policy
 
 The enforceable rules live in [`AGENTS.md`](./AGENTS.md). Skill files, scripts,
 CI, and agent instructions use English as their canonical language. Korean
 readers can use the conceptual
-[`docs/methodology.ko.md`](./docs/methodology.ko.md) guide instead of unstable
+[`docs/reference/methodology.ko.md`](./docs/reference/methodology.ko.md) guide instead of unstable
 per-skill translations.
 
 OOPforge remains a backend OOP/DDD methodology layer, not a model wrapper or
-general orchestration framework. See the [roadmap](./docs/roadmap.md) for
+general orchestration framework. See the [roadmap](./docs/project/roadmap.md) for
 required future work and non-goals, and the
 [changelog](./CHANGELOG.md) for completed releases.
 

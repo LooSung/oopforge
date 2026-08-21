@@ -9,12 +9,12 @@ Use this checklist after an agent generates or refactors code with OOPforge.
   checks, or tests. The plain Python hexagonal example is checked by
   import-linter; the plain Java hexagonal example runs ArchUnit in Gradle tests.
 - **The adopter template is non-blocking by default.** Copying
-  [`templates/github/oopforge-domain-review.yml`](../templates/github/oopforge-domain-review.yml)
+  [`templates/github/oopforge-domain-review.yml`](../../templates/github/oopforge-domain-review.yml)
   posts review feedback and artifacts, but findings keep a `NEUTRAL` verdict
   and do not fail the workflow or block a merge.
 - **Blocking in an adopter repository is opt-in.** Copy the matching canonical
   import-linter or ArchUnit template from
-  [`skills/skeleton/lint-enforcement.md`](../skills/skeleton/lint-enforcement.md),
+  [`skills/skeleton/lint-enforcement.md`](../../skills/skeleton/lint-enforcement.md),
   run it in the adopter's CI, and configure that concrete lint/test check as a
   required status check in branch protection. Making the default domain-review
   job required does not turn its findings into failures.
@@ -50,7 +50,7 @@ Use this checklist after an agent generates or refactors code with OOPforge.
 
 Use this section only when the user explicitly requested deployment, production,
 or operational readiness and the
-[Production Readiness gate](../skills/workflow/production-readiness.md) applies.
+[Production Readiness gate](../../skills/workflow/production-readiness.md) applies.
 
 - [ ] Inbound adapters reject invalid wire shape, size, format, and required fields.
 - [ ] Inbound adapters expose stable safe errors without internals, PII, or secrets.

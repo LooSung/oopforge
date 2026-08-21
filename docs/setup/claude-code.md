@@ -2,7 +2,7 @@
 
 OOPforge supports Claude Code through the symlink-installed skill and
 `/oopforge:craft` command defined in the
-[support scope](./support-contract.md).
+[support scope](../reference/support-scope.md).
 
 ## Install
 
@@ -48,8 +48,8 @@ treat that repository as the work target.
 /oopforge:craft Refactor imported billing module without changing behavior
 ```
 
-**First time?** Follow the [library loan walkthrough](./guides/library-loan/README.md) step by step.
-Localized index: [KO](./guides/library-loan/README.ko.md)
+**First time?** Follow the [library loan walkthrough](../guides/library-loan/README.md) step by step.
+Localized index: [KO](../guides/library-loan/README.ko.md)
 
 ## Update after pull
 

@@ -2,20 +2,25 @@
 
 ## Supported Versions
 
-Use this section to tell people about which versions of your project are
-currently being supported with security updates.
+Security fixes target the latest OOPforge release.
 
-| Version | Supported          |
-| ------- | ------------------ |
-| 5.1.x   | :white_check_mark: |
-| 5.0.x   | :x:                |
-| 4.0.x   | :white_check_mark: |
-| < 4.0   | :x:                |
+| Version | Supported |
+|---|---|
+| 1.x | Yes |
+| < 1.0 | No |
+
+OOPforge is a local skill and methodology pack, not a hosted service. Security
+scope includes installer scripts, GitHub Actions, packaged agent instructions,
+and repository templates. Vulnerabilities in Claude Code, Codex, Cursor, Java,
+Python, or their dependencies should be reported to the relevant vendor.
 
 ## Reporting a Vulnerability
 
-Use this section to tell people how to report a vulnerability.
+Use [GitHub private vulnerability reporting](https://github.com/LooSung/oopforge/security/advisories/new).
+Do not open a public issue containing an exploit, credential, or private
+environment detail.
 
-Tell them where to go, how often they can expect to get an update on a
-reported vulnerability, what to expect if the vulnerability is accepted or
-declined, etc.
+Include the affected OOPforge version or commit, harness, reproduction steps,
+impact, and any proposed mitigation. This is a personal open-source project and
+does not provide a response-time SLA. Accepted reports are fixed and disclosed
+through a GitHub Security Advisory and release notes when appropriate.

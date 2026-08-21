@@ -12,6 +12,7 @@ this probe, output exactly OOPFORGE_NOT_LOADED."
 
 green() { printf "\033[32m%s\033[0m\n" "$*"; }
 red() { printf "\033[31m%s\033[0m\n" "$*" >&2; }
+probe_step() { printf "RUN %s\n" "$*" >&2; }
 
 cleanup() {
   local path
@@ -32,7 +33,7 @@ require_command() {
 }
 
 run_timed() {
-  perl -e 'alarm shift; exec @ARGV' \
+  python3 "$PACK_DIR/scripts/ci/run-with-timeout.py" \
     "${OOPFORGE_HARNESS_TIMEOUT:-1200}" "$@"
 }
 
@@ -112,7 +113,7 @@ for status in ("stable", "experimental"):
 required = [
     "commands/craft.md",
     ".cursor-plugin/skills/oopforge/SKILL.md",
-    "docs/support-contract.md",
+    "docs/reference/support-scope.md",
 ]
 for relative in required:
     if not (root / relative).is_file():
@@ -141,6 +142,7 @@ live_claude() {
   require_command claude
   test -L "$HOME/.claude/skills/oopforge"
   test -L "$HOME/.claude/commands/oopforge"
+  claude --version >&2
   local run_dir positive negative
   run_dir="$(mktemp -d)"
   TEMP_DIRS+=("$run_dir")
@@ -148,8 +150,10 @@ live_claude() {
   negative="$run_dir/negative.txt"
   (
     cd "$run_dir"
+    probe_step "Claude command positive"
     run_timed claude -p --no-session-persistence --permission-mode plan \
       --tools "" "/oopforge:craft $ACTIVATION_TOKEN" >"$positive"
+    probe_step "Claude safe-mode negative"
     run_timed claude --safe-mode -p --no-session-persistence \
       --permission-mode plan --tools "" "$NEGATIVE_PROBE" >"$negative"
   )
@@ -159,6 +163,7 @@ live_claude() {
 
 live_codex() {
   require_command codex
+  codex --version >&2
   local run_dir workspace positive_home negative_home positive negative
   run_dir="$(mktemp -d)"
   TEMP_DIRS+=("$run_dir")
@@ -171,9 +176,11 @@ live_codex() {
   link_codex_auth "$positive_home"
   link_codex_auth "$negative_home"
   ln -s "$PACK_DIR/skills" "$positive_home/skills/oopforge"
+  probe_step "Codex global-skill positive"
   CODEX_HOME="$positive_home" run_timed codex exec --skip-git-repo-check \
     --ignore-user-config --ephemeral --sandbox read-only -C "$workspace" \
     -o "$positive" "Use OOPforge craft: $NEGATIVE_PROBE"
+  probe_step "Codex isolated negative"
   CODEX_HOME="$negative_home" run_timed codex exec --skip-git-repo-check \
     --ignore-user-config --ephemeral --sandbox read-only -C "$workspace" \
     -o "$negative" "$NEGATIVE_PROBE"
@@ -199,6 +206,7 @@ live_cursor() {
     red "FAIL Cursor live smoke requires CURSOR_API_KEY for HOME isolation"
     exit 1
   fi
+  cursor-agent --version >&2
   local run_dir plugin_workspace local_workspace clean_workspace
   local plugin_output local_output negative_output
   run_dir="$(mktemp -d)"
@@ -210,11 +218,14 @@ live_cursor() {
   local_output="$run_dir/project-local.txt"
   negative_output="$run_dir/negative.txt"
   mkdir -p "$plugin_workspace" "$local_workspace/.cursor/skills" "$clean_workspace"
+  probe_step "Cursor explicit-plugin positive"
   run_cursor "$plugin_workspace" "$plugin_output" \
     "Use OOPforge craft: $NEGATIVE_PROBE" --plugin-dir "$PACK_DIR"
   ln -s "$PACK_DIR/skills" "$local_workspace/.cursor/skills/oopforge"
+  probe_step "Cursor project-local positive"
   run_cursor "$local_workspace" "$local_output" \
     "Use OOPforge craft: $NEGATIVE_PROBE" --add-dir "$PACK_DIR"
+  probe_step "Cursor isolated negative"
   run_cursor "$clean_workspace" "$negative_output" "$NEGATIVE_PROBE"
   assert_positive "$plugin_output"
   assert_positive "$local_output"

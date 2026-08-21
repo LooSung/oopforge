@@ -141,13 +141,13 @@ Token usage and elapsed time may be recorded as context, but they are not the
 primary success metrics.
 
 The canonical experiment design and publication checklist live in the
-[proof protocol](proof/README.md). The
-[first valid paired result](proof/results/2026-08-20-cursor-gpt-5.6-sol-high.md)
+[proof protocol](../proof/README.md). The
+[first valid paired result](../proof/results/2026-08-20-cursor-gpt-5.6-sol-high.md)
 was neutral. The
-[second](proof/results/2026-08-20-cursor-gpt-5.6-sol-high-2.md) and
-[third](proof/results/2026-08-20-cursor-gpt-5.6-sol-high-3.md) were favorable
+[second](../proof/results/2026-08-20-cursor-gpt-5.6-sol-high-2.md) and
+[third](../proof/results/2026-08-20-cursor-gpt-5.6-sol-high-3.md) were favorable
 on method length; all three leaked public mutable invariant state. See the
-[repeated-pair summary](proof/README.md#repeated-pair-summary). This is not a
+[repeated-pair summary](../proof/README.md#repeated-pair-summary). This is not a
 percentage improvement claim.
 
 ## Messaging guardrails

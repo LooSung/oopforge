@@ -102,11 +102,11 @@ check_command "cursor-agent"
 
 cyan "--- Cursor Agent CLI"
 if command -v cursor-agent >/dev/null 2>&1; then
-  ok "CLI found; see docs/cursor.md for the verified --plugin-dir setup"
+  ok "CLI found; see docs/setup/cursor.md for the verified --plugin-dir setup"
 else
   warn "cursor-agent not found (install Cursor CLI to use OOPforge with Cursor)"
 fi
-warn "Cursor setup is not installed automatically; see docs/cursor.md."
+warn "Cursor setup is not installed automatically; see docs/setup/cursor.md."
 
 cyan "--- Installed links"
 check_link "Claude skills" "$HOME/.claude/skills/oopforge" "$PACK_DIR/skills"
