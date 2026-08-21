@@ -30,7 +30,9 @@ Maintainers can run the authenticated positive/negative check with:
 ```
 
 This optional local check uses the maintainer's existing Claude authentication;
-the repository does not require provider secrets.
+the repository does not require provider secrets. The check also requires the
+installed skill and command symlinks to point at the candidate pack, preventing
+a stale `~/.oopforge` checkout from producing release evidence.
 
 Installed paths:
 

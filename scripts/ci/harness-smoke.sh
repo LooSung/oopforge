@@ -32,6 +32,15 @@ require_command() {
   }
 }
 
+require_link_target() {
+  local link="$1"
+  local expected="$2"
+  [ -L "$link" ] && [ "$(readlink "$link")" = "$expected" ] || {
+    red "FAIL expected link: $link -> $expected"
+    exit 1
+  }
+}
+
 run_timed() {
   python3 "$PACK_DIR/scripts/ci/run-with-timeout.py" \
     "${OOPFORGE_HARNESS_TIMEOUT:-1200}" "$@"
@@ -140,8 +149,8 @@ link_codex_auth() {
 
 live_claude() {
   require_command claude
-  test -L "$HOME/.claude/skills/oopforge"
-  test -L "$HOME/.claude/commands/oopforge"
+  require_link_target "$HOME/.claude/skills/oopforge" "$PACK_DIR/skills"
+  require_link_target "$HOME/.claude/commands/oopforge" "$PACK_DIR/commands"
   claude --version >&2
   local run_dir positive negative
   run_dir="$(mktemp -d)"
