@@ -151,10 +151,12 @@ with an authenticated Cursor CLI:
 
 The check requires `OOPFORGE_LOADED`, Assumptions, and OOP Contract from both
 supported paths. Its isolated no-skill workspace must return
-`OOPFORGE_NOT_LOADED`. It replaces `HOME` and `CURSOR_CONFIG_DIR` to isolate
-skill discovery while reusing authentication available to the local CLI (for
-example, the OS credential store or a local `CURSOR_API_KEY`). Never add a
-provider key as a repository secret; live smoke remains a local release check.
+`OOPFORGE_NOT_LOADED`. It uses temporary workspaces and `CURSOR_CONFIG_DIR`
+while retaining the real `HOME` so the OS credential-store token remains
+available. Only non-secret login metadata (`version` and `authInfo`) is copied
+into each temporary config. The negative control catches any user-level
+OOPforge installation that would contaminate isolation. Never add a provider
+key as a repository secret; live smoke remains a local release check.
 
 ## Related
 

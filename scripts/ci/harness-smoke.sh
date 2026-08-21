@@ -188,14 +188,33 @@ live_codex() {
   assert_negative "$negative"
 }
 
+seed_cursor_auth() {
+  local target_dir="$1"
+  local source="${CURSOR_CONFIG_DIR:-$HOME/.cursor}/cli-config.json"
+  [ -n "${CURSOR_API_KEY:-}" ] && return
+  [ -f "$source" ] || {
+    red "FAIL Cursor requires a local login or CURSOR_API_KEY"
+    exit 1
+  }
+  python3 - "$source" "$target_dir/cli-config.json" <<'PY'
+import json
+import pathlib
+import sys
+
+source = json.loads(pathlib.Path(sys.argv[1]).read_text())
+safe = {key: source[key] for key in ("version", "authInfo") if key in source}
+pathlib.Path(sys.argv[2]).write_text(json.dumps(safe))
+PY
+}
+
 run_cursor() {
   local workspace="$1"
   local output="$2"
   local prompt="$3"
   shift 3
-  mkdir -p "$workspace/.home" "$workspace/.cursor-config"
-  HOME="$workspace/.home" CURSOR_CONFIG_DIR="$workspace/.cursor-config" \
-    run_timed cursor-agent \
+  mkdir -p "$workspace/.cursor-config"
+  seed_cursor_auth "$workspace/.cursor-config"
+  CURSOR_CONFIG_DIR="$workspace/.cursor-config" run_timed cursor-agent \
     --print --mode ask --trust --workspace "$workspace" "$@" "$prompt" \
     >"$output"
 }

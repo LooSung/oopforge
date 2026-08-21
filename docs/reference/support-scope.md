@@ -32,8 +32,8 @@ Maintainers can run `scripts/ci/harness-smoke.sh live <harness>` with their own
 local CLI authentication. A positive run must report `OOPFORGE_LOADED`, and an
 isolated negative control must report `OOPFORGE_NOT_LOADED`.
 Claude and Codex can reuse their local login state. Cursor's isolated live probe
-reuses authentication available to the local CLI, such as the OS credential
-store or a local `CURSOR_API_KEY`. No provider credential is stored in the
+reuses its OS credential-store token through sanitized login metadata, or a
+local `CURSOR_API_KEY` when present. No provider credential is stored in the
 repository.
 
 ## Automated evidence
