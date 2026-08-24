@@ -4,6 +4,12 @@
 
 ## [Unreleased]
 
+### Fixed
+
+- **Python 테스트 타입 게이트** — 세 FastAPI 참조 프로젝트의 strict mypy
+  범위를 `tests`까지 확장하고 fixture·fake·negative test 타입 오류를
+  suppression 없이 바로잡았다.
+
 ## [1.1.0] - 2026-08-24
 
 ### Added

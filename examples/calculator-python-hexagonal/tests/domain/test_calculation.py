@@ -24,7 +24,7 @@ def test_calculation_state_is_read_only() -> None:
     calculation = Calculation.perform(CalculationId.generate(), 2, Operator.ADD, 3)
 
     with pytest.raises(FrozenInstanceError):
-        calculation.result = 99
+        setattr(calculation, "result", 99)
 
 
 def test_division_by_zero_raises() -> None:

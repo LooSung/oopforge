@@ -58,7 +58,7 @@ Add mypy and use Pydantic's official plugin:
 python_version = "3.12"
 plugins = ["pydantic.mypy"]
 strict = true
-files = ["app"]
+files = ["app", "tests"]
 
 [tool.pydantic-mypy]
 init_forbid_extra = true
@@ -66,9 +66,10 @@ init_typed = true
 warn_required_dynamic_aliases = true
 ```
 
-Run `python -m mypy` as a blocking CI step before `pytest`. Start with
-production code (`app`) so adopting strict mode does not require unrelated test
-cleanup; expand to tests once their fixture annotations are ready.
+Run `python -m mypy` as a blocking CI step before `pytest`. Type-check
+production code and tests together: fixtures, fakes, and negative tests are part
+of the executable contract. A legacy adopter may stage the migration, but a new
+OOPforge project does not exclude tests from its completed type gate.
 
 ## Boundary tests
 

@@ -1,6 +1,8 @@
 from collections.abc import Callable, Iterable
+from typing import TypeVar
 
 import pytest
+from fastapi.testclient import TestClient
 
 from app.application.domain_events import (
     CalculationPerformedHandler,
@@ -22,6 +24,8 @@ from app.infrastructure.in_memory_transaction import InMemoryTransactionRunner
 from app.infrastructure.repositories.calculation.in_memory_calculation_repository import (
     InMemoryCalculationRepository,
 )
+
+T = TypeVar("T")
 
 
 class RecordingRepository(InMemoryCalculationRepository):
@@ -69,7 +73,7 @@ class RecordingTransactionRunner(InMemoryTransactionRunner):
         super().__init__(repository, outbox)
         self._calls = calls
 
-    def run(self, operation: Callable[[], object]) -> object:
+    def run(self, operation: Callable[[], T]) -> T:
         self._calls.append("transaction")
         return super().run(operation)
 
@@ -84,7 +88,9 @@ class FailingHandler:
         raise RuntimeError("handler failed")
 
 
-def test_handle_saves_then_drains_and_dispatches_once(monkeypatch) -> None:
+def test_handle_saves_then_drains_and_dispatches_once(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
     calls: list[str] = []
     repository = RecordingRepository(calls)
     outbox = RecordingOutbox(calls)
@@ -129,7 +135,7 @@ def test_handler_failure_rolls_back_calculation_and_outbox() -> None:
     assert outbox.unpublished() == ()
 
 
-def test_calculate_via_api(client) -> None:
+def test_calculate_via_api(client: TestClient) -> None:
     response = client.post(
         "/calculations",
         json={"operand_a": 10, "operator": "subtract", "operand_b": 4},

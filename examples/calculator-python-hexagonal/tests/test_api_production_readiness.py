@@ -12,7 +12,11 @@ from app.core.dependencies import (
 from app.infrastructure.event_relay import IdempotentConsumer, OutboxRelay
 
 
-def calculation_body(operand_a=8, operator="divide", operand_b=2) -> dict:
+def calculation_body(
+    operand_a: object = 8,
+    operator: object = "divide",
+    operand_b: object = 2,
+) -> dict[str, object]:
     return {
         "operand_a": operand_a,
         "operator": operator,
@@ -20,7 +24,7 @@ def calculation_body(operand_a=8, operator="divide", operand_b=2) -> dict:
     }
 
 
-def test_invalid_input_has_safe_custom_error_and_audit(client) -> None:
+def test_invalid_input_has_safe_custom_error_and_audit(client: TestClient) -> None:
     response = client.post(
         "/calculations",
         json={**calculation_body(operator="power"), "secret": "raw-super-secret"},
@@ -58,7 +62,9 @@ def test_rejects_values_outside_request_contract(
     assert response.json()["error"]["code"] == "validation_error"
 
 
-def test_duplicate_normalized_request_returns_first_result_once(client) -> None:
+def test_duplicate_normalized_request_returns_first_result_once(
+    client: TestClient,
+) -> None:
     first = client.post(
         "/calculations",
         json=calculation_body(operand_a=8, operand_b=2),
@@ -75,7 +81,7 @@ def test_duplicate_normalized_request_returns_first_result_once(client) -> None:
     assert len(get_outbox().unpublished()) == 1
 
 
-def test_duplicate_request_produces_one_relay_effect(client) -> None:
+def test_duplicate_request_produces_one_relay_effect(client: TestClient) -> None:
     headers = {"Idempotency-Key": "calculation-2"}
     client.post("/calculations", json=calculation_body(), headers=headers)
     client.post("/calculations", json=calculation_body(), headers=headers)
@@ -87,7 +93,9 @@ def test_duplicate_request_produces_one_relay_effect(client) -> None:
     assert len(effects) == 1
 
 
-def test_reused_key_with_different_body_returns_safe_conflict(client) -> None:
+def test_reused_key_with_different_body_returns_safe_conflict(
+    client: TestClient,
+) -> None:
     headers = {"Idempotency-Key": "calculation-3"}
     client.post("/calculations", json=calculation_body(), headers=headers)
     response = client.post(
@@ -102,7 +110,7 @@ def test_reused_key_with_different_body_returns_safe_conflict(client) -> None:
     assert len(get_outbox().unpublished()) == 1
 
 
-def test_division_by_zero_has_safe_domain_error(client) -> None:
+def test_division_by_zero_has_safe_domain_error(client: TestClient) -> None:
     response = client.post(
         "/calculations",
         json=calculation_body(operand_a=1, operand_b=0),
@@ -114,7 +122,7 @@ def test_division_by_zero_has_safe_domain_error(client) -> None:
     assert get_outbox().unpublished() == ()
 
 
-def test_generates_correlation_id_and_audits_it(client) -> None:
+def test_generates_correlation_id_and_audits_it(client: TestClient) -> None:
     response = client.post("/calculations", json=calculation_body())
     correlation_id = response.headers["X-Correlation-Id"]
     entry = get_audit_log().entries()[0]
@@ -126,7 +134,7 @@ def test_generates_correlation_id_and_audits_it(client) -> None:
     assert entry.outcome == "created"
 
 
-def test_preserves_valid_provided_correlation_id(client) -> None:
+def test_preserves_valid_provided_correlation_id(client: TestClient) -> None:
     response = client.post(
         "/calculations",
         json=calculation_body(),
@@ -138,8 +146,11 @@ def test_preserves_valid_provided_correlation_id(client) -> None:
     assert get_audit_log().entries()[0].correlation_id == "request-123"
 
 
-def test_unexpected_failure_has_no_internal_detail(client, monkeypatch) -> None:
-    def fail(_):
+def test_unexpected_failure_has_no_internal_detail(
+    client: TestClient,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    def fail(_command: object) -> None:
         raise RuntimeError("database password is internal-secret")
 
     monkeypatch.setattr(get_calculate_service(), "handle", fail)

@@ -32,7 +32,7 @@ pythonpath = ["."]
 python_version = "3.12"
 plugins = ["pydantic.mypy"]
 strict = true
-files = ["app"]
+files = ["app", "tests"]
 
 [tool.pydantic-mypy]
 init_forbid_extra = true
