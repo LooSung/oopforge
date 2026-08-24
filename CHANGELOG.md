@@ -4,6 +4,8 @@
 
 ## [Unreleased]
 
+## [1.1.1] - 2026-08-24
+
 ### Fixed
 
 - **Python 테스트 타입 게이트** — 세 FastAPI 참조 프로젝트의 strict mypy
