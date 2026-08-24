@@ -1,5 +1,8 @@
 from uuid import UUID
 
+import pytest
+from fastapi.testclient import TestClient
+
 from app.application.outbox import CalculationPerformedV1
 from app.core.dependencies import (
     get_audit_log,
@@ -33,6 +36,26 @@ def test_invalid_input_has_safe_custom_error_and_audit(client) -> None:
     assert "raw-super-secret" not in exposed
     assert "token-secret" not in exposed
     assert "api-secret" not in exposed
+
+
+@pytest.mark.parametrize(
+    "payload",
+    [
+        {"operand_a": 8, "operator": "divide"},
+        {"operand_a": None, "operator": "divide", "operand_b": 2},
+        {"operand_a": 8, "operator": "divide", "operand_b": 2, "extra": True},
+        {"operand_a": "8", "operator": "divide", "operand_b": 2},
+        {"operand_a": 8, "operator": "power", "operand_b": 2},
+        {"operand_a": "NaN", "operator": "add", "operand_b": 2},
+    ],
+)
+def test_rejects_values_outside_request_contract(
+    client: TestClient, payload: dict[str, object]
+) -> None:
+    response = client.post("/calculations", json=payload)
+
+    assert response.status_code == 422
+    assert response.json()["error"]["code"] == "validation_error"
 
 
 def test_duplicate_normalized_request_returns_first_result_once(client) -> None:

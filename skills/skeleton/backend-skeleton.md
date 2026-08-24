@@ -57,6 +57,10 @@ If JPA is needed, separate the domain model from the JPA entity and convert with
 
 ## Python FastAPI
 
+Apply `skills/lang/python-pydantic.md` to API schemas and the Python build:
+declare Pydantic directly, configure mypy with its plugin, and make request
+coercion and unknown-field behavior explicit.
+
 ### Layered
 
 Split layers by **folder**, not by filename (Hard Rule). Put dependency wiring outside the layers (`app/core/`).

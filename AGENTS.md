@@ -78,6 +78,7 @@ Use this table to decide **which skill to read first**. Workflow stage always wi
 | One Aggregate per transaction / multi-Aggregate writes | `skills/oop/transaction-boundary.md` |
 | Publishing an event or notifying another system in the same commit | `skills/oop/outbox.md` |
 | Read/write split, complex query off the domain (CQRS) | `skills/oop/cqrs.md` |
+| Python FastAPI request/response typing and validation | `skills/lang/python-pydantic.md` |
 | Explicit deployment, production, or operational-readiness request | `skills/workflow/production-readiness.md` (add to the normal path; never infer from an ordinary feature) |
 | Backend stack selection | `skills/lang/backend-stack.md` |
 | Backend package structure / skeleton | `skills/skeleton/backend-skeleton.md` |
@@ -117,6 +118,7 @@ Before changing behavior, read the relevant skill file:
 - Transaction boundary (one Aggregate per TX): `skills/oop/transaction-boundary.md`
 - Transactional Outbox (state change + event in one commit): `skills/oop/outbox.md`
 - Backend stack selection: `skills/lang/backend-stack.md`
+- Python FastAPI boundary typing and validation: `skills/lang/python-pydantic.md`
 - Backend skeleton structure: `skills/skeleton/backend-skeleton.md`
 - Lint enforcement (import-linter / ArchUnit in CI): `skills/skeleton/lint-enforcement.md`
 - Craft execution mode: `skills/workflow/craft.md` + `skills/principles/oop-discipline.md`

@@ -181,15 +181,19 @@ class InMemoryLoanRepository(LoanRepository):
 
 **`request.py`** — DTO (not domain)
 ```python
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class BorrowBookRequest(BaseModel):
-    member_id: str
-    book_id: str = Field(min_length=1)
+    model_config = ConfigDict(extra="forbid")
+
+    member_id: str = Field(min_length=1, strict=True)
+    book_id: str = Field(min_length=1, strict=True)
 
 
 class LoanResponse(BaseModel):
+    model_config = ConfigDict(frozen=True)
+
     loan_id: str
 ```
 

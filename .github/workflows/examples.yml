@@ -67,11 +67,12 @@ jobs:
           cache: pip
           cache-dependency-path: ${{ matrix.dir }}/pyproject.toml
 
-      - name: Install and test
+      - name: Install, type-check, and test
         working-directory: ${{ matrix.dir }}
         run: |
           python -m pip install --upgrade pip
           pip install -e ".[dev]"
+          python -m mypy
           pytest -q
 
   notify-on-cron-failure:

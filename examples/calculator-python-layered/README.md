@@ -22,6 +22,7 @@ app/calculator/
 ```bash
 cd examples/calculator-python-layered
 pip install -e ".[dev]"
+python -m mypy
 pytest
 ```
 
@@ -45,4 +46,5 @@ curl -X POST http://127.0.0.1:8000/api/v1/calculations \
 /oopforge:craft calculate use case in python-fastapi-layered
 ```
 
-Skeleton skill: `skills/skeleton/backend-skeleton.md` · stack via `skills/lang/backend-stack.md`
+Skeleton skill: `skills/skeleton/backend-skeleton.md` · Pydantic boundary via
+`skills/lang/python-pydantic.md` · stack via `skills/lang/backend-stack.md`

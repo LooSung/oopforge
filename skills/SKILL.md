@@ -70,6 +70,7 @@ Core OOP:
 
 Backend stack and skeleton:
 - Stack selection (layered or hexagonal/clean): `lang/backend-stack.md`
+- Python FastAPI boundary typing and validation: `lang/python-pydantic.md`
 - Package structure / skeleton: `skeleton/backend-skeleton.md`
 
 Conditional workflow:

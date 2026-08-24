@@ -27,9 +27,9 @@ One domain — a **calculator with history** — implemented across architecture
 cd examples/calculator-java-layered && ./gradlew test
 cd examples/calculator-java-hexagonal && ./gradlew test
 cd examples/calculator-java-hexagonal-cqrs && ./gradlew test
-cd examples/calculator-python-layered && pip install -e ".[dev]" && pytest
-cd examples/calculator-python-hexagonal && pip install -e ".[dev]" && pytest
-cd examples/calculator-python-hexagonal-cqrs && pip install -e ".[dev]" && pytest
+cd examples/calculator-python-layered && pip install -e ".[dev]" && python -m mypy && pytest
+cd examples/calculator-python-hexagonal && pip install -e ".[dev]" && python -m mypy && pytest
+cd examples/calculator-python-hexagonal-cqrs && pip install -e ".[dev]" && python -m mypy && pytest
 ```
 
 ## Enforced in CI

@@ -26,6 +26,7 @@ app/
 ```bash
 cd examples/calculator-python-hexagonal-cqrs
 pip install -e ".[dev]"
+python -m mypy
 pytest
 ```
 

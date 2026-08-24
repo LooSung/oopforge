@@ -8,6 +8,7 @@ guide for a skill pack, not a hosted-service SLA.
 - Java with Spring: layered and hexagonal references.
 - Python with FastAPI: layered and hexagonal references.
 - Java and Python hexagonal CQRS references.
+- Python Pydantic v2 boundaries with mypy and the official Pydantic plugin.
 - Domain modeling, use-case and transaction boundaries, Domain Events,
   transactional outbox, and opt-in Production Readiness.
 

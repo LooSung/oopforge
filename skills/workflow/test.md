@@ -20,6 +20,8 @@ You may write them first with TDD or as regression tests after implementation.
 - [ ] Verify adapters with real integration or contract tests
 - [ ] Verify E2E minimally, for core user/system flows only
 - [ ] Include failure/boundary/authorization/duplicate-execution cases
+- [ ] For FastAPI, cover the boundary matrix in `skills/lang/python-pydantic.md`
+- [ ] Run the stack's static type or compile check
 - [ ] Record the run commands and results
 
 ## Conditional Production Gate

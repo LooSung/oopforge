@@ -32,6 +32,7 @@ durable shared adapters for a real multi-instance deployment.
 ```bash
 cd examples/calculator-python-hexagonal
 pip install -e ".[dev]"
+python -m mypy
 pytest
 lint-imports
 ```

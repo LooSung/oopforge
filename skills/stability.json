@@ -3,6 +3,7 @@
   "stable": [
     "skills/SKILL.md",
     "skills/lang/backend-stack.md",
+    "skills/lang/python-pydantic.md",
     "skills/oop/cqrs.md",
     "skills/oop/domain-events.md",
     "skills/oop/domain-model.md",

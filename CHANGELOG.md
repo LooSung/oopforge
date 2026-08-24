@@ -4,6 +4,18 @@
 
 ## [Unreleased]
 
+### Added
+
+- **Python Pydantic 타입 안전성** — FastAPI 경계의 직접 Pydantic 의존성,
+  mypy 공식 플러그인, strict 정적 검사, 요청 계약 테스트를 정본 스킬과 세
+  Python 계산기 예제에 추가했다.
+
+### Changed
+
+- **명시적 요청 계약** — 계산 요청은 알 수 없는 필드, 숫자 문자열,
+  `NaN`/`Infinity`를 거부하고 CQRS 시간 응답은 OpenAPI `date-time` 의미를
+  보존한다.
+
 ## [1.0.0] - 2026-08-21
 
 ### Added

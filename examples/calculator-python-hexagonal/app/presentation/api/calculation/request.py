@@ -1,14 +1,18 @@
-from pydantic import BaseModel, ConfigDict, FiniteFloat
+from typing import Annotated
+
+from pydantic import AllowInfNan, BaseModel, ConfigDict, Strict
 
 from app.domain.calculation.model import Operator
+
+StrictFiniteFloat = Annotated[float, Strict(), AllowInfNan(False)]
 
 
 class CalculateRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
-    operand_a: FiniteFloat
+    operand_a: StrictFiniteFloat
     operator: Operator
-    operand_b: FiniteFloat
+    operand_b: StrictFiniteFloat
 
     def fingerprint(self) -> tuple[float, str, float]:
         return (float(self.operand_a), self.operator.value, float(self.operand_b))

@@ -16,7 +16,7 @@ def _to_response(entry: HistorySummary) -> HistoryEntryResponse:
         operand_b=entry.operand_b,
         operator=entry.operator,
         result=entry.result,
-        performed_at=entry.performed_at.isoformat(),
+        performed_at=entry.performed_at,
     )
 
 

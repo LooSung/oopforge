@@ -16,7 +16,9 @@ Do not implement several use cases at once.
 - [ ] Implement the use case class (orchestration)
 - [ ] Implement port adapters (only what is needed)
 - [ ] Implement the inbound adapter (Controller, etc.)
+- [ ] For Python FastAPI, apply `skills/lang/python-pydantic.md`
 - [ ] At least one integration test
+- [ ] Run the stack's static type or compile check
 - [ ] Pass human code review
 
 ## Implementation order (inside-out)
@@ -73,6 +75,7 @@ upgrade path for anything you intentionally defer.
 
 ## Definition of Done
 - Unit tests + integration tests pass
+- Static type or compile check passes
 - At least one code reviewer
 - Change summary in `CHANGELOG` or the PR description
 - Merge before moving to the next use case
