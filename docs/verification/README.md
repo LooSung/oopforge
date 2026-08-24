@@ -3,7 +3,7 @@
 Harness verification is release evidence, separate from the methodology
 experiments under [`../proof/`](../proof/).
 
-Each release record includes:
+When a compatibility baseline is refreshed, its record includes:
 
 - the candidate commit and date;
 - Claude Code, Codex CLI, and Cursor Agent CLI versions;

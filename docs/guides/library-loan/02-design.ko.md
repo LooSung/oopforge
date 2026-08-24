@@ -37,12 +37,14 @@
 - `LoanRepository.findById(id): Loan?`
 - `LoanRepository.findActiveLoanByBookId(bookId): Loan?`
 - `LoanRepository.save(loan): void`
+- `DomainEventDispatcher.dispatch(events): void`
 ```
 
 ---
 
 ## 체크포인트
 
-질문: *"Design 검토하고 Delivery Plan 또는 Skeleton으로 넘어가도 될까요?"*
+질문: *"Delivery Plan을 세우기 전에 이 Design이 행동과 경계를 올바르게
+담았나요?"*
 
-다음: [03-skeleton.ko.md](./03-skeleton.ko.md)
+다음: [03-delivery-plan.ko.md](./03-delivery-plan.ko.md)

@@ -14,11 +14,11 @@ Use this index to find the smallest document for the job.
 - [Reviewer checklist](reference/reviewer-checklist.md)
 - [Support scope and compatibility](reference/support-scope.md)
 - [Skill stability](reference/skill-stability.md)
+- [Skill path convention](reference/path-convention.md)
 
 ## Project
 
 - [Positioning](project/positioning.md)
-- [Roadmap](project/roadmap.md)
 
 ## Guides and evidence
 

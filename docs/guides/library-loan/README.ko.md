@@ -11,24 +11,28 @@ OOPforge **사용법**을 단계별로 보여주는 가이드입니다. 최소 �
 
 ## 시나리오
 
-회원이 도서를 **대출**한다. 대출 중인 도서는 다시 대출할 수 없다. 대출하면 `BookBorrowed` 이벤트가 발행된다.
+회원이 도서를 **대출**한다. 대출 중인 도서는 다시 대출할 수 없다.
+대출하면 인프로세스로 `BookBorrowed` 이벤트를 기록하고 디스패치한다.
 
 ---
 
 ## 슬래시 명령 (Claude Code)
 
-**Java 트랙:**
+**각 명령 뒤 사람 확인을 거치는 공통 단계:**
 
 ```text
 /oopforge:craft library loan domain Discovery부터 시작. 코드는 아직 작성하지 마.
+/oopforge:craft 승인된 library loan 작업을 Design으로 진행. 시그니처만 작성해.
+/oopforge:craft 승인된 borrow-book 설계의 Delivery Plan을 작성해.
+/oopforge:craft 승인된 Skeleton을 java-spring-hexagonal로 만들어.
 /oopforge:craft java-spring으로 borrow-book 구현
 /oopforge:craft borrow-book 테스트
 ```
 
-**Python 트랙** — Discovery/Design/Delivery Plan은 동일. Skeleton만 다름:
+**Python 트랙** — 승인된 산출물은 같고 스택만 바꾼다:
 
 ```text
-/oopforge:craft library loan domain Discovery부터 시작. 코드는 아직 작성하지 마.
+/oopforge:craft 승인된 Skeleton을 python-fastapi-clean으로 만들어.
 /oopforge:craft python-fastapi로 borrow-book 구현
 /oopforge:craft borrow-book 테스트
 ```
@@ -49,10 +53,11 @@ Follow OOPforge workflow for a library loan domain. Start at Discovery — no co
 |---|---|---|
 | 1. Discovery | [01-discovery.ko.md](./01-discovery.ko.md) | 동일 |
 | 2. Design | [02-design.ko.md](./02-design.ko.md) | 동일 |
-| 3. Skeleton | [03-skeleton.ko.md](./03-skeleton.ko.md) § Java | [03-skeleton.ko.md](./03-skeleton.ko.md) § Python |
-| 4. Implement | [04-implement-java.ko.md](./04-implement-java.ko.md) | [04-implement-python.ko.md](./04-implement-python.ko.md) |
-| 5. Test | [05-test.ko.md](./05-test.ko.md) § Java | [05-test.ko.md](./05-test.ko.md) § Python |
-| 6. 레이어 규칙 | [06-layer-rules.ko.md](./06-layer-rules.ko.md) | 동일 |
+| 3. Delivery Plan | [03-delivery-plan.ko.md](./03-delivery-plan.ko.md) | 동일 |
+| 4. Skeleton | [04-skeleton.ko.md](./04-skeleton.ko.md) § Java | [04-skeleton.ko.md](./04-skeleton.ko.md) § Python |
+| 5. Implement | [05-implement-java.ko.md](./05-implement-java.ko.md) | [05-implement-python.ko.md](./05-implement-python.ko.md) |
+| 6. Test | [06-test.ko.md](./06-test.ko.md) § Java | [06-test.ko.md](./06-test.ko.md) § Python |
+| 7. 레이어 규칙 | [07-layer-rules.ko.md](./07-layer-rules.ko.md) | 동일 |
 
 각 단계 파일 상단에서 EN · KO 전환 가능.
 

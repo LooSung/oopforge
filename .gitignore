@@ -34,12 +34,11 @@ dist/
 build/
 target/
 
-# Internal docs (not part of public pack surface)
-docs/release/
-docs/planning/
+# Private maintainer management (single local source, never committed)
+docs/planning/management.md
 
-# Legacy/invalid local C4 runs (valid runs are created outside this repository)
+# Legacy/invalid local proof runs (valid runs are created outside this repository)
 .proof-runs/
 
-# OOPforge continuity work docs (personal in-progress notes, not committed)
+# Legacy OOPforge continuity path; disabled for this repository
 .craft/

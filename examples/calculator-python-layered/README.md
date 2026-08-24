@@ -4,7 +4,9 @@
 
 Same `calculate` use case as [`calculator-java-layered`](../calculator-java-layered/), and the simplest member of the calculator family (no history). For the read/write split, see [`calculator-python-hexagonal-cqrs`](../calculator-python-hexagonal-cqrs/).
 
-Each layer is its **own folder** (v0.7 Hard Rule), and the router never touches the repository directly — wiring lives in `app/core/dependencies.py`.
+Each layer is its **own folder** (the current layer-layout Hard Rule), and the
+router never touches the repository directly — wiring lives in
+`app/core/dependencies.py`.
 
 ## Layout
 

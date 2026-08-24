@@ -24,12 +24,21 @@ One domain — a **calculator with history** — implemented across architecture
 ## Quick verify
 
 ```bash
-cd examples/calculator-java-layered && ./gradlew test
-cd examples/calculator-java-hexagonal && ./gradlew test
-cd examples/calculator-java-hexagonal-cqrs && ./gradlew test
-cd examples/calculator-python-layered && pip install -e ".[dev]" && python -m mypy && pytest
-cd examples/calculator-python-hexagonal && pip install -e ".[dev]" && python -m mypy && pytest
-cd examples/calculator-python-hexagonal-cqrs && pip install -e ".[dev]" && python -m mypy && pytest
+(cd examples/calculator-java-layered && ./gradlew test --no-daemon)
+(cd examples/calculator-java-hexagonal && ./gradlew test --no-daemon)
+(cd examples/calculator-java-hexagonal-cqrs && ./gradlew test --no-daemon)
+
+(cd examples/calculator-python-layered &&
+  python3 -m venv .venv && .venv/bin/pip install -e ".[dev]" &&
+  .venv/bin/python -m mypy && .venv/bin/lint-imports &&
+  .venv/bin/python -m pytest)
+(cd examples/calculator-python-hexagonal &&
+  python3 -m venv .venv && .venv/bin/pip install -e ".[dev]" &&
+  .venv/bin/python -m mypy && .venv/bin/lint-imports &&
+  .venv/bin/python -m pytest)
+(cd examples/calculator-python-hexagonal-cqrs &&
+  python3 -m venv .venv && .venv/bin/pip install -e ".[dev]" &&
+  .venv/bin/python -m mypy && .venv/bin/python -m pytest)
 ```
 
 ## Enforced in CI

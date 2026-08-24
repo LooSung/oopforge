@@ -28,5 +28,5 @@ Negative controls require `OOPFORGE_NOT_LOADED` without `OOPFORGE_LOADED`.
 ## Release decision
 
 All three supported harnesses passed activation, isolation, and advisory Craft
-routing on the candidate. The release may proceed when the repository and
-reference-project gates also pass.
+routing on the candidate. Repository and reference-project gates also passed
+before v1.0.0 was released.

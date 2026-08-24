@@ -37,7 +37,7 @@ Typo fixes and obvious bug fixes can skip this step.
 ```bash
 git clone https://github.com/LooSung/oopforge.git
 cd oopforge
-./scripts/setup/install.sh         # installs to ~/.oopforge via symlinks
+./scripts/setup/install.sh         # links this checkout into Claude/Codex
 ./scripts/setup/doctor.sh          # verifies links
 ```
 
@@ -56,7 +56,7 @@ Categories:
 ### 4. Verify locally
 
 ```bash
-./scripts/ci/lint-skills.sh        # 200-line rule, frontmatter, AGENTS.md refs
+./scripts/ci/lint-skills.sh        # size, frontmatter, registry, links, manifests
 ./scripts/ci/smoke-test.sh         # clean-HOME install test
 ```
 
@@ -68,9 +68,11 @@ If you edit or add a skill, update these so it gets discovered:
 
 - `AGENTS.md` — "Task → skill" table and "Skill Selection" section
 - `skills/SKILL.md` — "Supporting Skills" section
-- `CHANGELOG.md` — add a line under `## [Unreleased]` → `### Added`
+- `CHANGELOG.md` — for completed user-visible work, record it under
+  `## [Unreleased]`
 
-The lint script will tell you if you forgot a reference.
+The lint script checks the stability registry and known packaging paths. Review
+new routing references explicitly; not every useful cross-reference is inferred.
 
 ### 6. Open the PR
 
@@ -82,11 +84,11 @@ Every skill must:
 
 1. Start with YAML frontmatter (`name`, `description`, `tags`, `stability`)
 2. Be ≤ 200 lines total
-3. Have a **`## 언제 쓰나`** (when to use) section explaining the trigger condition
-4. Have a **`## 체크리스트`** (checklist) with measurable items
-5. Have a **`## 금지`** (forbidden) section — what *not* to do is usually the most valuable signal for AI agents
-6. Have at least one code example if the skill involves code
-7. Be focused on one concept (split if you find yourself teaching two)
+3. Be focused on one concept (split if you find yourself teaching two)
+4. State its trigger clearly, normally under **`## When to use`**
+5. Include measurable checklist or verification items when the workflow needs them
+6. State prohibited behavior when constraints are part of the concept
+7. Include at least one code example when the skill teaches code
 
 ## Language policy
 
@@ -111,7 +113,8 @@ chore(ci): bump lint script
 
 ## Code of Conduct
 
-This project follows the [Contributor Covenant v2.1](https://www.contributor-covenant.org/version/2/1/code_of_conduct/). Be kind, assume good intent, focus on the work.
+This project follows the [repository Code of Conduct](CODE_OF_CONDUCT.md). Be
+kind, assume good intent, and focus on the work.
 
 ## Getting help
 

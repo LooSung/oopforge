@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import importlib.util
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -56,6 +57,20 @@ class DocLinkTests(unittest.TestCase):
         self.write("README.md", "# Root\n")
         source = self.write("docs/guide.md", "[root](../README.md#root)\n")
         self.assertEqual([], MODULE.check_file(self.root, source))
+
+    def test_repository_markdown_includes_untracked_but_not_ignored(self) -> None:
+        subprocess.run(["git", "init", "-q"], cwd=self.root, check=True)
+        tracked = self.write("tracked.md", "# Tracked\n")
+        untracked = self.write("untracked.md", "# Untracked\n")
+        ignored = self.write("ignored.md", "# Ignored\n")
+        self.write(".gitignore", "ignored.md\n")
+        subprocess.run(["git", "add", "tracked.md", ".gitignore"],
+                       cwd=self.root, check=True)
+        self.assertEqual(
+            {tracked, untracked},
+            set(MODULE.repository_markdown(self.root)),
+        )
+        self.assertNotIn(ignored, MODULE.repository_markdown(self.root))
 
 
 if __name__ == "__main__":

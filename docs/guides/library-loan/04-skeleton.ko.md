@@ -1,6 +1,6 @@
-# Step 3 — Skeleton
+# 4단계 — Skeleton
 
-[English](./03-skeleton.md) · [한국어](./03-skeleton.ko.md)
+[English](./04-skeleton.md) · [한국어](./04-skeleton.ko.md)
 > **패키지 + 빈 타입.** 비즈니스 로직은 `NotImplementedError` / `UnsupportedOperationException` only.
 
 스킬: `{pack}/skills/workflow/skeleton.md`
@@ -26,7 +26,8 @@ src/main/java/com/example/
     │   │   ├── BorrowBook.java
     │   │   └── ReturnBook.java
     │   ├── required/
-    │   │   └── LoanRepository.java
+    │   │   ├── LoanRepository.java
+    │   │   └── DomainEventDispatcher.java
     │   └── service/
     │       ├── BorrowBookService.java
     │       └── ReturnBookService.java
@@ -54,6 +55,9 @@ app/
 ├── application/services/lending/
 │   ├── borrow_book_service.py
 │   └── return_book_service.py
+├── application/domain_events.py
+├── core/dependencies.py
+├── infrastructure/domain_events.py
 ├── infrastructure/repositories/lending/
 │   └── in_memory_loan_repository.py
 └── presentation/api/lending/
@@ -67,4 +71,5 @@ app/
 
 질문: *"Skeleton 검토하고 Implement할 유스케이스를 골라주세요."*
 
-다음: [04-implement-java.ko.md](./04-implement-java.ko.md) · [04-implement-python.ko.md](./04-implement-python.ko.md)
+다음: [05-implement-java.ko.md](./05-implement-java.ko.md) ·
+[05-implement-python.ko.md](./05-implement-python.ko.md)

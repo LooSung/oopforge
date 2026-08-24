@@ -74,13 +74,11 @@ Codex CLI:
 Use OOPforge craft: Email 값 객체 하나 추가해줘
 ```
 
-Cursor Agent CLI는 등록 단계가 하나 더 필요하다:
+Cursor Agent CLI는 설치된 팩을 직접 로드한다:
 
 ```bash
-mkdir -p ~/.cursor/plugins/local
-ln -s ~/.oopforge ~/.cursor/plugins/local/oopforge
 cd /path/to/your-backend-project
-cursor-agent --plugin-dir ~/.cursor/plugins/local/oopforge
+cursor-agent --plugin-dir ~/.oopforge
 ```
 
 ```text
@@ -199,7 +197,7 @@ starter에서 중립이었다. 이는 일반적인 효과 주장이 아니다.
 ```bash
 git clone https://github.com/LooSung/oopforge ~/.oopforge
 cd ~/.oopforge
-git checkout v1.0.0
+git checkout v1.2.0
 chmod +x scripts/setup/*.sh
 ./scripts/setup/install.sh
 ./scripts/setup/doctor.sh
@@ -254,15 +252,15 @@ Claude·Codex는 에이전트를 재시작한다. Cursor의 수동 등록 링크
 ```
 
 이 명령은 OOPforge가 관리하는 Claude·Codex 링크만 제거한다.
-`~/.oopforge`, Cursor의 `~/.cursor/plugins/local/oopforge`, 프로젝트의
-`.cursor/skills/oopforge`는 유지한다. 완전히 제거하려면 직접 삭제한다.
+`~/.oopforge`와 프로젝트의 `.cursor/skills/oopforge`는 유지한다. 완전히
+제거하려면 직접 삭제한다.
 
 ## 포함된 구성
 
 - `skills/` — 워크플로, OOP/DDD, 스택, 스켈레톤, 리뷰 지침
 - `commands/` — Claude Code 커맨드 진입점
 - `examples/` — 실행 가능한 Java/Python 계산기 예제 6종
-- `docs/` — 하네스 가이드, Proof, 로드맵, 튜토리얼
+- `docs/` — 하네스 가이드, 지원 범위, Proof, 튜토리얼
 - `scripts/` — 설치, lint, 아키텍처 검사, smoke test
 - `templates/github/` — 대상 프로젝트용 도메인 리뷰
 
@@ -274,7 +272,8 @@ Claude·Codex는 에이전트를 재시작한다. Cursor의 수동 등록 링크
 skill, script, CI, agent instruction은 영어를 정본으로 사용한다. 한국어
 독자는 skill별 복제본 대신
 [`docs/reference/methodology.ko.md`](./docs/reference/methodology.ko.md)를 사용한다.
-필수 미래 작업과 비-목표는 [로드맵](./docs/project/roadmap.md), 완료된 릴리스는
+현재 공개 계약은 [포지셔닝](./docs/project/positioning.md)과
+[지원 범위](./docs/reference/support-scope.md), 완료된 릴리스는
 [변경 이력](./CHANGELOG.md)에서 확인한다.
 
 ## 라이선스

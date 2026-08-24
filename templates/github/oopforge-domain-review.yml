@@ -15,6 +15,6 @@ permissions:
 
 jobs:
   domain-review:
-    uses: LooSung/oopforge/.github/workflows/reusable-domain-review.yml@v1.0.0
+    uses: LooSung/oopforge/.github/workflows/reusable-domain-review.yml@v1.2.0
     with:
-      oopforge_ref: v1.0.0
+      oopforge_ref: v1.2.0

@@ -4,5 +4,5 @@ contact_links:
     url: https://github.com/LooSung/oopforge/discussions
     about: Ask a question, share an idea, or discuss design choices.
   - name: Read the contributing guide
-    url: https://github.com/LooSung/oopforge/blob/main/CONTRIBUTING.md
+    url: https://github.com/LooSung/oopforge/blob/main/.github/CONTRIBUTING.md
     about: Before opening an issue, check the contributing guide.

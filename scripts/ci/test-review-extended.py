@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Self-test for C2+ domain-review extensions."""
+"""Self-test for extended domain-review detectors and delivery."""
 import os
 import sys
 import tempfile
@@ -129,7 +129,7 @@ def test_correction_delivery():
 
 
 def main():
-    print("domain-review C2+ self-test:")
+    print("extended domain-review self-test:")
     test_public_mutable_python()
     test_presentation_repository()
     test_file_level_admission()

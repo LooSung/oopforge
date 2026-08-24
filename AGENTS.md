@@ -2,11 +2,37 @@
 
 If you are an AI coding agent working in this repository, follow OOPforge itself.
 
+OOPforge continuity: off
+
 ## Mission
 
 OOPforge is a portable OOP/DDD methodology pack for coding agents — **methodology plus agent harness**.
 
 It defines OOP/DDD as a **dialect agents follow** (skills = grammar, hard rules = lint, `examples/` = reference implementations, install/commands = runtime). Protect the core promise: small skills, clean domain models, explicit workflow stages, and human checkpoints.
+
+## Maintainer Management
+
+Maintainer direction is private and local. When present, its single source is
+`docs/planning/management.md`, which is gitignored.
+
+- Do not add future plans, backlogs, internal metrics, or release drafts to
+  tracked files.
+- `CHANGELOG.md` records completed user-visible changes under `Unreleased`
+  before release; it never carries future plans.
+- Public docs describe current behavior, support, evidence, and positioning.
+- Do not create `.craft/` continuity state in this repository.
+
+### Maintainer work gate
+
+Before planning or implementing an OOPforge upgrade, new capability,
+architecture change, or release:
+
+1. If `docs/planning/management.md` exists, read it and follow its Agent entry
+   checklist.
+2. If it is absent, an explicit user request or linked issue defines the scope;
+   do not infer other private priorities or block that requested work.
+3. Record maintainer decisions in the private file only when it exists. Never
+   create it from public repository context.
 
 ## Required Workflow
 
@@ -37,7 +63,8 @@ Use `/oopforge:craft` (`commands/craft.md`) as the single OOPforge user entry po
 
 Resolve the OOPforge pack root in order: `$OOPFORGE_HOME` → `~/.oopforge` → repository root (when developing this pack).
 
-Skill files live at `{pack}/skills/...`. Do **not** use legacy `skills/oopforge/...` paths. See `scripts/path-convention.md`.
+Skill files live at `{pack}/skills/...`. Do **not** use legacy
+`skills/oopforge/...` paths. See `docs/reference/path-convention.md`.
 
 ## Project Configuration (target project `AGENTS.md`)
 
@@ -129,7 +156,6 @@ Before changing behavior, read the relevant skill file:
 - Refactoring existing or external code: `skills/workflow/refactor.md`
 - Anti-patterns: `skills/antipatterns/` (`flat-package`, `anemic-domain`, `controller-fat`, `repository-with-business-logic`, `god-aggregate`)
 - Resuming work across sessions (persist + restore context): `skills/workflow/continuity.md`
-- Roadmap / direction: `docs/project/roadmap.md`
 
 ## Hard Rules
 

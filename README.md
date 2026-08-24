@@ -74,13 +74,11 @@ Codex CLI:
 Use OOPforge craft: Add a single Email value object
 ```
 
-Cursor Agent CLI requires one extra registration step:
+Cursor Agent CLI loads the installed pack directly:
 
 ```bash
-mkdir -p ~/.cursor/plugins/local
-ln -s ~/.oopforge ~/.cursor/plugins/local/oopforge
 cd /path/to/your-backend-project
-cursor-agent --plugin-dir ~/.cursor/plugins/local/oopforge
+cursor-agent --plugin-dir ~/.oopforge
 ```
 
 ```text
@@ -131,7 +129,7 @@ work remaining, `.craft/next-session-prompt.md` records the next decision.
 **New to the workflow?** Follow the step-by-step library loan guide:
 
 **[Library loan walkthrough →](docs/guides/library-loan/README.md)**  
-Discovery → Design → Skeleton → Implement (Java + Python) → Test
+Discovery → Design → Delivery Plan → Skeleton → Implement → Test
 
 Guide index: [EN](docs/guides/library-loan/README.md) · [KO](docs/guides/library-loan/README.ko.md)
 
@@ -206,7 +204,7 @@ release instead:
 ```bash
 git clone https://github.com/LooSung/oopforge ~/.oopforge
 cd ~/.oopforge
-git checkout v1.0.0
+git checkout v1.2.0
 chmod +x scripts/setup/*.sh
 ./scripts/setup/install.sh
 ./scripts/setup/doctor.sh
@@ -262,17 +260,16 @@ entry point documented in the relevant harness guide:
 ./scripts/setup/uninstall.sh
 ```
 
-This removes only OOPforge-managed Claude and Codex links. It deliberately
-keeps `~/.oopforge`, Cursor's `~/.cursor/plugins/local/oopforge` link, and any
-project-local `.cursor/skills/oopforge` link. Remove those paths manually if
-you want a complete uninstall.
+This removes only OOPforge-managed Claude and Codex links. It keeps
+`~/.oopforge` and any project-local `.cursor/skills/oopforge` link; remove those
+manually if you want a complete uninstall.
 
 ## What's included
 
 - `skills/` — workflow, OOP/DDD, stack, skeleton, and review instructions
 - `commands/` — Claude Code command entry point
 - `examples/` — six runnable Java/Python calculator references
-- `docs/` — harness guides, proof protocol, roadmap, and walkthroughs
+- `docs/` — harness guides, support reference, proof protocol, and walkthroughs
 - `scripts/` — setup, lint, architecture checks, and smoke tests
 - `templates/github/` — reusable target-project domain review
 
@@ -290,9 +287,10 @@ readers can use the conceptual
 per-skill translations.
 
 OOPforge remains a backend OOP/DDD methodology layer, not a model wrapper or
-general orchestration framework. See the [roadmap](./docs/project/roadmap.md) for
-required future work and non-goals, and the
-[changelog](./CHANGELOG.md) for completed releases.
+general orchestration framework. See the
+[positioning](./docs/project/positioning.md) and
+[support scope](./docs/reference/support-scope.md) for the current public
+contract, and the [changelog](./CHANGELOG.md) for completed releases.
 
 ## License
 

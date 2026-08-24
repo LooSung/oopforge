@@ -49,12 +49,14 @@ jobs:
         run: python3 scripts/ci/test-run-with-timeout.py
 
       - name: Self-test proof evaluator
-        run: python3 scripts/ci/test-proof-evaluator.py
+        run: |
+          python3 scripts/ci/test-proof-evaluator.py
+          python3 scripts/ci/test-proof-runner.py
 
       - name: Self-test domain review
         run: |
           python3 scripts/ci/test-review.py
-          python3 scripts/ci/test-review-c2plus.py
+          python3 scripts/ci/test-review-extended.py
 
       - name: Smoke test
         run: |

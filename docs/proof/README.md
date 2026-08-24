@@ -1,7 +1,7 @@
 # OOPforge Proof Protocol
 
-This directory defines a reproducible control-versus-OOPforge comparison for
-C4. It intentionally separates the experiment design from the results.
+This directory defines a reproducible control-versus-OOPforge comparison. It
+intentionally separates the experiment design from the results.
 
 No effectiveness claim should be published until both runs and the evaluation
 complete successfully.
@@ -119,8 +119,8 @@ Task-specific findings keep separate IDs:
 `MISSING_DOMAIN_TEST`, `MISSING_USE_CASE_TEST`, and `MISSING_API_TEST`.
 
 Reference gates, domain review, and this evaluator preserve these common IDs.
-`scripts/ci/test-proof-evaluator.py` and the domain-review self-tests block
-drift in CI.
+`scripts/ci/test-proof-evaluator.py`, `scripts/ci/test-proof-runner.py`, and the
+domain-review self-tests block drift in CI.
 
 ## Run
 
@@ -133,10 +133,16 @@ PROOF_MODEL="<model-id>" ./scripts/proof/run-comparison.sh
 `PROOF_MODEL=auto` is rejected because separate runs could resolve to different
 models. Pin one ID returned by `cursor-agent --list-models`.
 
+The runner exports the starter and treatment skill from the recorded Git commit,
+not the working tree. Commit relevant changes before running it. Both conditions
+install against one generated constraints file; dependency freezes must match.
+The quality gate runs mypy, import-linter, and pytest for each workspace.
+
 The script writes raw artifacts outside the repository under the system
 temporary directory (`$TMPDIR/oopforge-proof-runs/` by default):
 
-- copied workspaces;
+- commit-exported workspaces;
+- the shared constraints file and per-condition dependency freezes;
 - agent output;
 - patches;
 - test output;

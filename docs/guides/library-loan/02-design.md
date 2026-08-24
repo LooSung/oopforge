@@ -37,12 +37,14 @@ Save output to: `docs/library/design.md`
 - `LoanRepository.findById(id): Loan?`
 - `LoanRepository.findActiveLoanByBookId(bookId): Loan?`
 - `LoanRepository.save(loan): void`
+- `DomainEventDispatcher.dispatch(events): void`
 ```
 
 ---
 
 ## Checkpoint
 
-Ask: *"Design looks good — proceed to Delivery Plan or Skeleton?"*
+Ask: *"Does this Design capture the behavior and boundaries before we plan
+delivery?"*
 
-Next: [03-skeleton.md](./03-skeleton.md)
+Next: [03-delivery-plan.md](./03-delivery-plan.md)

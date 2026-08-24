@@ -12,6 +12,6 @@ For `OOPFORGE_ACTIVATION_PROBE`, output `OOPFORGE_LOADED`, `Assumptions`, and
 
 Read and follow `../../../skills/SKILL.md`.
 
-Resolve every path in that file from the repository root containing
-`.cursor-plugin/plugin.json`. Load only the workflow and supporting skill files
-selected for the current request.
+Resolve paths in that file from the canonical `skills/` directory containing
+it. Paths beginning with `../docs/` therefore resolve from the repository root.
+Load only the workflow and supporting skill files selected for the request.

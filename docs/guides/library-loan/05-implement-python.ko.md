@@ -1,6 +1,6 @@
-# Step 4 — Implement (Python)
+# 5단계 — Implement (Python)
 
-[English](./04-implement-python.md) · [한국어](./04-implement-python.ko.md)
+[English](./05-implement-python.md) · [한국어](./05-implement-python.ko.md)
 Java와 동일한 유스케이스. **Domain: stdlib + dataclasses only.**
 
 ---
@@ -62,14 +62,16 @@ class BookBorrowed:
     borrowed_at: datetime
 
 
-@dataclass
+@dataclass(frozen=True)
 class Loan:
     id: LoanId
     member_id: MemberId
     book_id: BookId
     borrowed_at: datetime
     status: LoanStatus
-    _events: list = field(default_factory=list, repr=False)
+    _events: tuple[object, ...] = field(
+        default_factory=tuple, init=False, repr=False, compare=False
+    )
 
     @staticmethod
     def borrow(loan_id: LoanId, member_id: MemberId, book_id: BookId) -> "Loan":
@@ -87,15 +89,15 @@ class Loan:
     def return_book(self) -> None:
         if self.status is LoanStatus.RETURNED:
             raise ValueError("loan already returned")
-        self.status = LoanStatus.RETURNED
+        object.__setattr__(self, "status", LoanStatus.RETURNED)
 
-    def pop_events(self) -> list:
-        published = list(self._events)
-        self._events.clear()
+    def pop_events(self) -> tuple[object, ...]:
+        published = self._events
+        object.__setattr__(self, "_events", ())
         return published
 
     def _record(self, event: object) -> None:
-        self._events.append(event)
+        object.__setattr__(self, "_events", (*self._events, event))
 ```
 
 **`repository.py`**
@@ -116,10 +118,20 @@ class LoanRepository(Protocol):
 
 ## Application
 
+**`domain_events.py`**
+```python
+from typing import Protocol
+
+
+class DomainEventDispatcher(Protocol):
+    def dispatch(self, events: tuple[object, ...]) -> None: ...
+```
+
 **`borrow_book_service.py`**
 ```python
 from dataclasses import dataclass
 
+from app.application.domain_events import DomainEventDispatcher
 from app.domain.lending.model import Loan
 from app.domain.lending.repository import LoanRepository
 from app.domain.lending.value import BookId, LoanId, MemberId
@@ -132,8 +144,13 @@ class BorrowBookCommand:
 
 
 class BorrowBookService:
-    def __init__(self, loan_repository: LoanRepository) -> None:
+    def __init__(
+        self,
+        loan_repository: LoanRepository,
+        event_dispatcher: DomainEventDispatcher,
+    ) -> None:
         self._repo = loan_repository
+        self._events = event_dispatcher
 
     def handle(self, command: BorrowBookCommand) -> LoanId:
         book_id = BookId(command.book_id)
@@ -146,7 +163,7 @@ class BorrowBookService:
         loan = Loan.borrow(loan_id, member_id, book_id)
 
         self._repo.save(loan)
-        loan.pop_events()
+        self._events.dispatch(loan.pop_events())
         return loan_id
 ```
 
@@ -179,6 +196,39 @@ class InMemoryLoanRepository(LoanRepository):
         self._store[loan.id] = loan
 ```
 
+**`domain_events.py`** — 인프로세스 어댑터
+```python
+from collections.abc import Callable
+
+
+class InProcessDomainEventDispatcher:
+    def __init__(self, handlers: tuple[Callable[[object], None], ...] = ()) -> None:
+        self._handlers = handlers
+
+    def dispatch(self, events: tuple[object, ...]) -> None:
+        for event in events:
+            for handler in self._handlers:
+                handler(event)
+```
+
+**`core/dependencies.py`** — 조립 지점
+```python
+from app.application.services.lending.borrow_book_service import BorrowBookService
+from app.infrastructure.domain_events import InProcessDomainEventDispatcher
+from app.infrastructure.repositories.lending.in_memory_loan_repository import (
+    InMemoryLoanRepository,
+)
+
+_service = BorrowBookService(
+    InMemoryLoanRepository(),
+    InProcessDomainEventDispatcher(),
+)
+
+
+def get_borrow_book_service() -> BorrowBookService:
+    return _service
+```
+
 **`request.py`** — DTO (도메인 아님)
 ```python
 from pydantic import BaseModel, ConfigDict, Field
@@ -199,24 +249,26 @@ class LoanResponse(BaseModel):
 
 **`loan_router.py`**
 ```python
-from fastapi import APIRouter, HTTPException, status
+from typing import Annotated
+
+from fastapi import APIRouter, Depends, HTTPException, status
 
 from app.application.services.lending.borrow_book_service import (
     BorrowBookCommand, BorrowBookService,
 )
-from app.infrastructure.repositories.lending.in_memory_loan_repository import (
-    InMemoryLoanRepository,
-)
+from app.core.dependencies import get_borrow_book_service
 from app.presentation.api.lending.request import BorrowBookRequest, LoanResponse
 
 _router = APIRouter(prefix="/loans", tags=["loans"])
-_service = BorrowBookService(InMemoryLoanRepository())
 
 
 @_router.post("", response_model=LoanResponse, status_code=status.HTTP_201_CREATED)
-def borrow_book(body: BorrowBookRequest) -> LoanResponse:
+def borrow_book(
+    body: BorrowBookRequest,
+    service: Annotated[BorrowBookService, Depends(get_borrow_book_service)],
+) -> LoanResponse:
     try:
-        loan_id = _service.handle(
+        loan_id = service.handle(
             BorrowBookCommand(member_id=body.member_id, book_id=body.book_id)
         )
     except ValueError as e:
@@ -228,4 +280,4 @@ router = _router
 
 ---
 
-다음: [05-test.ko.md](./05-test.ko.md)
+다음: [06-test.ko.md](./06-test.ko.md)

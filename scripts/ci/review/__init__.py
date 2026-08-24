@@ -1,4 +1,4 @@
-"""OOPforge domain review (roadmap C2+).
+"""OOPforge domain review.
 
 Read-only PR-diff reviewer that surfaces new or worsened hard-rule,
 antipattern, and archlint violations. Pure stdlib.

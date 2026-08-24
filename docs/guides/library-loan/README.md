@@ -11,24 +11,28 @@ This guide shows **how to use OOPforge end to end**. For a minimal runnable proo
 
 ## Scenario
 
-A member **borrows** a book. A book already on loan cannot be borrowed again. Borrowing publishes a `BookBorrowed` event.
+A member **borrows** a book. A book already on loan cannot be borrowed again.
+Borrowing records and dispatches a `BookBorrowed` event in process.
 
 ---
 
 ## Craft Prompts
 
-**Java track:**
+**Shared stages, with a human checkpoint after each command:**
 
 ```text
 /oopforge:craft Start Discovery for the library loan domain. No code yet.
+/oopforge:craft Continue the approved library loan work to Design. Signatures only.
+/oopforge:craft Create the Delivery Plan for the approved borrow-book design.
+/oopforge:craft Create the approved Skeleton in java-spring-hexagonal.
 /oopforge:craft Implement borrow-book in java-spring
 /oopforge:craft Test borrow-book
 ```
 
-**Python track** — same Discovery/Design/Delivery Plan; Skeleton only changes:
+**Python track** — use the same approved artifacts and change only the stack:
 
 ```text
-/oopforge:craft Start Discovery for the library loan domain. No code yet.
+/oopforge:craft Create the approved Skeleton in python-fastapi-clean.
 /oopforge:craft Implement borrow-book in python-fastapi
 /oopforge:craft Test borrow-book
 ```
@@ -49,10 +53,11 @@ Follow OOPforge workflow for a library loan domain. Start at Discovery — no co
 |---|---|---|
 | 1. Discovery | [01-discovery.md](./01-discovery.md) | same |
 | 2. Design | [02-design.md](./02-design.md) | same |
-| 3. Skeleton | [03-skeleton.md](./03-skeleton.md) § Java | [03-skeleton.md](./03-skeleton.md) § Python |
-| 4. Implement | [04-implement-java.md](./04-implement-java.md) | [04-implement-python.md](./04-implement-python.md) |
-| 5. Test | [05-test.md](./05-test.md) § Java | [05-test.md](./05-test.md) § Python |
-| 6. Layer rules | [06-layer-rules.md](./06-layer-rules.md) | same |
+| 3. Delivery Plan | [03-delivery-plan.md](./03-delivery-plan.md) | same |
+| 4. Skeleton | [04-skeleton.md](./04-skeleton.md) § Java | [04-skeleton.md](./04-skeleton.md) § Python |
+| 5. Implement | [05-implement-java.md](./05-implement-java.md) | [05-implement-python.md](./05-implement-python.md) |
+| 6. Test | [06-test.md](./06-test.md) § Java | [06-test.md](./06-test.md) § Python |
+| 7. Layer rules | [07-layer-rules.md](./07-layer-rules.md) | same |
 
 Each step file includes language links (EN · KO) at the top.
 

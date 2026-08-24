@@ -151,4 +151,4 @@ DRY는 **지식(규칙)의 중복**을 없애는 것이지, 닮아 보이는 코
 - 영어 정본 스킬: `skills/`
 - 런어블 예제: [`examples/README.md`](../../examples/README.md) — 같은 calculator를 layered/hexagonal/CQRS로
 - 단계별 튜토리얼: [`docs/guides/library-loan/README.ko.md`](../guides/library-loan/README.ko.md)
-- 방향·우선순위: [`docs/project/roadmap.md`](../project/roadmap.md)
+- 현재 지원 범위: [`docs/reference/support-scope.md`](support-scope.md)

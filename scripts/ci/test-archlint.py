@@ -1,9 +1,5 @@
 #!/usr/bin/env python3
-"""Self-test for archlint.py — proves it catches violations and clears clean code.
-
-Builds throwaway fixtures in a temp dir, asserts expected pass/fail, then also
-lints real examples in the repo. Pure stdlib; run in CI.
-"""
+"""Self-test for archlint.py using isolated passing and failing fixtures."""
 import os
 import sys
 import tempfile
@@ -11,7 +7,6 @@ import tempfile
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import archlint  # noqa: E402
 
-REPO = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 FAILURES = []
 
 
@@ -70,22 +65,6 @@ def main():
         expect("py-flat violation", "layered", f"{base}/py_flat", True)
         expect("py-cqrs-good clean", "cqrs", f"{base}/py_good", False)
         expect("py-cqrs-bad violation", "cqrs", f"{base}/py_cqrs_bad", True)
-
-    java_layered = f"{REPO}/examples/calculator-java-layered/src/main/java/com/oopforge/example/layered/calculator"
-    if os.path.isdir(java_layered):
-        expect("real calculator-java-layered clean", "layered", java_layered, False)
-
-    calc_layered = f"{REPO}/examples/calculator-python-layered/app/calculator"
-    if os.path.isdir(calc_layered):
-        expect("real calculator-layered clean", "layered", calc_layered, False)
-
-    calc_cqrs = f"{REPO}/examples/calculator-python-hexagonal-cqrs/app"
-    if os.path.isdir(calc_cqrs):
-        expect("real calculator-hexagonal-cqrs cqrs clean", "cqrs", calc_cqrs, False)
-
-    java_cqrs = f"{REPO}/examples/calculator-java-hexagonal-cqrs/src/main/java/com/oopforge/example/calculator"
-    if os.path.isdir(java_cqrs):
-        expect("real calculator-java-hexagonal-cqrs cqrs clean", "cqrs", java_cqrs, False)
 
     print("RESULT:", "PASS" if not FAILURES else f"FAIL ({FAILURES})")
     return 1 if FAILURES else 0

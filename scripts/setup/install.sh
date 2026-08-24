@@ -62,6 +62,17 @@ parse_args() {
   done
 }
 
+validate_environment() {
+  local name value
+  for name in INSTALL_CLAUDE INSTALL_CODEX; do
+    value="${!name:-0}"
+    case "$value" in
+      0|1) ;;
+      *) red "$name must be 0 or 1"; exit 1 ;;
+    esac
+  done
+}
+
 link_path() {
   local src="$1"
   local dst="$2"
@@ -112,19 +123,20 @@ link_path() {
 }
 
 do_install() {
-  if [ -d "$HOME/.claude" ] || [ -n "${INSTALL_CLAUDE:-}" ]; then
+  if [ -d "$HOME/.claude" ] || [ "${INSTALL_CLAUDE:-0}" = 1 ]; then
     cyan "--- Claude Code detected"
     link_path "$PACK_DIR/skills" "$HOME/.claude/skills/oopforge"
     link_path "$PACK_DIR/commands" "$HOME/.claude/commands/oopforge"
   fi
 
-  if [ -d "$HOME/.codex" ] || [ -n "${INSTALL_CODEX:-}" ]; then
+  if [ -d "$HOME/.codex" ] || [ "${INSTALL_CODEX:-0}" = 1 ]; then
     cyan "--- Codex CLI detected"
     link_path "$PACK_DIR/skills" "$HOME/.codex/skills/oopforge"
   fi
 
 }
 
+validate_environment
 parse_args "$@"
 
 if [ "$MODE" = "update" ]; then

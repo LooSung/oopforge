@@ -1,7 +1,7 @@
 # Cursor Setup
 
-OOPforge supports **Cursor Agent CLI** (`cursor-agent`) through an explicit
-local plugin directory or a project-local skill. These are the canonical paths
+OOPforge supports **Cursor Agent CLI** (`cursor-agent`) through the explicit
+pack directory or a project-local skill. These are the canonical paths
 in the [support scope](../reference/support-scope.md). There is no
 `scripts/setup/install.sh` target for Cursor.
 
@@ -20,19 +20,12 @@ chmod +x scripts/setup/*.sh
 ./scripts/setup/doctor.sh
 ```
 
-`doctor.sh` checks the pack but does not register Cursor or execute Craft.
+`doctor.sh` checks the pack but does not configure Cursor or execute Craft.
 
-## 2. Register the local plugin
+## 2. Choose the load path
 
-Link the installed pack into Cursor's local-plugin directory:
-
-```bash
-mkdir -p ~/.cursor/plugins/local
-ln -s ~/.oopforge ~/.cursor/plugins/local/oopforge
-```
-
-Pass this directory explicitly when starting Cursor Agent. Headless sessions
-did not discover it from the directory alone.
+The primary path passes the installed pack directly with
+`--plugin-dir ~/.oopforge`; no additional registration link is needed.
 
 Project-local skill links remain a supported alternative. Because the symlink
 target is outside the project, include the pack with `--add-dir`:
@@ -54,7 +47,7 @@ Start Cursor Agent and invoke Craft by name:
 
 ```bash
 cd /path/to/your-backend-project
-cursor-agent --plugin-dir ~/.cursor/plugins/local/oopforge
+cursor-agent --plugin-dir ~/.oopforge
 ```
 
 ```text
@@ -71,7 +64,7 @@ cursor-agent --plan
 One-shot (non-interactive):
 
 ```bash
-cursor-agent --plugin-dir ~/.cursor/plugins/local/oopforge \
+cursor-agent --plugin-dir ~/.oopforge \
   -p "Use OOPforge Discovery: order domain. No code yet."
 ```
 
@@ -87,15 +80,14 @@ A GitHub Release does not update the local clone:
 cd ~/.oopforge && git pull
 ```
 
-Restart `cursor-agent` after the pull. Cursor links are not managed by
-`scripts/setup/install.sh`. To unregister them:
+Restart `cursor-agent` after the pull. Cursor paths are not managed by
+`scripts/setup/install.sh`. If you created the project-local alternative,
+remove it with:
 
 ```bash
-rm -f ~/.cursor/plugins/local/oopforge
 rm -f /path/to/your-backend-project/.cursor/skills/oopforge
 ```
 
-The second command applies only if you created the project-local alternative.
 Also remove the matching `.cursor/skills/oopforge` line from
 `.git/info/exclude` if you added it during setup. The source pack at
 `~/.oopforge` is kept.
@@ -130,7 +122,7 @@ Match the structure in examples/calculator-java-hexagonal/ — domain has zero f
 ## Limitations
 
 - **Explicit load required** — a clean headless session loaded Craft with
-  `--plugin-dir ~/.cursor/plugins/local/oopforge`; the local directory alone
+  `--plugin-dir ~/.oopforge`; the pack directory without that flag
   returned `OOPFORGE_NOT_LOADED`.
 - **Natural-language entry point** — use `Use OOPforge craft: …`.
   `/oopforge:craft` is not a supported Cursor headless command.
@@ -138,7 +130,7 @@ Match the structure in examples/calculator-java-hexagonal/ — domain has zero f
   `--add-dir ~/.oopforge` so headless mode may read the pack.
 - **No bootstrap auto-link** — unlike Claude Code / Codex, `install.sh` does not configure Cursor.
 - **Marketplace** — local packaging is verified; marketplace publication is
-  separate future work.
+  not supported.
 
 ### Local plugin smoke evidence
 

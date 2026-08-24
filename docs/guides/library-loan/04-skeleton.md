@@ -1,6 +1,6 @@
-# Step 3 — Skeleton
+# Step 4 — Skeleton
 
-[English](./03-skeleton.md) · [한국어](./03-skeleton.ko.md)
+[English](./04-skeleton.md) · [한국어](./04-skeleton.ko.md)
 > **Packages + empty types.** Business logic is `NotImplementedError` / `UnsupportedOperationException` only.
 
 Read skills: `{pack}/skills/workflow/skeleton.md`
@@ -26,7 +26,8 @@ src/main/java/com/example/
     │   │   ├── BorrowBook.java
     │   │   └── ReturnBook.java
     │   ├── required/
-    │   │   └── LoanRepository.java
+    │   │   ├── LoanRepository.java
+    │   │   └── DomainEventDispatcher.java
     │   └── service/
     │       ├── BorrowBookService.java
     │       └── ReturnBookService.java
@@ -54,6 +55,9 @@ app/
 ├── application/services/lending/
 │   ├── borrow_book_service.py
 │   └── return_book_service.py
+├── application/domain_events.py
+├── core/dependencies.py
+├── infrastructure/domain_events.py
 ├── infrastructure/repositories/lending/
 │   └── in_memory_loan_repository.py
 └── presentation/api/lending/
@@ -67,4 +71,5 @@ app/
 
 Ask: *"Skeleton looks good — which use case should we implement first?"*
 
-Next: [04-implement-java.md](./04-implement-java.md) · [04-implement-python.md](./04-implement-python.md)
+Next: [05-implement-java.md](./05-implement-java.md) ·
+[05-implement-python.md](./05-implement-python.md)

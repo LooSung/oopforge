@@ -15,13 +15,12 @@ One sentence.
 
 ## OOPforge rules checklist
 
-- [ ] Each new/edited skill file is **≤ 200 lines**
-- [ ] Each touched code file is **≤ 300 lines**
+- [ ] Each touched file is **≤ 300 lines**; each skill is **≤ 200 lines**
 - [ ] Methods kept around **≤ 20 lines** where reasonable
-- [ ] Domain layer in examples has **0 framework imports**
-- [ ] Skill follows the standard structure (frontmatter, 언제 쓰나, 체크리스트, 금지)
-- [ ] New skill is referenced from `AGENTS.md` and `skills/SKILL.md` (so it gets discovered)
-- [ ] `CHANGELOG.md` updated under `## [Unreleased]`
+- [ ] Example domain layers have **0 framework imports** (when applicable)
+- [ ] New/edited skills follow the conditional structure in `CONTRIBUTING.md`
+- [ ] New skills are registered in `skills/stability.json` and routed where needed
+- [ ] User-visible completed work is recorded under `CHANGELOG.md` → `Unreleased`
 - [ ] Local lint passes: `./scripts/ci/lint-skills.sh`
 
 ## How I tested

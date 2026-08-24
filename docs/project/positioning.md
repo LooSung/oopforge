@@ -177,5 +177,5 @@ The shortest useful adoption path is:
 4. add the relevant architecture checks to CI;
 5. compare review findings before and after adoption.
 
-The methodology remains useful without marketplace packaging or an MCP server.
-Those integrations reduce friction and tighten feedback; they do not define the product.
+The methodology is delivered through the supported load paths and does not
+depend on marketplace packaging or an MCP server.

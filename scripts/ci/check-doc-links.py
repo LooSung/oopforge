@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Check local Markdown links in git-tracked documentation."""
+"""Check local Markdown links in tracked and untracked repository documents."""
 
 from __future__ import annotations
 
@@ -104,9 +104,12 @@ def check_file(root: Path, source: Path) -> list[Finding]:
     return findings
 
 
-def tracked_markdown(root: Path) -> list[Path]:
+def repository_markdown(root: Path) -> list[Path]:
     result = subprocess.run(
-        ["git", "ls-files", "-z", "--", "*.md"],
+        [
+            "git", "ls-files", "-z", "--cached", "--others",
+            "--exclude-standard", "--", "*.md",
+        ],
         cwd=root,
         check=True,
         capture_output=True,
@@ -119,7 +122,7 @@ def main() -> int:
     root = Path(__file__).resolve().parents[2]
     findings = [
         finding
-        for source in tracked_markdown(root)
+        for source in repository_markdown(root)
         for finding in check_file(root, source)
     ]
     if findings:

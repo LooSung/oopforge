@@ -4,7 +4,8 @@ Minimal **Spring Boot 3-tier (layered)** reference for OOPforge — the `calcula
 
 The simplest Java member of the calculator family. For ports & adapters, see [`calculator-java-hexagonal`](../calculator-java-hexagonal/).
 
-Each layer is its **own package/folder** (v0.7 Hard Rule), and the controller goes through the service — never straight to the repository.
+Each layer is its **own package/folder** (the current layer-layout Hard Rule),
+and the controller goes through the service — never straight to the repository.
 
 ## Layout
 

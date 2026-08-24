@@ -1,6 +1,6 @@
-# Step 6 — Layer dependency rules
+# 7단계 — Layer dependency rules
 
-[English](./06-layer-rules.md) · [한국어](./06-layer-rules.ko.md)
+[English](./07-layer-rules.md) · [한국어](./07-layer-rules.ko.md)
 ```text
 Presentation / Adapter
         │
@@ -22,7 +22,7 @@ Infrastructure (required port 구현)
 | Domain | 비즈니스 규칙 | Spring, FastAPI, JPA, SQLAlchemy |
 | Application | Domain, port 인터페이스 | 구체 repository, HTTP |
 | Infrastructure | Application port | Domain 불변식 (직접 변경) |
-| Presentation | Application port | Controller에서 Domain 직접 호출 |
+| Presentation | Application port | Domain 직접 호출이나 구체 infrastructure |
 
 > Domain 테스트에 Spring context나 DB fixture가 필요하면 의존 방향이 깨진 것이다.
 

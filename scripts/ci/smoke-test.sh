@@ -15,6 +15,26 @@ green() { printf "\033[32m%s\033[0m\n" "$*"; }
 cyan "==> OOPforge smoke test"
 cyan "HOME=$TMP_HOME"
 
+ZERO_HOME="$TMP_HOME/zero"
+mkdir -p "$ZERO_HOME"
+HOME="$ZERO_HOME" INSTALL_CLAUDE=0 INSTALL_CODEX=0 "$SETUP_DIR/install.sh"
+test ! -e "$ZERO_HOME/.claude/skills/oopforge"
+test ! -e "$ZERO_HOME/.codex/skills/oopforge"
+if HOME="$ZERO_HOME" INSTALL_CLAUDE=yes "$SETUP_DIR/install.sh" --dry-run; then
+  printf "FAIL invalid INSTALL_CLAUDE value was accepted\n" >&2
+  exit 1
+fi
+
+CODEX_HOME="$TMP_HOME/codex-one"
+mkdir -p "$CODEX_HOME"
+HOME="$CODEX_HOME" INSTALL_CLAUDE=0 INSTALL_CODEX=1 "$SETUP_DIR/install.sh"
+test -L "$CODEX_HOME/.codex/skills/oopforge"
+test ! -e "$CODEX_HOME/.claude/skills/oopforge"
+if HOME="$ZERO_HOME" INSTALL_CODEX=yes "$SETUP_DIR/install.sh" --dry-run; then
+  printf "FAIL invalid INSTALL_CODEX value was accepted\n" >&2
+  exit 1
+fi
+
 export HOME="$TMP_HOME"
 export INSTALL_CLAUDE=1
 

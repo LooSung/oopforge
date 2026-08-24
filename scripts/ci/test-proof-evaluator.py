@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Self-test the task-specific C4 proof evaluator."""
+"""Self-test the task-specific proof evaluator."""
 
 from __future__ import annotations
 

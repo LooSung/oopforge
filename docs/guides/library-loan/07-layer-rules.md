@@ -1,6 +1,6 @@
-# Step 6 — Layer dependency rules
+# Step 7 — Layer dependency rules
 
-[English](./06-layer-rules.md) · [한국어](./06-layer-rules.ko.md)
+[English](./07-layer-rules.md) · [한국어](./07-layer-rules.ko.md)
 ```text
 Presentation / Adapter
         │
@@ -22,7 +22,7 @@ Infrastructure (implements required port)
 | Domain | Business rules | Spring, FastAPI, JPA, SQLAlchemy |
 | Application | Domain, port interfaces | Concrete repository, HTTP |
 | Infrastructure | Application ports | Domain invariants (direct mutation) |
-| Presentation | Application ports | Domain called directly from controller |
+| Presentation | Application ports | Domain calls or concrete infrastructure |
 
 > If a domain test needs Spring context or a database fixture, dependency direction is broken.
 

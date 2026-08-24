@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Evaluate one C4 proof workspace using canonical domain-review checks."""
+"""Evaluate one proof workspace using canonical domain-review checks."""
 
 from __future__ import annotations
 

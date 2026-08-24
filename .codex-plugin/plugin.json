@@ -1,6 +1,6 @@
 {
     "name": "oopforge",
-    "version": "1.1.1",
+    "version": "1.2.0",
     "description": "DDD, hexagonal architecture, and OOP domain modeling skills for Codex.",
     "author": {
         "name": "Mr.Louis",
@@ -23,7 +23,7 @@
     "interface": {
         "displayName": "OOPforge",
         "shortDescription": "DDD and OOP workflow discipline for coding agents",
-        "longDescription": "Use OOPforge to guide Codex through Discovery, Design, Skeleton, and Implement workflows with DDD, hexagonal architecture, and framework-free domain modeling rules.",
+        "longDescription": "Use OOPforge to guide Codex through Discovery, Design, Delivery Plan, Skeleton, Implement, and Test workflows with DDD, hexagonal architecture, and framework-free domain modeling rules.",
         "developerName": "Mr.Louis",
         "category": "Coding",
         "capabilities": [

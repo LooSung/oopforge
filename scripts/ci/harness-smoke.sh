@@ -88,14 +88,19 @@ import pathlib
 import sys
 
 root = pathlib.Path(sys.argv[1])
-manifests = [
-    root / ".claude-plugin/plugin.json",
-    root / ".codex-plugin/plugin.json",
-    root / ".cursor-plugin/plugin.json",
-]
-versions = {json.loads(path.read_text())["version"] for path in manifests}
+manifests = [root / name for name in (
+    ".claude-plugin/plugin.json", ".codex-plugin/plugin.json",
+    ".cursor-plugin/plugin.json")]
+manifest_data = [json.loads(path.read_text()) for path in manifests]
+versions = {data["version"] for data in manifest_data}
 if len(versions) != 1:
     raise SystemExit("manifest versions differ")
+claude, _, cursor = manifest_data
+assert isinstance(claude.get("repository"), str), "Claude repository must be a string"
+assert claude.get("skills") == ["./skills/"], "unexpected Claude skills path"
+assert claude.get("commands") == ["./commands/"], "unexpected Claude commands path"
+assert cursor.get("skills") == "./.cursor-plugin/skills/", "unexpected Cursor skills path"
+assert "commands" not in cursor, "Cursor must not package Claude-only commands"
 
 registry = json.loads((root / "skills/stability.json").read_text())
 stable = registry["stable"]
@@ -122,6 +127,9 @@ for status in ("stable", "experimental"):
 required = [
     "commands/craft.md",
     ".cursor-plugin/skills/oopforge/SKILL.md",
+    "skills/workflow/craft.md",
+    "skills/principles/oop-discipline.md",
+    "docs/setup/cursor.md",
     "docs/reference/support-scope.md",
 ]
 for relative in required:

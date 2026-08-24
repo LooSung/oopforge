@@ -99,15 +99,27 @@ check_cursor_skill() {
 
 check_cursor_manifest_paths() {
   local file="$PACK_DIR/.cursor-plugin/plugin.json"
-  local skills commands
+  local skills
   skills="$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1]))["skills"])' "$file")"
-  commands="$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1]))["commands"])' "$file")"
   if [ "$skills" != "./.cursor-plugin/skills/" ]; then
     fail ".cursor-plugin/plugin.json: unexpected skills path: $skills"
-  elif [ "$commands" != "./commands/" ]; then
-    fail ".cursor-plugin/plugin.json: unexpected commands path: $commands"
-  else
+  elif python3 -c 'import json,sys; assert "commands" not in json.load(open(sys.argv[1]))' "$file"; then
     ok ".cursor-plugin component paths"
+  else
+    fail ".cursor-plugin/plugin.json must not package Claude commands"
+  fi
+}
+
+check_claude_manifest_paths() {
+  local file="$PACK_DIR/.claude-plugin/plugin.json"
+  if python3 -c 'import json,sys
+d=json.load(open(sys.argv[1]))
+assert isinstance(d.get("repository"), str)
+assert d.get("skills") == ["./skills/"]
+assert d.get("commands") == ["./commands/"]' "$file"; then
+    ok ".claude-plugin component paths"
+  else
+    fail ".claude-plugin/plugin.json: invalid repository or component paths"
   fi
 }
 
@@ -165,6 +177,7 @@ check_manifest_versions
 cyan "--- Harness packaging"
 check_craft_command
 check_cursor_skill
+check_claude_manifest_paths
 check_cursor_manifest_paths
 
 cyan "--- Documentation links"

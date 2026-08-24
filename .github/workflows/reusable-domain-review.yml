@@ -9,8 +9,7 @@ on:
       oopforge_ref:
         description: OOPforge ref that provides the reviewer
         type: string
-        required: false
-        default: main
+        required: true
 
 permissions:
   contents: read
@@ -56,6 +55,9 @@ jobs:
             review-correction.md
 
       - name: Upsert PR summary comment
+        if: >-
+          github.event.pull_request.head.repo.full_name == github.repository &&
+          github.actor != 'dependabot[bot]'
         uses: actions/github-script@v7
         with:
           script: |

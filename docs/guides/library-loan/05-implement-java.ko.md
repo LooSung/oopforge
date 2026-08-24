@@ -1,7 +1,7 @@
-# Step 4 — Implement (Java)
+# 5단계 — Implement (Java)
 
-[English](./04-implement-java.md) · [한국어](./04-implement-java.ko.md)
-Domain → application → adapter order. **Domain layer: Spring import 0.**
+[English](./05-implement-java.md) · [한국어](./05-implement-java.ko.md)
+Domain → application → adapter 순서. **Domain layer: Spring import 0.**
 
 ---
 
@@ -69,7 +69,7 @@ public record BookBorrowed(
 ) {}
 ```
 
-**`Loan.java`** — Aggregate Root
+**`Loan.java`** — 애그리게이트 루트
 ```java
 package com.example.lending.domain;
 
@@ -127,7 +127,7 @@ public class Loan {
 
 ## Application
 
-**`BorrowBook.java`** — inbound port
+**`BorrowBook.java`** — 인바운드 포트
 ```java
 package com.example.lending.application.provided;
 
@@ -137,7 +137,7 @@ public interface BorrowBook {
 }
 ```
 
-**`LoanRepository.java`** — outbound port
+**`LoanRepository.java`** — 아웃바운드 포트
 ```java
 package com.example.lending.application.required;
 
@@ -151,20 +151,37 @@ public interface LoanRepository {
 }
 ```
 
+**`DomainEventDispatcher.java`** — 아웃바운드 포트
+```java
+package com.example.lending.application.required;
+
+import java.util.List;
+
+public interface DomainEventDispatcher {
+    void dispatch(List<Object> events);
+}
+```
+
 **`BorrowBookService.java`**
 ```java
 package com.example.lending.application.service;
 
 import com.example.lending.application.provided.BorrowBook;
+import com.example.lending.application.required.DomainEventDispatcher;
 import com.example.lending.application.required.LoanRepository;
 import com.example.lending.domain.*;
 
 public class BorrowBookService implements BorrowBook {
 
     private final LoanRepository loanRepository;
+    private final DomainEventDispatcher eventDispatcher;
 
-    public BorrowBookService(LoanRepository loanRepository) {
+    public BorrowBookService(
+        LoanRepository loanRepository,
+        DomainEventDispatcher eventDispatcher
+    ) {
         this.loanRepository = loanRepository;
+        this.eventDispatcher = eventDispatcher;
     }
 
     @Override
@@ -180,7 +197,7 @@ public class BorrowBookService implements BorrowBook {
         Loan loan = Loan.borrow(loanId, memberId, bookId);
 
         loanRepository.save(loan);
-        loan.popEvents();
+        eventDispatcher.dispatch(loan.popEvents());
 
         return loanId.value().toString();
     }
@@ -222,6 +239,33 @@ public class InMemoryLoanRepository implements LoanRepository {
 }
 ```
 
+**`LendingConfig.java`** — 조립 지점
+```java
+package com.example.lending.config;
+
+import com.example.lending.adapter.persistence.InMemoryLoanRepository;
+import com.example.lending.application.provided.BorrowBook;
+import com.example.lending.application.required.*;
+import com.example.lending.application.service.BorrowBookService;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.annotation.*;
+
+@Configuration
+public class LendingConfig {
+    @Bean LoanRepository loanRepository() {
+        return new InMemoryLoanRepository();
+    }
+
+    @Bean DomainEventDispatcher eventDispatcher(ApplicationEventPublisher publisher) {
+        return events -> events.forEach(publisher::publishEvent);
+    }
+
+    @Bean BorrowBook borrowBook(LoanRepository repo, DomainEventDispatcher dispatcher) {
+        return new BorrowBookService(repo, dispatcher);
+    }
+}
+```
+
 **`LoanController.java`**
 ```java
 package com.example.lending.adapter.web;
@@ -252,4 +296,5 @@ public class LoanController {
 
 ---
 
-Next: [05-test.md](./05-test.md) · Python: [04-implement-python.md](./04-implement-python.md)
+다음: [06-test.ko.md](./06-test.ko.md) · Python:
+[05-implement-python.ko.md](./05-implement-python.ko.md)

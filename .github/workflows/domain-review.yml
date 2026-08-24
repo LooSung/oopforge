@@ -1,6 +1,6 @@
 name: Domain Review
 
-# Read-only OOPforge domain review (roadmap C2+).
+# Read-only OOPforge domain review.
 # Comments new or worsened hard-rule, antipattern, and archlint findings
 # on the changed surface. Non-blocking: never fails the check or edits code.
 # Posts one summary comment (idempotent), uploads findings JSON, and a
@@ -46,6 +46,9 @@ jobs:
             review-correction.md
 
       - name: Upsert PR summary comment
+        if: >-
+          github.event.pull_request.head.repo.full_name == github.repository &&
+          github.actor != 'dependabot[bot]'
         uses: actions/github-script@v7
         with:
           script: |

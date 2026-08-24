@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Self-test for the domain-review MVP (roadmap C2).
+"""Self-test for the core domain-review behavior.
 
 Proves the domain logic: unified-diff parsing, per-file detectors, and the
 new-only + line-level admission in ReviewRun. Pure stdlib; run in CI.

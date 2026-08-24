@@ -1,6 +1,6 @@
-# Step 5 — Test
+# 6단계 — Test
 
-[English](./05-test.md) · [한국어](./05-test.ko.md)
+[English](./06-test.md) · [한국어](./06-test.ko.md)
 Domain 테스트는 Spring·DB fixture **없이** 실행. 유스케이스 테스트는 in-memory port 사용.
 
 ---
@@ -47,6 +47,8 @@ package com.example.lending.application.service;
 
 import com.example.lending.adapter.persistence.InMemoryLoanRepository;
 import com.example.lending.application.provided.BorrowBook;
+import com.example.lending.domain.BookBorrowed;
+import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.*;
 
@@ -54,14 +56,18 @@ class BorrowBookServiceTest {
 
     @Test
     void borrow_returns_loan_id() {
-        var service = new BorrowBookService(new InMemoryLoanRepository());
+        var events = new ArrayList<Object>();
+        var service = new BorrowBookService(
+            new InMemoryLoanRepository(), events::addAll);
         String loanId = service.handle(new BorrowBook.Command("member-1", "book-1"));
         assertThat(loanId).isNotBlank();
+        assertThat(events).singleElement().isInstanceOf(BookBorrowed.class);
     }
 
     @Test
     void cannot_borrow_same_book_twice() {
-        var service = new BorrowBookService(new InMemoryLoanRepository());
+        var service = new BorrowBookService(
+            new InMemoryLoanRepository(), events -> {});
         service.handle(new BorrowBook.Command("member-1", "book-1"));
         assertThatThrownBy(() ->
             service.handle(new BorrowBook.Command("member-2", "book-1"))
@@ -90,6 +96,14 @@ from app.infrastructure.repositories.lending.in_memory_loan_repository import (
 )
 
 
+class RecordingDispatcher:
+    def __init__(self) -> None:
+        self.events: list[object] = []
+
+    def dispatch(self, events: tuple[object, ...]) -> None:
+        self.events.extend(events)
+
+
 def test_borrow_sets_active():
     loan = Loan.borrow(LoanId.generate(), MemberId("m-1"), BookId("b-1"))
     assert loan.status is LoanStatus.ACTIVE
@@ -110,13 +124,16 @@ def test_return_twice_raises():
 
 
 def test_use_case_borrow_success():
-    service = BorrowBookService(InMemoryLoanRepository())
+    dispatcher = RecordingDispatcher()
+    service = BorrowBookService(InMemoryLoanRepository(), dispatcher)
     loan_id = service.handle(BorrowBookCommand("member-1", "book-1"))
     assert loan_id is not None
+    assert len(dispatcher.events) == 1
+    assert isinstance(dispatcher.events[0], BookBorrowed)
 
 
 def test_use_case_duplicate_borrow_fails():
-    service = BorrowBookService(InMemoryLoanRepository())
+    service = BorrowBookService(InMemoryLoanRepository(), RecordingDispatcher())
     service.handle(BorrowBookCommand("member-1", "book-1"))
     with pytest.raises(ValueError, match="book already on loan"):
         service.handle(BorrowBookCommand("member-2", "book-1"))
@@ -124,4 +141,4 @@ def test_use_case_duplicate_borrow_fails():
 
 ---
 
-다음: [06-layer-rules.ko.md](./06-layer-rules.ko.md)
+다음: [07-layer-rules.ko.md](./07-layer-rules.ko.md)
