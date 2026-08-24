@@ -4,6 +4,8 @@
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-08-24
+
 ### Added
 
 - **Python Pydantic 타입 안전성** — FastAPI 경계의 직접 Pydantic 의존성,
