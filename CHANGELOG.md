@@ -6,6 +6,8 @@
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-08-25
+
 ### Added
 
 - **Refactor command** — Claude Code의 `/oopforge:refactor`와 Codex/Cursor의
@@ -17,6 +19,9 @@
 
 - **Craft command boundary** — Craft를 호환 가능한 기본 진입점으로 유지하면서,
   명시적인 리팩터 요청은 기능 변경을 금지하는 좁은 command 계약으로 분리했다.
+- **Cursor 검증 경계 문서화** — 명시적 plugin과 project-local 로드는 동작하지만,
+  최신 CLI가 전역 Claude skill도 발견해 source-isolation negative control을
+  오염시킬 수 있음을 지원 범위에 기록했다.
 
 ## [1.2.0] - 2026-08-25
 
