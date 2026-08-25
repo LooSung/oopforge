@@ -86,7 +86,6 @@ static_smoke() {
 import json
 import pathlib
 import sys
-
 root = pathlib.Path(sys.argv[1])
 manifests = [root / name for name in (
     ".claude-plugin/plugin.json", ".codex-plugin/plugin.json",
@@ -125,9 +124,9 @@ for status in ("stable", "experimental"):
             raise SystemExit(f"stability frontmatter mismatch: {relative}")
 
 required = [
-    "commands/craft.md", "commands/refactor.md",
+    "commands/craft.md", "commands/refactor.md", "commands/consult.md",
     ".cursor-plugin/skills/oopforge/SKILL.md",
-    "skills/workflow/craft.md",
+    "skills/workflow/craft.md", "skills/workflow/consult.md",
     "skills/principles/oop-discipline.md",
     "docs/setup/cursor.md",
     "docs/reference/support-scope.md",
@@ -135,11 +134,12 @@ required = [
 for relative in required:
     if not (root / relative).is_file():
         raise SystemExit(f"missing harness path: {relative}")
-for relative in ["commands/craft.md", "commands/refactor.md", "skills/SKILL.md",
+for relative in ["commands/craft.md", "commands/refactor.md", "commands/consult.md", "skills/SKILL.md",
                  ".cursor-plugin/skills/oopforge/SKILL.md"]:
     if "OOPFORGE_ACTIVATION_PROBE" not in (root / relative).read_text():
         raise SystemExit(f"missing activation probe: {relative}")
-assert all(marker in (root / "commands/refactor.md").read_text() for marker in ("workflow/refactor.md", "Do not reclassify"))
+contracts = {"commands/refactor.md": ("workflow/refactor.md", "Do not reclassify"), "skills/workflow/consult.md": ("Select exactly one mode", "Never modify production code")}
+assert all(all(marker in (root / path).read_text() for marker in markers) for path, markers in contracts.items())
 print("PASS static harness packaging")
 PY
 }

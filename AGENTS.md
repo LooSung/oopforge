@@ -57,6 +57,7 @@ Use `/oopforge:craft` (`commands/craft.md`) as the default OOPforge user entry p
 
 - Use `/oopforge:craft` for single components, existing-domain features, domain bug fixes, and requests whose path is not yet clear.
 - Use `/oopforge:refactor` for explicit behavior-preserving structural cleanup; it applies Craft startup/completion gates and `skills/workflow/refactor.md` without reclassification.
+- Use `/oopforge:consult` for answers, alternatives, review, or explicitly requested planning documents; it never changes implementation or test code.
 - For ambiguous or advisory requests, Craft recommends the smallest path without implementing.
 - For a new domain or large feature, Craft routes into the existing Discovery → Test workflow and keeps the human checkpoints.
 
@@ -86,6 +87,7 @@ Use this table to decide **which skill to read first**. Workflow stage always wi
 |---|---|---|
 | Craft (entrypoint) | Select and execute the smallest OOP path, or recommend only for advisory requests | `skills/workflow/craft.md` + `skills/principles/oop-discipline.md` |
 | Refactor command | Preserve behavior while improving one structural decision | `skills/workflow/craft.md` + `skills/workflow/refactor.md` + `skills/principles/oop-discipline.md` |
+| Consult command | Answer, propose, review, or explicitly write one planning document | `skills/workflow/consult.md` |
 | Discovery | Glossary, contexts, actors | `skills/workflow/discovery.md` |
 | Design | Use-case signatures, aggregates | `skills/workflow/design.md` + `skills/oop/domain-model.md` |
 | Delivery Plan | Scope, order, tests, risks | `skills/workflow/delivery-plan.md` |
@@ -156,6 +158,7 @@ Before changing behavior, read the relevant skill file:
 - Testing: `skills/workflow/test.md`
 - Production readiness (explicit opt-in only): `skills/workflow/production-readiness.md`
 - Refactoring existing or external code: `skills/workflow/refactor.md`
+- Consultation and explicit planning documents: `skills/workflow/consult.md`
 - Anti-patterns: `skills/antipatterns/` (`flat-package`, `anemic-domain`, `controller-fat`, `repository-with-business-logic`, `god-aggregate`)
 - Resuming work across sessions (persist + restore context): `skills/workflow/continuity.md`
 

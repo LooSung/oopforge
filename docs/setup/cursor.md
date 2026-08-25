@@ -54,6 +54,7 @@ cursor-agent --plugin-dir ~/.oopforge
 Use OOPforge craft: Add a single Email value object
 Use OOPforge craft: Read docs/integration/image-storage.md and advise only.
 Use OOPforge refactor: Improve billing structure while preserving behavior.
+Use OOPforge consult: Compare billing designs without changing files.
 ```
 
 Planning-only sessions (Discovery, Design, Delivery Plan):
@@ -125,9 +126,9 @@ Match the structure in examples/calculator-java-hexagonal/ — domain has zero f
 - **Explicit load required** — a clean headless session loaded Craft with
   `--plugin-dir ~/.oopforge`; the pack directory without that flag
   returned `OOPFORGE_NOT_LOADED`.
-- **Natural-language entry point** — use `Use OOPforge craft: …` or `Use
-  OOPforge refactor: …`. OOPforge `/` commands are not supported Cursor
-  headless commands.
+- **Natural-language entry point** — use `Use OOPforge craft: …`, `Use
+  OOPforge refactor: …`, or `Use OOPforge consult: …`. OOPforge `/` commands
+  are not supported Cursor headless commands.
 - **External symlink target** — project-local symlink startup includes
   `--add-dir ~/.oopforge` so headless mode may read the pack.
 - **No bootstrap auto-link** — unlike Claude Code / Codex, `install.sh` does not configure Cursor.

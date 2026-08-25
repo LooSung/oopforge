@@ -4,7 +4,7 @@ OOPforge supports Codex through the global skill entry point at
 `skills/SKILL.md`. This is the canonical path in the
 [support scope](../reference/support-scope.md).
 
-Codex installs **skills only** — not Claude Code `commands/`. OOPforge strings such as `/oopforge:craft` and `/oopforge:refactor` are **not** Codex slash commands; Codex reserves `/` for built-ins such as `/skills` and `/model`.
+Codex installs **skills only** — not Claude Code `commands/`. OOPforge strings such as `/oopforge:craft`, `/oopforge:refactor`, and `/oopforge:consult` are **not** Codex slash commands; Codex reserves `/` for built-ins such as `/skills` and `/model`.
 
 ## Install
 
@@ -56,6 +56,7 @@ OOPforge repository and treat that repository as the work target.
 Use OOPforge craft: Start Discovery for the library loan domain. No code yet.
 Use OOPforge craft: Implement borrow-book in python-fastapi
 Use OOPforge refactor: Improve imported billing structure without changing behavior
+Use OOPforge consult: Review billing boundaries without changing files
 ```
 
 One-shot (non-interactive):
@@ -64,7 +65,7 @@ One-shot (non-interactive):
 codex exec "Use OOPforge craft: Add a single Email value object"
 ```
 
-The `oopforge` skill routes Craft to the smallest OOP path and explicit Refactor requests to the behavior-preserving workflow.
+The `oopforge` skill routes Craft to the smallest OOP path, Refactor to behavior-preserving work, and Consult to advice or explicit planning documents without implementation changes.
 
 Maintainers can run the authenticated positive/negative check with:
 
@@ -94,5 +95,5 @@ Skill content updates immediately via symlinks; restart Codex when the skill ent
 
 ## Related
 
-- [Claude Code setup](./claude-code.md) — slash commands `/oopforge:craft` and `/oopforge:refactor`
+- [Claude Code setup](./claude-code.md) — slash commands `/oopforge:craft`, `/oopforge:refactor`, and `/oopforge:consult`
 - [Cursor setup](./cursor.md) (explicit local plugin or project-local skill)

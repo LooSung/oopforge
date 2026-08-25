@@ -1,6 +1,6 @@
 ---
 name: oopforge
-description: Use OOPforge when building or refactoring a backend service, server, REST/HTTP API, or business app/feature in Java or Python — including vague build prompts like "make a calculator" or "build an order service" — and for DDD/OOP modeling, layered or hexagonal/clean architecture, aggregates, value objects, ports/adapters, CQRS, OpenAPI/Swagger, or the /oopforge:craft and /oopforge:refactor workflow prompts.
+description: Use OOPforge when building, refactoring, or consulting on a backend service, server, REST/HTTP API, or business app/feature in Java or Python — including DDD/OOP modeling, layered or hexagonal/clean architecture, aggregates, value objects, ports/adapters, CQRS, OpenAPI/Swagger, or the /oopforge:craft, /oopforge:refactor, and /oopforge:consult workflow prompts.
 license: MIT
 compatibility: Claude Code, Codex CLI, Cursor Agent, and Agent Skills-compatible clients with access to the complete OOPforge pack.
 stability: stable
@@ -23,14 +23,14 @@ Use this skill when the user asks for OOPforge, DDD/OOP modeling, clean or hexag
 
 ## Command Routing
 
-Treat **`/oopforge:craft`** as the default OOPforge entry point on **Claude Code**. Use **`/oopforge:refactor`** when the user explicitly wants to preserve behavior while improving structure.
+Treat **`/oopforge:craft`** as the default OOPforge entry point on **Claude Code**. Use **`/oopforge:refactor`** for explicit behavior-preserving cleanup and **`/oopforge:consult`** for advice, proposals, review, or explicit planning documents without implementation changes.
 
-On **Codex CLI**, do not type OOPforge `/` commands at the composer — Codex reserves `/` for built-ins. Use `/skills` or `$oopforge` → **oopforge**, then `craft: …` or `refactor: …` without a leading `/`.
+On **Codex CLI**, do not type OOPforge `/` commands at the composer — Codex reserves `/` for built-ins. Use `/skills` or `$oopforge` → **oopforge**, then `craft: …`, `refactor: …`, or `consult: …` without a leading `/`.
 
 On **Cursor Agent CLI**, use the explicit local-plugin or project-local skill
 setup documented in `../docs/setup/cursor.md`, then use natural-language intents
-such as `Use OOPforge craft: …` or `Use OOPforge refactor: …`. OOPforge `/`
-commands are not Cursor headless entry points.
+such as `Use OOPforge craft: …`, `Use OOPforge refactor: …`, or `Use OOPforge
+consult: …`. OOPforge `/` commands are not Cursor headless entry points.
 
 ## Project vs pack (paths)
 
@@ -43,6 +43,7 @@ commands are not Cursor headless entry points.
 |---|---|---|
 | `/oopforge:craft …` (Claude) or `Use OOPforge craft: …` (Codex/Cursor) | `workflow/craft.md` + `principles/oop-discipline.md` | select the smallest OOP path; execute unless advisory only |
 | `/oopforge:refactor …` (Claude) or `Use OOPforge refactor: …` (Codex/Cursor) | `workflow/craft.md` + `workflow/refactor.md` + `principles/oop-discipline.md` | preserve behavior while improving one structural decision |
+| `/oopforge:consult …` (Claude) or `Use OOPforge consult: …` (Codex/Cursor) | `workflow/consult.md` | answer, propose, review, or explicitly write one planning document without implementation changes |
 
 Use Craft as the default when the user does not know which path fits. Existing Craft refactor requests remain valid for v1.x compatibility; the explicit Refactor intent narrows authorization to behavior-preserving work. Do not force the full Discovery→Test pipeline for small, focused tasks.
 
@@ -54,10 +55,11 @@ Natural language also works, for example: "Use OOPforge Discovery for the paymen
 2. Read only the relevant OOP or language skill files needed for the task.
 3. For `/oopforge:craft`, follow `workflow/craft.md`; it owns classification, OOP Contract, execution path, and verification.
 4. For an explicit Refactor request, use Craft's startup and completion gates, select `workflow/refactor.md` without reclassification, and preserve behavior.
-5. Keep the normal order for new work: Discovery -> Design -> Delivery Plan -> Skeleton -> Implement -> Test.
-6. Ask for human approval before moving from one workflow stage to the next.
-7. Do not merge planning, implementation, and verification in a single step unless the user explicitly asks.
-8. Add `workflow/production-readiness.md` only when the user explicitly asks
+5. For Consult, follow `workflow/consult.md`; default to read-only and write one planning document only after explicit document wording.
+6. Keep the normal order for new work: Discovery -> Design -> Delivery Plan -> Skeleton -> Implement -> Test.
+7. Ask for human approval before moving from one workflow stage to the next.
+8. Do not merge planning, implementation, and verification in a single step unless the user explicitly asks.
+9. Add `workflow/production-readiness.md` only when the user explicitly asks
    about deployment, production, or operational readiness; ordinary feature
    requests never activate it.
 
@@ -78,6 +80,7 @@ Backend stack and skeleton:
 
 Conditional workflow:
 - Production readiness (explicit opt-in only): `workflow/production-readiness.md`
+- Consultation (experimental): `workflow/consult.md`
 
 Skill maturity is recorded in `stability.json`; current harness and stack
 support boundaries are defined by `../docs/reference/support-scope.md`.

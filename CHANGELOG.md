@@ -10,6 +10,8 @@
 
 - **Refactor command** — Claude Code의 `/oopforge:refactor`와 Codex/Cursor의
   `Use OOPforge refactor: …`가 기존 동작 보존 Refactor workflow로 직접 진입한다.
+- **Consult command (experimental)** — 질문·대안·검토·명시적 계획 문서를
+  answer/proposal/review/document 중 한 모드로 처리하며 기본은 읽기 전용이다.
 
 ### Changed
 

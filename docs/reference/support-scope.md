@@ -20,9 +20,9 @@ must be replaced by durable shared infrastructure for multi-instance deployment.
 
 | Harness | Supported load path | Invocation |
 |---|---|---|
-| Claude Code | `~/.claude/skills/oopforge` and `~/.claude/commands/oopforge` symlinks | `/oopforge:craft …` or `/oopforge:refactor …` |
-| Codex CLI | `~/.codex/skills/oopforge` symlink | select `oopforge`, then `Use OOPforge craft: …` or `Use OOPforge refactor: …` |
-| Cursor Agent CLI | explicit `--plugin-dir` | `Use OOPforge craft: …` or `Use OOPforge refactor: …` |
+| Claude Code | `~/.claude/skills/oopforge` and `~/.claude/commands/oopforge` symlinks | `/oopforge:craft …`, `/oopforge:refactor …`, or `/oopforge:consult …` |
+| Codex CLI | `~/.codex/skills/oopforge` symlink | select `oopforge`, then use the matching `craft`, `refactor`, or `consult` natural-language intent |
+| Cursor Agent CLI | explicit `--plugin-dir` | use the matching `craft`, `refactor`, or `consult` natural-language intent |
 | Cursor Agent CLI | `.cursor/skills/oopforge` plus pack `--add-dir` | same natural-language intents |
 
 Cursor directory auto-discovery, Cursor headless OOPforge `/` commands,

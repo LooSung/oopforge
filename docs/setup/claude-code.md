@@ -1,7 +1,7 @@
 # Claude Code Setup
 
 OOPforge supports Claude Code through the symlink-installed skill and the
-`/oopforge:craft` and `/oopforge:refactor` commands defined in the
+`/oopforge:craft`, `/oopforge:refactor`, and `/oopforge:consult` commands defined in the
 [support scope](../reference/support-scope.md).
 
 ## Install
@@ -22,6 +22,7 @@ from the backend project and confirm that the commands are registered:
 ```text
 /oopforge:craft Advise only: which path fits adding one Email value object? Do not edit files.
 /oopforge:refactor Improve the billing module structure while preserving its API and behavior.
+/oopforge:consult Review the billing boundaries without changing files.
 ```
 
 Maintainers can run the authenticated positive/negative check with:
@@ -49,6 +50,7 @@ treat that repository as the work target.
 /oopforge:craft Start Discovery for the library loan domain. No code yet.
 /oopforge:craft Implement borrow-book in java-spring
 /oopforge:refactor Improve imported billing structure without changing behavior
+/oopforge:consult Compare two payment designs without changing files
 ```
 
 **First time?** Follow the [library loan walkthrough](../guides/library-loan/README.md) step by step.
