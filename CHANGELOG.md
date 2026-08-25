@@ -6,6 +6,12 @@
 
 ## [Unreleased]
 
+### Fixed
+
+- **Harness live-smoke isolation** — Codex negative token의 무해한 문장부호를
+  허용하면서 loaded-token 충돌은 계속 차단하고, Cursor는 실행별 임시 source
+  probe로 전역 Claude skill 자동 발견과 현재 후보 로드를 구분한다.
+
 ## [1.3.0] - 2026-08-25
 
 ### Added

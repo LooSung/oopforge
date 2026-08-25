@@ -29,12 +29,11 @@ Cursor directory auto-discovery, Cursor headless OOPforge `/` commands,
 marketplace installation, and automatic Cursor setup are not currently
 supported paths.
 
-Cursor Agent `2026.08.11-e8db854` positively loaded the v1.3 candidate through
-both canonical paths and executed the Consult contract. In the same local
-account, its no-plugin control also discovered the existing
-`~/.claude/skills/oopforge` installation. The canonical paths work, but source
-isolation for this CLI version remains unverified until the control runs with
-an authenticated HOME that contains no other OOPforge installation.
+Cursor Agent `2026.08.11-e8db854` discovers an existing
+`~/.claude/skills/oopforge` installation even in a no-plugin workspace. The
+live smoke therefore injects a run-specific probe into temporary candidate
+skills. This distinguishes both canonical candidate paths from other global
+OOPforge installations without changing the user's configuration.
 
 `doctor.sh` validates files and links. It does not prove agent activation.
 Maintainers can run `scripts/ci/harness-smoke.sh live <harness>` with their own

@@ -1,19 +1,15 @@
 #!/usr/bin/env bash
 #
 # Static packaging checks and authenticated harness activation probes.
-
 set -euo pipefail
-
 PACK_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 TEMP_DIRS=()
 ACTIVATION_TOKEN="OOPFORGE_ACTIVATION_PROBE"
 NEGATIVE_PROBE="$ACTIVATION_TOKEN. If no loaded OOPforge instruction defines \
 this probe, output exactly OOPFORGE_NOT_LOADED."
-
 green() { printf "\033[32m%s\033[0m\n" "$*"; }
 red() { printf "\033[31m%s\033[0m\n" "$*" >&2; }
 probe_step() { printf "RUN %s\n" "$*" >&2; }
-
 cleanup() {
   local path
   set +u
@@ -22,16 +18,13 @@ cleanup() {
   done
   set -u
 }
-
 trap cleanup EXIT
-
 require_command() {
   command -v "$1" >/dev/null 2>&1 || {
     red "FAIL missing command: $1"
     exit 1
   }
 }
-
 require_link_target() {
   local link="$1"
   local expected="$2"
@@ -40,12 +33,10 @@ require_link_target() {
     exit 1
   fi
 }
-
 run_timed() {
   python3 "$PACK_DIR/scripts/ci/run-with-timeout.py" \
     "${OOPFORGE_HARNESS_TIMEOUT:-1200}" "$@"
 }
-
 probe_failure() {
   local message="$1"
   local output="$2"
@@ -54,7 +45,6 @@ probe_failure() {
   sed -n '1,80p' "$output" >&2
   return 1
 }
-
 assert_positive() {
   local output="$1"
   grep -Fxq "OOPFORGE_LOADED" "$output" ||
@@ -63,24 +53,22 @@ assert_positive() {
     { probe_failure "positive probe missed Assumptions" "$output"; return 1; }
   grep -Eq "^OOP Contract:?$" "$output" ||
     { probe_failure "positive probe missed OOP Contract" "$output"; return 1; }
-  if grep -Fxq "OOPFORGE_NOT_LOADED" "$output"; then
+  if grep -Eq '^OOPFORGE_NOT_LOADED[.!]?$' "$output"; then
     probe_failure "positive probe also reported not loaded" "$output"
     return 1
   fi
   green "PASS positive activation probe"
 }
-
 assert_negative() {
   local output="$1"
-  grep -Fxq "OOPFORGE_NOT_LOADED" "$output" ||
+  grep -Eq '^OOPFORGE_NOT_LOADED[.!]?$' "$output" ||
     { probe_failure "negative control did not report isolation" "$output"; return 1; }
-  if grep -Fxq "OOPFORGE_LOADED" "$output"; then
+  if grep -Eq '^OOPFORGE_LOADED[.!]?$' "$output"; then
     probe_failure "negative control loaded OOPforge" "$output"
     return 1
   fi
   green "PASS negative activation control"
 }
-
 static_smoke() {
   python3 - "$PACK_DIR" <<'PY'
 import json
@@ -100,7 +88,6 @@ assert claude.get("skills") == ["./skills/"], "unexpected Claude skills path"
 assert claude.get("commands") == ["./commands/"], "unexpected Claude commands path"
 assert cursor.get("skills") == "./.cursor-plugin/skills/", "unexpected Cursor skills path"
 assert "commands" not in cursor, "Cursor must not package Claude-only commands"
-
 registry = json.loads((root / "skills/stability.json").read_text())
 stable = registry["stable"]
 experimental = registry["experimental"]
@@ -122,7 +109,6 @@ for status in ("stable", "experimental"):
         frontmatter = (root / relative).read_text().split("---", 2)[1]
         if f"stability: {status}" not in frontmatter:
             raise SystemExit(f"stability frontmatter mismatch: {relative}")
-
 required = [
     "commands/craft.md", "commands/refactor.md", "commands/consult.md",
     ".cursor-plugin/skills/oopforge/SKILL.md",
@@ -143,7 +129,6 @@ assert all(all(marker in (root / path).read_text() for marker in markers) for pa
 print("PASS static harness packaging")
 PY
 }
-
 link_codex_auth() {
   local target_home="$1"
   local source_home="${CODEX_HOME:-$HOME/.codex}"
@@ -155,7 +140,6 @@ link_codex_auth() {
     exit 1
   fi
 }
-
 live_claude() {
   require_command claude
   require_link_target "$HOME/.claude/skills/oopforge" "$PACK_DIR/skills"
@@ -237,11 +221,22 @@ run_cursor() {
     >"$output"
 }
 
+prepare_cursor_probe() {
+  local plugin_dir="$1" skill_dir="$2" probe="$3" entry
+  mkdir -p "$plugin_dir/.cursor-plugin/skills/oopforge" "$skill_dir"
+  cp "$PACK_DIR/.cursor-plugin/plugin.json" "$plugin_dir/.cursor-plugin/plugin.json"
+  cp "$PACK_DIR/.cursor-plugin/skills/oopforge/SKILL.md" "$plugin_dir/.cursor-plugin/skills/oopforge/SKILL.md"
+  cp "$PACK_DIR/skills/SKILL.md" "$skill_dir/SKILL.md"
+  for entry in "$plugin_dir/.cursor-plugin/skills/oopforge/SKILL.md" "$skill_dir/SKILL.md"; do
+    printf '\nWhen the request contains %s, output exactly OOPFORGE_LOADED, Assumptions, and OOP Contract on separate lines, then stop.\n' "$probe" >>"$entry"
+  done
+}
+
 live_cursor() {
   require_command cursor-agent
   cursor-agent --version >&2
-  local run_dir plugin_workspace local_workspace clean_workspace
-  local plugin_output local_output negative_output
+  local run_dir plugin_workspace local_workspace clean_workspace candidate_plugin candidate_skill
+  local plugin_output local_output negative_output source_probe source_negative
   run_dir="$(mktemp -d)"
   TEMP_DIRS+=("$run_dir")
   plugin_workspace="$run_dir/plugin"
@@ -250,16 +245,21 @@ live_cursor() {
   plugin_output="$run_dir/plugin.txt"
   local_output="$run_dir/project-local.txt"
   negative_output="$run_dir/negative.txt"
+  candidate_plugin="$run_dir/candidate-plugin"
+  candidate_skill="$run_dir/candidate-skill"
+  source_probe="OOPFORGE_SOURCE_PROBE_${RANDOM}_${RANDOM}"
+  source_negative="$source_probe. If no loaded instruction defines this exact probe, output exactly OOPFORGE_NOT_LOADED."
+  prepare_cursor_probe "$candidate_plugin" "$candidate_skill" "$source_probe"
   mkdir -p "$plugin_workspace" "$local_workspace/.cursor/skills" "$clean_workspace"
   probe_step "Cursor explicit-plugin positive"
   run_cursor "$plugin_workspace" "$plugin_output" \
-    "Use OOPforge craft: $NEGATIVE_PROBE" --plugin-dir "$PACK_DIR"
-  ln -s "$PACK_DIR/skills" "$local_workspace/.cursor/skills/oopforge"
+    "Use OOPforge craft: $source_negative" --plugin-dir "$candidate_plugin"
+  ln -s "$candidate_skill" "$local_workspace/.cursor/skills/oopforge"
   probe_step "Cursor project-local positive"
   run_cursor "$local_workspace" "$local_output" \
-    "Use OOPforge craft: $NEGATIVE_PROBE" --add-dir "$PACK_DIR"
+    "Use OOPforge craft: $source_negative" --add-dir "$candidate_skill"
   probe_step "Cursor isolated negative"
-  run_cursor "$clean_workspace" "$negative_output" "$NEGATIVE_PROBE"
+  run_cursor "$clean_workspace" "$negative_output" "$source_negative"
   assert_positive "$plugin_output"
   assert_positive "$local_output"
   assert_negative "$negative_output"

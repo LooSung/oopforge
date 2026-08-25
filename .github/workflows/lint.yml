@@ -46,7 +46,9 @@ jobs:
         run: python3 scripts/ci/test-doc-links.py
 
       - name: Self-test hard timeout runner
-        run: python3 scripts/ci/test-run-with-timeout.py
+        run: |
+          python3 scripts/ci/test-run-with-timeout.py
+          python3 scripts/ci/test-harness-smoke.py
 
       - name: Self-test proof evaluator
         run: |
