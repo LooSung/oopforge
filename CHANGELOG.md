@@ -6,6 +6,8 @@
 
 ## [Unreleased]
 
+## [1.3.1] - 2026-08-25
+
 ### Fixed
 
 - **Harness live-smoke isolation** — Codex negative token의 무해한 문장부호를
