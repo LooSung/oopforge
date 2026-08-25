@@ -47,9 +47,9 @@ Discovery → Design → Delivery Plan → Skeleton → Implement → Test
 
 ---
 
-## 3. Craft — 단일 진입점
+## 3. Craft와 Refactor 진입점
 
-**Craft**가 사용자 진입점이며 호출법은 하네스마다 다르다. Claude Code는
+**Craft**가 기본 진입점이며 호출법은 하네스마다 다르다. Claude Code는
 `/oopforge:craft <요청>`, Codex와 Cursor Agent CLI는
 `Use OOPforge craft: <요청>`을 사용한다. Craft는:
 
@@ -60,6 +60,11 @@ Discovery → Design → Delivery Plan → Skeleton → Implement → Test
 4. 구현·테스트 후 **하드룰**을 검증하고 완료 보고를 남긴다.
 
 advisory(추천만) 요청이면 구현하지 않고 가장 작은 경로만 추천한다.
+
+동작을 보존하는 구조 개선이 명확하면 Claude Code는
+`/oopforge:refactor <요청>`, Codex와 Cursor는 `Use OOPforge refactor: <요청>`을
+사용한다. Refactor는 Craft의 시작·완료 검증을 유지하면서 기능 변경을 금지하고
+`skills/workflow/refactor.md`로 바로 진입한다. 기존 Craft 리팩터 요청도 호환된다.
 
 세션이 바뀌어도 일은 끊기지 않는다. 실행 작업은 `.craft/` 에 기록을 남기고, **한 세션은 결정 하나만** 끝낸다. 일이 남으면 에이전트가 묻지 않고 `next-session-prompt.md` 를 쓴다. 다음 Craft는 그 파일을 먼저 읽고, 사용자가 지난 작업을 꺼내지 않아도 이어서 할지 한 번 묻는다.
 

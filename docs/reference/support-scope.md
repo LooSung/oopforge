@@ -18,15 +18,16 @@ must be replaced by durable shared infrastructure for multi-instance deployment.
 
 ## Canonical harness paths
 
-| Harness | Supported load path | Craft invocation |
+| Harness | Supported load path | Invocation |
 |---|---|---|
-| Claude Code | `~/.claude/skills/oopforge` and `~/.claude/commands/oopforge` symlinks | `/oopforge:craft …` |
-| Codex CLI | `~/.codex/skills/oopforge` symlink | select `oopforge`, then `Use OOPforge craft: …` |
-| Cursor Agent CLI | explicit `--plugin-dir` | `Use OOPforge craft: …` |
-| Cursor Agent CLI | `.cursor/skills/oopforge` plus pack `--add-dir` | `Use OOPforge craft: …` |
+| Claude Code | `~/.claude/skills/oopforge` and `~/.claude/commands/oopforge` symlinks | `/oopforge:craft …` or `/oopforge:refactor …` |
+| Codex CLI | `~/.codex/skills/oopforge` symlink | select `oopforge`, then `Use OOPforge craft: …` or `Use OOPforge refactor: …` |
+| Cursor Agent CLI | explicit `--plugin-dir` | `Use OOPforge craft: …` or `Use OOPforge refactor: …` |
+| Cursor Agent CLI | `.cursor/skills/oopforge` plus pack `--add-dir` | same natural-language intents |
 
-Cursor directory auto-discovery, Cursor headless `/oopforge:craft`, marketplace
-installation, and automatic Cursor setup are not currently supported paths.
+Cursor directory auto-discovery, Cursor headless OOPforge `/` commands,
+marketplace installation, and automatic Cursor setup are not currently
+supported paths.
 
 `doctor.sh` validates files and links. It does not prove agent activation.
 Maintainers can run `scripts/ci/harness-smoke.sh live <harness>` with their own
@@ -53,7 +54,7 @@ and changelog. Skill maturity is tracked separately in
 
 OOPforge 1.x keeps this core usage contract compatible:
 
-- the canonical harness load paths and Craft invocations above;
+- the canonical harness load paths and Craft invocation above;
 - the Discovery → Design → Delivery Plan → Skeleton → Implement → Test stage
   order and its human checkpoints;
 - the meaning of existing Hard Rules and the OOP Contract fields;

@@ -41,7 +41,7 @@ Start the agent from the target project so paths like `docs/foo.md` resolve in
 the app repository. For OOPforge maintenance, the pack repository is the work
 target.
 
-## 3. Run Craft
+## 3. Run OOPforge commands
 
 Start Cursor Agent and invoke Craft by name:
 
@@ -53,6 +53,7 @@ cursor-agent --plugin-dir ~/.oopforge
 ```text
 Use OOPforge craft: Add a single Email value object
 Use OOPforge craft: Read docs/integration/image-storage.md and advise only.
+Use OOPforge refactor: Improve billing structure while preserving behavior.
 ```
 
 Planning-only sessions (Discovery, Design, Delivery Plan):
@@ -124,8 +125,9 @@ Match the structure in examples/calculator-java-hexagonal/ — domain has zero f
 - **Explicit load required** — a clean headless session loaded Craft with
   `--plugin-dir ~/.oopforge`; the pack directory without that flag
   returned `OOPFORGE_NOT_LOADED`.
-- **Natural-language entry point** — use `Use OOPforge craft: …`.
-  `/oopforge:craft` is not a supported Cursor headless command.
+- **Natural-language entry point** — use `Use OOPforge craft: …` or `Use
+  OOPforge refactor: …`. OOPforge `/` commands are not supported Cursor
+  headless commands.
 - **External symlink target** — project-local symlink startup includes
   `--add-dir ~/.oopforge` so headless mode may read the pack.
 - **No bootstrap auto-link** — unlike Claude Code / Codex, `install.sh` does not configure Cursor.

@@ -94,8 +94,9 @@ guides for [Claude Code](docs/setup/claude-code.md), [Codex](docs/setup/codex.md
 
 ## The Basic Workflow
 
-Craft is the single entry point. It selects a focused path for small changes and
-preserves the full sequence for a new domain or large feature:
+Craft is the default entry point. For explicit behavior-preserving cleanup, use
+`/oopforge:refactor …` on Claude or `Use OOPforge refactor: …` on Codex/Cursor.
+Craft selects a focused path for small changes and preserves the full sequence for a new domain or large feature:
 
 ```text
 Discovery → Design → Delivery Plan → Skeleton → Implement → Test

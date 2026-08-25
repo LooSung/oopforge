@@ -6,6 +6,16 @@
 
 ## [Unreleased]
 
+### Added
+
+- **Refactor command** — Claude Code의 `/oopforge:refactor`와 Codex/Cursor의
+  `Use OOPforge refactor: …`가 기존 동작 보존 Refactor workflow로 직접 진입한다.
+
+### Changed
+
+- **Craft command boundary** — Craft를 호환 가능한 기본 진입점으로 유지하면서,
+  명시적인 리팩터 요청은 기능 변경을 금지하는 좁은 command 계약으로 분리했다.
+
 ## [1.2.0] - 2026-08-25
 
 ### Changed

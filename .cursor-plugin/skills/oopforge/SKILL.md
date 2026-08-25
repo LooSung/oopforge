@@ -1,6 +1,6 @@
 ---
 name: oopforge
-description: Use OOPforge for Java Spring or Python FastAPI backend work, OOP/DDD modeling, layered or hexagonal architecture, and the Craft workflow.
+description: Use OOPforge for Java Spring or Python FastAPI backend work, OOP/DDD modeling, layered or hexagonal architecture, and the Craft or Refactor workflow.
 license: MIT
 compatibility: Cursor Agent with the complete OOPforge plugin directory.
 ---

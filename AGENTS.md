@@ -47,15 +47,16 @@ For new domains or large features, do not jump straight to code.
 
 Ask for human approval before moving from one stage to the next.
 
-**For smaller, focused tasks** (extending an existing domain, adding a single value object, refactoring, code review) — start with `/oopforge:craft` (`commands/craft.md`). It selects the smallest path and does not force the full pipeline.
+**For smaller, focused tasks** (extending an existing domain, adding a single value object, refactoring, code review) — start with `/oopforge:craft` (`commands/craft.md`). For explicit behavior-preserving cleanup, `/oopforge:refactor` (`commands/refactor.md`) selects the Refactor path directly.
 
 ## Default Entry Point
 
-Use `/oopforge:craft` (`commands/craft.md`) as the single OOPforge user entry point.
+Use `/oopforge:craft` (`commands/craft.md`) as the default OOPforge user entry point.
 
 `/oopforge:craft` delegates orchestration to `skills/workflow/craft.md`, reads `skills/principles/oop-discipline.md`, requires Assumptions then an OOP Contract before business-logic implementation, and verifies Hard Rules (including surgical scope) before completion.
 
-- Use `/oopforge:craft` for single components, existing-domain features, domain bug fixes, and behavior-preserving refactors.
+- Use `/oopforge:craft` for single components, existing-domain features, domain bug fixes, and requests whose path is not yet clear.
+- Use `/oopforge:refactor` for explicit behavior-preserving structural cleanup; it applies Craft startup/completion gates and `skills/workflow/refactor.md` without reclassification.
 - For ambiguous or advisory requests, Craft recommends the smallest path without implementing.
 - For a new domain or large feature, Craft routes into the existing Discovery → Test workflow and keeps the human checkpoints.
 
@@ -84,6 +85,7 @@ Use this table to decide **which skill to read first**. Workflow stage always wi
 | Workflow stage | Goal | Read first |
 |---|---|---|
 | Craft (entrypoint) | Select and execute the smallest OOP path, or recommend only for advisory requests | `skills/workflow/craft.md` + `skills/principles/oop-discipline.md` |
+| Refactor command | Preserve behavior while improving one structural decision | `skills/workflow/craft.md` + `skills/workflow/refactor.md` + `skills/principles/oop-discipline.md` |
 | Discovery | Glossary, contexts, actors | `skills/workflow/discovery.md` |
 | Design | Use-case signatures, aggregates | `skills/workflow/design.md` + `skills/oop/domain-model.md` |
 | Delivery Plan | Scope, order, tests, risks | `skills/workflow/delivery-plan.md` |

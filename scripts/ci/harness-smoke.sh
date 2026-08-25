@@ -125,7 +125,7 @@ for status in ("stable", "experimental"):
             raise SystemExit(f"stability frontmatter mismatch: {relative}")
 
 required = [
-    "commands/craft.md",
+    "commands/craft.md", "commands/refactor.md",
     ".cursor-plugin/skills/oopforge/SKILL.md",
     "skills/workflow/craft.md",
     "skills/principles/oop-discipline.md",
@@ -135,10 +135,11 @@ required = [
 for relative in required:
     if not (root / relative).is_file():
         raise SystemExit(f"missing harness path: {relative}")
-for relative in ["commands/craft.md", "skills/SKILL.md",
+for relative in ["commands/craft.md", "commands/refactor.md", "skills/SKILL.md",
                  ".cursor-plugin/skills/oopforge/SKILL.md"]:
     if "OOPFORGE_ACTIVATION_PROBE" not in (root / relative).read_text():
         raise SystemExit(f"missing activation probe: {relative}")
+assert all(marker in (root / "commands/refactor.md").read_text() for marker in ("workflow/refactor.md", "Do not reclassify"))
 print("PASS static harness packaging")
 PY
 }

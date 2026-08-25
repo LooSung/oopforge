@@ -1,7 +1,7 @@
 # Claude Code Setup
 
-OOPforge supports Claude Code through the symlink-installed skill and
-`/oopforge:craft` command defined in the
+OOPforge supports Claude Code through the symlink-installed skill and the
+`/oopforge:craft` and `/oopforge:refactor` commands defined in the
 [support scope](../reference/support-scope.md).
 
 ## Install
@@ -16,11 +16,12 @@ Restart Claude Code. Check the pack and installed links:
 ~/.oopforge/scripts/setup/doctor.sh
 ```
 
-`doctor.sh` does not execute Craft. To verify activation, start Claude Code from
-the backend project and confirm that `/oopforge:craft` is registered:
+`doctor.sh` does not execute a workflow. To verify activation, start Claude Code
+from the backend project and confirm that the commands are registered:
 
 ```text
 /oopforge:craft Advise only: which path fits adding one Email value object? Do not edit files.
+/oopforge:refactor Improve the billing module structure while preserving its API and behavior.
 ```
 
 Maintainers can run the authenticated positive/negative check with:
@@ -47,7 +48,7 @@ treat that repository as the work target.
 ```text
 /oopforge:craft Start Discovery for the library loan domain. No code yet.
 /oopforge:craft Implement borrow-book in java-spring
-/oopforge:craft Refactor imported billing module without changing behavior
+/oopforge:refactor Improve imported billing structure without changing behavior
 ```
 
 **First time?** Follow the [library loan walkthrough](../guides/library-loan/README.md) step by step.

@@ -93,8 +93,9 @@ Assumptions와 OOP Contract를 제시한다. 자문 요청은 구현하지 않�
 
 ## 기본 워크플로
 
-Craft가 단일 진입점이다. 작은 작업은 집중 경로를 고르고, 새 도메인이나 큰
-기능은 전체 순서를 유지한다:
+Craft가 기본 진입점이다. 동작을 보존하는 구조 개선이 명확하면 Claude에서는
+`/oopforge:refactor …`, Codex/Cursor에서는 `Use OOPforge refactor: …`를 사용한다.
+Craft는 작은 작업의 집중 경로를 고르고, 새 도메인이나 큰 기능은 전체 순서를 유지한다:
 
 ```text
 Discovery → Design → Delivery Plan → Skeleton → Implement → Test

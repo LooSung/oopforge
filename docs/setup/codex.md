@@ -4,7 +4,7 @@ OOPforge supports Codex through the global skill entry point at
 `skills/SKILL.md`. This is the canonical path in the
 [support scope](../reference/support-scope.md).
 
-Codex installs **skills only** — not Claude Code `commands/`. The string `/oopforge:craft` is **not** a Codex slash command; Codex reserves `/` for built-ins such as `/skills` and `/model`.
+Codex installs **skills only** — not Claude Code `commands/`. OOPforge strings such as `/oopforge:craft` and `/oopforge:refactor` are **not** Codex slash commands; Codex reserves `/` for built-ins such as `/skills` and `/model`.
 
 ## Install
 
@@ -46,7 +46,7 @@ If `pwd` is `~/.oopforge`, relative paths like `docs/integration/foo.md` will be
 Exception: when you are maintaining OOPforge itself, start Codex from the
 OOPforge repository and treat that repository as the work target.
 
-## Run Craft on Codex
+## Run OOPforge commands on Codex
 
 1. Start Codex in your backend project: `cd /path/to/your-project && codex`
 2. Type `/skills` and select **oopforge**
@@ -55,7 +55,7 @@ OOPforge repository and treat that repository as the work target.
 ```text
 Use OOPforge craft: Start Discovery for the library loan domain. No code yet.
 Use OOPforge craft: Implement borrow-book in python-fastapi
-Use OOPforge craft: Refactor imported billing module without changing behavior
+Use OOPforge refactor: Improve imported billing structure without changing behavior
 ```
 
 One-shot (non-interactive):
@@ -64,7 +64,7 @@ One-shot (non-interactive):
 codex exec "Use OOPforge craft: Add a single Email value object"
 ```
 
-The `oopforge` skill routes Craft requests to `workflow/craft.md` and the smallest OOP path.
+The `oopforge` skill routes Craft to the smallest OOP path and explicit Refactor requests to the behavior-preserving workflow.
 
 Maintainers can run the authenticated positive/negative check with:
 
@@ -75,14 +75,14 @@ Maintainers can run the authenticated positive/negative check with:
 This optional local check uses the maintainer's existing Codex authentication;
 the repository does not require provider secrets.
 
-## Why not `/oopforge:craft`?
+## Why not OOPforge slash commands?
 
-| Harness | `/oopforge:craft` |
+| Harness | OOPforge `/` commands |
 |---|---|
-| Claude Code | Works — `commands/` is installed |
+| Claude Code | Work — `commands/` is installed |
 | Codex CLI | **Fails** — Codex parses `/…` as its own command menu |
 
-If you see `Unrecognized command '/oopforge:craft'`, you typed a Codex slash command, not an agent prompt. Use `/skills` + natural language instead.
+If an OOPforge `/` command is unrecognized, you typed a Codex slash command, not an agent prompt. Use `/skills` + natural language instead.
 
 ## Update After Pull
 
@@ -94,5 +94,5 @@ Skill content updates immediately via symlinks; restart Codex when the skill ent
 
 ## Related
 
-- [Claude Code setup](./claude-code.md) — slash command `/oopforge:craft`
+- [Claude Code setup](./claude-code.md) — slash commands `/oopforge:craft` and `/oopforge:refactor`
 - [Cursor setup](./cursor.md) (explicit local plugin or project-local skill)
