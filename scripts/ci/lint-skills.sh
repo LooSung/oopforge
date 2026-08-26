@@ -179,6 +179,7 @@ cyan "--- Harness packaging"
 check_command craft
 check_command refactor
 check_command consult
+check_command test
 check_cursor_skill
 check_claude_manifest_paths
 check_cursor_manifest_paths

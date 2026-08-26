@@ -20,9 +20,9 @@ must be replaced by durable shared infrastructure for multi-instance deployment.
 
 | Harness | Supported load path | Invocation |
 |---|---|---|
-| Claude Code | `~/.claude/skills/oopforge` and `~/.claude/commands/oopforge` symlinks | `/oopforge:craft …`, `/oopforge:refactor …`, or `/oopforge:consult …` |
-| Codex CLI | `~/.codex/skills/oopforge` symlink | select `oopforge`, then use the matching `craft`, `refactor`, or `consult` natural-language intent |
-| Cursor Agent CLI | explicit `--plugin-dir` | use the matching `craft`, `refactor`, or `consult` natural-language intent |
+| Claude Code | `~/.claude/skills/oopforge` and `~/.claude/commands/oopforge` symlinks | `/oopforge:craft …`, `/oopforge:refactor …`, `/oopforge:consult …`, or `/oopforge:test …` |
+| Codex CLI | `~/.codex/skills/oopforge` symlink | select `oopforge`, then use the matching `craft`, `refactor`, `consult`, or `test` natural-language intent |
+| Cursor Agent CLI | explicit `--plugin-dir` | use the matching `craft`, `refactor`, `consult`, or `test` natural-language intent |
 | Cursor Agent CLI | `.cursor/skills/oopforge` plus pack `--add-dir` | same natural-language intents |
 
 Cursor directory auto-discovery, Cursor headless OOPforge `/` commands,
@@ -37,8 +37,9 @@ OOPforge installations without changing the user's configuration.
 
 `doctor.sh` validates files and links. It does not prove agent activation.
 Maintainers can run `scripts/ci/harness-smoke.sh live <harness>` with their own
-local CLI authentication. A positive run must report `OOPFORGE_LOADED`, and an
-isolated negative control must report `OOPFORGE_NOT_LOADED`.
+local CLI authentication. A positive run must report the Test route, `auto`
+level, and production-code boundary; an isolated negative control must report
+`OOPFORGE_NOT_LOADED`.
 Claude and Codex can reuse their local login state. Cursor's isolated live probe
 reuses its OS credential-store token through sanitized login metadata, or a
 local `CURSOR_API_KEY` when present. No provider credential is stored in the

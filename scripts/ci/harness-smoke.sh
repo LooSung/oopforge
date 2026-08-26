@@ -5,6 +5,7 @@ set -euo pipefail
 PACK_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 TEMP_DIRS=()
 ACTIVATION_TOKEN="OOPFORGE_ACTIVATION_PROBE"
+TEST_ROUTING_PROBE="OOPFORGE_TEST_ROUTING_PROBE"
 NEGATIVE_PROBE="$ACTIVATION_TOKEN. If no loaded OOPforge instruction defines \
 this probe, output exactly OOPFORGE_NOT_LOADED."
 green() { printf "\033[32m%s\033[0m\n" "$*"; }
@@ -69,64 +70,33 @@ assert_negative() {
   fi
   green "PASS negative activation control"
 }
+assert_test_route() {
+  local output="$1"
+  local source="${2:-}"
+  grep -Fxq "OOPFORGE_TEST_ROUTED" "$output" ||
+    { probe_failure "Test probe missed route token" "$output"; return 1; }
+  grep -Fxq "Level: auto" "$output" ||
+    { probe_failure "Test probe missed auto level" "$output"; return 1; }
+  grep -Fxq "Production code: forbidden" "$output" ||
+    { probe_failure "Test probe missed production boundary" "$output"; return 1; }
+  [ -z "$source" ] || grep -Fxq "Source: $source" "$output" ||
+    { probe_failure "Test probe loaded another source" "$output"; return 1; }
+  green "PASS Test command routing"
+}
 static_smoke() {
-  python3 - "$PACK_DIR" <<'PY'
-import json
+  python3 "$PACK_DIR/scripts/ci/check-harness-packaging.py" "$PACK_DIR"
+}
+prepare_claude_probe() {
+  local plugin_dir="$1"
+  mkdir -p "$plugin_dir/.claude-plugin"
+  cp "$PACK_DIR/.claude-plugin/plugin.json" "$plugin_dir/.claude-plugin/plugin.json"
+  cp -R "$PACK_DIR/commands" "$plugin_dir/commands"
+  cp -R "$PACK_DIR/skills" "$plugin_dir/skills"
+  python3 - "$plugin_dir/commands/test.md" "$plugin_dir/skills" <<'PY'
 import pathlib
 import sys
-root = pathlib.Path(sys.argv[1])
-manifests = [root / name for name in (
-    ".claude-plugin/plugin.json", ".codex-plugin/plugin.json",
-    ".cursor-plugin/plugin.json")]
-manifest_data = [json.loads(path.read_text()) for path in manifests]
-versions = {data["version"] for data in manifest_data}
-if len(versions) != 1:
-    raise SystemExit("manifest versions differ")
-claude, _, cursor = manifest_data
-assert isinstance(claude.get("repository"), str), "Claude repository must be a string"
-assert claude.get("skills") == ["./skills/"], "unexpected Claude skills path"
-assert claude.get("commands") == ["./commands/"], "unexpected Claude commands path"
-assert cursor.get("skills") == "./.cursor-plugin/skills/", "unexpected Cursor skills path"
-assert "commands" not in cursor, "Cursor must not package Claude-only commands"
-registry = json.loads((root / "skills/stability.json").read_text())
-stable = registry["stable"]
-experimental = registry["experimental"]
-listed = stable + experimental
-actual = sorted(
-    str(path.relative_to(root))
-    for path in (root / "skills").rglob("*.md")
-)
-if len(listed) != len(set(listed)):
-    raise SystemExit("skill stability registry contains duplicates")
-if sorted(listed) != actual:
-    missing = sorted(set(actual) - set(listed))
-    extra = sorted(set(listed) - set(actual))
-    raise SystemExit(f"skill stability mismatch: missing={missing}, extra={extra}")
-if registry["schema"] != "oopforge.skill-stability.v1":
-    raise SystemExit("unexpected skill stability schema")
-for status in ("stable", "experimental"):
-    for relative in registry[status]:
-        frontmatter = (root / relative).read_text().split("---", 2)[1]
-        if f"stability: {status}" not in frontmatter:
-            raise SystemExit(f"stability frontmatter mismatch: {relative}")
-required = [
-    "commands/craft.md", "commands/refactor.md", "commands/consult.md",
-    ".cursor-plugin/skills/oopforge/SKILL.md",
-    "skills/workflow/craft.md", "skills/workflow/consult.md",
-    "skills/principles/oop-discipline.md",
-    "docs/setup/cursor.md",
-    "docs/reference/support-scope.md",
-]
-for relative in required:
-    if not (root / relative).is_file():
-        raise SystemExit(f"missing harness path: {relative}")
-for relative in ["commands/craft.md", "commands/refactor.md", "commands/consult.md", "skills/SKILL.md",
-                 ".cursor-plugin/skills/oopforge/SKILL.md"]:
-    if "OOPFORGE_ACTIVATION_PROBE" not in (root / relative).read_text():
-        raise SystemExit(f"missing activation probe: {relative}")
-contracts = {"commands/refactor.md": ("workflow/refactor.md", "Do not reclassify"), "skills/workflow/consult.md": ("Select exactly one mode", "Never modify production code")}
-assert all(all(marker in (root / path).read_text() for marker in markers) for path, markers in contracts.items())
-print("PASS static harness packaging")
+path = pathlib.Path(sys.argv[1])
+path.write_text(path.read_text().replace("~/.claude/skills/oopforge", sys.argv[2]))
 PY
 }
 link_codex_auth() {
@@ -142,24 +112,34 @@ link_codex_auth() {
 }
 live_claude() {
   require_command claude
-  require_link_target "$HOME/.claude/skills/oopforge" "$PACK_DIR/skills"
-  require_link_target "$HOME/.claude/commands/oopforge" "$PACK_DIR/commands"
   claude --version >&2
-  local run_dir positive negative
+  local run_dir candidate positive negative
+  local -a load_args
   run_dir="$(mktemp -d)"
   TEMP_DIRS+=("$run_dir")
+  if [ "${OOPFORGE_INSTALLED_SMOKE:-0}" = "1" ]; then
+    require_link_target "$HOME/.claude/skills/oopforge" "$PACK_DIR/skills"
+    require_link_target "$HOME/.claude/commands/oopforge" "$PACK_DIR/commands"
+    load_args=()
+  else
+    candidate="$run_dir/candidate"
+    prepare_claude_probe "$candidate"
+    load_args=(--plugin-dir "$candidate")
+  fi
   positive="$run_dir/positive.txt"
   negative="$run_dir/negative.txt"
   (
     cd "$run_dir"
-    probe_step "Claude command positive"
-    run_timed claude -p --no-session-persistence --permission-mode plan \
-      --tools "" >"$positive" <<<"/oopforge:craft $ACTIVATION_TOKEN"
+    printf 'def test_example():\n    assert True\n' >test_example.py
+    probe_step "Claude Test command positive"
+    run_timed claude -p --no-session-persistence --permission-mode dontAsk \
+      --tools "Read" "${load_args[@]}" >"$positive" \
+      <<<"/oopforge:test Before running test_example.py, $TEST_ROUTING_PROBE"
     probe_step "Claude safe-mode negative"
     run_timed claude --safe-mode -p --no-session-persistence \
       --permission-mode plan --tools "" >"$negative" <<<"$NEGATIVE_PROBE"
   )
-  assert_positive "$positive"
+  assert_test_route "$positive"
   assert_negative "$negative"
 }
 
@@ -175,18 +155,19 @@ live_codex() {
   positive="$run_dir/positive.txt"
   negative="$run_dir/negative.txt"
   mkdir -p "$workspace" "$positive_home/skills"
+  printf 'def test_example():\n    assert True\n' >"$workspace/test_example.py"
   link_codex_auth "$positive_home"
   link_codex_auth "$negative_home"
   ln -s "$PACK_DIR/skills" "$positive_home/skills/oopforge"
-  probe_step "Codex global-skill positive"
+  probe_step "Codex Test intent positive"
   CODEX_HOME="$positive_home" run_timed codex exec --skip-git-repo-check \
     --ignore-user-config --ephemeral --sandbox read-only -C "$workspace" \
-    -o "$positive" "Use OOPforge craft: $NEGATIVE_PROBE"
+    -o "$positive" "Use OOPforge test: Before running test_example.py, $TEST_ROUTING_PROBE"
   probe_step "Codex isolated negative"
   CODEX_HOME="$negative_home" run_timed codex exec --skip-git-repo-check \
     --ignore-user-config --ephemeral --sandbox read-only -C "$workspace" \
     -o "$negative" "$NEGATIVE_PROBE"
-  assert_positive "$positive"
+  assert_test_route "$positive"
   assert_negative "$negative"
 }
 
@@ -222,13 +203,14 @@ run_cursor() {
 }
 
 prepare_cursor_probe() {
-  local plugin_dir="$1" skill_dir="$2" probe="$3" entry
-  mkdir -p "$plugin_dir/.cursor-plugin/skills/oopforge" "$skill_dir"
+  local plugin_dir="$1" skill_dir="$2" probe="$3" workflow
+  mkdir -p "$plugin_dir/.cursor-plugin/skills/oopforge"
   cp "$PACK_DIR/.cursor-plugin/plugin.json" "$plugin_dir/.cursor-plugin/plugin.json"
   cp "$PACK_DIR/.cursor-plugin/skills/oopforge/SKILL.md" "$plugin_dir/.cursor-plugin/skills/oopforge/SKILL.md"
-  cp "$PACK_DIR/skills/SKILL.md" "$skill_dir/SKILL.md"
-  for entry in "$plugin_dir/.cursor-plugin/skills/oopforge/SKILL.md" "$skill_dir/SKILL.md"; do
-    printf '\nWhen the request contains %s, output exactly OOPFORGE_LOADED, Assumptions, and OOP Contract on separate lines, then stop.\n' "$probe" >>"$entry"
+  cp -R "$PACK_DIR/skills" "$plugin_dir/skills"
+  cp -R "$PACK_DIR/skills" "$skill_dir"
+  for workflow in "$plugin_dir/skills/workflow/test.md" "$skill_dir/workflow/test.md"; do
+    printf '\nWhen the request contains %s, output OOPFORGE_TEST_ROUTED, Level: auto, Production code: forbidden, and Source: %s on separate lines, then stop.\n' "$probe" "$probe" >>"$workflow"
   done
 }
 
@@ -251,22 +233,24 @@ live_cursor() {
   source_negative="$source_probe. If no loaded instruction defines this exact probe, output exactly OOPFORGE_NOT_LOADED."
   prepare_cursor_probe "$candidate_plugin" "$candidate_skill" "$source_probe"
   mkdir -p "$plugin_workspace" "$local_workspace/.cursor/skills" "$clean_workspace"
-  probe_step "Cursor explicit-plugin positive"
+  printf 'def test_example():\n    assert True\n' >"$plugin_workspace/test_example.py"
+  printf 'def test_example():\n    assert True\n' >"$local_workspace/test_example.py"
+  probe_step "Cursor explicit-plugin Test positive"
   run_cursor "$plugin_workspace" "$plugin_output" \
-    "Use OOPforge craft: $source_negative" --plugin-dir "$candidate_plugin"
+    "Use OOPforge test: Before running test_example.py, $source_negative" --plugin-dir "$candidate_plugin"
   ln -s "$candidate_skill" "$local_workspace/.cursor/skills/oopforge"
-  probe_step "Cursor project-local positive"
+  probe_step "Cursor project-local Test positive"
   run_cursor "$local_workspace" "$local_output" \
-    "Use OOPforge craft: $source_negative" --add-dir "$candidate_skill"
+    "Use OOPforge test: Before running test_example.py, $source_negative" --add-dir "$candidate_skill"
   probe_step "Cursor isolated negative"
   run_cursor "$clean_workspace" "$negative_output" "$source_negative"
-  assert_positive "$plugin_output"
-  assert_positive "$local_output"
+  assert_test_route "$plugin_output" "$source_probe"
+  assert_test_route "$local_output" "$source_probe"
   assert_negative "$negative_output"
 }
 
 usage() {
-  echo "Usage: $0 static|assert-positive FILE|assert-negative FILE|live HARNESS"
+  echo "Usage: $0 static|assert-positive FILE|assert-negative FILE|assert-test-route FILE|live HARNESS"
   echo "HARNESS: claude, codex, cursor, or all"
 }
 
@@ -279,6 +263,9 @@ case "${1:-}" in
     ;;
   assert-negative)
     assert_negative "${2:?output file required}"
+    ;;
+  assert-test-route)
+    assert_test_route "${2:?output file required}" "${3:-}"
     ;;
   live)
     case "${2:-}" in

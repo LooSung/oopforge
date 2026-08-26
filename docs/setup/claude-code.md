@@ -1,8 +1,8 @@
 # Claude Code Setup
 
 OOPforge supports Claude Code through the symlink-installed skill and the
-`/oopforge:craft`, `/oopforge:refactor`, and `/oopforge:consult` commands defined in the
-[support scope](../reference/support-scope.md).
+`/oopforge:craft`, `/oopforge:refactor`, `/oopforge:consult`, and
+`/oopforge:test` commands defined in the [support scope](../reference/support-scope.md).
 
 ## Install
 
@@ -23,6 +23,7 @@ from the backend project and confirm that the commands are registered:
 /oopforge:craft Advise only: which path fits adding one Email value object? Do not edit files.
 /oopforge:refactor Improve the billing module structure while preserving its API and behavior.
 /oopforge:consult Review the billing boundaries without changing files.
+/oopforge:test Run the smallest useful tests for the billing approval rule.
 ```
 
 Maintainers can run the authenticated positive/negative check with:
@@ -32,9 +33,10 @@ Maintainers can run the authenticated positive/negative check with:
 ```
 
 This optional local check uses the maintainer's existing Claude authentication;
-the repository does not require provider secrets. The check also requires the
-installed skill and command symlinks to point at the candidate pack, preventing
-a stale `~/.oopforge` checkout from producing release evidence.
+the repository does not require provider secrets. It loads a self-contained
+temporary candidate plugin and does not change global configuration. After
+installing a release, set `OOPFORGE_INSTALLED_SMOKE=1` to require the real skill
+and command symlinks during the same check.
 
 Installed paths:
 
@@ -51,6 +53,7 @@ treat that repository as the work target.
 /oopforge:craft Implement borrow-book in java-spring
 /oopforge:refactor Improve imported billing structure without changing behavior
 /oopforge:consult Compare two payment designs without changing files
+/oopforge:test Strengthen unit tests for the borrow-book invariants
 ```
 
 **First time?** Follow the [library loan walkthrough](../guides/library-loan/README.md) step by step.

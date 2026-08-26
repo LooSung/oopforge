@@ -7,81 +7,107 @@ stability: stable
 
 # Workflow — Test
 
-## When to use
-When writing or strengthening tests for domain logic, use cases, adapters, or an API/CLI flow.
-You may write them first with TDD or as regression tests after implementation.
+When the request contains `OOPFORGE_TEST_ROUTING_PROBE`, output these lines and
+stop:
+
+```text
+OOPFORGE_TEST_ROUTED
+Level: auto
+Production code: forbidden
+```
+
+## Purpose
+
+Verify, write, or strengthen tests for domain logic, use cases, adapters, or an
+API/CLI flow without silently changing production behavior.
+
+This workflow is both the final stage of the full OOPforge lifecycle and the
+policy owner for the public Test command. A standalone Test request does not
+approve or complete earlier lifecycle stages.
+
+## Authorization
+
+Classify the request before acting:
+
+| Request | Write permission |
+|---|---|
+| Run, check, or report existing tests | none |
+| Write or strengthen tests | test code and existing test configuration |
+| Create or connect test infrastructure | only after explicit approval |
+| Fix production behavior | none; stop and propose a separate Craft job |
+
+Test never grants commit, push, PR, release, deployment, or production-code
+permission. Craft supplies startup, continuity, verification, and completion
+reporting when Test is invoked as a public command.
+
+## Level selection
+
+1. Inspect existing tests, test configuration, fixtures, markers, and naming.
+2. If the request names `unit`, `use-case`, or `integration`, use that level.
+3. Otherwise `auto` selects the smallest useful level from repository evidence.
+4. E2E requires explicit user wording; `auto` may report it only as a gap.
+5. Before E2E, inspect required processes, services, data, and credentials.
+6. If E2E infrastructure is absent, ask whether to create or connect it.
+7. If no test context exists, ask which behavior and boundary matter before
+   creating test structure.
+
+## Scope block
+
+Before writing or running tests, report:
+
+```markdown
+Test target:
+Level: auto | unit | use-case | integration | e2e
+Write permission: none | tests | approved test infrastructure
+Evidence: <existing test/config paths or missing context>
+```
 
 ## Checklist
-- [ ] Define the test target and scope
-- [ ] Choose the needed test types among unit/integration/E2E
-- [ ] Check the existing test structure and naming conventions
-- [ ] Pin domain rules with unit tests
-- [ ] Verify use cases with port mocks/fakes
-- [ ] Verify adapters with real integration or contract tests
-- [ ] Verify E2E minimally, for core user/system flows only
-- [ ] Include failure/boundary/authorization/duplicate-execution cases
-- [ ] For FastAPI, cover the boundary matrix in `skills/lang/python-pydantic.md`
+
+- [ ] Define the behavior, risk, and boundary under test
+- [ ] Match existing structure, naming, fixtures, and markers
+- [ ] Pin domain rules with framework-free unit tests
+- [ ] Verify use cases with mocks, fakes, or in-memory ports
+- [ ] Verify adapters with integration or contract tests
+- [ ] Keep E2E to explicitly requested core flows
+- [ ] Cover relevant failure, boundary, authorization, and duplicate cases
+- [ ] For FastAPI, apply `skills/lang/python-pydantic.md`
 - [ ] Run the stack's static type or compile check
-- [ ] Record the run commands and results
+- [ ] Record reproducible commands, toolchain identity, and results
 
 ## Conditional Production Gate
 
 Only when the user explicitly asks about deployment, production, or operational
-readiness:
-
-- [ ] Run the invalid-input, duplicate-request, safe-error, and
-      correlation/audit boundary checklist in the
-      [Production Readiness gate](production-readiness.md).
-- [ ] Record reproducible commands, results, blockers, and accepted operational
-      risks for that gate.
-
-Do not infer this gate from an ordinary feature or test request.
+readiness, add the boundary checks in
+[`production-readiness.md`](production-readiness.md). An ordinary Test request
+never activates that gate.
 
 ## Test priority
 
-| Test | Purpose | Example tools |
+| Level | Purpose | Example tools |
 |---|---|---|
-| Unit | Pin domain rules and pure logic | JUnit, pytest |
-| Use case | Verify application-service orchestration | Mockito, unittest.mock |
-| Integration | Verify DB, HTTP, queue, filesystem adapters | Testcontainers, pytest fixtures |
-| E2E | Confirm real user/system flows | RestAssured, Playwright, httpx |
+| Unit | Domain rules and pure logic | JUnit, pytest |
+| Use case | Application orchestration | Mockito, unittest.mock |
+| Integration | DB, HTTP, queue, filesystem adapters | Testcontainers, fixtures |
+| E2E | Real user/system flow | RestAssured, Playwright, httpx |
 
-## Output
+## Reporting
 
-Save to `docs/test-plan.md` or `docs/<domain>/test-plan.md`:
+Always report scope, commands, pass/fail counts, skipped checks, and remaining
+risks. Create or update `docs/test-plan.md` or
+`docs/<domain>/test-plan.md` only when the user explicitly asks for a saved
+test plan.
 
-```markdown
-# <Feature> — Test Plan
-
-## Scope
-- Target:
-- Risk:
-
-## Unit Tests
-- 
-
-## Integration Tests
-- 
-
-## E2E Checks
-- 
-
-## Fixtures / Test Data
-- 
-
-## Commands
-- `...`
-
-## Result
-- 
-```
+When a test fails, diagnose whether the cause is test code, infrastructure, or
+production behavior. Fix only within the authorized write scope. Otherwise
+report the evidence and stop.
 
 ## Prohibited
-- **No changing domain logic without tests**
-- **No skipping domain unit tests by trusting framework tests only**
-- **No making real external-service calls the default**
-- **No flaky tests depending on sleep/time/network**
-- **No naming tests around implementation details**
 
-## Next step
-After tests pass -> review, commit, push, write MR/release notes
+- No production changes to make a test pass
+- No E2E or infrastructure creation inferred from `auto`
+- No framework-only tests standing in for domain unit tests
+- No real external-service calls by default
+- No sleep-, wall-clock-, or network-dependent flaky tests
+- No tests named around private implementation details
+- No claiming a skipped or unavailable check passed

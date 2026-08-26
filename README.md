@@ -8,20 +8,18 @@
 >
 > *Harness engineering that stops vibe coding from wrecking your backend.*
 
-**Forge small. Compose forever.** OOPforge is a portable OOP/DDD methodology
-pack and agent harness. Skills teach the grammar, hard rules act as lint,
-runnable examples provide references, and Craft selects the smallest workflow
-for the job.
+**Forge small. Compose forever.** OOPforge is a portable OOP/DDD methodology pack
+and agent harness. Skills teach the grammar, hard rules act as lint, runnable
+examples provide references, and Craft selects the smallest workflow for the job.
 
-Use it when a **Java (Spring)** or **Python (FastAPI)** backend needs explicit
-domain models, use-case boundaries, and reviewable architecture. It is not a
-general agent framework, UI toolkit, or automatic code generator.
+Use it when a **Java (Spring)** or **Python (FastAPI)** backend needs explicit domain
+models, use-case boundaries, and reviewable architecture. It is not a general
+agent framework, UI toolkit, or automatic code generator.
 
 [Positioning](docs/project/positioning.md) · [Support scope](docs/reference/support-scope.md) ·
 [Proof protocol](docs/proof/README.md)
 
 [English](./README.md) · [한국어](./README.ko.md)
-
 ## Quickstart
 
 ### 1. Install the latest `main`
@@ -52,7 +50,7 @@ OOPforge lives in `~/.oopforge`. Your app code lives in **your backend repo**. A
 cd /path/to/your-backend-project
 ```
 
-### 4. Load Craft and make one request
+### 4. Load OOPforge and make one request
 
 Choose the harness you actually use:
 
@@ -85,18 +83,22 @@ cursor-agent --plugin-dir ~/.oopforge
 Use OOPforge craft: Add a single Email value object
 ```
 
-For a fresh execution task, a loaded Craft flow identifies the smallest path
-and surfaces Assumptions and an OOP Contract before business logic. Advisory
-requests recommend a path without implementing. See the
-[illustrative Craft session](docs/assets/craft-demo.cast) and the exact setup
-guides for [Claude Code](docs/setup/claude-code.md), [Codex](docs/setup/codex.md), and
-[Cursor](docs/setup/cursor.md).
+Craft identifies the smallest path and surfaces Assumptions and an OOP Contract
+before business logic. See the [illustrative session](docs/assets/craft-demo.cast)
+and setup guides for [Claude](docs/setup/claude-code.md), [Codex](docs/setup/codex.md), and [Cursor](docs/setup/cursor.md).
 
 ## The Basic Workflow
 
-Craft is the default entry point. Use `refactor` for behavior-preserving cleanup
-and `consult` for advice, review, or explicit planning documents without code changes.
-Craft selects a focused path for small changes and preserves the full sequence for a new domain or large feature:
+Craft remains the default; use a narrower command when its write boundary fits:
+
+| Intent | Claude Code | Codex / Cursor | Write boundary |
+|---|---|---|---|
+| Build or select a path | `/oopforge:craft …` | `Use OOPforge craft: …` | Requested implementation |
+| Preserve behavior while restructuring | `/oopforge:refactor …` | `Use OOPforge refactor: …` | Structural and regression-test changes |
+| Answer, compare, review, or document | `/oopforge:consult …` | `Use OOPforge consult: …` | None; one explicitly requested planning document |
+| Run, write, or strengthen tests | `/oopforge:test …` | `Use OOPforge test: …` | Tests only; E2E and infrastructure require approval |
+
+Craft preserves the full sequence for a new domain or large feature:
 
 ```text
 Discovery → Design → Delivery Plan → Skeleton → Implement → Test
@@ -268,7 +270,7 @@ manually if you want a complete uninstall.
 ## What's included
 
 - `skills/` — workflow, OOP/DDD, stack, skeleton, and review instructions
-- `commands/` — Claude Code command entry point
+- `commands/` — Claude Code command entry points
 - `examples/` — six runnable Java/Python calculator references
 - `docs/` — harness guides, support reference, proof protocol, and walkthroughs
 - `scripts/` — setup, lint, architecture checks, and smoke tests

@@ -43,7 +43,7 @@ target.
 
 ## 3. Run OOPforge commands
 
-Start Cursor Agent and invoke Craft by name:
+Start Cursor Agent and invoke the matching intent by name:
 
 ```bash
 cd /path/to/your-backend-project
@@ -55,6 +55,7 @@ Use OOPforge craft: Add a single Email value object
 Use OOPforge craft: Read docs/integration/image-storage.md and advise only.
 Use OOPforge refactor: Improve billing structure while preserving behavior.
 Use OOPforge consult: Compare billing designs without changing files.
+Use OOPforge test: Run the smallest useful tests for the billing approval rule.
 ```
 
 Planning-only sessions (Discovery, Design, Delivery Plan):
@@ -127,8 +128,8 @@ Match the structure in examples/calculator-java-hexagonal/ — domain has zero f
   `--plugin-dir ~/.oopforge`; the pack directory without that flag
   returned `OOPFORGE_NOT_LOADED`.
 - **Natural-language entry point** — use `Use OOPforge craft: …`, `Use
-  OOPforge refactor: …`, or `Use OOPforge consult: …`. OOPforge `/` commands
-  are not supported Cursor headless commands.
+  OOPforge refactor: …`, `Use OOPforge consult: …`, or `Use OOPforge test: …`.
+  OOPforge `/` commands are not supported Cursor headless commands.
 - **External symlink target** — project-local symlink startup includes
   `--add-dir ~/.oopforge` so headless mode may read the pack.
 - **No bootstrap auto-link** — unlike Claude Code / Codex, `install.sh` does not configure Cursor.
@@ -144,14 +145,13 @@ with an authenticated Cursor CLI:
 ./scripts/ci/harness-smoke.sh live cursor
 ```
 
-The check requires `OOPFORGE_LOADED`, Assumptions, and OOP Contract from both
-supported paths. Its isolated no-skill workspace must return
-`OOPFORGE_NOT_LOADED`. It uses temporary workspaces and `CURSOR_CONFIG_DIR`
-while retaining the real `HOME` so the OS credential-store token remains
-available. Only non-secret login metadata (`version` and `authInfo`) is copied
-into each temporary config. The negative control catches any user-level
-OOPforge installation that would contaminate isolation. Never add a provider
-key as a repository secret; live smoke remains a local release check.
+The check requires the Test routing token, `auto` level, production-code
+boundary, and a run-specific source marker from both supported paths. Its
+isolated no-skill workspace must return `OOPFORGE_NOT_LOADED`. It uses temporary
+workspaces and `CURSOR_CONFIG_DIR` while retaining the real `HOME` so the OS
+credential-store token remains available. Only non-secret login metadata is
+copied. Never add a provider key as a repository secret; live smoke remains a
+local release check.
 
 ## Related
 

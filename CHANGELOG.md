@@ -6,6 +6,19 @@
 
 ## [Unreleased]
 
+### Added
+
+- **Test command** — Claude Code의 `/oopforge:test`와 Codex/Cursor의
+  `Use OOPforge test: …`가 저장소 근거로 가장 작은 테스트 범위를 고르며,
+  제품 코드 변경과 자동 E2E 실행을 금지한다.
+
+### Changed
+
+- **공개 커맨드 안내** — 영문·한국어 README와 세 하네스 설정 문서에서
+  Craft, Refactor, Consult, Test의 호출법과 서로 다른 쓰기 범위를 바로 보여준다.
+- **하네스 Test 근거** — 정적 패키징 검사와 세 하네스의 Test 전용
+  positive/source-isolated negative live smoke를 추가했다.
+
 ## [1.3.1] - 2026-08-25
 
 ### Fixed
@@ -273,27 +286,7 @@
 - **구조 면제는 이름이 아니라 증거로** (`oop-discipline` #7) — 사다리 면제를 받으려면 그 구조가 지키는 불변식과 **사용자가 실제로 쓴 단어**를 둘 다 댈 수 있어야 한다. "Aggregate 경계"라고 부르는 것만으로는 면제되지 않는다. 사용자가 안 쓴 이름이면 1단으로 돌아간다.
 - **작업 폴더 소실 경고** (`workflow-continuity`) — `.craft/` 는 gitignore 라 긴 프로그램의 유일본이 로컬에만 남는다. 코드로 복원 불가능한 판단이 쌓이면 한 번 알리고 사용자가 거처를 정한다. 폐기 문서는 지우지 않고 `archive/` 로 옮긴다.
 
-## [0.9.7] - 2026-08-11
-
-### Added
-
-- **Comment discipline** — LLM이 남기는 장황한 "what" 주석을 줄이기 위해 `oop-discipline`에 narration comment 금지 원칙을 추가. 인접 코드 설명 주석은 삭제하거나 이름/메서드 추출로 대체하고, 주석은 why·외부 제약·숨은 불변식·추적되는 임시 결정에만 남기도록 명시.
-- **Craft 검증 항목** — 완료 전 comment discipline을 확인하도록 Verification에 `names explain what, comments explain why` 체크를 추가.
-- **AGENTS 하드룰 보강** — OOPforge 레포 자체 규칙에도 narration comment 금지와 rename/extract 대체 기준을 추가.
-
-## [0.9.6] - 2026-08-11
-
-### Fixed
-
-- **Craft 실행 지시문 정정** — "The goal is not to add code" 문구를 "code volume이 목표가 아니다"로 바꿔, 필요한 구현은 진행하되 최소 변경을 유지하도록 명확화.
-- **비-OOP 작업 경로** — 환경·툴링·문서·운영·조사 작업은 한 줄로 선언하고 Assumptions/OOP Contract를 건너뛰되 Verification/Scope drift는 유지하도록 Craft 라우팅을 추가.
-- **원인 주장 검증 게이트** — 원인을 기록하기 전에 반증 가능한 관찰 하나를 확보하도록 `oop-discipline`에 원칙 추가.
-- **검증 결과 재현성** — 테스트 수치와 함께 인터프리터 경로/버전, 환경변수 같은 툴체인 정체를 기록하도록 Craft Verification 보강.
-- **continuity 모순 정정** — 새 발견이 기존 기록과 어긋나면 work dir 전체를 검색해 앞선 주장도 함께 정정하도록 규칙 추가.
-- **프로젝트 규칙 참조 정정** — `AGENTS.md`에 "Hard Rules" 절이 있다고 가정하지 않고, 프로젝트가 선언한 규칙을 이름으로 지목하도록 스킬 문구 정리.
-- **OOPforge 자체 유지보수 예외** — `skills/workflow/craft.md`, `skills/SKILL.md`, `docs/claude-code.md`, `docs/codex.md`, `docs/cursor.md`에 OOPforge pack repository를 고치는 작업은 pack root가 올바른 work target임을 명시.
-
 ## Older releases
 
-- [0.8.x–0.9.5](docs/releases/changelog-0.8-0.9.md)
+- [0.8.x–0.9.7](docs/releases/changelog-0.8-0.9.md)
 - [0.1.x–0.7.x](docs/releases/changelog-0.1-0.7.md)

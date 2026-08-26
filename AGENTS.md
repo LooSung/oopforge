@@ -58,6 +58,7 @@ Use `/oopforge:craft` (`commands/craft.md`) as the default OOPforge user entry p
 - Use `/oopforge:craft` for single components, existing-domain features, domain bug fixes, and requests whose path is not yet clear.
 - Use `/oopforge:refactor` for explicit behavior-preserving structural cleanup; it applies Craft startup/completion gates and `skills/workflow/refactor.md` without reclassification.
 - Use `/oopforge:consult` for answers, alternatives, review, or explicitly requested planning documents; it never changes implementation or test code.
+- Use `/oopforge:test` to run, write, or strengthen tests; it never changes production behavior and E2E requires explicit wording.
 - For ambiguous or advisory requests, Craft recommends the smallest path without implementing.
 - For a new domain or large feature, Craft routes into the existing Discovery → Test workflow and keeps the human checkpoints.
 
@@ -88,6 +89,7 @@ Use this table to decide **which skill to read first**. Workflow stage always wi
 | Craft (entrypoint) | Select and execute the smallest OOP path, or recommend only for advisory requests | `skills/workflow/craft.md` + `skills/principles/oop-discipline.md` |
 | Refactor command | Preserve behavior while improving one structural decision | `skills/workflow/craft.md` + `skills/workflow/refactor.md` + `skills/principles/oop-discipline.md` |
 | Consult command | Answer, propose, review, or explicitly write one planning document | `skills/workflow/consult.md` |
+| Test command | Run, write, or strengthen tests without changing production behavior | `skills/workflow/craft.md` + `skills/workflow/test.md` |
 | Discovery | Glossary, contexts, actors | `skills/workflow/discovery.md` |
 | Design | Use-case signatures, aggregates | `skills/workflow/design.md` + `skills/oop/domain-model.md` |
 | Delivery Plan | Scope, order, tests, risks | `skills/workflow/delivery-plan.md` |
@@ -110,6 +112,7 @@ Use this table to decide **which skill to read first**. Workflow stage always wi
 | Publishing an event or notifying another system in the same commit | `skills/oop/outbox.md` |
 | Read/write split, complex query off the domain (CQRS) | `skills/oop/cqrs.md` |
 | Python FastAPI request/response typing and validation | `skills/lang/python-pydantic.md` |
+| Run, write, or strengthen tests | `skills/workflow/test.md` |
 | Explicit deployment, production, or operational-readiness request | `skills/workflow/production-readiness.md` (add to the normal path; never infer from an ordinary feature) |
 | Backend stack selection | `skills/lang/backend-stack.md` |
 | Backend package structure / skeleton | `skills/skeleton/backend-skeleton.md` |

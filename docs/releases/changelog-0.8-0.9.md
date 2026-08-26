@@ -3,6 +3,26 @@
 Historical entries moved from the root changelog to keep each tracked file
 within the repository's 300-line review limit.
 
+## [0.9.7] - 2026-08-11
+
+### Added
+
+- **Comment discipline** — LLM이 남기는 장황한 "what" 주석을 줄이기 위해 `oop-discipline`에 narration comment 금지 원칙을 추가. 인접 코드 설명 주석은 삭제하거나 이름/메서드 추출로 대체하고, 주석은 why·외부 제약·숨은 불변식·추적되는 임시 결정에만 남기도록 명시.
+- **Craft 검증 항목** — 완료 전 comment discipline을 확인하도록 Verification에 `names explain what, comments explain why` 체크를 추가.
+- **AGENTS 하드룰 보강** — OOPforge 레포 자체 규칙에도 narration comment 금지와 rename/extract 대체 기준을 추가.
+
+## [0.9.6] - 2026-08-11
+
+### Fixed
+
+- **Craft 실행 지시문 정정** — "The goal is not to add code" 문구를 "code volume이 목표가 아니다"로 바꿔, 필요한 구현은 진행하되 최소 변경을 유지하도록 명확화.
+- **비-OOP 작업 경로** — 환경·툴링·문서·운영·조사 작업은 한 줄로 선언하고 Assumptions/OOP Contract를 건너뛰되 Verification/Scope drift는 유지하도록 Craft 라우팅을 추가.
+- **원인 주장 검증 게이트** — 원인을 기록하기 전에 반증 가능한 관찰 하나를 확보하도록 `oop-discipline`에 원칙 추가.
+- **검증 결과 재현성** — 테스트 수치와 함께 인터프리터 경로/버전, 환경변수 같은 툴체인 정체를 기록하도록 Craft Verification 보강.
+- **continuity 모순 정정** — 새 발견이 기존 기록과 어긋나면 work dir 전체를 검색해 앞선 주장도 함께 정정하도록 규칙 추가.
+- **프로젝트 규칙 참조 정정** — `AGENTS.md`에 "Hard Rules" 절이 있다고 가정하지 않고, 프로젝트가 선언한 규칙을 이름으로 지목하도록 스킬 문구 정리.
+- **OOPforge 자체 유지보수 예외** — `skills/workflow/craft.md`, `skills/SKILL.md`, `docs/claude-code.md`, `docs/codex.md`, `docs/cursor.md`에 OOPforge pack repository를 고치는 작업은 pack root가 올바른 work target임을 명시.
+
 ## [0.9.5] - 2026-07-16
 
 C2 도메인 리뷰 자동화 MVP — PR diff에서 **신규 하드룰 위반만** 코멘트하는 read-only 리뷰어.

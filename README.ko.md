@@ -54,7 +54,7 @@ OOPforge 팩은 `~/.oopforge`에 있고 앱 코드는 **백엔드 저장소**에
 cd /path/to/your-backend-project
 ```
 
-### 4. Craft를 로드하고 한 번 요청
+### 4. OOPforge를 로드하고 한 번 요청
 
 | 하네스 | Craft 로드와 호출 |
 |---|---|
@@ -85,18 +85,22 @@ cursor-agent --plugin-dir ~/.oopforge
 Use OOPforge craft: Email 값 객체 하나 추가해줘
 ```
 
-새 실행 작업에서 Craft가 로드되면 가장 작은 경로를 고르고 비즈니스 로직 전에
-Assumptions와 OOP Contract를 제시한다. 자문 요청은 구현하지 않고 경로만
-추천한다. [예시 Craft 세션](docs/assets/craft-demo.cast)과
-[Claude Code](./docs/setup/claude-code.md) · [Codex](./docs/setup/codex.md) ·
-[Cursor](./docs/setup/cursor.md) 설정을 참고한다.
+Craft는 가장 작은 경로를 고르고 비즈니스 로직 전에 Assumptions와 OOP
+Contract를 제시한다. [예시 세션](docs/assets/craft-demo.cast)과
+[Claude](./docs/setup/claude-code.md) · [Codex](./docs/setup/codex.md) · [Cursor](./docs/setup/cursor.md) 설정을 참고한다.
 
 ## 기본 워크플로
 
-Craft가 기본 진입점이다. 동작을 보존하는 구조 개선이 명확하면 Claude에서는
-`/oopforge:refactor …`, Codex/Cursor에서는 `Use OOPforge refactor: …`를 사용한다.
-질문·대안·검토·명시적 계획 문서는 `consult`를 사용하며 구현 코드는 변경하지 않는다.
-Craft는 작은 작업의 집중 경로를 고르고, 새 도메인이나 큰 기능은 전체 순서를 유지한다:
+Craft가 기본 진입점이며 쓰기 범위가 더 좁으면 해당 커맨드를 사용한다:
+
+| 목적 | Claude Code | Codex / Cursor | 쓰기 범위 |
+|---|---|---|---|
+| 구현 또는 경로 선택 | `/oopforge:craft …` | `Use OOPforge craft: …` | 요청한 구현 |
+| 동작을 보존하는 구조 개선 | `/oopforge:refactor …` | `Use OOPforge refactor: …` | 구조와 회귀 테스트 |
+| 질문·비교·검토·문서 | `/oopforge:consult …` | `Use OOPforge consult: …` | 없음; 명시한 계획 문서 하나 |
+| 테스트 실행·작성·보강 | `/oopforge:test …` | `Use OOPforge test: …` | 테스트만; E2E·인프라는 별도 승인 |
+
+Craft는 새 도메인이나 큰 기능에서 전체 순서를 유지한다:
 
 ```text
 Discovery → Design → Delivery Plan → Skeleton → Implement → Test
@@ -260,7 +264,7 @@ Claude·Codex는 에이전트를 재시작한다. Cursor의 수동 등록 링크
 ## 포함된 구성
 
 - `skills/` — 워크플로, OOP/DDD, 스택, 스켈레톤, 리뷰 지침
-- `commands/` — Claude Code 커맨드 진입점
+- `commands/` — Claude Code 커맨드 진입점들
 - `examples/` — 실행 가능한 Java/Python 계산기 예제 6종
 - `docs/` — 하네스 가이드, 지원 범위, Proof, 튜토리얼
 - `scripts/` — 설치, lint, 아키텍처 검사, smoke test
