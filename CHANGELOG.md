@@ -6,6 +6,8 @@
 
 ## [Unreleased]
 
+## [1.4.2] - 2026-08-26
+
 ### Fixed
 
 - **Cursor Test source isolation** — 전역 OOPforge Test intent가 임시 후보보다
