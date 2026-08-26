@@ -6,6 +6,8 @@
 
 ## [Unreleased]
 
+## [1.4.0] - 2026-08-26
+
 ### Added
 
 - **Test command** — Claude Code의 `/oopforge:test`와 Codex/Cursor의

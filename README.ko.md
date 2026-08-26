@@ -203,7 +203,7 @@ starter에서 중립이었다. 이는 일반적인 효과 주장이 아니다.
 ```bash
 git clone https://github.com/LooSung/oopforge ~/.oopforge
 cd ~/.oopforge
-git checkout v1.2.0
+git checkout v1.4.0
 chmod +x scripts/setup/*.sh
 ./scripts/setup/install.sh
 ./scripts/setup/doctor.sh
