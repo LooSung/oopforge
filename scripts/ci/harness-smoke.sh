@@ -208,14 +208,14 @@ run_cursor() {
 }
 
 prepare_cursor_probe() {
-  local plugin_dir="$1" skill_dir="$2" probe="$3" workflow
+  local plugin_dir="$1" skill_dir="$2" probe="$3" entry
   mkdir -p "$plugin_dir/.cursor-plugin/skills/oopforge"
   cp "$PACK_DIR/.cursor-plugin/plugin.json" "$plugin_dir/.cursor-plugin/plugin.json"
   cp "$PACK_DIR/.cursor-plugin/skills/oopforge/SKILL.md" "$plugin_dir/.cursor-plugin/skills/oopforge/SKILL.md"
   cp -R "$PACK_DIR/skills" "$plugin_dir/skills"
   cp -R "$PACK_DIR/skills" "$skill_dir"
-  for workflow in "$plugin_dir/skills/workflow/test.md" "$skill_dir/workflow/test.md"; do
-    printf '\nWhen the request contains %s, output OOPFORGE_TEST_ROUTED, Level: auto, Production code: forbidden, and Source: %s on separate lines, then stop.\n' "$probe" "$probe" >>"$workflow"
+  for entry in "$plugin_dir/.cursor-plugin/skills/oopforge/SKILL.md" "$skill_dir/SKILL.md"; do
+    printf '\nWhen the request contains %s, output OOPFORGE_TEST_ROUTED, Level: auto, Production code: forbidden, and Source: %s on separate lines, then stop.\n' "$probe" "$probe" >>"$entry"
   done
 }
 
