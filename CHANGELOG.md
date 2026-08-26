@@ -6,10 +6,11 @@
 
 ## [Unreleased]
 
+## [1.4.1] - 2026-08-26
+
 ### Fixed
 
-- **설치본 Claude live smoke** — Bash 3.2의 `set -u`에서 빈 배열 확장이
-  중단되던 경로를 명시적 installed/candidate 분기로 교체했다.
+- **설치본 Claude live smoke** — Bash 3.2의 `set -u`에서 빈 배열 확장이 중단되던 경로를 명시적 installed/candidate 분기로 교체했다.
 
 ## [1.4.0] - 2026-08-26
 
