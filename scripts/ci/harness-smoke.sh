@@ -113,18 +113,17 @@ link_codex_auth() {
 live_claude() {
   require_command claude
   claude --version >&2
-  local run_dir candidate positive negative
-  local -a load_args
+  local run_dir candidate positive negative load_mode
   run_dir="$(mktemp -d)"
   TEMP_DIRS+=("$run_dir")
+  load_mode="candidate"
   if [ "${OOPFORGE_INSTALLED_SMOKE:-0}" = "1" ]; then
     require_link_target "$HOME/.claude/skills/oopforge" "$PACK_DIR/skills"
     require_link_target "$HOME/.claude/commands/oopforge" "$PACK_DIR/commands"
-    load_args=()
+    load_mode="installed"
   else
     candidate="$run_dir/candidate"
     prepare_claude_probe "$candidate"
-    load_args=(--plugin-dir "$candidate")
   fi
   positive="$run_dir/positive.txt"
   negative="$run_dir/negative.txt"
@@ -132,9 +131,15 @@ live_claude() {
     cd "$run_dir"
     printf 'def test_example():\n    assert True\n' >test_example.py
     probe_step "Claude Test command positive"
-    run_timed claude -p --no-session-persistence --permission-mode dontAsk \
-      --tools "Read" "${load_args[@]}" >"$positive" \
-      <<<"/oopforge:test Before running test_example.py, $TEST_ROUTING_PROBE"
+    if [ "$load_mode" = "installed" ]; then
+      run_timed claude -p --no-session-persistence --permission-mode bypassPermissions \
+        --tools "Read" --add-dir "$PACK_DIR" >"$positive" \
+        <<<"/oopforge:test Before running test_example.py, $TEST_ROUTING_PROBE"
+    else
+      run_timed claude -p --no-session-persistence --permission-mode bypassPermissions \
+        --tools "Read" --add-dir "$candidate" --plugin-dir "$candidate" >"$positive" \
+        <<<"/oopforge:test Before running test_example.py, $TEST_ROUTING_PROBE"
+    fi
     probe_step "Claude safe-mode negative"
     run_timed claude --safe-mode -p --no-session-persistence \
       --permission-mode plan --tools "" >"$negative" <<<"$NEGATIVE_PROBE"
