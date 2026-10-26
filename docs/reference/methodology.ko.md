@@ -77,10 +77,11 @@ consult: <요청>`을 사용한다. Consult는 답변·제안·검토·문서 �
 `auto`는 기존 테스트를 조사해 가장 작은 유효 범위를 고르며, 제품 코드 변경과
 자동 E2E 실행을 금지한다.
 
-Jira 작업 카드 하나는 Jira를 사용한다. Claude Code는 `/oopforge:jira
-<요청>`, Codex와 Cursor는 `Use OOPforge jira: <요청>`을 사용한다. 고정된
-다섯 절 템플릿으로 카드만 쓰고 코드는 바꾸지 않는다. Jira에 저장하는 것은
-명시적으로 요청된 경우만 한다.
+Jira 이슈 하나는 Jira를 사용한다. Claude Code는 `/oopforge:jira
+<요청>`, Codex와 Cursor는 `Use OOPforge jira: <요청>`을 사용한다. 기본은
+작업(Task)이고, 스토리·버그·에픽은 요청에 그 말이 있을 때 각 템플릿으로
+이슈 하나만 쓴다. 코드는 바꾸지 않는다. Jira에 저장하는 것은 명시 요청 때만
+한다.
 
 세션이 바뀌어도 일은 끊기지 않는다. 실행 작업은 `.craft/` 에 기록을 남기고, **한 세션은 결정 하나만** 끝낸다. 일이 남으면 에이전트가 묻지 않고 `next-session-prompt.md` 를 쓴다. 다음 Craft는 그 파일을 먼저 읽고, 사용자가 지난 작업을 꺼내지 않아도 이어서 할지 한 번 묻는다.
 

@@ -46,7 +46,7 @@ commands are not Cursor headless entry points.
 | `/oopforge:refactor …` (Claude) or `Use OOPforge refactor: …` (Codex/Cursor) | `workflow/craft.md` + `workflow/refactor.md` + `principles/oop-discipline.md` | preserve behavior while improving one structural decision |
 | `/oopforge:consult …` (Claude) or `Use OOPforge consult: …` (Codex/Cursor) | `workflow/consult.md` | answer, propose, review, or explicitly write one planning document without implementation changes |
 | `/oopforge:test …` (Claude) or `Use OOPforge test: …` (Codex/Cursor) | `workflow/craft.md` + `workflow/test.md` | verify, write, or strengthen tests within an explicit test-only write scope |
-| `/oopforge:jira …` (Claude) or `Use OOPforge jira: …` (Codex/Cursor) | `workflow/jira-card.md` | one Jira card in the fixed Korean template; writes to Jira only on explicit request |
+| `/oopforge:jira …` (Claude) or `Use OOPforge jira: …` (Codex/Cursor) | `workflow/jira-card.md` | one task, story, bug, or epic in the fixed Korean template; writes to Jira only on explicit request |
 
 Use Craft as the default when the user does not know which path fits. Existing Craft refactor requests remain valid for v1.x compatibility; the explicit Refactor intent narrows authorization to behavior-preserving work. Do not force the full Discovery→Test pipeline for small, focused tasks.
 

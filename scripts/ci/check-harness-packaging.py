@@ -104,7 +104,15 @@ def check_contracts(root: pathlib.Path) -> None:
     check_contract(
         root,
         "skills/workflow/jira-card.md",
-        ("Never change code", "## 개요", "## 작업 내용"),
+        (
+            "Never change code",
+            "Type: task | story | bug | epic",
+            "## 개요",
+            "## 작업 내용",
+            "## 현상",
+            "## 결과",
+            "Never create a second issue",
+        ),
     )
     check_contract(
         root,

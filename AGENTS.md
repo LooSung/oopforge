@@ -91,7 +91,7 @@ Use this table to decide **which skill to read first**. Workflow stage always wi
 | Refactor command | Preserve behavior while improving one structural decision | `skills/workflow/craft.md` + `skills/workflow/refactor.md` + `skills/principles/oop-discipline.md` |
 | Consult command | Answer, propose, review, or explicitly write one planning document | `skills/workflow/consult.md` |
 | Test command | Run, write, or strengthen tests without changing production behavior | `skills/workflow/craft.md` + `skills/workflow/test.md` |
-| Jira command | Write one Jira work card in the fixed Korean template | `skills/workflow/jira-card.md` |
+| Jira command | Write one Jira task, story, bug, or epic in the fixed Korean template | `skills/workflow/jira-card.md` |
 | Discovery | Glossary, contexts, actors | `skills/workflow/discovery.md` |
 | Design | Use-case signatures, aggregates | `skills/workflow/design.md` + `skills/oop/domain-model.md` |
 | Delivery Plan | Scope, order, tests, risks | `skills/workflow/delivery-plan.md` |

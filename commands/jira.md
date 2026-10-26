@@ -1,6 +1,6 @@
 ---
 name: jira
-description: Write or rewrite one Jira work card in the team's fixed Korean template without changing code.
+description: Write or rewrite one Jira task, story, bug, or epic in the fixed Korean template without changing code.
 ---
 
 If the user request is exactly `OOPFORGE_ACTIVATION_PROBE`, output these three
