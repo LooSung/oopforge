@@ -6,6 +6,8 @@
 
 ## [Unreleased]
 
+## [1.5.0] - 2026-10-26
+
 ### Added
 
 - **Jira command** — `/oopforge:jira`(Codex/Cursor는 `Use OOPforge jira: …`)가
