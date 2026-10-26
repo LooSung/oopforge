@@ -99,6 +99,7 @@ Craft가 기본 진입점이며 쓰기 범위가 더 좁으면 해당 커맨드�
 | 동작을 보존하는 구조 개선 | `/oopforge:refactor …` | `Use OOPforge refactor: …` | 구조와 회귀 테스트 |
 | 질문·비교·검토·문서 | `/oopforge:consult …` | `Use OOPforge consult: …` | 없음; 명시한 계획 문서 하나 |
 | 테스트 실행·작성·보강 | `/oopforge:test …` | `Use OOPforge test: …` | 테스트만; E2E·인프라는 별도 승인 |
+| Jira 작업 카드 하나 작성 | `/oopforge:jira …` | `Use OOPforge jira: …` | 카드만; Jira 쓰기는 명시 요청 때 |
 
 Craft는 새 도메인이나 큰 기능에서 전체 순서를 유지한다:
 

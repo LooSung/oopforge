@@ -1,8 +1,8 @@
 # Claude Code Setup
 
 OOPforge supports Claude Code through the symlink-installed skill and the
-`/oopforge:craft`, `/oopforge:refactor`, `/oopforge:consult`, and
-`/oopforge:test` commands defined in the [support scope](../reference/support-scope.md).
+`/oopforge:craft`, `/oopforge:refactor`, `/oopforge:consult`,
+`/oopforge:test`, and `/oopforge:jira` commands defined in the [support scope](../reference/support-scope.md).
 
 ## Install
 
@@ -24,6 +24,7 @@ from the backend project and confirm that the commands are registered:
 /oopforge:refactor Improve the billing module structure while preserving its API and behavior.
 /oopforge:consult Review the billing boundaries without changing files.
 /oopforge:test Run the smallest useful tests for the billing approval rule.
+/oopforge:jira Write one work card for the billing approval rule. Do not edit files.
 ```
 
 Maintainers can run the authenticated positive/negative check with:
@@ -54,6 +55,7 @@ treat that repository as the work target.
 /oopforge:refactor Improve imported billing structure without changing behavior
 /oopforge:consult Compare two payment designs without changing files
 /oopforge:test Strengthen unit tests for the borrow-book invariants
+/oopforge:jira Write one work card for borrow-book. Do not edit files.
 ```
 
 **First time?** Follow the [library loan walkthrough](../guides/library-loan/README.md) step by step.

@@ -42,10 +42,12 @@ def check_required_paths(root: pathlib.Path) -> None:
         "commands/refactor.md",
         "commands/consult.md",
         "commands/test.md",
+        "commands/jira.md",
         ".cursor-plugin/skills/oopforge/SKILL.md",
         "skills/workflow/craft.md",
         "skills/workflow/consult.md",
         "skills/workflow/test.md",
+        "skills/workflow/jira-card.md",
         "skills/principles/oop-discipline.md",
         "docs/setup/cursor.md",
         "docs/reference/support-scope.md",
@@ -60,6 +62,7 @@ def check_activation_probes(root: pathlib.Path) -> None:
         "commands/refactor.md",
         "commands/consult.md",
         "commands/test.md",
+        "commands/jira.md",
         "skills/SKILL.md",
         ".cursor-plugin/skills/oopforge/SKILL.md",
     )
@@ -95,8 +98,25 @@ def check_contracts(root: pathlib.Path) -> None:
     )
     check_contract(
         root,
+        "commands/jira.md",
+        ("workflow/jira-card.md",),
+    )
+    check_contract(
+        root,
+        "skills/workflow/jira-card.md",
+        ("Never change code", "## 개요", "## 작업 내용"),
+    )
+    check_contract(
+        root,
         "skills/SKILL.md",
-        ("/oopforge:test", "Use OOPforge test:", "workflow/test.md"),
+        (
+            "/oopforge:test",
+            "Use OOPforge test:",
+            "workflow/test.md",
+            "/oopforge:jira",
+            "Use OOPforge jira:",
+            "workflow/jira-card.md",
+        ),
     )
 
 

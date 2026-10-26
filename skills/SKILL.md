@@ -1,6 +1,6 @@
 ---
 name: oopforge
-description: Use OOPforge when building, refactoring, consulting on, or testing a backend service, REST/HTTP API, or business feature in Java or Python — including DDD/OOP modeling, layered or hexagonal/clean architecture, CQRS, or the Craft, Refactor, Consult, and Test workflows.
+description: Use OOPforge when building, refactoring, consulting on, testing, or writing one Jira card for a backend service, REST/HTTP API, or business feature in Java or Python — including DDD/OOP modeling, layered or hexagonal/clean architecture, CQRS, or the Craft, Refactor, Consult, Test, and Jira workflows.
 license: MIT
 compatibility: Claude Code, Codex CLI, Cursor Agent, and Agent Skills-compatible clients with access to the complete OOPforge pack.
 stability: stable
@@ -23,15 +23,15 @@ Use this skill when the user asks for OOPforge, DDD/OOP modeling, clean or hexag
 
 ## Command Routing
 
-Treat **`/oopforge:craft`** as the default OOPforge entry point on **Claude Code**. Use **`/oopforge:refactor`** for behavior-preserving cleanup, **`/oopforge:consult`** for advisory work, and **`/oopforge:test`** to verify, write, or strengthen tests without changing production behavior.
+Treat **`/oopforge:craft`** as the default OOPforge entry point on **Claude Code**. Use **`/oopforge:refactor`** for behavior-preserving cleanup, **`/oopforge:consult`** for advisory work, **`/oopforge:test`** to verify, write, or strengthen tests without changing production behavior, and **`/oopforge:jira`** to write one Jira work card without touching code.
 
-On **Codex CLI**, do not type OOPforge `/` commands at the composer — Codex reserves `/` for built-ins. Use `/skills` or `$oopforge` → **oopforge**, then `craft: …`, `refactor: …`, `consult: …`, or `test: …` without a leading `/`.
+On **Codex CLI**, do not type OOPforge `/` commands at the composer — Codex reserves `/` for built-ins. Use `/skills` or `$oopforge` → **oopforge**, then `craft: …`, `refactor: …`, `consult: …`, `test: …`, or `jira: …` without a leading `/`.
 
 On **Cursor Agent CLI**, use the explicit local-plugin or project-local skill
 setup documented in `../docs/setup/cursor.md`, then use natural-language intents
 such as `Use OOPforge craft: …`, `Use OOPforge refactor: …`, `Use OOPforge
-consult: …`, or `Use OOPforge test: …`. OOPforge `/` commands are not Cursor
-headless entry points.
+consult: …`, `Use OOPforge test: …`, or `Use OOPforge jira: …`. OOPforge `/`
+commands are not Cursor headless entry points.
 
 ## Project vs pack (paths)
 
@@ -46,6 +46,7 @@ headless entry points.
 | `/oopforge:refactor …` (Claude) or `Use OOPforge refactor: …` (Codex/Cursor) | `workflow/craft.md` + `workflow/refactor.md` + `principles/oop-discipline.md` | preserve behavior while improving one structural decision |
 | `/oopforge:consult …` (Claude) or `Use OOPforge consult: …` (Codex/Cursor) | `workflow/consult.md` | answer, propose, review, or explicitly write one planning document without implementation changes |
 | `/oopforge:test …` (Claude) or `Use OOPforge test: …` (Codex/Cursor) | `workflow/craft.md` + `workflow/test.md` | verify, write, or strengthen tests within an explicit test-only write scope |
+| `/oopforge:jira …` (Claude) or `Use OOPforge jira: …` (Codex/Cursor) | `workflow/jira-card.md` | one Jira card in the fixed Korean template; writes to Jira only on explicit request |
 
 Use Craft as the default when the user does not know which path fits. Existing Craft refactor requests remain valid for v1.x compatibility; the explicit Refactor intent narrows authorization to behavior-preserving work. Do not force the full Discovery→Test pipeline for small, focused tasks.
 
@@ -59,10 +60,11 @@ Natural language also works, for example: "Use OOPforge Discovery for the paymen
 4. For an explicit Refactor request, use Craft's startup and completion gates, select `workflow/refactor.md` without reclassification, and preserve behavior.
 5. For Consult, follow `workflow/consult.md`; default to read-only and write one planning document only after explicit document wording.
 6. For an explicit Test request, use Craft's lifecycle gates and `workflow/test.md`; never change production behavior or infer E2E.
-7. Keep the normal order for new work: Discovery -> Design -> Delivery Plan -> Skeleton -> Implement -> Test.
-8. Ask for human approval before moving from one workflow stage to the next.
-9. Do not merge planning, implementation, and verification in a single step unless the user explicitly asks.
-10. Add `workflow/production-readiness.md` only when the user explicitly asks
+7. For Jira, follow `workflow/jira-card.md`; write one card and change nothing else.
+8. Keep the normal order for new work: Discovery -> Design -> Delivery Plan -> Skeleton -> Implement -> Test.
+9. Ask for human approval before moving from one workflow stage to the next.
+10. Do not merge planning, implementation, and verification in a single step unless the user explicitly asks.
+11. Add `workflow/production-readiness.md` only when the user explicitly asks
    about deployment, production, or operational readiness; ordinary feature
    requests never activate it.
 
@@ -85,6 +87,7 @@ Conditional workflow:
 - Testing: `workflow/test.md`
 - Production readiness (explicit opt-in only): `workflow/production-readiness.md`
 - Consultation (experimental): `workflow/consult.md`
+- Jira card (experimental): `workflow/jira-card.md`
 
 Skill maturity is recorded in `stability.json`; current harness and stack
 support boundaries are defined by `../docs/reference/support-scope.md`.

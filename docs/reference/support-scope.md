@@ -20,9 +20,9 @@ must be replaced by durable shared infrastructure for multi-instance deployment.
 
 | Harness | Supported load path | Invocation |
 |---|---|---|
-| Claude Code | `~/.claude/skills/oopforge` and `~/.claude/commands/oopforge` symlinks | `/oopforge:craft …`, `/oopforge:refactor …`, `/oopforge:consult …`, or `/oopforge:test …` |
-| Codex CLI | `~/.codex/skills/oopforge` symlink | select `oopforge`, then use the matching `craft`, `refactor`, `consult`, or `test` natural-language intent |
-| Cursor Agent CLI | explicit `--plugin-dir` | use the matching `craft`, `refactor`, `consult`, or `test` natural-language intent |
+| Claude Code | `~/.claude/skills/oopforge` and `~/.claude/commands/oopforge` symlinks | `/oopforge:craft …`, `/oopforge:refactor …`, `/oopforge:consult …`, `/oopforge:test …`, or `/oopforge:jira …` |
+| Codex CLI | `~/.codex/skills/oopforge` symlink | select `oopforge`, then use the matching `craft`, `refactor`, `consult`, `test`, or `jira` natural-language intent |
+| Cursor Agent CLI | explicit `--plugin-dir` | use the matching `craft`, `refactor`, `consult`, `test`, or `jira` natural-language intent |
 | Cursor Agent CLI | `.cursor/skills/oopforge` plus pack `--add-dir` | same natural-language intents |
 
 Cursor directory auto-discovery, Cursor headless OOPforge `/` commands,

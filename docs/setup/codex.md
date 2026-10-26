@@ -5,8 +5,8 @@ OOPforge supports Codex through the global skill entry point at
 [support scope](../reference/support-scope.md).
 
 Codex installs **skills only** — not Claude Code `commands/`. OOPforge strings
-such as `/oopforge:craft`, `/oopforge:refactor`, `/oopforge:consult`, and
-`/oopforge:test` are **not** Codex slash commands; Codex reserves `/` for built-ins.
+such as `/oopforge:craft`, `/oopforge:refactor`, `/oopforge:consult`,
+`/oopforge:test`, and `/oopforge:jira` are **not** Codex slash commands; Codex reserves `/` for built-ins.
 
 ## Install
 
@@ -60,6 +60,7 @@ Use OOPforge craft: Implement borrow-book in python-fastapi
 Use OOPforge refactor: Improve imported billing structure without changing behavior
 Use OOPforge consult: Review billing boundaries without changing files
 Use OOPforge test: Run the smallest useful tests for the borrow-book rule
+Use OOPforge jira: Write one work card for borrow-book. Do not edit files.
 ```
 
 One-shot (non-interactive):

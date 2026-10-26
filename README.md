@@ -97,6 +97,7 @@ Craft remains the default; use a narrower command when its write boundary fits:
 | Preserve behavior while restructuring | `/oopforge:refactor …` | `Use OOPforge refactor: …` | Structural and regression-test changes |
 | Answer, compare, review, or document | `/oopforge:consult …` | `Use OOPforge consult: …` | None; one explicitly requested planning document |
 | Run, write, or strengthen tests | `/oopforge:test …` | `Use OOPforge test: …` | Tests only; E2E and infrastructure require approval |
+| Write one Jira work card | `/oopforge:jira …` | `Use OOPforge jira: …` | The card only; Jira write on explicit request |
 
 Craft preserves the full sequence for a new domain or large feature:
 
@@ -290,8 +291,7 @@ readers can use the conceptual
 per-skill translations.
 
 OOPforge remains a backend OOP/DDD methodology layer, not a model wrapper or
-general orchestration framework. See the
-[positioning](./docs/project/positioning.md) and
+general orchestration framework. See the [positioning](./docs/project/positioning.md) and
 [support scope](./docs/reference/support-scope.md) for the current public
 contract, and the [changelog](./CHANGELOG.md) for completed releases.
 

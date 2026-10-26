@@ -56,6 +56,7 @@ Use OOPforge craft: Read docs/integration/image-storage.md and advise only.
 Use OOPforge refactor: Improve billing structure while preserving behavior.
 Use OOPforge consult: Compare billing designs without changing files.
 Use OOPforge test: Run the smallest useful tests for the billing approval rule.
+Use OOPforge jira: Write one work card for the billing approval rule. Do not edit files.
 ```
 
 Planning-only sessions (Discovery, Design, Delivery Plan):
@@ -128,7 +129,8 @@ Match the structure in examples/calculator-java-hexagonal/ — domain has zero f
   `--plugin-dir ~/.oopforge`; the pack directory without that flag
   returned `OOPFORGE_NOT_LOADED`.
 - **Natural-language entry point** — use `Use OOPforge craft: …`, `Use
-  OOPforge refactor: …`, `Use OOPforge consult: …`, or `Use OOPforge test: …`.
+  OOPforge refactor: …`, `Use OOPforge consult: …`, `Use OOPforge test: …`,
+  or `Use OOPforge jira: …`.
   OOPforge `/` commands are not supported Cursor headless commands.
 - **External symlink target** — project-local symlink startup includes
   `--add-dir ~/.oopforge` so headless mode may read the pack.

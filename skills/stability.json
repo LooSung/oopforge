@@ -32,6 +32,7 @@
     "skills/antipatterns/flat-package.md",
     "skills/antipatterns/god-aggregate.md",
     "skills/antipatterns/repository-with-business-logic.md",
-    "skills/workflow/consult.md"
+    "skills/workflow/consult.md",
+    "skills/workflow/jira-card.md"
   ]
 }
