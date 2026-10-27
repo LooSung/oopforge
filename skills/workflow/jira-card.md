@@ -1,6 +1,6 @@
 ---
 name: workflow-jira-card
-description: Write or rewrite one Jira task, story, bug, or epic in the fixed Korean template for that type, without changing code.
+description: Write or rewrite one Jira task, story, bug, epic, or backlog item in the fixed Korean template for that type, without changing code.
 tags: [workflow, planning, jira]
 stability: experimental
 ---
@@ -20,11 +20,15 @@ the card. Writes nothing but that one issue.
    repository or recent issues do not reveal it.
 2. Read only what the card must point to: the plan or design decision, one or
    two sibling issues for voice, and the few code files the card names.
-3. Choose one type. `버그` or `bug` selects bug. `에픽` or `epic` selects epic.
-   `스토리` or `story` selects story. Otherwise select task. When the request
-   names more than one type, use the type it assigns to this issue. If that is
-   still ambiguous, ask which single type to write.
-4. Begin with `Mode: new | rewrite | Type: task | story | bug | epic | Target: <key or paste>`
+3. Choose one template. `백로그` or `backlog` selects backlog. `버그` or `bug`
+   selects bug. `에픽` or `epic` selects epic. `스토리` or `story` selects
+   story. Otherwise select task. Backlog together with story, task, or bug
+   keeps this template and uses that word as the Jira issue type. Any other
+   mix uses the type assigned to this issue, or asks which single type to write.
+4. Children of an existing epic or story belong to `workflow/jira-children.md`.
+   If this request also asks for those children, write only the one issue this
+   file owns and say that the children are the next turn.
+5. Begin with `Mode: new | rewrite | Type: task | story | bug | epic | backlog | Target: <key or paste>`
    and nothing before it.
 
 ## Task and story
@@ -63,7 +67,7 @@ changes and why now.
 - `테스트 확인` lists observable outcomes (`…한다`, `…이 나온다`). Put the
   project's standard check command last when sibling issues do.
 - `영향 범위` names repositories and modules in words, not trees.
-- Do not create the child tasks of a story in the same turn.
+- Children of this story are another turn: `workflow/jira-children.md`.
 
 ## Bug
 
@@ -122,7 +126,38 @@ Set the Jira issue type to Epic. No implementation checklist.
 - The first `자식` bullet is fixed. Keep it when rewriting. Further bullets are
   only starting issues that already exist at first write. Omit them when there
   are none. Do not append keys to this list later.
-- Do not create child issues in the same turn.
+- Children of this epic are another turn: `workflow/jira-children.md`.
+
+## Backlog
+
+Jira has no Backlog issue type. This template is the body of an issue that
+waits in the backlog, with no sprint. Set the issue type to Story, Task, or
+Bug when the request names one. Otherwise set Story.
+
+```markdown
+## 배경
+* …
+
+## 결과
+* …
+
+## 범위
+* **안**: …
+* **밖**: …
+
+## 미결
+* …
+
+## 참고
+* 관련 이슈: [KEY 제목](url)(관계 한 구절)
+* 문서/링크: 경로 + 절
+```
+
+- No build checklist and no sprint. `배경` is 2–4 bullets, noun-ending Korean.
+  Story names who needs it, task names the module, and bug states the known defect.
+- `결과` is 2–3 bullets with an observable done-when. A bug states the expected behavior, with no implementation steps.
+- `범위` is coarse enough to rank. `미결` is one open decision per bullet, or
+  `-`. A later card is named here and written on a later turn.
 
 ## Shared writing rules
 
@@ -131,11 +166,17 @@ Set the Jira issue type to Epic. No implementation checklist.
 - Match the voice of sibling issues over this file when they differ.
 - Target under 60 rendered lines.
 - Never leave a template section out; use `-` when it is empty.
+- When the request names this issue's track, start the summary with `[F.E]`,
+  `[B.E]`, `[AI]`, or `[DOC]` and one space. One issue carries one tag. Work for a
+  track this repository does not implement is a child in
+  `workflow/jira-children.md`: the title carries the tag, and the body says
+  how the other repository does the work and how it connects.
 
 ## Writing to Jira
 
 - When the issue being created names an existing epic, set its parent to that
   epic and leave the epic description unchanged.
+- A backlog issue stays in the backlog. Do not set a sprint, rank, or estimate.
 - With an Atlassian tool and an explicit request to write, create or edit the
   one issue with `contentFormat: html` and the chosen issue type. Checkboxes
   must be

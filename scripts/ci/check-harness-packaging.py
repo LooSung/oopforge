@@ -48,6 +48,7 @@ def check_required_paths(root: pathlib.Path) -> None:
         "skills/workflow/consult.md",
         "skills/workflow/test.md",
         "skills/workflow/jira-card.md",
+        "skills/workflow/jira-children.md",
         "skills/principles/oop-discipline.md",
         "docs/setup/cursor.md",
         "docs/reference/support-scope.md",
@@ -99,14 +100,30 @@ def check_contracts(root: pathlib.Path) -> None:
     check_contract(
         root,
         "commands/jira.md",
-        ("workflow/jira-card.md",),
+        ("workflow/jira-card.md", "workflow/jira-children.md"),
+    )
+    check_contract(
+        root,
+        "skills/workflow/jira-children.md",
+        (
+            "Mode: children",
+            "[F.E]",
+            "[B.E]",
+            "[AI]",
+            "[DOC]",
+            "## 개요",
+            "Never edit the parent",
+            "구현 저장소",
+            "Never change code",
+        ),
     )
     check_contract(
         root,
         "skills/workflow/jira-card.md",
         (
             "Never change code",
-            "Type: task | story | bug | epic",
+            "Type: task | story | bug | epic | backlog",
+            "## 배경",
             "## 개요",
             "## 작업 내용",
             "## 현상",
@@ -124,6 +141,7 @@ def check_contracts(root: pathlib.Path) -> None:
             "/oopforge:jira",
             "Use OOPforge jira:",
             "workflow/jira-card.md",
+            "workflow/jira-children.md",
         ),
     )
 

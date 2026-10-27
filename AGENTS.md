@@ -59,7 +59,7 @@ Use `/oopforge:craft` (`commands/craft.md`) as the default OOPforge user entry p
 - Use `/oopforge:refactor` for explicit behavior-preserving structural cleanup; it applies Craft startup/completion gates and `skills/workflow/refactor.md` without reclassification.
 - Use `/oopforge:consult` for answers, alternatives, review, or explicitly requested planning documents; it never changes implementation or test code.
 - Use `/oopforge:test` to run, write, or strengthen tests; it never changes production behavior and E2E requires explicit wording.
-- Use `/oopforge:jira` to write or rewrite one Jira work card in the fixed template; it changes nothing but the card.
+- Use `/oopforge:jira` to write or rewrite one Jira work card, or the child tasks of one existing epic or story, in the fixed template; it changes nothing but those issues.
 - For ambiguous or advisory requests, Craft recommends the smallest path without implementing.
 - For a new domain or large feature, Craft routes into the existing Discovery → Test workflow and keeps the human checkpoints.
 
@@ -91,7 +91,7 @@ Use this table to decide **which skill to read first**. Workflow stage always wi
 | Refactor command | Preserve behavior while improving one structural decision | `skills/workflow/craft.md` + `skills/workflow/refactor.md` + `skills/principles/oop-discipline.md` |
 | Consult command | Answer, propose, review, or explicitly write one planning document | `skills/workflow/consult.md` |
 | Test command | Run, write, or strengthen tests without changing production behavior | `skills/workflow/craft.md` + `skills/workflow/test.md` |
-| Jira command | Write one Jira task, story, bug, or epic in the fixed Korean template | `skills/workflow/jira-card.md` |
+| Jira command | Write one Jira task, story, bug, epic, or backlog item, or the `[F.E]` `[B.E]` `[AI]` `[DOC]` child tasks of one existing epic or story | `skills/workflow/jira-card.md`; `skills/workflow/jira-children.md` when the parent already exists |
 | Discovery | Glossary, contexts, actors | `skills/workflow/discovery.md` |
 | Design | Use-case signatures, aggregates | `skills/workflow/design.md` + `skills/oop/domain-model.md` |
 | Delivery Plan | Scope, order, tests, risks | `skills/workflow/delivery-plan.md` |
@@ -165,6 +165,7 @@ Before changing behavior, read the relevant skill file:
 - Refactoring existing or external code: `skills/workflow/refactor.md`
 - Consultation and explicit planning documents: `skills/workflow/consult.md`
 - Jira work card in the fixed template: `skills/workflow/jira-card.md`
+- Jira child tasks of one epic or story: `skills/workflow/jira-children.md`
 - Anti-patterns: `skills/antipatterns/` (`flat-package`, `anemic-domain`, `controller-fat`, `repository-with-business-logic`, `god-aggregate`)
 - Resuming work across sessions (persist + restore context): `skills/workflow/continuity.md`
 
