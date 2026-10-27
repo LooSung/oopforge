@@ -6,6 +6,8 @@
 
 ## [Unreleased]
 
+## [1.7.0] - 2026-10-27
+
 ### Added
 
 - **Jira 백로그** — `/oopforge:jira`에 백로그 템플릿이 있다. 본문은
