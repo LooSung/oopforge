@@ -16,7 +16,7 @@ Not a required step of the default delivery flow but a **supporting workflow use
 - First pin the current behavior with tests or reproduction scenarios.
 - Change in small steps and verify often.
 - Preserve public behavior, API contract, and domain rules.
-- If something must change, it is the subject of a new delivery plan.
+- If behavior must change, that is a separate Craft job.
 
 ## Brownfield order
 
@@ -117,4 +117,4 @@ Save to `docs/refactor-plan.md` or `docs/<domain>/refactor-plan.md`:
 - **No breaking domain purity for framework convenience**
 
 ## Next step
-After verification -> review, commit, push. If a functional change is needed, split it into `workflow-delivery-plan`.
+After verification -> review, commit, push. If a functional change is needed, split it into a separate Craft job.

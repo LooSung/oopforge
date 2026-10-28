@@ -15,7 +15,7 @@ Do not invent a per-language layout; follow the standard structure below.
 
 ## Common rules
 
-- [ ] Keep the domain at 0 framework imports as much as possible.
+- [ ] Keep the domain at 0 framework imports (Hard Rule).
 - [ ] The inbound adapter handles only request/response mapping.
 - [ ] The application service handles only orchestration and the transaction boundary.
 - [ ] The outbound adapter handles only repository, external API, and messaging implementations.

@@ -13,7 +13,6 @@ Run an existing backend OOP task via the smallest appropriate execution path.
 The goal is not code volume. Add or change code only when the selected path
 requires it, and keep domain behavior inside domain objects while the
 application service orchestrates.
-Make domain objects own their responsibilities and keep the application service from doing more than orchestration.
 
 ## Startup procedure
 

@@ -61,4 +61,5 @@ Save to `docs/design.md`:
 - **No infinite abstraction** — one interface level. No Adapter pattern.
 
 ## Next step
-After user approval -> `workflow-skeleton`
+After user approval -> `workflow-delivery-plan`. Small Craft paths may skip
+Delivery Plan and go to `workflow-skeleton` when scope is already one use case.

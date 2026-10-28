@@ -178,9 +178,6 @@ These limits are intentionally measurable. They come from review focus and agent
 - **200 lines/skill** — one concept per agent context load; split when a skill teaches two ideas
 
 - Domain layer framework imports: **0**
-- One file: **300 lines or less**
-- One method: **20 lines preferred**
-- One skill file: **200 lines or less**
 - No public setters; use factory methods or intention-revealing behavior methods.
 - Collections crossing boundaries must be defensively copied or immutable.
 - Other aggregates are referenced by ID only.

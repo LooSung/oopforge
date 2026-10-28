@@ -11,7 +11,7 @@ stability: stable
 
 When read and write shapes differ enough that one model cannot serve both well.
 **Default depth is medium**: split the Command/Query paths and DTOs but **share the store (DB)**.
-Event sourcing or separate read/write databases is out of scope for this skill (a long-term item).
+Event sourcing or separate read/write databases is out of scope for this skill.
 
 ## Entry criteria (do not adopt unless at least one holds)
 

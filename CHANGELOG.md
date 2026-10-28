@@ -6,6 +6,18 @@
 
 ## [Unreleased]
 
+### Fixed
+
+- **워크플로 단계 연결** — Design 다음 단계가 Delivery Plan이다. 범위가
+  유스케이스 하나인 작은 Craft 경로만 Skeleton으로 바로 간다. 유스케이스를
+  모두 구현하면 Test로 넘어간다. continuity 작업 문서의 Stage에
+  `delivery-plan`이 있다.
+- **Refactor 분기** — 리팩터링 중 동작 변경이 필요하면 별도 Craft 작업으로
+  나눈다. Test와 같은 규칙이다.
+- **규칙 문구** — `AGENTS.md`의 크기 제한을 한 번만 적고, 메서드 20줄을
+  제한으로 통일했다. domain 프레임워크 import 0개를 Hard Rule로 적는다. Craft의
+  중복 문장과 CQRS skill의 로드맵 표현을 지웠다.
+
 ## [1.7.0] - 2026-10-27
 
 ### Added

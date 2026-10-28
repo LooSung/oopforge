@@ -82,4 +82,4 @@ upgrade path for anything you intentionally defer.
 
 ## Next step
 Merge the completed use case -> repeat the Implement cycle for the next use case.
-When all use cases are done -> domain-level retrospective.
+When all use cases are done -> `workflow-test` for cross-use-case verification.

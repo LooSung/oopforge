@@ -128,7 +128,7 @@ that into the task doc and leave a link. The job line uses product language.
 # <Title> — <kind>
 
 ## Status
-- Stage: <discovery|design|skeleton|implement|test|refactor|done>
+- Stage: <discovery|design|delivery-plan|skeleton|implement|test|refactor|done>
 - Updated: <date>
 - Next: <pointer to next-session-prompt.md — do not duplicate the prompt>
 
