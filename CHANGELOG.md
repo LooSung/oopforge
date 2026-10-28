@@ -6,6 +6,8 @@
 
 ## [Unreleased]
 
+## [1.7.1] - 2026-10-28
+
 ### Fixed
 
 - **워크플로 단계 연결** — Design 다음 단계가 Delivery Plan이다. 범위가
