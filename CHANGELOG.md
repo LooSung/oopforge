@@ -6,6 +6,8 @@
 
 ## [Unreleased]
 
+## [1.8.0] - 2026-11-16
+
 ### Fixed
 
 - **플러그인 로드 경로** — 모든 명령이 `${CLAUDE_PLUGIN_ROOT}/skills/workflow/`를
