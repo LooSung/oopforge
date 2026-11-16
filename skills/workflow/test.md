@@ -95,7 +95,12 @@ never activates that gate.
 
 ## Live run
 
-If the harness can launch and drive the application, use it to call what
+Launching the application is the most expensive step in this pack, so it is opt-in.
+Run it only when the user asks in this request, or the target `AGENTS.md` has
+`OOPforge live run: on`. Otherwise do not launch anything: report
+`Live run: not run` and name in one line what to check by hand.
+
+When it is on and the harness can launch and drive the application, use it to call what
 changed against a running server. In Claude Code, `/verify` confirms that one
 change does what it should; `/run` drives a scenario, which suits the Refactor
 before-and-after below. Craft and Refactor call this section; it is the one

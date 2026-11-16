@@ -6,6 +6,17 @@
 
 ## [Unreleased]
 
+## [1.8.1] - 2026-11-16
+
+### Changed
+
+- **Live run** — 기본으로 꺼져 있다. 사용자가 그 요청에서 부탁했거나 대상
+  `AGENTS.md`에 `OOPforge live run: on`이 있을 때만 서버를 띄운다. 꺼져 있으면
+  `Live run: not run`과 손으로 확인할 것을 한 줄로 보고한다. 서버 실행이 팩에서
+  가장 비싼 동작이라 Craft와 Refactor마다 돌지 않게 했다.
+- **Refactor cleanup pass** — 기본으로 꺼져 있다. 사용자가 부탁했거나
+  `OOPforge cleanup pass: on`이 있을 때만 `/simplify`를 돌린다.
+
 ## [1.8.0] - 2026-11-16
 
 ### Fixed

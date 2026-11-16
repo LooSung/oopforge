@@ -128,7 +128,7 @@ Transaction Boundary:
 - If and only if the Production Gate was explicitly activated, complete
   `skills/workflow/production-readiness.md` and report its blockers or accepted risks.
 - Run the necessary tests and record reproducible commands, toolchain identity (interpreter path/version, required env vars), and results.
-- For a change to an endpoint or other externally callable behavior, do the **Live run** in `skills/workflow/test.md` after the tests are green.
+- **Live run** (`skills/workflow/test.md`) is opt-in: start the server only when the user asked or `OOPforge live run: on` is set. Otherwise report `Live run: not run` and what to check by hand.
 - For any failed or skipped verification, leave a reason and the risk.
 
 ## Completion report

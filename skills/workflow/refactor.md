@@ -7,7 +7,7 @@ stability: stable
 
 # Workflow — Refactor
 
-Contents: When to use · Core principles · Brownfield order · One branch, one decision · Abandoning a branch · Checklist · Output · Cleanup pass (optional) · Prohibited · Next step
+Contents: When to use · Core principles · Brownfield order · One branch, one decision · Abandoning a branch · Checklist · Output · Cleanup pass (opt-in) · Prohibited · Next step
 
 ## When to use
 When cleaning up the structure, names, responsibility boundaries, and duplication of existing or imported source while preserving behavior.
@@ -73,7 +73,7 @@ the residue — otherwise the next session inherits a half-real repository.
 - [ ] Check layer-dependency violations
 - [ ] Change in small steps
 - [ ] After each step, verify tests/build/key scenarios
-- [ ] When an endpoint is in scope, send the same requests before the first step and after the last (`skills/workflow/test.md` **Live run**); responses must match
+- [ ] When Live run is on (`skills/workflow/test.md`) and an endpoint is in scope, send the same requests before the first step and after the last; responses must match
 - [ ] Record the change summary and remaining risks
 
 ## Output
@@ -109,10 +109,13 @@ Save to `docs/refactor-plan.md` or `docs/<domain>/refactor-plan.md`:
 - 
 ```
 
-## Cleanup pass (optional)
+## Cleanup pass (opt-in)
 
-If the harness provides a diff-scoped cleanup skill (Claude Code: `/simplify`),
-run it once, **after** the checklist's tests/build verification is green. It
+Off by default. Run it only when the user asks in this request, or the target
+`AGENTS.md` has `OOPforge cleanup pass: on`. Otherwise skip it silently.
+
+When it is on and the harness provides a diff-scoped cleanup skill (Claude Code:
+`/simplify`), run it once, **after** the checklist's tests/build verification is green. It
 tidies the moves you just made; it does not choose the boundary decision and
 does not replace this workflow.
 
@@ -122,7 +125,7 @@ does not replace this workflow.
   implementations, or carries a second decision — the rules in **Prohibited**
   still apply to its output.
 - Record what it changed in the refactor plan's Verification section.
-- No such skill in this harness: skip, and say so in one line.
+- On but no such skill in this harness: say so in one line.
 
 ## Prohibited
 - **No second decision in one branch** — widen only on an explicit instruction

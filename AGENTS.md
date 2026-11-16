@@ -79,6 +79,8 @@ Optional single-line directives the target project can set to control OOPforge b
 |---|---|
 | `OOPforge work dir: <path>` | Override the continuity work dir (default `.craft/`). |
 | `OOPforge continuity: off` | Disable automatic `.craft/` work-doc creation. |
+| `OOPforge live run: on` | Let Craft and Refactor launch the app for the Live run in `skills/workflow/test.md`. Off by default. |
+| `OOPforge cleanup pass: on` | Let Refactor run the harness cleanup skill (`/simplify`) after verification. Off by default. |
 
 By default, continuity work docs are **auto-created (opt-out)** for execution tasks (feature/refactor/bugfix); advisory and tiny tasks never create one. If previous work exists, Craft emits a **Resume block** (previous work / last verified / proposed job / parked) **before any code** and re-scopes an inherited prompt to one decision — the user does not have to mention it. When a session unit ends with work remaining, Craft writes `.craft/next-session-prompt.md` without being asked. See `skills/workflow/continuity.md`.
 
