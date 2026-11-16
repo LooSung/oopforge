@@ -7,6 +7,8 @@ stability: stable
 
 # OOP Discipline
 
+Contents: 1. Behavior lives in the domain · 2. Define boundaries before code · 3. Domain knows no framework · 4. Use case over CRUD · 5. Aggregate references by ID · 6. Failing test before bug fix · 7. Subtract before abstracting — the pre-write ladder · 8. Encode lessons in structure · 9. Duplicate before the wrong abstraction · 10. Surface assumptions before coding · 11. Evidence before cause · 12. Comment discipline · 13. Surgical changes only · 14. Product language at the human boundary
+
 Read this before starting backend OOP work.
 In the completion report, mention only the principles that actually changed a design decision.
 

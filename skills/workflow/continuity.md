@@ -7,6 +7,8 @@ stability: stable
 
 # Workflow — Continuity
 
+Contents: Purpose · Work location · Resume protocol (Craft start — before any code) · First session (auto-create, opt-out) · Session cut (where this chat stops) · Next-session prompt (link, do not copy) · Work-doc format · Update rules · Large tasks / program · Prohibited
+
 ## Purpose
 
 Keep work alive across chats. Task docs hold decisions. One file,

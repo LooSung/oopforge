@@ -7,6 +7,8 @@ stability: stable
 
 # Backend Skeleton
 
+Contents: When to use · Common rules · Java Spring · Python FastAPI · Self-check (right after the skeleton, required) · Prohibited
+
 ## When to use
 
 Use this in the Skeleton stage to create the package structure for an **already-chosen stack**.

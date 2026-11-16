@@ -43,12 +43,14 @@ def check_required_paths(root: pathlib.Path) -> None:
         "commands/consult.md",
         "commands/test.md",
         "commands/jira.md",
+        "commands/review.md",
         ".cursor-plugin/skills/oopforge/SKILL.md",
         "skills/workflow/craft.md",
         "skills/workflow/consult.md",
         "skills/workflow/test.md",
         "skills/workflow/jira-card.md",
         "skills/workflow/jira-children.md",
+        "skills/workflow/review.md",
         "skills/principles/oop-discipline.md",
         "docs/setup/cursor.md",
         "docs/reference/support-scope.md",
@@ -64,6 +66,7 @@ def check_activation_probes(root: pathlib.Path) -> None:
         "commands/consult.md",
         "commands/test.md",
         "commands/jira.md",
+        "commands/review.md",
         "skills/SKILL.md",
         ".cursor-plugin/skills/oopforge/SKILL.md",
     )
@@ -131,10 +134,26 @@ def check_contracts(root: pathlib.Path) -> None:
             "Never create a second issue",
         ),
     )
+    check_contract(root, "commands/review.md", ("workflow/review.md",))
+    check_contract(
+        root,
+        "skills/workflow/review.md",
+        (
+            "**P1**",
+            "**P2**",
+            "**P3**",
+            "base commit",
+            "Never modify production code",
+            "Never post to a pull request without an explicit request",
+        ),
+    )
     check_contract(
         root,
         "skills/SKILL.md",
         (
+            "/oopforge:review",
+            "Use OOPforge review:",
+            "workflow/review.md",
             "/oopforge:test",
             "Use OOPforge test:",
             "workflow/test.md",
@@ -146,13 +165,64 @@ def check_contracts(root: pathlib.Path) -> None:
     )
 
 
+SPEC_FRONTMATTER_KEYS = {
+    "name", "description", "license", "compatibility", "metadata", "allowed-tools",
+}
+
+
+def check_spec_frontmatter(root) -> None:
+    """Keep SKILL.md loadable everywhere.
+
+    Keys outside the Agent Skills spec are ignored by Claude Code but rejected
+    by claude.ai uploads and the Skills API. An unquoted ': ' or ' #' in a
+    value breaks YAML, and Claude Code then loads the skill with no fields.
+    """
+    paths = [root / "skills/SKILL.md", *sorted(root.glob(".cursor-plugin/skills/*/SKILL.md"))]
+    for path in paths:
+        relative = path.relative_to(root)
+        block = path.read_text(encoding="utf-8").split("---", 2)[1]
+        for line in block.splitlines():
+            if not line or line[0] in " \t#":
+                continue
+            key, sep, value = line.partition(":")
+            if not sep:
+                raise SystemExit(f"{relative}: unparsable frontmatter line: {line}")
+            if key not in SPEC_FRONTMATTER_KEYS:
+                raise SystemExit(
+                    f"{relative}: non-spec frontmatter key {key!r}; move it under metadata"
+                )
+            value = value.strip()
+            if value and value[0] not in "'\"|>" and (": " in value or " #" in value):
+                raise SystemExit(f"{relative}: unquoted ': ' or ' #' in {key} breaks YAML")
+
+
+def check_command_load_paths(root: pathlib.Path) -> None:
+    """A command that names the symlink path must also name the plugin path.
+
+    Loaded as a plugin (session plugin, marketplace, `claude plugin eval`), only
+    ${CLAUDE_PLUGIN_ROOT} resolves; the symlink path exists only after install.sh.
+    """
+    import re
+
+    link = "~/.claude/skills/oopforge/workflow/"
+    plugin = "${CLAUDE_PLUGIN_ROOT}/skills/workflow/"
+    for command in sorted((root / "commands").glob("*.md")):
+        text = command.read_text()
+        for name in re.findall(re.escape(link) + r"([\w-]+\.md)", text):
+            assert plugin + name in text, (
+                f"{command.name}: names {link}{name} without {plugin}{name}"
+            )
+
+
 def main() -> None:
     root = pathlib.Path(sys.argv[1]).resolve()
     check_manifests(root)
     check_stability(root)
+    check_spec_frontmatter(root)
     check_required_paths(root)
     check_activation_probes(root)
     check_contracts(root)
+    check_command_load_paths(root)
     print("PASS static harness packaging")
 
 

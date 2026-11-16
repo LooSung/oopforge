@@ -7,6 +7,8 @@ stability: stable
 
 # Workflow — Test
 
+Contents: Purpose · Authorization · Level selection · Scope block · Checklist · Conditional Production Gate · Test priority · Live run · Reporting · Prohibited
+
 When the request contains `OOPFORGE_TEST_ROUTING_PROBE`, output these lines and
 stop:
 
@@ -90,6 +92,38 @@ never activates that gate.
 | Use case | Application orchestration | Mockito, unittest.mock |
 | Integration | DB, HTTP, queue, filesystem adapters | Testcontainers, fixtures |
 | E2E | Real user/system flow | RestAssured, Playwright, httpx |
+
+## Live run
+
+If the harness can launch and drive the application, use it to call what
+changed against a running server. In Claude Code, `/verify` confirms that one
+change does what it should; `/run` drives a scenario, which suits the Refactor
+before-and-after below. Craft and Refactor call this section; it is the one
+place the rules live.
+
+`/verify` may save its launch recipe to `.claude/skills/verify/SKILL.md` in the
+target project. That is a project file: report it under Scope drift and leave
+committing it to the user.
+
+A live run is an observation, not a test artifact. It is not E2E, writes no
+test files, and needs no E2E wording.
+
+- Start the server with the project's existing command and local configuration.
+  Never install a dependency, start a container or database server the project
+  does not already run locally, or create E2E infrastructure.
+- Call only what changed: one accepted request and the error case it adds, using
+  the project's HTTP client files or `curl`. Check status code, response shape,
+  and error shape against the API contract.
+- Never call a real external service, a shared environment, or production.
+- Record the start command, each request, the observed response, and the result.
+  "It started" is not evidence.
+- A run never replaces the unit, use-case, or integration tests above.
+- For Refactor, send the same requests before the first step and after the last.
+  The responses must be identical, apart from generated identifiers and
+  timestamps.
+- Stop every process you started, including on failure.
+- No such skill, or the server cannot start (missing env, port in use): report
+  it as not checked with the reason. Never edit product source to make it start.
 
 ## Reporting
 

@@ -42,3 +42,6 @@ docs/planning/management.md
 
 # Legacy OOPforge continuity path; disabled for this repository
 .craft/
+
+# claude plugin eval output
+evals/results/

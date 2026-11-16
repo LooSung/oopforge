@@ -7,6 +7,8 @@ stability: stable
 
 # Workflow — Delivery Plan
 
+Contents: When to use · Purpose · Checklist · Conditional Production Gate · Output · Prohibited · Next step
+
 ## When to use
 After Discovery/Design, or when requirements have arrived but the scope and contract are too unclear to implement directly.
 Merge the existing tech spec and kickoff docs into **one execution plan**.

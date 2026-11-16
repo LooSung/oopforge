@@ -7,6 +7,8 @@ stability: experimental
 
 # Workflow — Jira Card
 
+Contents: Purpose · Startup · Task and story · Bug · Epic · Backlog · Shared writing rules · Writing to Jira · Prohibited · Completion
+
 ## Purpose
 
 Turn a discussed change into one Jira issue a teammate can read in two minutes.
@@ -178,14 +180,12 @@ Bug when the request names one. Otherwise set Story.
   epic and leave the epic description unchanged.
 - A backlog issue stays in the backlog. Do not set a sprint, rank, or estimate.
 - With an Atlassian tool and an explicit request to write, create or edit the
-  one issue with `contentFormat: html` and the chosen issue type. Checkboxes
-  must be
+  one issue with `contentFormat: html` and the chosen issue type. Checkboxes must be
   `<ul data-type="task-list"><li data-type="task-item"><input type="checkbox"> …</li></ul>`;
   markdown `- [ ]` is stored as literal text.
 - Re-read the issue after saving and fix mojibake or typos in the same turn.
 - Without a tool, output the markdown ready to paste.
-- Renaming or rewriting another person's issue: do it only when asked, and say
-  so in the reply.
+- Renaming or rewriting another person's issue: do it only when asked, and say so in the reply.
 
 ## Prohibited
 

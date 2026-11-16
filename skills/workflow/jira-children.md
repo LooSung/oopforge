@@ -7,6 +7,8 @@ stability: experimental
 
 # Workflow — Jira Children
 
+Contents: Purpose · Startup · Child · Shared writing rules · Writing to Jira · Prohibited · Completion
+
 ## Purpose
 
 Turn one existing epic or story into its child tasks. Each title is `[F.E]`,

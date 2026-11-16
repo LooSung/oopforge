@@ -6,6 +6,47 @@
 
 ## [Unreleased]
 
+### Fixed
+
+- **플러그인 로드 경로** — 모든 명령이 `${CLAUDE_PLUGIN_ROOT}/skills/workflow/`를
+  먼저 읽고, 없을 때 symlink 설치 경로를 읽는다. 전에는 symlink 경로만 있어서
+  세션 플러그인이나 `claude plugin eval`처럼 플러그인으로 로드되면 workflow를
+  찾지 못하고 일반 지식으로 답했다. 패키징 검사가 두 경로를 함께 요구한다.
+- **SKILL.md** — Workflow Rules 번호 `11`이 두 번 나오던 것을 고쳤다.
+
+### Added
+
+- **Review** — `/oopforge:review`는 끝난 변경 하나(현재 diff, 브랜치, PR, 붙여넣은 diff)를
+  기준 커밋에 고정해 리뷰한다. 의견은 P1(머지 전 필수)·P2(머지 전 권장)·
+  P3(선택)이고, 각 의견에 근거 줄과 가장 작은 수정 방향을 적는다. 도메인 규칙,
+  레이어 방향, 트랜잭션·멱등성, API 계약, 마이그레이션, 권한을 본다. PR 본문의
+  "먼저 봐 주세요"·테스트·자가 점검을 읽기 순서와 검증할 주장으로 쓴다. 코드는
+  바꾸지 않고, PR 코멘트는 요청할 때만 단다. 팩 리뷰어(`scripts/ci/review`),
+  `archlint.py`, 하네스의 버그 리뷰(`/code-review`)는 있으면 쓴다.
+- **Refactor cleanup pass** — 검증이 통과한 뒤 하네스에 diff 범위 정리
+  스킬(`/simplify`)이 있으면 한 번 돌리고, 테스트와 빌드를 다시 돌리고, 바뀐
+  것을 refactor plan의 Verification에 적는다.
+- **Live run** — `workflow/test.md`에 하네스의 실행 스킬(`/verify`, `/run`)로
+  서버를 띄워 바뀐 엔드포인트를 실제로 호출하는 섹션이 있다. 테스트 파일을
+  만들지 않는 관찰이라 E2E가 아니다. 기존 시작 명령과 로컬 설정만 쓰고, 외부
+  서비스와 운영 환경은 부르지 않는다. Craft는 테스트 통과 후, Refactor는 첫
+  단계 전과 마지막 단계 후에 같은 요청으로 이 섹션을 따른다.
+- **Evals** — `evals/`에 `claude plugin eval` 케이스 세 개(review, consult,
+  refactor)가 있다. 플러그인 유무를 비교해 점수 차이를 보고한다.
+
+### Changed
+
+- **Consult Review** — 설계, 코드 영역, 기존 코드 질문을 다룬다. 끝난 diff나
+  PR은 `/oopforge:review`로 안내한다.
+- **SKILL.md** — description을 3인칭으로, 핵심 용도부터 쓴다. `stability`는
+  Agent Skills 스펙에 맞춰 `metadata` 아래로 옮겼다(claude.ai 업로드와 Skills
+  API가 스펙 밖 키를 거부한다). 모든 스킬 파일을 SKILL.md에서 바로 링크하고,
+  compaction 뒤에는 라우팅된 workflow를 다시 읽는다.
+- **목차** — 100줄이 넘는 스킬 파일은 제목 아래 `Contents:` 한 줄을 둔다.
+- **명령** — 모든 명령에 `argument-hint`가 있다.
+- **패키징 검사** — SKILL.md frontmatter가 스펙 키만 쓰고 YAML을 깨는
+  `: `가 없는지 확인한다.
+
 ## [1.7.1] - 2026-10-28
 
 ### Fixed

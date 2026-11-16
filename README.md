@@ -97,6 +97,7 @@ Craft remains the default; use a narrower command when its write boundary fits:
 | Preserve behavior while restructuring | `/oopforge:refactor …` | `Use OOPforge refactor: …` | Structural and regression-test changes |
 | Answer, compare, review, or document | `/oopforge:consult …` | `Use OOPforge consult: …` | None; one explicitly requested planning document |
 | Run, write, or strengthen tests | `/oopforge:test …` | `Use OOPforge test: …` | Tests only; E2E and infrastructure require approval |
+| Review one diff, branch, or pull request with P1/P2/P3 findings | `/oopforge:review …` | `Use OOPforge review: …` | None; PR comments only on explicit request |
 | Write one Jira card, or the child tasks of one epic or story | `/oopforge:jira …` | `Use OOPforge jira: …` | Those issues only; Jira write on explicit request |
 
 Craft preserves the full sequence for a new domain or large feature:

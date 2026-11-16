@@ -7,6 +7,8 @@ stability: stable
 
 # OOP — Domain Events
 
+Contents: When to use · Domain Event vs Integration Event · Record inside the Aggregate · Application lifecycle · Handler boundary · External message contract · Checklist · Out of scope · Related
+
 ## When to use
 
 Use this when an Aggregate records a fact that another part of the system may

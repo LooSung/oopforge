@@ -7,6 +7,8 @@ stability: stable
 
 # Lint Enforcement
 
+Contents: When to use · Canonical templates · Python — import-linter · Java — ArchUnit · CI and blocking policy · Prohibited
+
 ## When to use
 
 When layer or boundary rules must be enforced **by the build, not only docs**.

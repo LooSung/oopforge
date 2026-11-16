@@ -7,6 +7,8 @@ stability: stable
 
 # OOP — Transactional Outbox
 
+Contents: When to use · The failure it prevents · Entry criteria (do not adopt unless at least one holds) · Rule · The outbox row is not a second Aggregate · Where each piece lives · Row shape (keep it minimal) · Delivery: relay or CDC · At-least-once, and what that costs the consumer · OOP Contract additions · Checklist · Prohibited · Related
+
 ## When to use
 
 Use this when one use case must **change state and tell the outside world** —

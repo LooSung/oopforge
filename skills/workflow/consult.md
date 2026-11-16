@@ -7,6 +7,8 @@ stability: experimental
 
 # Workflow — Consult
 
+Contents: Purpose · When to use · Startup · Mode selection · Answer · Proposal · Review · Document · Conditional production guidance · Prohibited · Completion
+
 ## Purpose
 
 Give evidence-backed technical advice without turning an advisory request into
@@ -81,6 +83,10 @@ Write permission: none.
 ## Review
 
 Input: a target and optional review scope.
+
+Consult Review covers a design, a code area, or a question about existing code.
+For one finished diff, branch, or pull request, recommend `/oopforge:review`
+(`workflow/review.md`) instead and stop.
 
 Read the target project's rules first. Load only relevant OOPforge Hard Rules,
 anti-patterns, and `docs/reference/reviewer-checklist.md` sections.

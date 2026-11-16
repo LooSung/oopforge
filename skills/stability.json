@@ -34,6 +34,7 @@
     "skills/antipatterns/repository-with-business-logic.md",
     "skills/workflow/consult.md",
     "skills/workflow/jira-card.md",
-    "skills/workflow/jira-children.md"
+    "skills/workflow/jira-children.md",
+    "skills/workflow/review.md"
   ]
 }

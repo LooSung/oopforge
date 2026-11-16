@@ -77,6 +77,11 @@ consult: <요청>`을 사용한다. Consult는 답변·제안·검토·문서 �
 `auto`는 기존 테스트를 조사해 가장 작은 유효 범위를 고르며, 제품 코드 변경과
 자동 E2E 실행을 금지한다.
 
+끝난 변경 하나(diff·브랜치·PR)는 Review를 사용한다. Claude Code는
+`/oopforge:review <대상>`, Codex와 Cursor는 `Use OOPforge review: <대상>`을
+사용한다. 기준 커밋에 고정해 P1(머지 전 필수)·P2(머지 전 권장)·P3(선택) 의견으로
+보고하고, 코드는 바꾸지 않으며 PR 코멘트는 요청할 때만 단다.
+
 Jira 이슈 하나는 Jira를 사용한다. Claude Code는 `/oopforge:jira
 <요청>`, Codex와 Cursor는 `Use OOPforge jira: <요청>`을 사용한다. 기본은
 작업(Task)이고, 스토리·버그·에픽·백로그는 요청에 그 말이 있을 때 각 템플릿으로
