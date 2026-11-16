@@ -6,6 +6,17 @@
 
 ## [Unreleased]
 
+## [1.8.2] - 2026-11-16
+
+### Changed
+
+- **명령에 workflow 본문 포함** — `craft`, `refactor`, `test` 명령은 workflow와 원칙 파일의
+  본문을 명령 안에 담는다. 파일을 하나씩 읽는 턴이 없어진다. `claude plugin eval`
+  측정에서 refactor는 10턴에서 4턴으로 줄었지만 계획을 더 길게 써서 비용은 거의
+  같았다. Compforge craft에서는 비용이 약 34% 줄었다.
+  원본은 계속 `skills/`이고, `scripts/ci/build-commands.py`가 복사한다. lint가
+  `--check`로 어긋남을 잡는다. 스킬을 고친 뒤에는 이 스크립트를 다시 돌린다.
+
 ## [1.8.1] - 2026-11-16
 
 ### Changed
