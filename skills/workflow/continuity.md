@@ -87,6 +87,17 @@ One session ships **one decision**. Cut without being asked when any is true:
 
 Do not cut mid-failing tests or before the current unit's verification.
 
+### Context budget
+
+A long chat slows down and loses early decisions to automatic summaries. Cut at
+the next safe point when the chat was summarized once, two or more stages or
+delegated phases finished here, or status questions and re-reads of the same
+files repeat. A point is safe only when no agent, background command, merge, or
+rebase is running; every change is committed or recorded; and
+`next-session-prompt.md` names the commits, decisions taken in chat (speed
+rules, deferred checks, push scope), and the remaining order. Then tell the user
+in one line that this is a good point to clear.
+
 On cut, or when a unit finishes with work still remaining:
 
 1. Update the task doc (`Status` / `Progress` / `Decisions`).
