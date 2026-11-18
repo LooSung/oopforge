@@ -13,7 +13,7 @@ Use this when adding one new behavior or use case to an existing domain.
 For a new domain or large feature, start from Discovery.
 
 Follow `skills/workflow/implement.md` for the detailed implementation order.
-Follow `skills/workflow/craft.md` for the OOP Contract format and final verification.
+Follow `skills/workflow/craft.md` for the OOP Contract format and `skills/workflow/gates.md` for final verification.
 
 ## Checklist
 
@@ -22,7 +22,7 @@ Follow `skills/workflow/craft.md` for the OOP Contract format and final verifica
 - [ ] Decide which domain object will own the new behavior. → verify: owner is a domain type, not the application service
 - [ ] Minimize the scope of port and adapter changes. → verify: only ports the use case needs
 - [ ] Follow the single-use-case procedure in `skills/workflow/implement.md`. → verify: one use case + tests green
-- [ ] Follow the verification and completion report in `skills/workflow/craft.md`. → verify: Scope drift is `none` (or justified)
+- [ ] Follow the verification and completion report in `skills/workflow/gates.md`. → verify: Scope drift is `none` (or justified)
 
 ## Prohibited
 

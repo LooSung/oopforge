@@ -169,7 +169,7 @@ that into the task doc and leave a link. The job line uses product language.
   dir and correct the earlier claim too; append-only does not preserve
   false facts.
 - When a work unit finishes, update `Status` and `Progress`.
-- Reflect Craft's completion report in this doc.
+- Reflect the completion report (`gates.md`) in this doc.
 - **Completion gate**: do not report done before updating this doc.
   If work remains, also write `next-session-prompt.md`.
 

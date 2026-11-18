@@ -39,8 +39,8 @@ Classify the request before acting:
 | Fix production behavior | none; stop and propose a separate Craft job |
 
 Test never grants commit, push, PR, release, deployment, or production-code
-permission. Craft supplies startup, continuity, verification, and completion
-reporting when Test is invoked as a public command.
+permission. `gates.md` supplies startup, plan input, continuity, verification, and
+completion reporting when Test is invoked as a public command.
 
 ## Level selection
 

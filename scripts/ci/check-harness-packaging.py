@@ -42,12 +42,15 @@ def check_required_paths(root: pathlib.Path) -> None:
         "commands/refactor.md",
         "commands/consult.md",
         "commands/test.md",
+        "commands/crucible.md",
         "commands/jira.md",
         "commands/review.md",
         ".cursor-plugin/skills/oopforge/SKILL.md",
         "skills/workflow/craft.md",
+        "skills/workflow/gates.md",
         "skills/workflow/consult.md",
         "skills/workflow/test.md",
+        "skills/workflow/crucible.md",
         "skills/workflow/jira-card.md",
         "skills/workflow/jira-children.md",
         "skills/workflow/review.md",
@@ -65,6 +68,7 @@ def check_activation_probes(root: pathlib.Path) -> None:
         "commands/refactor.md",
         "commands/consult.md",
         "commands/test.md",
+        "commands/crucible.md",
         "commands/jira.md",
         "commands/review.md",
         "skills/SKILL.md",
@@ -89,6 +93,16 @@ def check_contracts(root: pathlib.Path) -> None:
         root,
         "skills/workflow/consult.md",
         ("Select exactly one mode", "Never modify production code"),
+    )
+    check_contract(
+        root,
+        "commands/crucible.md",
+        ("workflow/crucible.md", "Read each later stage's workflow file only when"),
+    )
+    check_contract(
+        root,
+        "skills/workflow/crucible.md",
+        ("This stop is mandatory", "Never change production code in stage 4"),
     )
     check_contract(
         root,

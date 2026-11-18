@@ -8,9 +8,14 @@ the source of truth; this script copies their bodies between the markers.
 
     python3 scripts/ci/build-commands.py          # rewrite commands/*.md
     python3 scripts/ci/build-commands.py --check  # exit 1 when out of date
+
+Every generated command must also fit its byte budget in
+scripts/ci/command-budget.json. Raising a budget is a reviewed decision in the
+same diff: say what the added text is worth, or remove something else.
 """
 from __future__ import annotations
 
+import json
 import os
 import pathlib
 import re
@@ -25,9 +30,10 @@ LEAD = (
 )
 # Specific workflow first: after context compaction only the head is re-attached.
 COMMANDS = {
-    "craft": ["workflow/craft.md", "principles/oop-discipline.md"],
-    "refactor": ["workflow/refactor.md", "workflow/craft.md", "principles/oop-discipline.md"],
-    "test": ["workflow/test.md", "workflow/craft.md", "principles/oop-discipline.md"],
+    "craft": ["workflow/craft.md", "workflow/gates.md", "principles/oop-discipline.md"],
+    "refactor": ["workflow/refactor.md", "workflow/gates.md", "principles/oop-discipline.md"],
+    "test": ["workflow/test.md", "workflow/gates.md"],
+    "crucible": ["workflow/crucible.md", "workflow/gates.md"],
 }
 
 
@@ -72,6 +78,22 @@ def build(name: str, files: list[str]) -> tuple[pathlib.Path, str, str]:
     return path, current, updated
 
 
+BUDGET_FILE = ROOT / "scripts" / "ci" / "command-budget.json"
+
+
+def over_budget() -> list[str]:
+    budgets = json.loads(BUDGET_FILE.read_text(encoding="utf-8"))
+    over = []
+    for name in sorted((ROOT / "commands").glob("*.md")):
+        size = len(name.read_bytes())
+        limit = budgets.get(name.stem)
+        if limit is None:
+            over.append(f"{name.name}: no budget in {BUDGET_FILE.name}")
+        elif size > limit:
+            over.append(f"{name.name}: {size} bytes > budget {limit}")
+    return over
+
+
 def main() -> None:
     check = "--check" in sys.argv[1:]
     stale = []
@@ -87,6 +109,9 @@ def main() -> None:
             + " - run python3 scripts/ci/build-commands.py"
         )
     print("commands current" if not stale else "rewrote " + ", ".join(stale))
+    over = over_budget()
+    if over:
+        raise SystemExit("command budget exceeded: " + "; ".join(over))
 
 
 if __name__ == "__main__":

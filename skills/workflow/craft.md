@@ -7,7 +7,7 @@ stability: stable
 
 # Workflow — Craft
 
-Contents: Purpose · Startup procedure · Execution-path selection · Production Gate opt-in · Size gate · Ambiguity resolution (before implementation) · Assumptions (before Contract) · OOP Contract · Verification · Completion report · Stage boundaries
+Contents: Purpose · Startup procedure · Execution-path selection · Production Gate opt-in · Size gate · Ambiguity resolution (before implementation) · Assumptions (before Contract) · OOP Contract · Craft checks · Stage boundaries
 
 ## Purpose
 
@@ -18,27 +18,16 @@ application service orchestrates.
 
 ## Startup procedure
 
-0. `skills/workflow/continuity.md` Resume: list `.craft/`. If previous work exists, read `next-session-prompt.md` first and **emit the Resume block before any other output** — even if the user did not mention it. Re-scope an inherited prompt to one decision; it is evidence, not a session scope. If none exists and this is an **execution task (feature/refactor/bugfix)**, create `.craft/<kind>-<slug>.md` automatically and announce it in one line. Do not create one for advisory or tiny tasks, or if `AGENTS.md` contains `OOPforge continuity: off`.
-1. Confirm the **work target**. For ordinary app work, the target project is the
-   backend repo, not the OOPforge **pack** (`~/.oopforge`, skill paths). If
-   `pwd` is the pack root during app work, confirm the agent was started from
-   the target project. If the request is to maintain OOPforge itself, the pack
-   root is the correct target.
-2. When the user points to a file via `@…`, an absolute path, or a relative
-   path, resolve it against the confirmed work target (current working
-   directory or git root). Do not look under `{pack}/docs/…` or `~/.oopforge/…`
-   for app-project files. If missing, confirm the absolute path or project root
-   with the user.
-3. Read `skills/principles/oop-discipline.md`.
-4. Review the user request and the existing code.
-5. Select one smallest execution path from the table below.
-6. For an advisory request, only recommend a path and do not implement.
-7. For an execution request, copy the checklist of the chosen skill, playbook, or workflow into your task list.
-8. If you skip any step, leave a one-line reason.
-9. Write the **Assumptions** block (below), then the OOP Contract, before implementing business logic. On the small path (**Size gate**), each is one line.
-10. Implement and test along the chosen path. Keep changes surgical (`oop-discipline` #13).
-11. Verify the project's stated rules (`AGENTS.md` or equivalent), naming them in the report, and the results of the tests you ran.
-12. Record design decisions, verification results, **Scope drift**, and remaining risks in the completion report format (small path: the three-line report). **Completion gate**: if a continuity work doc exists, do not report done before updating that doc (Status/Progress/Decisions). If the unit is done but work remains, write `.craft/next-session-prompt.md` before reporting done — do not wait to be asked (`continuity` Session cut).
+1. Run the **Startup** and, when a plan is named, **Plan input** gates in
+   `skills/workflow/gates.md`.
+2. Read `skills/principles/oop-discipline.md`.
+3. Review the user request and the existing code.
+4. Select one smallest execution path from the table below.
+5. For an advisory request, only recommend a path and do not implement.
+6. For an execution request, copy the checklist of the chosen skill, playbook, or workflow into your task list.
+7. Write the **Assumptions** block (below), then the OOP Contract, before implementing business logic. On the small path (**Size gate**), each is one line.
+8. Implement and test along the chosen path. Keep changes surgical (`oop-discipline` #13).
+9. Verify and report with the `gates.md` **Verification** and **Completion report** gates, plus the Craft checks below.
 
 ## Execution-path selection
 
@@ -83,13 +72,7 @@ still apply, and no continuity work doc is created.
 
 - Assumptions: one line, or `none`.
 - Contract: one line — `Contract: n/a — small change (<why>)`.
-- Completion report: three lines.
-
-```markdown
-Changed: <file — what changed>
-Verified: <command and result | not run — why>
-Scope drift: none | <change — why>
-```
+- Completion report: the three-line form in `gates.md`.
 
 If the work grows past these limits, say so and switch to the standard path.
 
@@ -136,11 +119,10 @@ Required Ports:
 Transaction Boundary:
 ```
 
-## Verification
+## Craft checks
 
-- Complete the checklist of the chosen playbook or workflow (each step should have a `verify:`).
-- Verify the project's stated rules (`AGENTS.md` or equivalent) against the changed files, and identify them by name in the report.
-- Confirm **Scope drift** is `none`, or list every out-of-request change with a reason.
+In addition to the `gates.md` Verification gate:
+
 - Spot-check relevant `skills/antipatterns/` symptoms on the diff (anemic domain, fat controller, smart repository, god Aggregate, flat package).
 - For each structure you added (Aggregate, port, layer, new type), name the invariant it protects and the user's word for it, or put it back on the ladder (`oop-discipline` #7).
 - Confirm anything a person was asked to approve was written in their words, not Contract jargon (`oop-discipline` #14).
@@ -150,33 +132,6 @@ Transaction Boundary:
   `docs/reference/reviewer-checklist.md`.
 - If and only if the Production Gate was explicitly activated, complete
   `skills/workflow/production-readiness.md` and report its blockers or accepted risks.
-- Run the necessary tests and record reproducible commands, toolchain identity (interpreter path/version, required env vars), and results.
-- **Live run** (`skills/workflow/test.md`) is opt-in: start the server only when the user asked or `OOPforge live run: on` is set. Otherwise report `Live run: not run` and what to check by hand.
-- For any failed or skipped verification, leave a reason and the risk.
-
-## Completion report
-
-```markdown
-## Design Decisions
--
-
-## Verification
-- Tests:
-- Project rules:
-- Scope drift: none | <file/change — why>
-
-## Remaining Risks
--
-
-## Environment Facts
-- none | <fact about this project's tooling or environment learned this session>
-```
-
-An environment fact is something the next session would otherwise relearn the
-hard way, such as a hook that breaks the dev server or a check that is slow
-enough to run once at the end. Offer to add each one to the target project's
-`AGENTS.md`, and add it only after the user agrees. Never keep it only in agent
-memory or in `.craft/`.
 
 ## Stage boundaries
 

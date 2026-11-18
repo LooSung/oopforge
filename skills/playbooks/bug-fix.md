@@ -13,7 +13,7 @@ Use this when fixing a wrong state transition, an invariant violation, duplicate
 an authorization error, or a regression bug.
 
 Follow `skills/workflow/test.md` for test design and run records.
-Follow `skills/workflow/craft.md` for the OOP Contract format and final verification.
+Follow `skills/workflow/craft.md` for the OOP Contract format and `skills/workflow/gates.md` for final verification.
 
 ## Checklist
 
@@ -24,7 +24,7 @@ Follow `skills/workflow/craft.md` for the OOP Contract format and final verifica
 - [ ] Write down the root cause. → verify: cause points at a domain rule or transition
 - [ ] Fix with the smallest code change. → verify: diff limited to the failing path (surgical)
 - [ ] Confirm the failing test and related regression tests pass. → verify: green run recorded
-- [ ] Follow the verification and completion report in `skills/workflow/craft.md`. → verify: Scope drift is `none` (or justified)
+- [ ] Follow the verification and completion report in `skills/workflow/gates.md`. → verify: Scope drift is `none` (or justified)
 
 ## Prohibited
 

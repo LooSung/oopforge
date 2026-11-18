@@ -5,6 +5,7 @@ Read and follow @AGENTS.md.
 When working on this repository:
 
 - Use `/oopforge:craft` as the canonical user entry point.
+- Use `/oopforge:crucible` to run Consult → Craft → Refactor → Test for one change, stopping once for plan approval.
 - Use `/oopforge:review` to review one diff, branch, or pull request without changing code.
 - Keep Claude-specific packaging in `.claude-plugin/` and `commands/`.
 - Do not bypass the Discovery → Design → Delivery Plan → Skeleton → Implement

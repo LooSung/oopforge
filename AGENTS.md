@@ -56,8 +56,9 @@ Use `/oopforge:craft` (`commands/craft.md`) as the default OOPforge user entry p
 `/oopforge:craft` delegates orchestration to `skills/workflow/craft.md`, reads `skills/principles/oop-discipline.md`, requires Assumptions then an OOP Contract before business-logic implementation, and verifies Hard Rules (including surgical scope) before completion.
 
 - Use `/oopforge:craft` for single components, existing-domain features, domain bug fixes, and requests whose path is not yet clear.
-- Use `/oopforge:refactor` for explicit behavior-preserving structural cleanup; it applies Craft startup/completion gates and `skills/workflow/refactor.md` without reclassification.
+- Use `/oopforge:refactor` for explicit behavior-preserving structural cleanup; it applies the `skills/workflow/gates.md` gates and `skills/workflow/refactor.md` without reclassification.
 - Use `/oopforge:consult` for answers, alternatives, review, or explicitly requested planning documents; it never changes implementation or test code.
+- Use `/oopforge:crucible` to run Consult → Craft → Refactor (when earned) → Test for one change; it stops for plan approval and adds no rules of its own.
 - Use `/oopforge:test` to run, write, or strengthen tests; it never changes production behavior and E2E requires explicit wording.
 - Use `/oopforge:review` to review one diff, branch, or pull request; it reports P1/P2/P3 findings and changes no code.
 - Use `/oopforge:jira` to write or rewrite one Jira work card, or the child tasks of one existing epic or story, in the fixed template; it changes nothing but those issues.
@@ -181,6 +182,7 @@ These limits are intentionally measurable. They come from review focus and agent
 - **300 lines/file** — a diff a reviewer can hold in working memory (~15-minute review unit)
 - **20 lines/method** — one responsibility, testable and nameable without scrolling
 - **200 lines/skill** — one concept per agent context load; split when a skill teaches two ideas
+- **Command budgets** — each generated `commands/*.md` must fit `scripts/ci/command-budget.json` (`build-commands.py --check`). Raising a budget is a reviewed decision in the same diff: say what the added text is worth, or remove something else. Shared startup, plan input, verification, and the completion report live once in `skills/workflow/gates.md`.
 
 - Domain layer framework imports: **0**
 - No public setters; use factory methods or intention-revealing behavior methods.

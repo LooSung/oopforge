@@ -16,8 +16,7 @@ Use it when a **Java (Spring)** or **Python (FastAPI)** backend needs explicit d
 models, use-case boundaries, and reviewable architecture. It is not a general
 agent framework, UI toolkit, or automatic code generator.
 
-[Positioning](docs/project/positioning.md) · [Support scope](docs/reference/support-scope.md) ·
-[Proof protocol](docs/proof/README.md)
+[Positioning](docs/project/positioning.md) · [Support scope](docs/reference/support-scope.md) · [Proof protocol](docs/proof/README.md)
 
 [English](./README.md) · [한국어](./README.ko.md)
 ## Quickstart
@@ -97,6 +96,7 @@ Craft remains the default; use a narrower command when its write boundary fits:
 | Preserve behavior while restructuring | `/oopforge:refactor …` | `Use OOPforge refactor: …` | Structural and regression-test changes |
 | Answer, compare, review, or document | `/oopforge:consult …` | `Use OOPforge consult: …` | None; one explicitly requested planning document |
 | Run, write, or strengthen tests | `/oopforge:test …` | `Use OOPforge test: …` | Tests only; E2E and infrastructure require approval |
+| Plan, build, refactor, and test one change in one request | `/oopforge:crucible …` | `Use OOPforge crucible: …` | Each stage's own scope; stops once for plan approval |
 | Review one diff, branch, or pull request with P1/P2/P3 findings | `/oopforge:review …` | `Use OOPforge review: …` | None; PR comments only on explicit request |
 | Write one Jira card, or the child tasks of one epic or story | `/oopforge:jira …` | `Use OOPforge jira: …` | Those issues only; Jira write on explicit request |
 
@@ -116,8 +116,7 @@ Discovery → Design → Delivery Plan → Skeleton → Implement → Test
 | **Test** | Unit, integration, and E2E evidence | Untested domain logic |
 
 Each stage ends with a human checkpoint. Ask Craft to start at a named stage
-only when earlier decisions already exist. Refactoring stays outside the feature
-flow because it must preserve behavior.
+only when earlier decisions already exist. Refactoring stays outside the feature flow because it must preserve behavior.
 
 Supported stacks are `java-spring-layered`, `java-spring-hexagonal`,
 `python-fastapi-layered`, and `python-fastapi-clean`; skeletons include OpenAPI/Swagger UI.
@@ -209,7 +208,7 @@ release instead:
 ```bash
 git clone https://github.com/LooSung/oopforge ~/.oopforge
 cd ~/.oopforge
-git checkout v1.9.0
+git checkout v1.10.0
 chmod +x scripts/setup/*.sh
 ./scripts/setup/install.sh
 ./scripts/setup/doctor.sh

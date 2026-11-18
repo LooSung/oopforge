@@ -6,6 +6,26 @@
 
 ## [Unreleased]
 
+## [1.10.0] - 2026-11-18
+
+Crucible, shared gates, plan input, and command budgets.
+
+### Added
+
+- **`/oopforge:crucible`** (experimental) — 한 요청으로 Consult(계획 문서) → Craft → Refactor(필요할 때만)
+  → Test(빈 곳 보강)를 차례로 실행한다. 계획 승인에서 한 번 반드시 멈추고, 이후에는 결정이 필요하거나
+  검사가 실패할 때만 멈춘다. 자체 규칙은 없고 기존 워크플로를 그대로 쓴다. 보고는 마지막에 한 번.
+
+### Changed
+
+- **Gates** — 시작·이어하기·검증·완료 보고를 `skills/workflow/gates.md` 하나로 옮겼다. Craft·Refactor·Test·Crucible이
+  같은 파일을 쓰고, Refactor·Test 명령은 더 이상 Craft 전체를 싣지 않는다. 명령 크기: refactor −28%, test −55%,
+  craft +3%(계획 입력 추가).
+- **Plan input** — 승인된 계획 문서(Consult가 쓴 Delivery Plan·Design 등)를 지정하면 그 결정은 확정으로 보고 다시 묻지 않는다.
+  Assumptions에는 계획이 남긴 것만 쓰고, 계획과 코드가 어긋나면 멈추고 묻는다.
+- **Environment Facts** — 알게 된 사실이 있을 때만 쓴다(`none` 줄을 매번 쓰지 않는다).
+- **Command budget** — 생성된 명령마다 바이트 예산(`scripts/ci/command-budget.json`)을 두고 넘으면 검사가 실패한다.
+
 ## [1.9.0] - 2026-11-18
 
 Public-versus-internal names and environment facts.

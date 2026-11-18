@@ -1,6 +1,6 @@
 ---
 name: oopforge
-description: Guides Java Spring and Python FastAPI backend work with OOP/DDD modeling, layered or hexagonal/clean architecture, and CQRS. Use when building, refactoring, testing, reviewing a diff or pull request, consulting on, or writing one Jira card or the child tasks of one epic or story for a backend service, REST/HTTP API, or business feature in Java or Python, or for the Craft, Refactor, Consult, Test, Review, and Jira workflows.
+description: Guides Java Spring and Python FastAPI backend work with OOP/DDD modeling, layered or hexagonal/clean architecture, and CQRS. Use when building, refactoring, testing, reviewing a diff or pull request, consulting on, or writing one Jira card or the child tasks of one epic or story for a backend service, REST/HTTP API, or business feature in Java or Python, or for the Craft, Refactor, Consult, Test, Crucible, Review, and Jira workflows.
 license: MIT
 compatibility: Claude Code, Codex CLI, Cursor Agent, and Agent Skills-compatible clients with access to the complete OOPforge pack.
 metadata:
@@ -24,14 +24,14 @@ Use this skill when the user asks for OOPforge, DDD/OOP modeling, clean or hexag
 
 ## Command Routing
 
-Treat **`/oopforge:craft`** as the default OOPforge entry point on **Claude Code**. Use **`/oopforge:refactor`** for behavior-preserving cleanup, **`/oopforge:consult`** for advisory work, **`/oopforge:test`** to verify, write, or strengthen tests without changing production behavior, **`/oopforge:review`** for prioritized findings on one finished diff, branch, or pull request without changing code, and **`/oopforge:jira`** to write one Jira work card, or the child tasks of one existing epic or story, without touching code.
+Treat **`/oopforge:craft`** as the default OOPforge entry point on **Claude Code**. Use **`/oopforge:refactor`** for behavior-preserving cleanup, **`/oopforge:consult`** for advisory work, **`/oopforge:test`** to verify, write, or strengthen tests without changing production behavior, **`/oopforge:crucible`** to run plan → build → refactor → test in one request, **`/oopforge:review`** for prioritized findings on one finished diff, branch, or pull request without changing code, and **`/oopforge:jira`** to write one Jira work card, or the child tasks of one existing epic or story, without touching code.
 
-On **Codex CLI**, do not type OOPforge `/` commands at the composer — Codex reserves `/` for built-ins. Use `/skills` or `$oopforge` → **oopforge**, then `craft: …`, `refactor: …`, `consult: …`, `test: …`, `review: …`, or `jira: …` without a leading `/`.
+On **Codex CLI**, do not type OOPforge `/` commands at the composer — Codex reserves `/` for built-ins. Use `/skills` or `$oopforge` → **oopforge**, then `craft: …`, `refactor: …`, `consult: …`, `test: …`, `crucible: …`, `review: …`, or `jira: …` without a leading `/`.
 
 On **Cursor Agent CLI**, use the explicit local-plugin or project-local skill
 setup documented in `../docs/setup/cursor.md`, then use natural-language intents
 such as `Use OOPforge craft: …`, `Use OOPforge refactor: …`, `Use OOPforge
-consult: …`, `Use OOPforge test: …`, `Use OOPforge review: …`, or `Use OOPforge
+consult: …`, `Use OOPforge test: …`, `Use OOPforge crucible: …`, `Use OOPforge review: …`, or `Use OOPforge
 jira: …`. OOPforge `/`
 commands are not Cursor headless entry points.
 
@@ -44,10 +44,11 @@ commands are not Cursor headless entry points.
 
 | Prompt | Read first | Output |
 |---|---|---|
-| `/oopforge:craft …` (Claude) or `Use OOPforge craft: …` (Codex/Cursor) | `workflow/craft.md` + `principles/oop-discipline.md` | select the smallest OOP path; execute unless advisory only |
-| `/oopforge:refactor …` (Claude) or `Use OOPforge refactor: …` (Codex/Cursor) | `workflow/craft.md` + `workflow/refactor.md` + `principles/oop-discipline.md` | preserve behavior while improving one structural decision |
+| `/oopforge:craft …` (Claude) or `Use OOPforge craft: …` (Codex/Cursor) | `workflow/craft.md` + `workflow/gates.md` + `principles/oop-discipline.md` | select the smallest OOP path; execute unless advisory only |
+| `/oopforge:refactor …` (Claude) or `Use OOPforge refactor: …` (Codex/Cursor) | `workflow/refactor.md` + `workflow/gates.md` + `principles/oop-discipline.md` | preserve behavior while improving one structural decision |
 | `/oopforge:consult …` (Claude) or `Use OOPforge consult: …` (Codex/Cursor) | `workflow/consult.md` | answer, propose, review, or explicitly write one planning document without implementation changes |
-| `/oopforge:test …` (Claude) or `Use OOPforge test: …` (Codex/Cursor) | `workflow/craft.md` + `workflow/test.md` | verify, write, or strengthen tests within an explicit test-only write scope |
+| `/oopforge:test …` (Claude) or `Use OOPforge test: …` (Codex/Cursor) | `workflow/test.md` + `workflow/gates.md` | verify, write, or strengthen tests within an explicit test-only write scope |
+| `/oopforge:crucible …` (Claude) or `Use OOPforge crucible: …` (Codex/Cursor) | `workflow/crucible.md` + `workflow/gates.md`; each stage's file read on entry | Consult plan → stop for approval → Craft → Refactor when earned → Test gap pass; one report |
 | `/oopforge:review …` (Claude) or `Use OOPforge review: …` (Codex/Cursor) | `workflow/review.md` | P1/P2/P3 findings on one diff, branch, or pull request at a recorded base commit; posts only on explicit request |
 | `/oopforge:jira …` (Claude) or `Use OOPforge jira: …` (Codex/Cursor) | `workflow/jira-card.md`; `workflow/jira-children.md` for the children of one existing epic or story | one card, or that parent's `[F.E]` `[B.E]` `[AI]` `[DOC]` tasks; writes to Jira only on explicit request |
 
@@ -61,16 +62,17 @@ Natural language also works, for example: "Use OOPforge Discovery for the paymen
    compaction, read it again before the next step: files read earlier in the
    session are not re-attached.
 2. Read only the relevant OOP or language skill files needed for the task.
-3. For `/oopforge:craft`, follow `workflow/craft.md`; it owns classification, OOP Contract, execution path, and verification.
-4. For an explicit Refactor request, use Craft's startup and completion gates, select `workflow/refactor.md` without reclassification, and preserve behavior.
+3. For `/oopforge:craft`, follow `workflow/craft.md`; it owns classification, OOP Contract, and the execution path. `workflow/gates.md` owns startup, plan input, verification, and the completion report for Craft, Refactor, Test, and Crucible.
+4. For an explicit Refactor request, use the `workflow/gates.md` gates, select `workflow/refactor.md` without reclassification, and preserve behavior.
 5. For Consult, follow `workflow/consult.md`; default to read-only and write one planning document only after explicit document wording.
-6. For an explicit Test request, use Craft's lifecycle gates and `workflow/test.md`; never change production behavior or infer E2E.
-7. For Review, follow `workflow/review.md`; report findings on one change and change nothing.
-8. For Jira, follow `workflow/jira-card.md` for one issue. When the request creates the children of an existing epic or story, follow `workflow/jira-children.md` instead. Change nothing else.
-9. Keep the normal order for new work: Discovery -> Design -> Delivery Plan -> Skeleton -> Implement -> Test.
-10. Ask for human approval before moving from one workflow stage to the next.
-11. Do not merge planning, implementation, and verification in a single step unless the user explicitly asks.
-12. Add `workflow/production-readiness.md` only when the user explicitly asks
+6. For an explicit Test request, use the `workflow/gates.md` gates and `workflow/test.md`; never change production behavior or infer E2E.
+7. For Crucible, follow `workflow/crucible.md`; it runs the existing workflows in order and stops for plan approval.
+8. For Review, follow `workflow/review.md`; report findings on one change and change nothing.
+9. For Jira, follow `workflow/jira-card.md` for one issue. When the request creates the children of an existing epic or story, follow `workflow/jira-children.md` instead. Change nothing else.
+10. Keep the normal order for new work: Discovery -> Design -> Delivery Plan -> Skeleton -> Implement -> Test.
+11. Ask for human approval before moving from one workflow stage to the next.
+12. Do not merge planning, implementation, and verification in a single step unless the user explicitly asks.
+13. Add `workflow/production-readiness.md` only when the user explicitly asks
    about deployment, production, or operational readiness; ordinary feature
    requests never activate it.
 

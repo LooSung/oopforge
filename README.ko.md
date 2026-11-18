@@ -99,6 +99,7 @@ Craft가 기본 진입점이며 쓰기 범위가 더 좁으면 해당 커맨드�
 | 동작을 보존하는 구조 개선 | `/oopforge:refactor …` | `Use OOPforge refactor: …` | 구조와 회귀 테스트 |
 | 질문·비교·검토·문서 | `/oopforge:consult …` | `Use OOPforge consult: …` | 없음; 명시한 계획 문서 하나 |
 | 테스트 실행·작성·보강 | `/oopforge:test …` | `Use OOPforge test: …` | 테스트만; E2E·인프라는 별도 승인 |
+| 한 요청으로 계획·구현·리팩터·테스트 | `/oopforge:crucible …` | `Use OOPforge crucible: …` | 단계별 권한 그대로; 계획 승인에서 한 번 멈춤 |
 | diff·브랜치·PR 하나 리뷰 (P1/P2/P3) | `/oopforge:review …` | `Use OOPforge review: …` | 없음; PR 코멘트는 명시 요청 때 |
 | Jira 작업 카드 하나 작성 | `/oopforge:jira …` | `Use OOPforge jira: …` | 카드만; Jira 쓰기는 명시 요청 때 |
 
@@ -205,7 +206,7 @@ starter에서 중립이었다. 이는 일반적인 효과 주장이 아니다.
 ```bash
 git clone https://github.com/LooSung/oopforge ~/.oopforge
 cd ~/.oopforge
-git checkout v1.9.0
+git checkout v1.10.0
 chmod +x scripts/setup/*.sh
 ./scripts/setup/install.sh
 ./scripts/setup/doctor.sh
