@@ -89,8 +89,9 @@ states otherwise.
 - Hard Rule violations: file size, method size, public setters, mutable
   collections crossing boundaries.
 
-Elapsed time and token usage may be recorded as context, but they are not
-success metrics.
+Elapsed time, token usage, and decisions asked of the human are recorded as
+context in the result template, but they are not success metrics. Defects caught
+during Design are recorded separately: a patch violation count cannot see them.
 
 ## Evaluation schema v2
 
@@ -217,6 +218,9 @@ An illustrative Craft session is at
 - Agent behavior is stochastic; repeat runs before making broad claims.
 - The starter architecture may guide both agents toward a good result.
 - The task-specific evaluator cannot replace human domain review.
+- Changing the evaluator after seeing results lets the result shape the scorer.
+  Record the evaluator commit before the next runs; a later change is a rescore
+  reported beside the original.
 - Missing `.craft/` creation invalidates the treatment skill load.
 - A control workspace that can discover OOPforge instructions invalidates the
   control run.

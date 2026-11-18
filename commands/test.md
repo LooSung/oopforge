@@ -343,7 +343,16 @@ Transaction Boundary:
 
 ## Remaining Risks
 -
+
+## Environment Facts
+- none | <fact about this project's tooling or environment learned this session>
 ```
+
+An environment fact is something the next session would otherwise relearn the
+hard way, such as a hook that breaks the dev server or a check that is slow
+enough to run once at the end. Offer to add each one to the target project's
+`AGENTS.md`, and add it only after the user agrees. Never keep it only in agent
+memory or in `.craft/`.
 
 ## Stage boundaries
 
@@ -419,6 +428,12 @@ is essential only when you can name both:
 If the name is one the user never used, the structure goes back on rung 1 and
 has to argue for itself. Naming is where accidental complexity enters disguised
 as essential.
+
+This rule is evidence that a structure is needed, not a reason to ask the user
+about every name. Ask only about public names — routes, endpoint paths, error
+codes, user-visible text, domain concepts. Give internal names (classes,
+modules, files, private fields) a default that follows the project's existing convention,
+and list them once for the user to override.
 
 **Lazy, not negligent.** Trust-boundary input validation, data-loss handling,
 and security are never skipped at any rung.

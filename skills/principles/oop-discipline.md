@@ -74,6 +74,12 @@ If the name is one the user never used, the structure goes back on rung 1 and
 has to argue for itself. Naming is where accidental complexity enters disguised
 as essential.
 
+This rule is evidence that a structure is needed, not a reason to ask the user
+about every name. Ask only about public names — routes, endpoint paths, error
+codes, user-visible text, domain concepts. Give internal names (classes,
+modules, files, private fields) a default that follows the project's existing convention,
+and list them once for the user to override.
+
 **Lazy, not negligent.** Trust-boundary input validation, data-loss handling,
 and security are never skipped at any rung.
 
