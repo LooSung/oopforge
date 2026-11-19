@@ -116,7 +116,7 @@ Domain layer framework imports: 0.
 Discovery → Design → Delivery Plan → Skeleton → Implement → Test
 ```
 
-Do not skip stages for new domains. See [README](../../README.md#the-basic-workflow).
+Do not skip stages for new domains. See [README](../../README.md#how-it-works).
 
 ## 7. Reference example
 

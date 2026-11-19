@@ -5,165 +5,101 @@
 ![License](https://img.shields.io/github/license/LooSung/oopforge)
 
 > **AI는 기능을 만든다. OOPforge는 구조를 지킨다.**
->
-> *바이브 코딩이 백엔드를 망치지 않게 하는 하네스 엔지니어링.*
 
-**Forge small. Compose forever.** OOPforge는 이식 가능한 OOP/DDD 방법론
-팩이자 에이전트 하네스다. 스킬은 문법을 가르치고, 하드 룰은 린트처럼
-작동하며, 실행 가능한 예제는 기준을 제공하고, Craft는 작업에 필요한 가장
-작은 워크플로를 고른다.
+OOPforge는 **Java Spring** 또는 **Python FastAPI** 백엔드에서 일하는 코딩
+에이전트용 스킬 팩이다. 에이전트가 비즈니스 로직을 쓰기 전에 도메인 모델,
+유스케이스 경계, 포트를 먼저 정하게 하고, 결과를 측정 가능한 하드 룰로
+검사한다. 하드 룰은 God Service와 도메인 계층의 프레임워크 코드를 금지한다.
 
-**Java(Spring)** 또는 **Python(FastAPI)** 백엔드에서 명시적인 도메인 모델,
-유스케이스 경계, 리뷰 가능한 아키텍처가 필요할 때 사용한다. 범용 에이전트
-프레임워크, UI 도구, 자동 코드 생성기는 아니다.
-
-[포지셔닝](docs/project/positioning.md) · [지원 범위](docs/reference/support-scope.md) ·
-[Proof 프로토콜](docs/proof/README.md)
+**Claude Code**, **Codex CLI**, **Cursor Agent CLI**에서 동작한다.
 
 [English](./README.md) · [한국어](./README.ko.md)
 
-## 빠른 시작
+## Forge 패밀리
 
-### 1. 최신 `main` 설치
+| 팩 | 대상 | 스택 |
+|---|---|---|
+| [Compforge](https://github.com/LooSung/compforge) | 프론트엔드 | TypeScript + React |
+| **OOPforge** (이 저장소) | 백엔드 | Java Spring · Python FastAPI |
+| [FuseForge](https://github.com/LooSung/fuseforge) | 두 쪽에 걸친 기능 하나 | Compforge + OOPforge 조율 (실험적) |
+
+각 팩은 단독으로 쓸 수 있다. Claude Code에서는 `forge` 마켓플레이스 하나로 셋 다 받을 수 있다.
+
+## 설치
+
+**Claude Code**는 플러그인 마켓플레이스로 (실험적):
+
+```text
+/plugin marketplace add LooSung/oopforge
+/plugin install oopforge@forge
+```
+
+다른 Forge 저장소에서 `forge`를 이미 추가했다면 첫 줄은 건너뛴다.
+플러그인 파일은 프로젝트 밖에 있으므로 한 번 읽기 허용이 필요하다:
+[읽기 권한](docs/setup/claude-code.md#plugin-marketplace-experimental).
+
+**Codex CLI**, 또는 플러그인 없이 Claude Code를 쓸 때는 설치 스크립트로:
 
 ```bash
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/LooSung/oopforge/main/scripts/setup/bootstrap.sh)"
 ```
 
-bootstrap은 `~/.oopforge`를 clone 또는 갱신하고 감지된 Claude Code·Codex
-링크를 설치한다. Cursor는 자동 설정하지 않는다.
+스크립트는 `~/.oopforge`를 clone하고 Claude Code와 Codex에 연결한다. 하니스마다
+한 가지 경로만 쓰고, 에이전트를 재시작한다. Cursor는 수동 단계가 하나 있다: [Cursor 설정](docs/setup/cursor.md).
+릴리스 고정 설치, 업데이트, 제거: [설치 가이드](docs/setup/install.md).
 
-### 2. 팩과 설치 링크 확인
+## 사용
 
-```bash
-~/.oopforge/scripts/setup/doctor.sh
+에이전트는 `~/.oopforge`가 아니라 **내 백엔드 프로젝트**에서 시작한다:
+
+```text
+/oopforge:craft Email 값 객체 하나 추가
+/oopforge:refactor 동작은 그대로 두고 대출 규칙을 컨트롤러 밖으로 이동
+/oopforge:review PR 42 리뷰
 ```
 
-`doctor.sh`는 팩 구조와 사용 가능한 symlink를 검사한다. 성공 결과가 실행
-중인 에이전트의 Craft 로드를 증명하지는 않으므로 4단계에서 하네스별
-진입점을 확인한다. 선택한 Claude·Codex 링크가 없다는 경고가 나오면
-`INSTALL_CLAUDE=1 ~/.oopforge/scripts/setup/install.sh` 또는 Codex 대응
-변수로 다시 설치한다.
-
-### 3. 백엔드 프로젝트로 이동
-
-OOPforge 팩은 `~/.oopforge`에 있고 앱 코드는 **백엔드 저장소**에 있다.
-에이전트는 항상 대상 프로젝트에서 시작한다:
-
-```bash
-cd /path/to/your-backend-project
-```
-
-### 4. OOPforge를 로드하고 한 번 요청
-
-| 하네스 | Craft 로드와 호출 |
+| 하니스 | 호출 방법 |
 |---|---|
-| **Claude Code** | Claude Code 재시작 후 `/oopforge:craft <요청>` |
-| **Codex CLI** | Codex 재시작 후 `/skills`에서 **oopforge**를 고르고 `/` 없이 요청 |
-| **Cursor Agent CLI** | 로컬 플러그인을 명시 로드한 뒤 `Use OOPforge craft: …` |
+| Claude Code | `/oopforge:craft <요청>` |
+| Codex CLI | `/skills` → **oopforge** 선택 후 `Use OOPforge craft: <요청>` (앞에 `/` 없음) |
+| Cursor Agent CLI | `cursor-agent --plugin-dir ~/.oopforge` 후 `Use OOPforge craft: <요청>` |
 
-Claude Code:
+## 명령
 
-```text
-/oopforge:craft Email 값 객체 하나 추가해줘
-```
-
-Codex CLI:
-
-```text
-Use OOPforge craft: Email 값 객체 하나 추가해줘
-```
-
-Cursor Agent CLI는 설치된 팩을 직접 로드한다:
-
-```bash
-cd /path/to/your-backend-project
-cursor-agent --plugin-dir ~/.oopforge
-```
-
-```text
-Use OOPforge craft: Email 값 객체 하나 추가해줘
-```
-
-Craft는 가장 작은 경로를 고르고 비즈니스 로직 전에 Assumptions와 OOP
-Contract를 제시한다. [예시 세션](docs/assets/craft-demo.cast)과
-[Claude](./docs/setup/claude-code.md) · [Codex](./docs/setup/codex.md) · [Cursor](./docs/setup/cursor.md) 설정을 참고한다.
-
-## 기본 워크플로
-
-Craft가 기본 진입점이며 쓰기 범위가 더 좁으면 해당 커맨드를 사용한다:
-
-| 목적 | Claude Code | Codex / Cursor | 쓰기 범위 |
-|---|---|---|---|
-| 구현 또는 경로 선택 | `/oopforge:craft …` | `Use OOPforge craft: …` | 요청한 구현 |
-| 동작을 보존하는 구조 개선 | `/oopforge:refactor …` | `Use OOPforge refactor: …` | 구조와 회귀 테스트 |
-| 질문·비교·검토·문서 | `/oopforge:consult …` | `Use OOPforge consult: …` | 없음; 명시한 계획 문서 하나 |
-| 테스트 실행·작성·보강 | `/oopforge:test …` | `Use OOPforge test: …` | 테스트만; E2E·인프라는 별도 승인 |
-| 한 요청으로 계획·구현·리팩터·테스트 | `/oopforge:crucible …` | `Use OOPforge crucible: …` | 단계별 권한 그대로; 계획 승인에서 한 번 멈춤 |
-| diff·브랜치·PR 하나 리뷰 (P1/P2/P3) | `/oopforge:review …` | `Use OOPforge review: …` | 없음; PR 코멘트는 명시 요청 때 |
-| Jira 작업 카드 하나 작성 | `/oopforge:jira …` | `Use OOPforge jira: …` | 카드만; Jira 쓰기는 명시 요청 때 |
-
-Craft는 새 도메인이나 큰 기능에서 전체 순서를 유지한다:
-
-```text
-Discovery → Design → Delivery Plan → Skeleton → Implement → Test
-```
-
-| 단계 | 산출물 | 금지 |
+| 명령 | 언제 쓰나 | 절대 하지 않는 것 |
 |---|---|---|
-| **Discovery** | 용어집, 컨텍스트, 액터, 질문 | 코드 |
-| **Design** | 유스케이스 시그니처, 애그리거트 윤곽, 포트 | 구현 |
-| **Delivery Plan** | 범위, 순서, 테스트, 릴리스 위험 | 코딩 |
-| **Skeleton** | 패키지, 인터페이스, 빈 클래스 | 비즈니스 로직 |
-| **Implement** | 테스트된 유스케이스 하나씩 | 여러 유스케이스 동시 작업 |
-| **Test** | 단위·통합·E2E 근거 | 테스트 없는 도메인 로직 |
+| `craft` | **기본값.** 유스케이스, 값 객체, 도메인 버그 | 필요한 단계 생략, 범위를 몰래 넓히기 |
+| `refactor` | 동작을 바꾸지 않는 구조 개선 | 기능 추가 |
+| `consult` | 질문, 비교, 리뷰, 계획 문서 1개 | 구현·테스트 코드 변경 |
+| `test` | 테스트 실행·작성·강화 | 프로덕션 동작 변경. E2E와 인프라는 승인 필요 |
+| `crucible` | 변경 하나를 계획 → 구현 → 리팩터 → 테스트까지 한 번에 | 계획 승인 전에 구현 시작 |
+| `review` | diff, 브랜치, PR 하나에 대한 P1/P2/P3 지적 | 코드 변경, 요청 없이 PR에 게시 |
+| `jira` | Jira 카드 1개, 또는 에픽·스토리 하나의 하위 작업 | 해당 이슈 외의 변경 |
 
-각 단계 끝에는 사람 확인이 있다. 앞선 결정이 이미 있을 때만 Craft에 특정
-단계부터 시작하라고 요청한다. 리팩토링은 동작을 보존해야 하므로 기능
-워크플로 밖에서 진행한다.
+뭘 써야 할지 모르겠다면 `craft`를 쓴다. 가장 작은 경로를 알아서 고른다.
 
-지원 스택 식별자는 `java-spring-layered`, `java-spring-hexagonal`,
-`python-fastapi-layered`, `python-fastapi-clean`이다. 백엔드 스켈레톤에는
-OpenAPI/Swagger UI가 포함된다.
-Domain Events와 transactional outbox 전달은 핵심 패턴이다. Production
-Readiness gate는 명시적 배포 요청에만 선택한다.
+## 동작 방식
 
-### 세션 사이 작업 이어가기
+1. **계약 먼저.** 비즈니스 로직 전에 Craft가 가정(Assumptions)과 OOP 계약
+   (OOP Contract)을 밝힌다: 애그리거트, 불변식, 유스케이스, 포트.
+2. **가장 작은 경로.** 값 객체 하나 추가는 작게 끝난다. 새 도메인이나 큰 기능은
+   전체 흐름을 거치고, 단계마다 사용자가 승인한다:
 
-실행 작업은 `.craft/` 아래에 가벼운 기록을 남긴다. 미완료 작업이 있으면
-Craft가 편집 전에 Resume 블록을 제시한다. 세션이 끝났는데 일이 남으면
-`.craft/next-session-prompt.md`가 다음 결정을 기록한다.
+   ```text
+   Discovery → Design → Delivery Plan → Skeleton → Implement → Test
+   ```
 
-## 예제로 배우기
+3. **검사.** 완료 보고 전에 [하드 룰](AGENTS.md#hard-rules)을 검증한다: 파일당
+   300줄, 메서드당 20줄, 도메인 계층 프레임워크 import 0, 트랜잭션당 애그리거트 하나.
 
-**처음이면 여기부터:** **[도서관 대출 가이드 →](docs/guides/library-loan/README.ko.md)**
+스택: `java-spring-layered`, `java-spring-hexagonal`, `python-fastapi-layered`,
+`python-fastapi-clean`. 스켈레톤에는 OpenAPI/Swagger UI가 포함된다. 도메인
+이벤트와 outbox는 기본이고, Production Readiness는 배포 요청에서만 켠다.
 
-| 자료 | 용도 |
-|---|---|
-| [도서관 대출 가이드](docs/guides/library-loan/README.ko.md) | 전체 워크플로 튜토리얼 |
-| [Examples index](examples/README.md) | 실행 가능한 계산기 예제 6종 |
-| [Reviewer checklist](docs/reference/reviewer-checklist.md) | 구현 후 규칙 점검 |
-
-## 왜 OOPforge인가
-
-| 원칙 | 의미 |
-|---|---|
-| **Small** | 한 스킬 = 한 개념, 스킬 200줄 이하 |
-| **Measurable** | 파일 300줄, 메서드 20줄 |
-| **Workflow-first** | Discovery → Test, 사람 확인 유지 |
-| **Proof over philosophy** | 실행 가능한 Java/Python 예제 |
-| **Domain-first** | 도메인 레이어 프레임워크 import 0 |
-
-요약하면 **구조가 기본값**이 되도록 해서 God Service 생성을 막는다.
-
-## Before / After
-
-팀은 DDD 다이어그램은 알지만 실제로는 `@Service` 하나에 로직이 몰리는 경우가
-많다. OOPforge는 **그 구조를 기본값**으로 만든다.
-
-### Before
+### Before → after
 
 ```java
+// Before: God Service, 도메인 모델 없음, 흩어진 규칙, 테스트하기 어려움
 @Service
 public class CalculatorService {
     public CalculationResponse calculate(CalculateRequest req) {
@@ -171,119 +107,40 @@ public class CalculatorService {
         eventPublisher.publish(...);
     }
 }
-```
 
-**문제:** God Service · 도메인 모델 없음 · 비즈니스 규칙 분산 · 단위 테스트
-어려움 · 에이전트가 같은 패턴 반복 생성
-
-### After
-
-```java
+// After: 규칙은 도메인이 소유하고, 유스케이스는 조율만 한다
 Calculation calc = Calculation.perform(id, operandA, operator, operandB);
-calculate.handle(command);
 calculationRepository.save(calc);
 calc.popEvents();
 ```
 
-**효과:** 도메인 중심 · 책임 분리 · Spring 없이 도메인 테스트 · 반복 가능한
-레이아웃. 실행 가능한 참고 구현은 [examples/README.md](examples/README.md)에 있다.
+## 프로젝트 스위치
 
-### 증거와 한계
+내 프로젝트 `AGENTS.md`에 한 줄씩:
 
-[Proof 프로토콜](docs/proof/README.md)은 과제, 대조군, OOPforge 적용군,
-평가 규칙과 공개 기준을 고정한다. Cursor `gpt-5.6-sol-high`의 유효한 네 짝
-중 첫 세 짝의 [1](docs/proof/results/2026-08-20-cursor-gpt-5.6-sol-high.md)은 중립,
-[2](docs/proof/results/2026-08-20-cursor-gpt-5.6-sol-high-2.md)와
-[3](docs/proof/results/2026-08-20-cursor-gpt-5.6-sol-high-3.md)은 메서드
-길이에서 유리했다. 세 짝 모두 공개 mutable 불변 상태 유출이 남았다.
-[4](docs/proof/results/2026-08-20-cursor-gpt-5.6-sol-high-4.md)는 정렬된
-starter에서 중립이었다. 이는 일반적인 효과 주장이 아니다.
-
-## 설치, 업데이트, 제거
-
-빠른 시작 bootstrap은 최신 `main`을 추적한다. 특정 릴리스를 설치하려면:
-
-```bash
-git clone https://github.com/LooSung/oopforge ~/.oopforge
-cd ~/.oopforge
-git checkout v1.10.0
-chmod +x scripts/setup/*.sh
-./scripts/setup/install.sh
-./scripts/setup/doctor.sh
-```
-
-### 설치 대상
-
-| 하네스 | 설치 또는 등록 경로 |
+| 줄 | 효과 |
 |---|---|
-| **Claude Code** | `~/.claude/skills/oopforge`, `~/.claude/commands/oopforge` |
-| **Codex CLI** | `~/.codex/skills/oopforge` |
-| **Cursor Agent CLI** | 수동 로컬 플러그인 또는 프로젝트 로컬 skill |
+| `OOPforge continuity: off` | `.craft/` 작업 노트를 끈다. 기본값은 실행 작업마다 노트를 남기고, 편집 전에 미완료 작업을 이어간다. |
+| `OOPforge work dir: <path>` | 작업 노트를 `.craft/`가 아닌 곳에 저장 |
+| `OOPforge live run: on` | Craft·Refactor가 앱을 직접 띄워 확인 |
+| `OOPforge cleanup pass: on` | 검증 후 Refactor가 `/simplify` 실행 |
 
-`install.sh`는 Claude·Codex 설정 디렉터리가 있을 때만 링크를 만든다.
-대상이 없으면 `INSTALL_CLAUDE=1` 또는 `INSTALL_CODEX=1`로 명시한다.
-Cursor는 `install.sh`가 설정하지 않는다.
+백엔드 PR에 비차단 피드백을 받으려면
+[`templates/github/oopforge-domain-review.yml`](templates/github/oopforge-domain-review.yml)을
+복사한다. 차단 게이트는 선택이다:
+[리뷰어 체크리스트](docs/reference/reviewer-checklist.md#enforcement-policy).
 
-### 업데이트
+## 더 보기
 
-GitHub Release는 기존 clone을 자동 갱신하지 않는다:
-
-```bash
-cd ~/.oopforge && git pull && ./scripts/setup/install.sh update
-```
-
-이 명령은 `main` 추적 clone용이다. 릴리스 태그에 고정한 clone은
-`git fetch --tags` 후 선택한 새 태그를 checkout하고
-`./scripts/setup/install.sh update`를 실행한다.
-
-Claude·Codex는 에이전트를 재시작한다. Cursor의 수동 등록 링크는
-`install.sh`가 관리하지 않으므로 pull 뒤 `cursor-agent`를 다시 시작한다.
-
-### 검증과 문제 해결
-
-아래 명령은 `~/.oopforge`에서 실행한다:
-
-```bash
-./scripts/setup/doctor.sh              # 팩 구조와 설치 링크
-./scripts/setup/install.sh --dry-run   # 예정된 링크 변경
-./scripts/setup/install.sh --force     # 충돌 symlink 교체
-./scripts/ci/smoke-test.sh             # 격리된 Claude/Codex 설치 수명주기
-```
-
-이 검사는 실제 Craft 응답을 실행하지 않는다. 활성화는 사용하는 하네스의
-진입점으로 확인한다: [Claude Code](./docs/setup/claude-code.md) ·
-[Codex](./docs/setup/codex.md) · [Cursor](./docs/setup/cursor.md).
-
-### 제거
-
-```bash
-./scripts/setup/uninstall.sh
-```
-
-이 명령은 OOPforge가 관리하는 Claude·Codex 링크만 제거한다.
-`~/.oopforge`와 프로젝트의 `.cursor/skills/oopforge`는 유지한다. 완전히
-제거하려면 직접 삭제한다.
-
-## 포함된 구성
-
-- `skills/` — 워크플로, OOP/DDD, 스택, 스켈레톤, 리뷰 지침
-- `commands/` — Claude Code 커맨드 진입점들
-- `examples/` — 실행 가능한 Java/Python 계산기 예제 6종
-- `docs/` — 하네스 가이드, 지원 범위, Proof, 튜토리얼
-- `scripts/` — 설치, lint, 아키텍처 검사, smoke test
-- `templates/github/` — 대상 프로젝트용 도메인 리뷰
-
-에이전트 규칙의 정본은 [`AGENTS.md`](./AGENTS.md)이며
-[`CLAUDE.md`](./CLAUDE.md)는 Claude Code 어댑터다.
-
-## 프로젝트 정책
-
-skill, script, CI, agent instruction은 영어를 정본으로 사용한다. 한국어
-독자는 skill별 복제본 대신
-[`docs/reference/methodology.ko.md`](./docs/reference/methodology.ko.md)를 사용한다.
-현재 공개 계약은 [포지셔닝](./docs/project/positioning.md)과
-[지원 범위](./docs/reference/support-scope.md), 완료된 릴리스는
-[변경 이력](./CHANGELOG.md)에서 확인한다.
+- [도서 대출 워크스루](docs/guides/library-loan/README.ko.md): Discovery → Test 단계별 튜토리얼
+- [예제](examples/README.md): 실행 가능한 계산기 6종 (Java/Python × layered, hexagonal, hexagonal-CQRS)
+- 설정: [Claude Code](docs/setup/claude-code.md) · [Codex](docs/setup/codex.md) ·
+  [Cursor](docs/setup/cursor.md) · [설치·업데이트·제거](docs/setup/install.md)
+- [지원 범위](docs/reference/support-scope.md) ·
+  [Proof 실행 결과](docs/proof/README.md) (중립 결과 포함, 일반적 효과 주장 아님) ·
+  [한국어 방법론 가이드](docs/reference/methodology.ko.md) · [전체 문서](docs/README.md)
+- [변경 이력](CHANGELOG.md) · [기여 가이드](.github/CONTRIBUTING.md) ·
+  [메인테이너용 에이전트 노트](AGENTS.md)
 
 ## 라이선스
 

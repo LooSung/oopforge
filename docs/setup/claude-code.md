@@ -48,6 +48,37 @@ Installed paths:
 If you are maintaining OOPforge itself, start from the OOPforge repository and
 treat that repository as the work target.
 
+## Plugin marketplace (experimental)
+
+Instead of the symlink install, add the `forge` catalog and install the plugin:
+
+```text
+/plugin marketplace add LooSung/oopforge
+/plugin install oopforge@forge
+```
+
+If `forge` is already added from Compforge or FuseForge, skip the first line;
+one catalog lists all three packs. `doctor.sh` comes with the script install,
+not the plugin.
+
+The slash commands carry their main workflow, so they start without reading
+plugin files; supporting skills and documents are read on demand.
+
+Plugin files live in `~/.claude/plugins/cache/`, outside your project, so
+Claude Code asks before reading them. Approve the prompt when it appears, or
+add this rule to `~/.claude/settings.json` (required for `claude -p`):
+
+```json
+{ "permissions": { "allow": ["Read(~/.claude/plugins/cache/forge/**)"] } }
+```
+
+Update with `claude plugin marketplace update forge` and
+`claude plugin update oopforge@forge`; remove with
+`claude plugin uninstall oopforge@forge`. The plugin registers the same
+`/oopforge:*` commands as the symlink install, so use one path, not both.
+Evidence and limits:
+[marketplace-2026-11-19](../verification/marketplace-2026-11-19.md).
+
 ## Slash commands
 
 ```text

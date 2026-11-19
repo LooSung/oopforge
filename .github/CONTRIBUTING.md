@@ -66,8 +66,7 @@ CI runs both on every PR.
 
 If you edit or add a skill, update these so it gets discovered:
 
-- `AGENTS.md` — "Task → skill" table and "Skill Selection" section
-- `skills/SKILL.md` — "Supporting Skills" section
+- `skills/SKILL.md` — the routing table and "Supporting Skills" section
 - `CHANGELOG.md` — for completed user-visible work, record it under
   `## [Unreleased]`
 

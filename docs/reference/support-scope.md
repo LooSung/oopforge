@@ -21,13 +21,19 @@ must be replaced by durable shared infrastructure for multi-instance deployment.
 | Harness | Supported load path | Invocation |
 |---|---|---|
 | Claude Code | `~/.claude/skills/oopforge` and `~/.claude/commands/oopforge` symlinks | `/oopforge:craft …`, `/oopforge:refactor …`, `/oopforge:consult …`, `/oopforge:test …`, `/oopforge:crucible …`, `/oopforge:review …`, or `/oopforge:jira …` |
+| Claude Code | `forge` plugin marketplace: `/plugin marketplace add LooSung/oopforge`, then `/plugin install oopforge@forge` | same slash commands |
 | Codex CLI | `~/.codex/skills/oopforge` symlink | select `oopforge`, then use the matching `craft`, `refactor`, `consult`, `test`, `crucible`, `review`, or `jira` natural-language intent |
 | Cursor Agent CLI | explicit `--plugin-dir` | use the matching `craft`, `refactor`, `consult`, `test`, `crucible`, `review`, or `jira` natural-language intent |
 | Cursor Agent CLI | `.cursor/skills/oopforge` plus pack `--add-dir` | same natural-language intents |
 
-Cursor directory auto-discovery, Cursor headless OOPforge `/` commands,
-marketplace installation, and automatic Cursor setup are not currently
-supported paths.
+The marketplace path is **experimental**: install, update, removal, and
+positive live probes passed, but a clean negative control is still pending
+([marketplace-2026-11-19](../verification/marketplace-2026-11-19.md)). Use
+one Claude Code path, not both: the symlinks and the plugin register the same
+commands.
+
+Cursor directory auto-discovery, Cursor headless OOPforge `/` commands, and
+automatic Cursor setup are not currently supported paths.
 
 Cursor Agent `2026.08.11-e8db854` discovers an existing
 `~/.claude/skills/oopforge` installation even in a no-plugin workspace. The
@@ -85,6 +91,6 @@ path unverified rather than claiming support.
 
 ## Not currently supported
 
-Saga orchestration, an OOPforge MCP server, additional languages, marketplace
-publication, a standalone OOPforge CLI, frontend/mobile work, and a claim that
+Saga orchestration, an OOPforge MCP server, additional languages, a listing
+in the official Claude plugin directory, a standalone OOPforge CLI, frontend/mobile work, and a claim that
 OOPforge universally improves agent output are outside this scope.

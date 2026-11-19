@@ -1,12 +1,6 @@
-# OOPforge — Claude Code Instructions
+# OOPforge — Claude Code
 
-Read and follow @AGENTS.md.
+@AGENTS.md
 
-When working on this repository:
-
-- Use `/oopforge:craft` as the canonical user entry point.
-- Use `/oopforge:crucible` to run Consult → Craft → Refactor → Test for one change, stopping once for plan approval.
-- Use `/oopforge:review` to review one diff, branch, or pull request without changing code.
-- Keep Claude-specific packaging in `.claude-plugin/` and `commands/`.
-- Do not bypass the Discovery → Design → Delivery Plan → Skeleton → Implement
-  → Test workflow for new domains or large features.
+Claude Code packaging lives in `.claude-plugin/` and `commands/`. `commands/` is
+generated: edit the skill sources, then run `python3 scripts/ci/build-commands.py`.

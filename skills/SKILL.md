@@ -37,7 +37,7 @@ commands are not Cursor headless entry points.
 
 ## Project vs pack (paths)
 
-- **Pack** — `~/.oopforge` or `$OOPFORGE_HOME`: skills, commands, examples. Not where user app code lives.
+- **Pack** — `~/.oopforge` or `$OOPFORGE_HOME`; when loaded as a Claude Code plugin, the plugin root (the parent of this `skills/` directory): skills, commands, examples. Not where user app code lives.
 - **Target project** — the repo the user is working on; start the agent **from this directory** (`cd your-project && codex`).
 - **OOPforge maintenance** — if the user asks to change OOPforge itself, the pack repository is the work target; do not reject it as the wrong directory.
 - User file paths (`docs/foo.md`, `@path`, absolute paths) resolve against the confirmed work target. For app work this is the target project, never the pack. If missing, ask for an absolute path — do not search only under `~/.oopforge`.

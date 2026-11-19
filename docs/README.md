@@ -4,6 +4,7 @@ Use this index to find the smallest document for the job.
 
 ## Setup
 
+- [Install, update, remove](setup/install.md)
 - [Claude Code](setup/claude-code.md)
 - [Codex CLI](setup/codex.md)
 - [Cursor Agent CLI](setup/cursor.md)
@@ -26,4 +27,6 @@ Use this index to find the smallest document for the job.
 - [Methodology proof](proof/README.md)
 - [Harness verification](verification/README.md)
 
-Agent-facing canonical instructions remain under [`../skills/`](../skills/).
+Agent-facing canonical instructions remain under [`../skills/`](../skills/); the
+entry point is [`../skills/SKILL.md`](../skills/SKILL.md). Notes for agents
+changing OOPforge itself, including the Hard Rules, are in [`../AGENTS.md`](../AGENTS.md).

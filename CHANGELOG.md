@@ -6,6 +6,22 @@
 
 ## [Unreleased]
 
+## [1.11.0] - 2026-11-19
+
+Forge 마켓플레이스, 짧아진 README·AGENTS·CLAUDE.
+
+### Added
+
+- Claude Code 플러그인 마켓플레이스 `forge` (`.claude-plugin/marketplace.json`, 실험적). `/plugin marketplace add LooSung/oopforge` 후 `/plugin install oopforge@forge`. 같은 카탈로그에 `compforge@forge`, `fuseforge@forge`도 있다. 설치·업데이트·제거와 실제 로드 검증: `docs/verification/marketplace-2026-11-19.md`.
+- `skills/SKILL.md`: 플러그인으로 로드되면 플러그인 루트를 팩 루트로 본다.
+
+### Changed
+
+- `README.md`·`README.ko.md`를 설치 한 줄 → 사용 예시 → 명령 표 → 동작 방식 순서의 짧은 문서로 다시 썼다. Forge 패밀리(Compforge·OOPforge·FuseForge) 표와 프로젝트 스위치 표를 추가했다.
+- `AGENTS.md`를 이 저장소를 수정하는 에이전트용 지도(구조·CI 체크·규칙)로 줄였다. Hard Rules는 그대로 두고, 중복이던 Skill Routing·Skill Selection 표는 `skills/SKILL.md`에만 둔다.
+- `CLAUDE.md`는 `@AGENTS.md`와 Claude 전용 두 줄만 남겼다. 이전에는 명령 7개 중 3개만 적혀 있었다.
+- 설치·업데이트·제거 상세는 `docs/setup/install.md`로 옮겼다.
+
 ## [1.10.0] - 2026-11-18
 
 Crucible, shared gates, plan input, and command budgets.

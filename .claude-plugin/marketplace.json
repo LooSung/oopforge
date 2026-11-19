@@ -1,0 +1,36 @@
+{
+  "name": "forge",
+  "owner": {
+    "name": "Mr.Louis",
+    "url": "https://github.com/LooSung"
+  },
+  "metadata": {
+    "description": "The Forge family: Compforge (frontend), OOPforge (backend), and FuseForge (full-stack coordinator)."
+  },
+  "plugins": [
+    {
+      "name": "compforge",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/LooSung/compforge.git"
+      },
+      "description": "TypeScript + React component architecture: component boundaries, state placement, and a staged workflow.",
+      "homepage": "https://github.com/LooSung/compforge"
+    },
+    {
+      "name": "oopforge",
+      "source": "./",
+      "description": "Java Spring and Python FastAPI backends with OOP/DDD modeling, layered or hexagonal architecture, and CQRS.",
+      "homepage": "https://github.com/LooSung/oopforge"
+    },
+    {
+      "name": "fuseforge",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/LooSung/fuseforge.git"
+      },
+      "description": "Experimental coordinator for one full-stack feature across Compforge and OOPforge.",
+      "homepage": "https://github.com/LooSung/fuseforge"
+    }
+  ]
+}

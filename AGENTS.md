@@ -1,179 +1,57 @@
-# OOPforge — Agent Instructions
+# OOPforge — agent notes
 
-If you are an AI coding agent working in this repository, follow OOPforge itself.
+These notes are for agents changing **OOPforge itself**. To *use* OOPforge on a
+backend project, follow `skills/SKILL.md` instead; it owns command routing and
+skill selection for every harness. The Hard Rules below apply in both cases, and
+`skills/workflow/review.md` reads them from this file.
 
 OOPforge continuity: off
 
-## Mission
+## What OOPforge is
 
-OOPforge is a portable OOP/DDD methodology pack for coding agents — **methodology plus agent harness**.
+A backend OOP/DDD methodology pack. Skills are the grammar, Hard Rules are the
+lint, `examples/` are the reference implementations, and commands plus install
+scripts are the runtime. Protect the core promise: small skills, clean domain
+models, explicit workflow stages, and human checkpoints.
 
-It defines OOP/DDD as a **dialect agents follow** (skills = grammar, hard rules = lint, `examples/` = reference implementations, install/commands = runtime). Protect the core promise: small skills, clean domain models, explicit workflow stages, and human checkpoints.
+Sister packs: [Compforge](https://github.com/LooSung/compforge) (frontend) and
+[FuseForge](https://github.com/LooSung/fuseforge) (full-stack coordinator).
 
-## Maintainer Management
+## Layout
 
-Maintainer direction is private and local. When present, its single source is
-`docs/planning/management.md`, which is gitignored.
-
-- Do not add future plans, backlogs, internal metrics, or release drafts to
-  tracked files.
-- `CHANGELOG.md` records completed user-visible changes under `Unreleased`
-  before release; it never carries future plans.
-- Public docs describe current behavior, support, evidence, and positioning.
-- Do not create `.craft/` continuity state in this repository.
-
-### Maintainer work gate
-
-Before planning or implementing an OOPforge upgrade, new capability,
-architecture change, or release:
-
-1. If `docs/planning/management.md` exists, read it and follow its Agent entry
-   checklist.
-2. If it is absent, an explicit user request or linked issue defines the scope;
-   do not infer other private priorities or block that requested work.
-3. Record maintainer decisions in the private file only when it exists. Never
-   create it from public repository context.
-
-## Required Workflow
-
-For new domains or large features, do not jump straight to code.
-
-1. **Discovery** — read `skills/workflow/discovery.md`; produce glossary, contexts, actors, open questions.
-2. **Design** — read `skills/workflow/design.md`; produce use-case signatures, aggregate outlines, ports.
-3. **Delivery Plan** — read `skills/workflow/delivery-plan.md`; align requirements, scope, implementation order, tests, and release risks.
-4. **Skeleton** — read `skills/workflow/skeleton.md`; create package structure and empty interfaces/classes only.
-5. **Implement** — read `skills/workflow/implement.md`; implement one use case with tests.
-6. **Test** — read `skills/workflow/test.md`; run unit, integration, and E2E checks as needed.
-
-Ask for human approval before moving from one stage to the next.
-
-**For smaller, focused tasks** (extending an existing domain, adding a single value object, refactoring, code review) — start with `/oopforge:craft` (`commands/craft.md`). For explicit behavior-preserving cleanup, `/oopforge:refactor` (`commands/refactor.md`) selects the Refactor path directly.
-
-## Default Entry Point
-
-Use `/oopforge:craft` (`commands/craft.md`) as the default OOPforge user entry point.
-
-`/oopforge:craft` delegates orchestration to `skills/workflow/craft.md`, reads `skills/principles/oop-discipline.md`, requires Assumptions then an OOP Contract before business-logic implementation, and verifies Hard Rules (including surgical scope) before completion.
-
-- Use `/oopforge:craft` for single components, existing-domain features, domain bug fixes, and requests whose path is not yet clear.
-- Use `/oopforge:refactor` for explicit behavior-preserving structural cleanup; it applies the `skills/workflow/gates.md` gates and `skills/workflow/refactor.md` without reclassification.
-- Use `/oopforge:consult` for answers, alternatives, review, or explicitly requested planning documents; it never changes implementation or test code.
-- Use `/oopforge:crucible` to run Consult → Craft → Refactor (when earned) → Test for one change; it stops for plan approval and adds no rules of its own.
-- Use `/oopforge:test` to run, write, or strengthen tests; it never changes production behavior and E2E requires explicit wording.
-- Use `/oopforge:review` to review one diff, branch, or pull request; it reports P1/P2/P3 findings and changes no code.
-- Use `/oopforge:jira` to write or rewrite one Jira work card, or the child tasks of one existing epic or story, in the fixed template; it changes nothing but those issues.
-- For ambiguous or advisory requests, Craft recommends the smallest path without implementing.
-- For a new domain or large feature, Craft routes into the existing Discovery → Test workflow and keeps the human checkpoints.
-
-## Skill Path Convention
-
-Resolve the OOPforge pack root in order: `$OOPFORGE_HOME` → `~/.oopforge` → repository root (when developing this pack).
-
-Skill files live at `{pack}/skills/...`. Do **not** use legacy
-`skills/oopforge/...` paths. See `docs/reference/path-convention.md`.
-
-## Project Configuration (target project `AGENTS.md`)
-
-Optional single-line directives the target project can set to control OOPforge behavior:
-
-| Directive | Effect |
+| Path | Holds |
 |---|---|
-| `OOPforge work dir: <path>` | Override the continuity work dir (default `.craft/`). |
-| `OOPforge continuity: off` | Disable automatic `.craft/` work-doc creation. |
-| `OOPforge live run: on` | Let Craft and Refactor launch the app for the Live run in `skills/workflow/test.md`. Off by default. |
-| `OOPforge cleanup pass: on` | Let Refactor run the harness cleanup skill (`/simplify`) after verification. Off by default. |
+| `skills/SKILL.md` | Entry point and command routing |
+| `skills/workflow/` | One file per workflow; `skills/workflow/gates.md` holds the shared startup, plan input, verification, and report gates |
+| `skills/principles/oop-discipline.md` | Core OOP principles, including the pre-write ladder |
+| `skills/oop/`, `lang/`, `skeleton/`, `playbooks/`, `antipatterns/` | Topic skills that workflows load on demand |
+| `skills/stability.json` | Skill maturity, explained in `docs/reference/skill-stability.md` |
+| `commands/` | **Generated** from the skill sources by `scripts/ci/build-commands.py` |
+| `.claude-plugin/`, `.codex-plugin/`, `.cursor-plugin/` | Harness packaging only; `.claude-plugin/marketplace.json` is the `forge` catalog of all three packs, kept identical across the three repositories except for which entry is `./` |
+| `examples/` | Six runnable calculators: Java/Python × layered, hexagonal, hexagonal-CQRS |
+| `templates/github/` | Reusable domain review for target projects |
+| `scripts/setup/`, `scripts/ci/` | Install lifecycle, CI checks, and `archlint.py` |
+| `docs/` | Human docs, indexed by `docs/README.md` |
 
-By default, continuity work docs are **auto-created (opt-out)** for execution tasks (feature/refactor/bugfix); advisory and tiny tasks never create one. If previous work exists, Craft emits a **Resume block** (previous work / last verified / proposed job / parked) **before any code** and re-scopes an inherited prompt to one decision — the user does not have to mention it. When a session unit ends with work remaining, Craft writes `.craft/next-session-prompt.md` without being asked. See `skills/workflow/continuity.md`.
+## Checks
 
-## Skill Routing
+CI runs these; all must pass before a change is done:
 
-Use this table to decide **which skill to read first**. Workflow stage always wins over ad-hoc coding.
+```bash
+./scripts/ci/lint-skills.sh             # skills, links, AGENTS.md paths, command freshness
+python3 scripts/ci/test-doc-links.py
+python3 scripts/ci/test-run-with-timeout.py
+python3 scripts/ci/test-harness-smoke.py
+python3 scripts/ci/test-proof-evaluator.py
+python3 scripts/ci/test-proof-runner.py
+python3 scripts/ci/test-review.py
+python3 scripts/ci/test-review-extended.py
+python3 scripts/ci/test-archlint.py
+./scripts/ci/smoke-test.sh              # clean-HOME install lifecycle
+```
 
-| Workflow stage | Goal | Read first |
-|---|---|---|
-| Craft (entrypoint) | Select and execute the smallest OOP path, or recommend only for advisory requests | `skills/workflow/craft.md` + `skills/principles/oop-discipline.md` |
-| Refactor command | Preserve behavior while improving one structural decision | `skills/workflow/craft.md` + `skills/workflow/refactor.md` + `skills/principles/oop-discipline.md` |
-| Consult command | Answer, propose, review, or explicitly write one planning document | `skills/workflow/consult.md` |
-| Test command | Run, write, or strengthen tests without changing production behavior | `skills/workflow/craft.md` + `skills/workflow/test.md` |
-| Review command | Prioritized findings on one finished diff, branch, or pull request | `skills/workflow/review.md` + `docs/reference/reviewer-checklist.md` |
-| Jira command | Write one Jira task, story, bug, epic, or backlog item, or the `[F.E]` `[B.E]` `[AI]` `[DOC]` child tasks of one existing epic or story | `skills/workflow/jira-card.md`; `skills/workflow/jira-children.md` when the parent already exists |
-| Discovery | Glossary, contexts, actors | `skills/workflow/discovery.md` |
-| Design | Use-case signatures, aggregates | `skills/workflow/design.md` + `skills/oop/domain-model.md` |
-| Delivery Plan | Scope, order, tests, risks | `skills/workflow/delivery-plan.md` |
-| Skeleton | Packages, empty types | `skills/workflow/skeleton.md` + `skills/skeleton/backend-skeleton.md` (stack via `skills/lang/backend-stack.md`) |
-| Implement | One use case + tests | `skills/workflow/implement.md` + `skills/oop/use-case-boundary.md` |
-| Test | Unit / integration / E2E | `skills/workflow/test.md` |
-| Production Gate (explicit opt-in only) | Adapter-boundary NFR evidence for deployment, production, or operational readiness | `skills/workflow/production-readiness.md` |
-| Refactor | Behavior-preserving cleanup | `skills/workflow/refactor.md` |
-| Continuity | Resume work across sessions | `skills/workflow/continuity.md` |
-| Code review | Detect rule violations; one finished change goes to `/oopforge:review` | Hard Rules below + `skills/antipatterns/` + `examples/calculator-java-hexagonal/` |
-
-### Task → skill (within a stage)
-
-| Task | Skill |
-|---|---|
-| Aggregate, Value Object | `skills/oop/domain-model.md` |
-| Domain vs Integration Event, recording, dispatch, handlers, message evolution | `skills/oop/domain-events.md` |
-| Use case / application service / Repository port | `skills/oop/use-case-boundary.md` |
-| One Aggregate per transaction / multi-Aggregate writes | `skills/oop/transaction-boundary.md` |
-| Publishing an event or notifying another system in the same commit | `skills/oop/outbox.md` |
-| Read/write split, complex query off the domain (CQRS) | `skills/oop/cqrs.md` |
-| Python FastAPI request/response typing and validation | `skills/lang/python-pydantic.md` |
-| Run, write, or strengthen tests | `skills/workflow/test.md` |
-| Explicit deployment, production, or operational-readiness request | `skills/workflow/production-readiness.md` (add to the normal path; never infer from an ordinary feature) |
-| Backend stack selection | `skills/lang/backend-stack.md` |
-| Backend package structure / skeleton | `skills/skeleton/backend-skeleton.md` |
-| Anemic domain | `skills/antipatterns/anemic-domain.md` |
-| Fat controller | `skills/antipatterns/controller-fat.md` |
-| Repository with business logic | `skills/antipatterns/repository-with-business-logic.md` |
-| God Aggregate | `skills/antipatterns/god-aggregate.md` |
-| Flat package (layered without folders) | `skills/antipatterns/flat-package.md` |
-
-### Harness setup
-
-| Harness | Guide |
-|---|---|
-| Codex | `docs/setup/codex.md` |
-| Claude Code | `docs/setup/claude-code.md` |
-| Cursor | `docs/setup/cursor.md` |
-
-Reference implementation: [examples/README.md](examples/README.md) — Java/Python
-`layered`, `hexagonal`, and `hexagonal-cqrs` calculators (same domain, different
-architectures).
-
-## Support Scope
-
-Canonical harness paths, supported stacks, compatibility, and exclusions are
-defined in `docs/reference/support-scope.md`. Skill maturity is machine-readable
-in `skills/stability.json` and explained in
-`docs/reference/skill-stability.md`; new advanced skills default to experimental
-until usage, references, and checks justify promoting them.
-
-## Skill Selection
-
-Before changing behavior, read the relevant skill file:
-
-- Domain model: `skills/oop/domain-model.md`
-- Domain Events and Integration Events: `skills/oop/domain-events.md`
-- Use-case boundary: `skills/oop/use-case-boundary.md`
-- Transaction boundary (one Aggregate per TX): `skills/oop/transaction-boundary.md`
-- Transactional Outbox (state change + event in one commit): `skills/oop/outbox.md`
-- Backend stack selection: `skills/lang/backend-stack.md`
-- Python FastAPI boundary typing and validation: `skills/lang/python-pydantic.md`
-- Backend skeleton structure: `skills/skeleton/backend-skeleton.md`
-- Lint enforcement (import-linter / ArchUnit in CI): `skills/skeleton/lint-enforcement.md`
-- Craft execution mode: `skills/workflow/craft.md` + `skills/principles/oop-discipline.md`
-- Craft playbooks: `skills/playbooks/feature.md` · `skills/playbooks/bug-fix.md`
-- Delivery planning: `skills/workflow/delivery-plan.md`
-- Testing: `skills/workflow/test.md`
-- Production readiness (explicit opt-in only): `skills/workflow/production-readiness.md`
-- Refactoring existing or external code: `skills/workflow/refactor.md`
-- Consultation and explicit planning documents: `skills/workflow/consult.md`
-- Review of one diff, branch, or pull request: `skills/workflow/review.md`
-- Jira work card in the fixed template: `skills/workflow/jira-card.md`
-- Jira child tasks of one epic or story: `skills/workflow/jira-children.md`
-- Anti-patterns: `skills/antipatterns/` (`flat-package`, `anemic-domain`, `controller-fat`, `repository-with-business-logic`, `god-aggregate`)
-- Resuming work across sessions (persist + restore context): `skills/workflow/continuity.md`
+After editing a workflow skill, regenerate commands with
+`python3 scripts/ci/build-commands.py`.
 
 ## Hard Rules
 
@@ -209,20 +87,29 @@ These limits are intentionally measurable. They come from review focus and agent
 - **Command side returns no read-shaped data** — return an ID or void, not a query DTO.
 - Checkable via `scripts/ci/archlint.py cqrs <root>`.
 
-## Repository Discipline
+## Rules for changing the pack
 
-- Do not add runtime dependencies for installer scripts unless there is no simpler shell-based alternative.
-- Update `CHANGELOG.md` for user-visible changes.
-- When changing install behavior, verify with a clean temporary `HOME`.
-- Do not claim a harness integration works until documented setup steps and a
-  clean-session positive/negative smoke prove it. See
-  `docs/reference/support-scope.md`.
-- PRs block on static harness packaging. Run authenticated live smoke locally
-  when changing a harness load path; repository provider secrets are not required.
-
-## What Not To Do
-
-- Do not merge workflow stages to save time.
-- Do not add framework annotations or infrastructure concerns to domain examples.
-- Do not create mega-prompts, mega-skills, or broad abstractions without evidence.
-- Do not mix refactoring with feature changes; use `workflow-refactor` only for behavior-preserving cleanup.
+- A new capability or architecture change goes through Discovery → Design →
+  Delivery Plan → Skeleton → Implement → Test, with human approval between
+  stages. A focused fix does not need the full flow.
+- One source of truth: routing lives only in `skills/SKILL.md`, support facts
+  only in `docs/reference/support-scope.md`, and the Hard Rules only here. Point
+  to them; never copy them.
+- Do not claim a harness integration works until documented setup and a
+  clean-session positive/negative smoke prove it. PRs block on static harness
+  packaging; run authenticated live smoke locally when changing a load path.
+- When changing install behavior, verify with a clean temporary `HOME`. Add no
+  runtime dependencies to installer scripts when shell will do.
+- Do not merge workflow stages, add framework annotations or infrastructure to
+  domain examples, mix refactoring with feature changes, or create mega-prompts,
+  mega-skills, or abstractions without evidence.
+- Skills, scripts, and agent instructions are in English. Korean readers get
+  `README.ko.md` and `docs/reference/methodology.ko.md`, not per-skill
+  translations.
+- Record completed user-visible changes in `CHANGELOG.md` under `Unreleased`.
+  Never put future plans in tracked files.
+- Before an upgrade, new capability, architecture change, or release: if the
+  gitignored `docs/planning/management.md` exists, read it and follow its Agent
+  entry checklist. If it is absent, the user's request or linked issue defines
+  scope; never create that file from public context.
+- Do not create `.craft/` state in this repository.

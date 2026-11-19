@@ -5,166 +5,103 @@
 ![License](https://img.shields.io/github/license/LooSung/oopforge)
 
 > **AI ships the feature. OOPforge keeps the architecture.**
->
-> *Harness engineering that stops vibe coding from wrecking your backend.*
 
-**Forge small. Compose forever.** OOPforge is a portable OOP/DDD methodology pack
-and agent harness. Skills teach the grammar, hard rules act as lint, runnable
-examples provide references, and Craft selects the smallest workflow for the job.
+OOPforge is a skill pack for coding agents working on **Java Spring** or
+**Python FastAPI** backends. Before your agent writes business logic, it names
+the domain model, the use-case boundary, and the ports. Then it checks the result
+against measurable Hard Rules, which forbid God Services and framework code in
+the domain.
 
-Use it when a **Java (Spring)** or **Python (FastAPI)** backend needs explicit domain
-models, use-case boundaries, and reviewable architecture. It is not a general
-agent framework, UI toolkit, or automatic code generator.
-
-[Positioning](docs/project/positioning.md) · [Support scope](docs/reference/support-scope.md) · [Proof protocol](docs/proof/README.md)
+Works with **Claude Code**, **Codex CLI**, and **Cursor Agent CLI**.
 
 [English](./README.md) · [한국어](./README.ko.md)
-## Quickstart
 
-### 1. Install the latest `main`
+## The Forge family
+
+| Pack | For | Stack |
+|---|---|---|
+| [Compforge](https://github.com/LooSung/compforge) | Frontend | TypeScript + React |
+| **OOPforge** (this repo) | Backend | Java Spring · Python FastAPI |
+| [FuseForge](https://github.com/LooSung/fuseforge) | One feature across both | Coordinates Compforge + OOPforge (experimental) |
+
+Each pack works on its own. In Claude Code, the `forge` marketplace offers all three.
+
+## Install
+
+**Claude Code**, from the plugin marketplace (experimental):
+
+```text
+/plugin marketplace add LooSung/oopforge
+/plugin install oopforge@forge
+```
+
+If `forge` is already added from another Forge repo, skip the first line.
+Plugin files sit outside your project, so allow reading them once:
+[read permission](docs/setup/claude-code.md#plugin-marketplace-experimental).
+
+**Codex CLI**, or Claude Code without plugins, with the install script:
 
 ```bash
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/LooSung/oopforge/main/scripts/setup/bootstrap.sh)"
 ```
 
-The bootstrap clones or updates `~/.oopforge` and installs detected Claude Code
-and Codex links. It does not configure Cursor automatically.
+The script clones `~/.oopforge` and links it into Claude Code and Codex. Pick one
+path per harness, then restart your agent. Cursor needs one manual step: [Cursor setup](docs/setup/cursor.md).
+Pinned releases, updates, and removal: [install guide](docs/setup/install.md).
 
-### 2. Check the pack and installed links
+## Use
 
-```bash
-~/.oopforge/scripts/setup/doctor.sh
-```
-
-`doctor.sh` validates the pack and available symlinks. A successful result does
-not prove that a running agent loaded Craft; use the harness-specific check in
-step 4. If it warns that your chosen Claude or Codex link is missing, run
-`INSTALL_CLAUDE=1 ~/.oopforge/scripts/setup/install.sh` or the Codex equivalent.
-
-### 3. Open your backend project
-
-OOPforge lives in `~/.oopforge`. Your app code lives in **your backend repo**. Always start the agent from that project:
-
-```bash
-cd /path/to/your-backend-project
-```
-
-### 4. Load OOPforge and make one request
-
-Choose the harness you actually use:
-
-| Harness | Load and invoke Craft |
-|---|---|
-| **Claude Code** | Restart Claude Code, then `/oopforge:craft <request>` |
-| **Codex CLI** | Restart Codex, use `/skills` to select **oopforge**, then prompt without a leading `/` |
-| **Cursor Agent CLI** | Explicitly load the local plugin, then use `Use OOPforge craft: …` |
-
-Claude Code:
+Start your agent from **your backend project**, not from `~/.oopforge`:
 
 ```text
 /oopforge:craft Add a single Email value object
+/oopforge:refactor Move the loan rules out of the controller without changing behavior
+/oopforge:review Review PR 42
 ```
 
-Codex CLI:
+| Harness | How to call |
+|---|---|
+| Claude Code | `/oopforge:craft <request>` |
+| Codex CLI | `/skills` → **oopforge**, then `Use OOPforge craft: <request>` (no leading `/`) |
+| Cursor Agent CLI | `cursor-agent --plugin-dir ~/.oopforge`, then `Use OOPforge craft: <request>` |
 
-```text
-Use OOPforge craft: Add a single Email value object
-```
+## Commands
 
-Cursor Agent CLI loads the installed pack directly:
-
-```bash
-cd /path/to/your-backend-project
-cursor-agent --plugin-dir ~/.oopforge
-```
-
-```text
-Use OOPforge craft: Add a single Email value object
-```
-
-Craft identifies the smallest path and surfaces Assumptions and an OOP Contract
-before business logic. See the [illustrative session](docs/assets/craft-demo.cast)
-and setup guides for [Claude](docs/setup/claude-code.md), [Codex](docs/setup/codex.md), and [Cursor](docs/setup/cursor.md).
-
-## The Basic Workflow
-
-Craft remains the default; use a narrower command when its write boundary fits:
-
-| Intent | Claude Code | Codex / Cursor | Write boundary |
-|---|---|---|---|
-| Build or select a path | `/oopforge:craft …` | `Use OOPforge craft: …` | Requested implementation |
-| Preserve behavior while restructuring | `/oopforge:refactor …` | `Use OOPforge refactor: …` | Structural and regression-test changes |
-| Answer, compare, review, or document | `/oopforge:consult …` | `Use OOPforge consult: …` | None; one explicitly requested planning document |
-| Run, write, or strengthen tests | `/oopforge:test …` | `Use OOPforge test: …` | Tests only; E2E and infrastructure require approval |
-| Plan, build, refactor, and test one change in one request | `/oopforge:crucible …` | `Use OOPforge crucible: …` | Each stage's own scope; stops once for plan approval |
-| Review one diff, branch, or pull request with P1/P2/P3 findings | `/oopforge:review …` | `Use OOPforge review: …` | None; PR comments only on explicit request |
-| Write one Jira card, or the child tasks of one epic or story | `/oopforge:jira …` | `Use OOPforge jira: …` | Those issues only; Jira write on explicit request |
-
-Craft preserves the full sequence for a new domain or large feature:
-
-```text
-Discovery → Design → Delivery Plan → Skeleton → Implement → Test
-```
-
-| Stage | Output | Do not do |
+| Command | Use it for | It never |
 |---|---|---|
-| **Discovery** | Glossary, contexts, actors, open questions | Code |
-| **Design** | Use-case signatures, aggregate outlines, ports | Implementation |
-| **Delivery Plan** | Scope, order, tests, release risks | Coding |
-| **Skeleton** | Packages, interfaces, empty classes | Business logic |
-| **Implement** | One tested use case at a time | Multiple use cases at once |
-| **Test** | Unit, integration, and E2E evidence | Untested domain logic |
+| `craft` | **Default.** A use case, a value object, a domain bug | Skips required stages or widens scope silently |
+| `refactor` | Restructure without changing behavior | Adds features |
+| `consult` | Ask, compare, review, or write one plan document | Changes implementation or test code |
+| `test` | Run, write, or strengthen tests | Changes production behavior; E2E and infrastructure need approval |
+| `crucible` | Plan → build → refactor → test one change in one request | Builds before you approve the plan |
+| `review` | P1/P2/P3 findings on one diff, branch, or PR | Changes code or posts to a PR unless asked |
+| `jira` | One Jira card, or the child tasks of one epic or story | Touches anything but those issues |
 
-Each stage ends with a human checkpoint. Ask Craft to start at a named stage
-only when earlier decisions already exist. Refactoring stays outside the feature flow because it must preserve behavior.
+Not sure which one? Use `craft`. It picks the smallest path.
 
-Supported stacks are `java-spring-layered`, `java-spring-hexagonal`,
-`python-fastapi-layered`, and `python-fastapi-clean`; skeletons include OpenAPI/Swagger UI.
-Domain Events and outbox are core; Production Readiness is opt-in for deployment requests.
+## How it works
 
-### Resume work across sessions
+1. **Contract first.** Before business logic, Craft states its Assumptions and
+   an OOP Contract: aggregates, invariants, use cases, and ports.
+2. **Smallest path.** Adding one value object stays small. A new domain or large
+   feature goes through the full flow, and you approve each stage:
 
-Execution tasks keep lightweight notes under `.craft/`. If unfinished work
-exists, Craft presents a Resume block before editing. When a session ends with
-work remaining, `.craft/next-session-prompt.md` records the next decision.
+   ```text
+   Discovery → Design → Delivery Plan → Skeleton → Implement → Test
+   ```
 
-## Learn by example
+3. **Checked.** Craft verifies the [Hard Rules](AGENTS.md#hard-rules) before it
+   reports done: 300 lines per file, 20 per method, zero framework imports in
+   the domain, one Aggregate per transaction.
 
-**New to the workflow?** Follow the step-by-step library loan guide:
+Stacks: `java-spring-layered`, `java-spring-hexagonal`, `python-fastapi-layered`,
+and `python-fastapi-clean`. Skeletons include OpenAPI/Swagger UI. Domain Events
+and the outbox are core; Production Readiness is opt-in for deployment requests.
 
-**[Library loan walkthrough →](docs/guides/library-loan/README.md)**  
-Discovery → Design → Delivery Plan → Skeleton → Implement → Test
-
-Guide index: [EN](docs/guides/library-loan/README.md) · [KO](docs/guides/library-loan/README.ko.md)
-
-| Resource | Purpose |
-|---|---|
-| [Library loan guide](docs/guides/library-loan/README.md) | End-to-end tutorial |
-| [Examples index](examples/README.md) | Six runnable calculator references |
-| [Reviewer checklist](docs/reference/reviewer-checklist.md) | Post-implementation rule check |
-
-## **Why OOPforge**
-
-OOPforge is a **DDD / OOP specialized AI engineering pack** — not a general agent framework. Think of it as **harness engineering for an OOP dialect**: skills encode grammar, hard rules act as lint, examples are reference implementations, and install/commands wire agents to the runtime.
-
-| Principle | What it means |
-|---|---|
-| **Small** | One skill, one concept; 200 lines per skill |
-| **Measurable** | 300 lines/file, 20 lines/method — reviewable units |
-| **Workflow-first** | Discovery → Test with human checkpoints |
-| **Proof over philosophy** | Runnable Java/Python examples, not slides |
-| **Domain-first** | Framework import 0 in the domain layer |
-
-In short: **structure is the default**, so agents stop generating God Services.
-
-## Before / After
-
-Most teams know the DDD diagram. The hard part is stopping an agent from
-collapsing the implementation into one service class.
-
-### Before
+### Before → after
 
 ```java
+// Before: God Service, no domain model, rules scattered, hard to test
 @Service
 public class CalculatorService {
     public CalculationResponse calculate(CalculateRequest req) {
@@ -172,128 +109,40 @@ public class CalculatorService {
         eventPublisher.publish(...);
     }
 }
-```
 
-**Problems:** God Service · no domain model · scattered rules · hard-to-test code
-
-### After
-
-```java
+// After: the domain owns the rule; the use case only orchestrates
 Calculation calc = Calculation.perform(id, operandA, operator, operandB);
-calculate.handle(command);
 calculationRepository.save(calc);
 calc.popEvents();
 ```
 
-**Effects:** domain-first · clear boundaries · framework-free domain tests · a
-repeatable layout. See the runnable [examples](examples/README.md).
+## Project switches
 
-### Evidence and limits
+One line each in your project's `AGENTS.md`:
 
-The [proof protocol](docs/proof/README.md) fixes the task, control, treatment,
-evaluation rules, and publication standard. Four valid Cursor
-`gpt-5.6-sol-high` pairs are published. In the first three,
-[pair 1](docs/proof/results/2026-08-20-cursor-gpt-5.6-sol-high.md) was
-neutral; [pair 2](docs/proof/results/2026-08-20-cursor-gpt-5.6-sol-high-2.md)
-and [pair 3](docs/proof/results/2026-08-20-cursor-gpt-5.6-sol-high-3.md) were
-favorable on method length. All three leaked public mutable invariant state.
-[Pair 4](docs/proof/results/2026-08-20-cursor-gpt-5.6-sol-high-4.md) was neutral
-on the aligned starter. This is not a general effectiveness claim.
-
-## Installation, updates, and removal
-
-The Quickstart bootstrap tracks the latest `main`. To install a reproducible
-release instead:
-
-```bash
-git clone https://github.com/LooSung/oopforge ~/.oopforge
-cd ~/.oopforge
-git checkout v1.10.0
-chmod +x scripts/setup/*.sh
-./scripts/setup/install.sh
-./scripts/setup/doctor.sh
-```
-
-### Install targets
-
-| Harness | Installed or registered path |
+| Line | Effect |
 |---|---|
-| **Claude Code** | `~/.claude/skills/oopforge` and `~/.claude/commands/oopforge` |
-| **Codex CLI** | `~/.codex/skills/oopforge` |
-| **Cursor Agent CLI** | Manual local plugin or project-local skill; `install.sh` does not configure it |
+| `OOPforge continuity: off` | Stop keeping `.craft/` work notes. By default, execution tasks keep them and resume unfinished work before editing. |
+| `OOPforge work dir: <path>` | Keep work notes somewhere other than `.craft/` |
+| `OOPforge live run: on` | Let Craft and Refactor launch the app to check it |
+| `OOPforge cleanup pass: on` | Let Refactor run `/simplify` after verification |
 
-`install.sh` only creates Claude and Codex links when their config directories
-exist. Set `INSTALL_CLAUDE=1` or `INSTALL_CODEX=1` to create a missing target
-explicitly.
+For non-blocking PR feedback in your backend, copy
+[`templates/github/oopforge-domain-review.yml`](templates/github/oopforge-domain-review.yml).
+Blocking gates are opt-in; see the
+[reviewer checklist](docs/reference/reviewer-checklist.md#enforcement-policy).
 
-### Update
+## Learn more
 
-A GitHub Release does not update an existing clone. Pull the pack, refresh
-Claude/Codex link targets, and restart the agent:
-
-```bash
-cd ~/.oopforge && git pull && ./scripts/setup/install.sh update
-```
-
-That command is for a `main`-tracking clone. A release-pinned clone must
-`git fetch --tags`, check out the chosen newer tag, and then run
-`./scripts/setup/install.sh update`.
-
-Cursor's manually registered symlink is not managed by `install.sh`; after the
-pull, restart `cursor-agent`.
-
-### Verify and troubleshoot
-
-Run these commands from `~/.oopforge`:
-
-```bash
-./scripts/setup/doctor.sh              # pack structure and installed links
-./scripts/setup/install.sh --dry-run   # planned link changes
-./scripts/setup/install.sh --force     # replace conflicting symlinks
-./scripts/ci/smoke-test.sh             # isolated Claude/Codex install lifecycle
-```
-
-These checks do not execute a live Craft response. Verify activation with the
-entry point documented in the relevant harness guide:
-[Claude Code](docs/setup/claude-code.md) · [Codex](docs/setup/codex.md) ·
-[Cursor](docs/setup/cursor.md).
-
-### Remove
-
-```bash
-./scripts/setup/uninstall.sh
-```
-
-This removes only OOPforge-managed Claude and Codex links. It keeps
-`~/.oopforge` and any project-local `.cursor/skills/oopforge` link; remove those
-manually if you want a complete uninstall.
-
-## What's included
-
-- `skills/` — workflow, OOP/DDD, stack, skeleton, and review instructions
-- `commands/` — Claude Code command entry points
-- `examples/` — six runnable Java/Python calculator references
-- `docs/` — harness guides, support reference, proof protocol, and walkthroughs
-- `scripts/` — setup, lint, architecture checks, and smoke tests
-- `templates/github/` — reusable target-project domain review
-
-Agents use [`AGENTS.md`](./AGENTS.md) as the shared rule source;
-[`CLAUDE.md`](./CLAUDE.md) is the Claude Code adapter. Target backends can use
-[`templates/github/oopforge-domain-review.yml`](templates/github/oopforge-domain-review.yml) for
-non-blocking PR feedback. Blocking gates are opt-in; see the [reviewer checklist](docs/reference/reviewer-checklist.md#enforcement-policy).
-
-## Project policy
-
-The enforceable rules live in [`AGENTS.md`](./AGENTS.md). Skill files, scripts,
-CI, and agent instructions use English as their canonical language. Korean
-readers can use the conceptual
-[`docs/reference/methodology.ko.md`](./docs/reference/methodology.ko.md) guide instead of unstable
-per-skill translations.
-
-OOPforge remains a backend OOP/DDD methodology layer, not a model wrapper or
-general orchestration framework. See the [positioning](./docs/project/positioning.md) and
-[support scope](./docs/reference/support-scope.md) for the current public
-contract, and the [changelog](./CHANGELOG.md) for completed releases.
+- [Library loan walkthrough](docs/guides/library-loan/README.md): Discovery → Test, step by step
+- [Examples](examples/README.md): six runnable calculators (Java/Python × layered, hexagonal, hexagonal-CQRS)
+- Setup: [Claude Code](docs/setup/claude-code.md) · [Codex](docs/setup/codex.md) ·
+  [Cursor](docs/setup/cursor.md) · [Install, update, remove](docs/setup/install.md)
+- [Support scope](docs/reference/support-scope.md) ·
+  [Proof runs](docs/proof/README.md), neutral ones included; no general
+  effectiveness claim · [All docs](docs/README.md)
+- [Changelog](CHANGELOG.md) · [Contributing](.github/CONTRIBUTING.md) ·
+  [Agent notes for maintainers](AGENTS.md)
 
 ## License
 
