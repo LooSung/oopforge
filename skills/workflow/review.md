@@ -67,8 +67,11 @@ Python FastAPI backends (`lang/backend-stack.md`).
 8. **Tests** — new behavior and each fixed defect has a test at the right level.
    Trace the call path; cite the line that proves the defect.
 9. **Scope** — every change maps to the stated card or PR purpose.
-10. **Self-check** — test the author's DRY · YAGNI · KISS claims against the diff.
-11. **Tools, when available** — each one optional; record a missing one in
+10. **Comments** — a comment the diff left contradicting its code is P2; a new
+    narration comment is P3. A comment is a claim: confirm behavior from code
+    and tests, never from the comment alone.
+11. **Self-check** — test the author's DRY · YAGNI · KISS claims against the diff.
+12. **Tools, when available** — each one optional; record a missing one in
     one line under **Not checked**:
     - the pack reviewer, run locally on the same range CI uses:
       `PYTHONPATH={pack}/scripts/ci python3 -m review.main --base <base> --head <head> --root <target>`;
@@ -100,10 +103,25 @@ linter owns is not a finding. Praise is not a finding.
 
 <What happens> → <why it is wrong, citing the file and line it contradicts> →
 <the smallest fix direction>. <Failing input and observed result, when known.>
+
+Next: `/oopforge:<craft|test|refactor> <one-line request naming the file>`
 ```
 
 Write each finding so the author can act without asking back: the input, the
 observed result, and the expected result.
+
+Pick the `Next` command by what the fix changes:
+
+- **craft** — behavior is wrong or a named state is missing. Craft's bug-fix
+  path writes the failing test first.
+- **test** — behavior is right but a test is missing, weak, or asserts the
+  wrong thing. Production code stays unchanged.
+- **refactor** — structure only, behavior unchanged: boundaries, naming,
+  narration comments, duplication.
+
+Write the request in the author's words so it runs as written; on Codex or
+Cursor write `Use OOPforge <command>: …` instead. A finding with no code fix,
+such as a scope question for the author, gets no `Next` line.
 
 ## Report
 
@@ -123,9 +141,16 @@ Before merge: <N> (P1 <a> · P2 <b>). Optional: <c> (P3).
 
 ### Scope drift
 none | <file — change outside the stated purpose>
+
+### Next
+1. `/oopforge:craft …` — behavior fixes, P1 first
+2. `/oopforge:test …` — missing or weak tests
+3. `/oopforge:refactor …` — structure, after the tests above pin behavior
 ```
 
-Omit an empty level heading. With no findings, say so and list what was checked.
+Omit an empty level heading or an empty `Next` step. With no findings, say so
+and list what was checked. Merge `Next` lines that touch the same file into one
+request.
 
 ## Posting
 
@@ -136,9 +161,10 @@ Never approve or request changes on the user's behalf unless asked.
 
 ## After the review
 
-Fixes are Craft, Refactor, or Test work. When the author answers a review, the
-PR can carry a response table — commit | finding | what changed. A follow-up
-Review re-checks those findings and the new diff only.
+Fixes are Craft, Test, or Refactor work, in the order of the `Next` section.
+When the author answers a review, the PR can carry a response table — commit |
+finding | what changed. A follow-up Review re-checks those findings and the new
+diff only.
 
 ## Prohibited
 
@@ -152,5 +178,5 @@ Review re-checks those findings and the new diff only.
 ## Completion
 
 Report the target and base commit, the counts per level, what was not checked,
-and the next command when fixes are needed (`/oopforge:craft`,
-`/oopforge:refactor`, or `/oopforge:test` for a missing test).
+and the `Next` commands when fixes are needed (`/oopforge:craft`,
+`/oopforge:test`, then `/oopforge:refactor`).

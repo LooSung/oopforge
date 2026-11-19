@@ -32,3 +32,5 @@ Follow `skills/workflow/craft.md` for the OOP Contract format and `skills/workfl
 - Do not add a conditional that only masks the symptom.
 - Do not mix a bug fix with structural rework.
 - Do not claim done if you could not reproduce it.
+- Do not change code to match a comment. A comment that contradicts passing
+  tests is a stale comment to report, not the bug (`oop-discipline` #12).

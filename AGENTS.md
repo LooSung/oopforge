@@ -68,8 +68,9 @@ These limits are intentionally measurable. They come from review focus and agent
 - Other aggregates are referenced by ID only.
 - **One Aggregate modified per transaction** — multi-Aggregate writes in one commit need an explicit consistency design (see `skills/oop/transaction-boundary.md`).
 - Do not commit domain logic without tests.
-- Comments explain "why"; names explain "what".
+- Intent lives in names, types, and tests. A comment carries only a "why" they cannot, anchored to an existing test or link. Doc comments and tool directives are exempt.
 - No narration comments — delete comments that restate nearby code, or rename/extract code until the comment is unnecessary.
+- **A comment is a claim, not evidence** — never change code only to match a comment. Act on a test or on history that shows which side changed last; otherwise change neither and report it.
 - **Surgical changes only** — touch what the request requires; no drive-by edits to adjacent code, comments, or formatting. Clean orphans your change created; mention pre-existing dead code instead of deleting it in the same change.
 - **Structure earns its exemption** — a structure escapes the YAGNI ladder only when you can name the invariant it protects *and* the user's own word for it. Calling it an Aggregate boundary is not evidence.
 - **Product language at the human boundary** — Aggregate, Port, Bounded Context, and invented names stay in the OOP Contract and the code; ask for approval in the user's words.

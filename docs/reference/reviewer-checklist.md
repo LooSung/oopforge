@@ -78,4 +78,6 @@ or operational readiness and the
 - [ ] Dependencies point inward.
 - [ ] Bounded context boundaries are explicit.
 - [ ] Public APIs express use cases, not database tables.
+- [ ] No narration comments; each remaining why points at an existing test or link.
+- [ ] No comment the change left contradicting its code, and no code changed only to match a comment.
 - [ ] The generated design can be explained using the Discovery → Design → Delivery Plan → Skeleton → Implement → Test flow.

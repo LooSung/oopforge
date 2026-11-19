@@ -129,9 +129,13 @@ differently, compare the thing you believe differs before documenting it.
 
 ## 12. Comment discipline
 
-Do not narrate code. If a comment explains what adjacent code does, delete it
-or rename/extract code until the comment is unnecessary. Keep comments only for
-why, external constraints, hidden invariants, or tracked temporary decisions.
+Carry intent in a name, a type, or a test that fails when it breaks. Comment
+only a why none of these can hold, and point it at an existing test or link.
+Never narrate code. Doc comments and tool directives are out of scope.
+
+A comment is a claim, not evidence. If it contradicts the code, act only on a
+test or on history showing which side changed last; otherwise change neither
+and report it. Fix comments your change made stale; report the rest.
 
 ## 13. Surgical changes only
 
