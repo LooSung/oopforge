@@ -8,14 +8,15 @@ Per-file detectors:
   - PUBLIC_MUTABLE_DOMAIN_FIELD   public field on a mutable domain dataclass
   - ARCHLINT_CONTROLLER_REPOSITORY presentation imports a repository directly
 
-Project-root archlint reuse lives in archlint_adapter.py.
+Per-language patterns live in lang_<language>.py; project-root archlint reuse
+lives in archlint_adapter.py.
 """
 from __future__ import annotations
 
-import ast
-import re
-from typing import Dict, List
+from types import ModuleType
+from typing import List, Optional
 
+from . import lang_java, lang_python
 from .method_length import scan_methods
 from .model import (
     ARCHLINT_CONTROLLER_REPOSITORY,
@@ -34,23 +35,14 @@ FILE_LIMIT = 300
 SKILL_LIMIT = 200
 METHOD_LIMIT = 20
 
-_JAVA_FW = re.compile(
-    r"^\s*import\s+(org\.springframework|jakarta\.persistence|"
-    r"javax\.persistence|org\.hibernate)[\w.]*"
-)
-_PY_FW = re.compile(
-    r"^\s*(?:from|import)\s+(fastapi|pydantic|sqlalchemy|flask|django)\b"
-)
-_PY_REPOSITORY_IMPORT = re.compile(
-    r"^\s*(?:from|import)\s+([\w.]*repository[\w.]*)", re.IGNORECASE
-)
-_JAVA_REPOSITORY_IMPORT = re.compile(
-    r"^\s*import\s+([\w.]*repository[\w.]*)", re.IGNORECASE
-)
-_JAVA_PUBLIC_FIELD = re.compile(
-    r"^\s*public\s+(?!static|class|interface|enum)[\w.<>,\s]+\s+([A-Za-z][A-Za-z0-9_]*)\s*[;=]"
-)
-_THIS_ASSIGN = re.compile(r"\bthis\.([A-Za-z][A-Za-z0-9_]*)\s*=")
+_LANGUAGES = (lang_java, lang_python)
+
+
+def _language(path: str) -> Optional[ModuleType]:
+    for language in _LANGUAGES:
+        if path.endswith(language.EXTENSIONS):
+            return language
+    return None
 
 
 def _norm(path: str) -> str:
@@ -58,7 +50,7 @@ def _norm(path: str) -> str:
 
 
 def _is_code_file(path: str) -> bool:
-    return path.endswith((".py", ".java"))
+    return _language(path) is not None
 
 
 def _is_skill_file(path: str) -> bool:
@@ -106,7 +98,7 @@ def _detect_skill_too_long(path: str, content: str) -> List[Violation]:
 
 
 def _detect_domain_framework_import(path: str, content: str) -> List[Violation]:
-    pattern = _JAVA_FW if path.endswith(".java") else _PY_FW
+    pattern = _language(path).FRAMEWORK_IMPORT
     out: List[Violation] = []
     for idx, line in enumerate(content.splitlines(), start=1):
         match = pattern.match(line)
@@ -139,59 +131,8 @@ def _detect_method_too_long(path: str, content: str) -> List[Violation]:
     return out
 
 
-def _decorator_name(node: ast.expr) -> str:
-    target = node.func if isinstance(node, ast.Call) else node
-    if isinstance(target, ast.Name):
-        return target.id
-    return target.attr if isinstance(target, ast.Attribute) else ""
-
-
-def _is_frozen_dataclass(node: ast.ClassDef) -> bool | None:
-    for decorator in node.decorator_list:
-        if _decorator_name(decorator) != "dataclass":
-            continue
-        if not isinstance(decorator, ast.Call):
-            return False
-        return any(
-            item.arg == "frozen"
-            and isinstance(item.value, ast.Constant)
-            and item.value.value is True
-            for item in decorator.keywords
-        )
-    return None
-
-
-def _py_public_mutable_fields(content: str) -> Dict[str, int]:
-    try:
-        tree = ast.parse(content)
-    except SyntaxError:
-        return {}
-    fields: Dict[str, int] = {}
-    for node in ast.walk(tree):
-        if not isinstance(node, ast.ClassDef) or _is_frozen_dataclass(node) is not False:
-            continue
-        for item in node.body:
-            if isinstance(item, ast.AnnAssign) and isinstance(item.target, ast.Name):
-                if not item.target.id.startswith("_"):
-                    fields[item.target.id] = item.lineno
-    return fields
-
-
-def _java_public_mutable_fields(content: str) -> Dict[str, int]:
-    fields = {}
-    assigned = set(_THIS_ASSIGN.findall(content))
-    for idx, raw in enumerate(content.splitlines(), start=1):
-        match = _JAVA_PUBLIC_FIELD.match(raw)
-        if match and "final" not in raw.split(match.group(1), 1)[0]:
-            fields[match.group(1)] = idx
-    return {name: line for name, line in fields.items() if name in assigned}
-
-
 def _detect_public_mutable_domain(path: str, content: str) -> List[Violation]:
-    fields = (
-        _py_public_mutable_fields(content) if path.endswith(".py")
-        else _java_public_mutable_fields(content)
-    )
+    fields = _language(path).public_mutable_fields(content)
     return [
         Violation(
             PUBLIC_MUTABLE_DOMAIN_FIELD,
@@ -205,7 +146,7 @@ def _detect_public_mutable_domain(path: str, content: str) -> List[Violation]:
 
 
 def _detect_presentation_repository(path: str, content: str) -> List[Violation]:
-    pattern = _PY_REPOSITORY_IMPORT if path.endswith(".py") else _JAVA_REPOSITORY_IMPORT
+    pattern = _language(path).REPOSITORY_IMPORT
     out: List[Violation] = []
     for line, raw in enumerate(content.splitlines(), start=1):
         match = pattern.match(raw)
