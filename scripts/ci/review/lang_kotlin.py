@@ -10,6 +10,8 @@ from __future__ import annotations
 import re
 from typing import Dict, List
 
+from .source_text import blank, closing_paren, line_of, member_lines
+
 EXTENSIONS = (".kt",)
 
 FRAMEWORK_IMPORT = re.compile(
@@ -28,55 +30,19 @@ _RESTRICTED_SET = re.compile(r"^\s*(private|protected)\s+set\b")
 _HIDDEN = {"private", "protected", "internal"}
 
 
-def _blank(match: re.Match) -> str:
-    return re.sub(r"[^\n]", " ", match.group())
-
-
-def _line_of(text: str, index: int) -> int:
-    return text.count("\n", 0, index) + 1
-
-
 def _is_public(modifiers: str) -> bool:
     return not (_HIDDEN & set(modifiers.split()))
-
-
-def _closing_paren(text: str, opening: int) -> int:
-    depth = 0
-    for index in range(opening, len(text)):
-        depth += {"(": 1, ")": -1}.get(text[index], 0)
-        if depth == 0:
-            return index
-    return len(text)
 
 
 def _constructor_vars(text: str) -> Dict[str, int]:
     fields: Dict[str, int] = {}
     for header in _CLASS_PARAMS.finditer(text):
         opening = header.end() - 1
-        params = text[opening:_closing_paren(text, opening)]
+        params = text[opening:closing_paren(text, opening)]
         for match in _VAR.finditer(params):
             if _is_public(match.group(1)):
-                fields[match.group(2)] = _line_of(text, opening + match.start(2))
+                fields[match.group(2)] = line_of(text, opening + match.start(2))
     return fields
-
-
-def _member_lines(text: str) -> List[int]:
-    """Line numbers whose statements sit directly in a class/object body."""
-    stack: List[bool] = []
-    statement_start, member = 0, []
-    for index, char in enumerate(text):
-        if char == "{":
-            stack.append(bool(_TYPE_HEADER.search(text[statement_start:index])))
-            statement_start = index + 1
-        elif char == "}":
-            if stack:
-                stack.pop()
-            statement_start = index + 1
-        elif char in "\n;":
-            statement_start = index + 1
-            if stack and stack[-1]:
-                member.append(_line_of(text, index) + 1)
-    return member
 
 
 def _restricted_setter(lines: List[str], line: int) -> bool:
@@ -90,10 +56,10 @@ def _restricted_setter(lines: List[str], line: int) -> bool:
 
 
 def public_mutable_fields(content: str) -> Dict[str, int]:
-    text = _NOISE.sub(_blank, content)
+    text = _NOISE.sub(blank, content)
     lines = text.splitlines()
     fields = _constructor_vars(text)
-    for line in sorted(set(_member_lines(text))):
+    for line in sorted(set(member_lines(text, _TYPE_HEADER))):
         if line > len(lines):
             continue
         match = re.match(r"\s*" + _VAR.pattern, lines[line - 1])
