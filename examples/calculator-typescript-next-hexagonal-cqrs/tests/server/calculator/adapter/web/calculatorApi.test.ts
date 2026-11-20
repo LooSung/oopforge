@@ -14,7 +14,7 @@ it('commandCreatesThenQueryReturnsHistory', async () => {
   expect(created.status).toBe(201);
   expect((await created.json()).calculationId).toBeDefined();
 
-  const history = listHistory(new Request('http://localhost/api/v1/calculations/history'));
+  const history = await listHistory(new Request('http://localhost/api/v1/calculations/history'));
   const body = await history.json();
   expect(history.status).toBe(200);
   expect(body.items[0].result).toBe(5.0);

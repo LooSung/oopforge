@@ -21,8 +21,6 @@ export function createCalculatorConfig(): CalculatorConfig {
   };
 }
 
-// `next dev` re-evaluates modules each time it compiles another route, which
-// would drop an in-memory store held in a plain module variable.
-const globalScope = globalThis as typeof globalThis & { oopforgeCalculatorConfig?: CalculatorConfig };
-
-export const calculatorConfig: CalculatorConfig = (globalScope.oopforgeCalculatorConfig ??= createCalculatorConfig());
+// Module-level, not on globalThis: a graph that outlived a module re-evaluation
+// would run stale code. Each evaluation starts with an empty in-memory store.
+export const calculatorConfig: CalculatorConfig = createCalculatorConfig();

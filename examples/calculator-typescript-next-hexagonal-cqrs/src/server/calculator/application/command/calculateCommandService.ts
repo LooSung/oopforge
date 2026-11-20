@@ -6,10 +6,10 @@ import type { CalculationRepository } from './calculationRepository';
 export class CalculateCommandService implements Calculate {
   constructor(private readonly calculationRepository: CalculationRepository) {}
 
-  handle(command: CalculateCommand): CalculationId {
+  async handle(command: CalculateCommand): Promise<CalculationId> {
     const id = CalculationId.generate();
     const calculation = Calculation.perform(id, command.operandA, command.operator, command.operandB);
-    this.calculationRepository.save(calculation);
+    await this.calculationRepository.save(calculation);
     return id;
   }
 }

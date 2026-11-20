@@ -38,7 +38,7 @@ it('rejectsMalformedIdWithBadRequest', async () => {
 });
 
 it('rejectsNonPositiveLimitWithBadRequest', async () => {
-  const response = listHistory(new Request(`${BASE}/history?limit=0`));
+  const response = await listHistory(new Request(`${BASE}/history?limit=0`));
 
   expect(response.status).toBe(400);
 });

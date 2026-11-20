@@ -63,6 +63,8 @@ tests/                          mirrors src/ (Vitest, handlers called with new R
 
 ## Run
 
+Requires Node.js 20 or newer (global Web Crypto).
+
 ```bash
 cd examples/calculator-typescript-next-hexagonal-cqrs
 npm install
@@ -101,8 +103,13 @@ curl http://localhost:3000/api/v1/calculations/history
   `Optional<T>` becomes `T | undefined`; `IllegalArgumentException` becomes
   `RangeError`; a `Map` is keyed by `id.value` because it compares object keys
   by identity.
-- **Command returns an id; query has no side effects.** `handle(...)` returns a
-  `CalculationId`, never a Response/Summary/Dto/View/ReadModel type, and
+- **Async ports.** The outbound ports (`CalculationRepository`,
+  `HistoryQueryRepository`) return promises although the reference adapters are
+  in-memory: every durable Node.js driver is asynchronous, and swapping an
+  adapter must not change a port or a service. The inbound ports, services, and
+  controllers are therefore `async` too; the domain stays synchronous.
+- **Command returns an id; query has no side effects.** `handle(...)` resolves to
+  a `CalculationId`, never a Response/Summary/Dto/View/ReadModel type, and
   `*QueryService.ts` calls nothing named save, delete, update, insert, persist,
   store, or remove. Exported functions and public methods declare their return
   types.
@@ -118,10 +125,11 @@ curl http://localhost:3000/api/v1/calculations/history
   `params` as a `Promise`, so `getCalculation` awaits it.
 - **Wiring.** `config/calculatorConfig.ts` builds the store, adapters, and
   services, and imports `server-only` to mark the server seam (Vitest aliases it
-  to its empty module). It keeps the result on `globalThis`, because `next dev`
-  re-evaluates modules each time it compiles another route: a plain module
-  variable lost the first command before the history route compiled.
-  `next start` shares one module instance across routes either way.
+  to its empty module). The graph is module-level, not kept on `globalThis`: a
+  graph that outlived a module re-evaluation would run stale code. `next start`
+  shares one module instance across the route files. Under `next dev` a
+  recompile can reset the in-memory stores, a property of the in-memory adapters
+  that a durable adapter does not have.
 - **Size and shape.** No `any`; every function ≤ 20 lines; every file ≤ 300
   lines; comments only for a "why" the code cannot carry. Imports inside `src/`
   are relative, because the ESLint resolver does not resolve `@/` aliases and
@@ -192,6 +200,8 @@ operand, a malformed id, or `limit=0`.
   `{status, error, message, path}` for `400`.
 - **`performedAt` precision.** `toISOString()` has millisecond precision; Java's
   `Instant.toString()` can carry micro- or nanoseconds.
+- **Async ports.** Ports return promises where Java's are synchronous; HTTP
+  behaviour is identical.
 - **Number format.** JSON numbers serialize as `42`, not `42.0` (same value).
 - **OpenAPI.** The Java CQRS reference has no springdoc. This port follows the
   OpenAPI default policy: the document is built from the zod schemas, served at

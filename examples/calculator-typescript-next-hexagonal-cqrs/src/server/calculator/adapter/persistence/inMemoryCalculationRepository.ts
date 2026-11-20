@@ -6,7 +6,7 @@ import type { CalculationStore } from './calculationStore';
 export class InMemoryCalculationRepository implements CalculationRepository {
   constructor(private readonly calculationStore: CalculationStore) {}
 
-  save(calculation: Calculation): void {
+  async save(calculation: Calculation): Promise<void> {
     this.calculationStore.putCalculation(calculation);
     this.calculationStore.appendHistory(HistorySummary.from(calculation));
   }

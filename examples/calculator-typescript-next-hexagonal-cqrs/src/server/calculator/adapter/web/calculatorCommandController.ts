@@ -9,7 +9,7 @@ export async function calculate(request: Request): Promise<Response> {
   if (!body.ok) {
     return body.response;
   }
-  const id = calculatorConfig.calculate.handle({
+  const id = await calculatorConfig.calculate.handle({
     operandA: body.value.operandA,
     operator: Operator.of(body.value.operator),
     operandB: body.value.operandB,

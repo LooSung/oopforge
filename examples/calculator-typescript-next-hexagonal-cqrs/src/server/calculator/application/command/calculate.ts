@@ -10,5 +10,5 @@ export interface CalculateCommand {
 // Returns only the new aggregate's id, never read-shaped data, to keep the
 // command/query split honest.
 export interface Calculate {
-  handle(command: CalculateCommand): CalculationId;
+  handle(command: CalculateCommand): Promise<CalculationId>;
 }

@@ -6,14 +6,14 @@ import type { CalculationStore } from './calculationStore';
 export class InMemoryHistoryQueryRepository implements HistoryQueryRepository {
   constructor(private readonly calculationStore: CalculationStore) {}
 
-  listRecent(limit: number): ReadonlyArray<HistorySummary> {
+  async listRecent(limit: number): Promise<ReadonlyArray<HistorySummary>> {
     if (limit <= 0) {
       throw new RangeError('limit must be positive');
     }
     return this.calculationStore.historySnapshot().slice(-limit).reverse();
   }
 
-  findById(calculationId: CalculationId): HistorySummary | undefined {
+  async findById(calculationId: CalculationId): Promise<HistorySummary | undefined> {
     const target = calculationId.value;
     const newestFirst = this.calculationStore.historySnapshot().slice().reverse();
     return newestFirst.find((summary) => summary.calculationId === target);

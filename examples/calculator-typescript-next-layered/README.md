@@ -32,6 +32,8 @@ tests/                                mirrors src/ (Vitest, handlers called with
 
 ## Run
 
+Requires Node.js 20 or newer (global Web Crypto).
+
 ```bash
 cd examples/calculator-typescript-next-layered
 npm install
@@ -68,10 +70,17 @@ curl -X POST http://localhost:3000/api/v1/calculations \
   `controller/dto/` parse the body; malformed JSON and schema failures return
   `400` with a safe JSON body (`status`, `error`, a fixed `message`, `path`). The
   same schemas generate the OpenAPI document (`@asteasolutions/zod-to-openapi`).
+- **Async repository.** `CalculationRepository` returns promises although the
+  reference adapter is in-memory: every durable Node.js driver is asynchronous,
+  and swapping the adapter must not change the interface or the service. So
+  `CalculatorService.calculate` and the controller are `async`; the domain stays
+  synchronous.
 - **Controller → service → repository.** Controllers and route files never import
   a repository. `src/server/core/dependencies.ts` wires the service to the
-  in-memory repository and imports `server-only` to mark the server seam; Vitest
-  aliases `server-only` to its empty module.
+  in-memory repository at module level and imports `server-only` to mark the
+  server seam; Vitest aliases `server-only` to its empty module. Under `next dev`
+  a recompile can reset the in-memory repository, a property of the in-memory
+  adapter that a durable adapter does not have.
 - **Thin routes.** Every file under `src/app/` is a one-line re-export of a
   handler from `controller/`.
 - **Size and shape.** No `any`; exported functions and public methods declare
@@ -130,6 +139,8 @@ unknown operator).
 - **Error body.** Spring's default error body is
   `{timestamp, status, error, path}`; this port returns
   `{status, error, message, path}` for `400`.
+- **Async repository.** The repository returns promises where Java's is
+  synchronous; HTTP behaviour is identical.
 - **Number format.** JSON numbers serialize as `42`, not `42.0` (same value).
 - **OpenAPI.** The document is built from the zod schemas and served at
   `/v3/api-docs`; there is no Swagger UI.

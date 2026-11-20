@@ -10,7 +10,7 @@ export async function POST(request: Request): Promise<Response> {
   if (!body.ok) {
     return body.response;
   }
-  const result = calculatorService.calculate({
+  const result = await calculatorService.calculate({
     operandA: body.value.operandA,
     operator: Operator.of(body.value.operator),
     operandB: body.value.operandB,

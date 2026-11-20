@@ -9,15 +9,15 @@ import type { CalculationHistory } from '../../../../../src/server/calculator/ap
 import { HistoryQueryService } from '../../../../../src/server/calculator/application/query/historyQueryService';
 import { Operator } from '../../../../../src/server/calculator/domain/operator';
 
-it('listsHistoryMostRecentFirstAfterCommands', () => {
+it('listsHistoryMostRecentFirstAfterCommands', async () => {
   const store = new CalculationStore();
   const command: Calculate = new CalculateCommandService(new InMemoryCalculationRepository(store));
   const query: CalculationHistory = new HistoryQueryService(new InMemoryHistoryQueryRepository(store));
 
-  command.handle({ operandA: 1, operator: Operator.ADD, operandB: 2 });
-  command.handle({ operandA: 5, operator: Operator.MULTIPLY, operandB: 3 });
+  await command.handle({ operandA: 1, operator: Operator.ADD, operandB: 2 });
+  await command.handle({ operandA: 5, operator: Operator.MULTIPLY, operandB: 3 });
 
-  const history = query.listRecent(10);
+  const history = await query.listRecent(10);
 
   expect(history).toHaveLength(2);
   expect(history[0]?.result).toBe(15.0);

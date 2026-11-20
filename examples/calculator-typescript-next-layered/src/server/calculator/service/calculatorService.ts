@@ -20,10 +20,10 @@ export interface CalculationResult {
 export class CalculatorService {
   constructor(private readonly calculationRepository: CalculationRepository) {}
 
-  calculate(command: CalculateCommand): CalculationResult {
+  async calculate(command: CalculateCommand): Promise<CalculationResult> {
     const id = CalculationId.generate();
     const calculation = Calculation.perform(id, command.operandA, command.operator, command.operandB);
-    this.calculationRepository.save(calculation);
+    await this.calculationRepository.save(calculation);
     return {
       calculationId: id.value,
       operandA: calculation.operandA,
