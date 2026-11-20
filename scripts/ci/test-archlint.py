@@ -89,6 +89,34 @@ def build_mixed_fixtures(base):
     write(f"{base}/mixed_bad/billing/BillService.kt", "package billing\n\nclass BillService\n")
 
 
+def build_typescript_layered_fixtures(base):
+    for layer, f in [("controller", "orderController"), ("service", "orderService"),
+                     ("repository", "orderRepository"), ("domain", "order")]:
+        write(f"{base}/ts_good/src/server/order/{layer}/{f}.ts", "export {};\n")
+    write(f"{base}/ts_good/src/app/api/orders/route.ts",
+          "export { POST } from '../../../server/order/controller/orderController';\n")
+    write(f"{base}/ts_good/node_modules/pkg/aController.ts", "export {};\n")
+    write(f"{base}/ts_good/node_modules/pkg/aService.ts", "export {};\n")
+    write(f"{base}/ts_flat/src/server/order/orderController.ts", "export {};\n")
+    write(f"{base}/ts_flat/src/server/order/orderService.ts", "export {};\n")
+    write(f"{base}/ts_route_repo/src/app/api/orders/route.ts",
+          "import { repo } from '../../../server/order/repository/orderRepository';\n")
+
+
+def build_typescript_cqrs_fixtures(base):
+    write(f"{base}/ts_cqrs_good/src/server/order/application/command/placeCommandService.ts",
+          "export class PlaceCommandService {\n  place(c: Cmd): OrderId {\n    return id;\n  }\n"
+          "  private helper() {\n    return 1;\n  }\n}\n")
+    write(f"{base}/ts_cqrs_good/src/server/order/application/query/orderQueryService.ts",
+          "export class OrderQueryService {\n  list(): ReadonlyArray<OrderSummary> {\n    return [];\n  }\n}\n")
+    write(f"{base}/ts_cqrs_bad_query/src/server/order/application/query/orderQueryService.ts",
+          "export class OrderQueryService {\n  list(): void {\n    this.repo.save(x);\n  }\n}\n")
+    write(f"{base}/ts_cqrs_bad_command/src/server/order/application/command/placeCommandService.ts",
+          "export class PlaceCommandService {\n  place(c: Cmd): Promise<OrderSummary> {\n    return s;\n  }\n}\n")
+    write(f"{base}/ts_cqrs_implicit/src/server/order/application/command/placeCommandService.ts",
+          "export class PlaceCommandService {\n  async place(c: Cmd) {\n    return id;\n  }\n}\n")
+
+
 CASES = [
     ("layered-good clean", "layered", "good", False),
     ("flat-package violation", "layered", "flat", True),
@@ -107,6 +135,13 @@ CASES = [
     ("kt-cqrs-implicit-return violation", "cqrs", "kt_cqrs_implicit", True),
     ("mixed-java-kotlin-good clean", "layered", "mixed_good", False),
     ("mixed-java-kotlin-flat violation", "layered", "mixed_bad", True),
+    ("ts-layered-good clean (node_modules skipped)", "layered", "ts_good", False),
+    ("ts-flat violation", "layered", "ts_flat", True),
+    ("ts-route-imports-repository violation", "layered", "ts_route_repo", True),
+    ("ts-cqrs-good clean", "cqrs", "ts_cqrs_good", False),
+    ("ts-cqrs-query-mutation violation", "cqrs", "ts_cqrs_bad_query", True),
+    ("ts-cqrs-command-returns-read violation", "cqrs", "ts_cqrs_bad_command", True),
+    ("ts-cqrs-implicit-return violation", "cqrs", "ts_cqrs_implicit", True),
 ]
 
 
@@ -114,7 +149,8 @@ def main():
     print("archlint self-test:")
     with tempfile.TemporaryDirectory() as base:
         for build in (build_fixtures, build_kotlin_layered_fixtures,
-                      build_kotlin_cqrs_fixtures, build_mixed_fixtures):
+                      build_kotlin_cqrs_fixtures, build_mixed_fixtures,
+                      build_typescript_layered_fixtures, build_typescript_cqrs_fixtures):
             build(base)
         for name, mode, folder, want in CASES:
             expect(name, mode, f"{base}/{folder}", want)

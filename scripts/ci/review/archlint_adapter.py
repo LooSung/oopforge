@@ -56,8 +56,8 @@ def _walk(root: str, catalog: RuleCatalog):
 def select_modes(root: str, catalog: RuleCatalog) -> List[str]:
     modes: List[str] = []
     suffixes = (
-        "CommandService.java", "CommandService.kt", "command_service.py",
-        "QueryService.java", "QueryService.kt", "query_service.py",
+        "CommandService.java", "CommandService.kt", "CommandService.ts", "command_service.py",
+        "QueryService.java", "QueryService.kt", "QueryService.ts", "query_service.py",
     )
     layered = cqrs = False
     for _, dirnames, filenames in _walk(root, catalog):

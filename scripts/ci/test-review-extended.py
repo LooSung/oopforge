@@ -164,6 +164,29 @@ def test_kotlin_detectors():
           "src/x/app/Expr.kt::run/0" in long_keys and "src/x/app/Expr.kt::next/0" not in long_keys)
 
 
+TS_DOMAIN = (
+    "import { z } from 'zod';\n\n"
+    "export class Order {\n  total = 0;\n  readonly id: string;\n  private secret = 1;\n  #hidden = 2;\n\n"
+    "  private constructor(public owner: string, readonly code: string, private x: number) {\n"
+    "    this.id = 'a';\n  }\n\n"
+    "  static create(): Order {\n    let local = 1;\n    const label = `class ${local} { total = 1 }`;\n"
+    "    return new Order('o', label, local);\n  }\n}\n"
+)
+
+
+def test_typescript_detectors():
+    found = _rules({"src/server/x/domain/order.ts": TS_DOMAIN, "src/ui/Widget.tsx": "import 'next/link';\n" * 301})
+    fields = {name for rule, name in found if rule == PUBLIC_MUTABLE_DOMAIN_FIELD}
+    check("ts public field and public constructor property are mutable", {"total", "owner"} <= fields)
+    check("ts readonly / private / #private / locals are not reported",
+          not fields & {"id", "secret", "hidden", "code", "x", "local", "label"})
+    check("ts domain zod import reported", ("DOMAIN_FRAMEWORK_IMPORT", "zod") in found)
+    check("tsx files are left to Compforge", not any("Widget.tsx" in name for _, name in found))
+    long_fn = "export function run(a: number): number {\n" + "  a += 1;\n" * 25 + "  return a;\n}\n"
+    keys = {v.subject_key for v in scan({"src/x/run.ts": long_fn}, RuleCatalog.defaults())}
+    check("ts long function reported", "src/x/run.ts::run/1" in keys)
+
+
 def main():
     print("extended domain-review self-test:")
     test_public_mutable_python()
@@ -172,6 +195,7 @@ def main():
     test_archlint_parse_and_modes()
     test_correction_delivery()
     test_kotlin_detectors()
+    test_typescript_detectors()
     print("RESULT:", "PASS" if not FAILURES else f"FAIL ({FAILURES})")
     return 1 if FAILURES else 0
 

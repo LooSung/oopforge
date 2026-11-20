@@ -1,4 +1,4 @@
-"""Shared stdlib-only Python, Java, and Kotlin method span scanner."""
+"""Shared stdlib-only Python, Java, Kotlin, and TypeScript method span scanner."""
 from __future__ import annotations
 
 import ast
@@ -59,6 +59,14 @@ _KOTLIN_FUN = re.compile(
     r"fun\s+(?:<[^>]+>\s*)?(?:[\w.<>?]+\.)?(?P<name>[A-Za-z_]\w*)\s*\("
 )
 _KOTLIN_BODY = re.compile(r"[ \t]*(?::[ \t]*[^={\n]+?)?[ \t]*([={])")
+_TS_FUNCTION = re.compile(
+    r"(?m)^[ \t]*(?:export\s+)?(?:default\s+)?"
+    r"(?:(?:public|private|protected|static|async|override|abstract)\s+)*"
+    r"(?:function\s*\*?\s*|(?:const|let)\s+)?(?P<name>[A-Za-z_$][\w$]*)\s*"
+    r"(?:<[^>(){}]*>)?\s*(?::[^=\n]+)?(?:=\s*(?:async\s+)?)?\("
+)
+_TS_BODY = re.compile(r"[ \t]*(?::[ \t]*[^{;=\n]+?)?[ \t]*(?:=>)?[ \t]*\{")
+_TS_CONTROL = {"if", "for", "while", "switch", "catch", "return", "await", "typeof", "new"}
 _JAVA_NOISE = re.compile(
     r"//[^\n]*|/\*.*?\*/|\"(?:\\.|[^\"\\])*\"|'(?:\\.|[^'\\])*'",
     re.DOTALL,
@@ -166,6 +174,26 @@ def _kotlin_methods(content: str) -> list[MethodSpan]:
     return methods
 
 
+def _typescript_methods(content: str) -> list[MethodSpan]:
+    """Block bodies only; an arrow function with an expression body is not measured."""
+    clean = _strip_java_noise(re.sub(r"`(?:\\.|[^`\\])*`", lambda m: re.sub(r"[^\n]", " ", m.group()), content))
+    methods: list[MethodSpan] = []
+    for match in _TS_FUNCTION.finditer(clean):
+        if match.group("name") in _TS_CONTROL:
+            continue
+        closing = _matching_paren(clean, match.end() - 1)
+        body = None if closing is None else _TS_BODY.match(clean, closing + 1)
+        brace = None if body is None else _matching_brace(clean, body.end() - 1)
+        if brace is None:
+            continue
+        params = clean[match.end():closing]
+        arity = len([part for part in params.split(",") if part.strip()])
+        start = clean.count("\n", 0, match.start()) + 1
+        end = clean.count("\n", 0, brace) + 1
+        methods.append(MethodSpan(f"{match.group('name')}/{arity}", start, end))
+    return methods
+
+
 def scan_methods(path: str, content: str) -> list[MethodSpan]:
     if path.endswith(".py"):
         return _python_methods(content)
@@ -173,4 +201,6 @@ def scan_methods(path: str, content: str) -> list[MethodSpan]:
         return _java_methods(content)
     if path.endswith(".kt"):
         return _kotlin_methods(content)
+    if path.endswith(".ts"):
+        return _typescript_methods(content)
     return []
