@@ -53,18 +53,71 @@ def build_fixtures(base):
           "class CalculateCommandService:\n    def calculate(self) -> HistorySummary:\n        return s\n")
 
 
+def build_kotlin_layered_fixtures(base):
+    for layer, cls in [("controller", "OrderController"), ("service", "OrderService"),
+                       ("repository", "OrderRepository"), ("domain", "Order")]:
+        write(f"{base}/kt_good/order/{layer}/{cls}.kt", f"package order.{layer}\n\nclass {cls}\n")
+    write(f"{base}/kt_flat/order/OrderController.kt",
+          "package order\n\nclass OrderController(private val repository: OrderRepository)\n")
+    write(f"{base}/kt_flat/order/OrderService.kt", "package order\n\nclass OrderService\n")
+    write(f"{base}/kt_flat/order/OrderRepository.kt", "package order\n\ninterface OrderRepository\n")
+    write(f"{base}/kt_controller_repo/order/controller/OrderController.kt",
+          "package order.controller\n\nclass OrderController(private val orders: Repository<Order, Long>)\n")
+
+
+def build_kotlin_cqrs_fixtures(base):
+    write(f"{base}/kt_cqrs_good/order/service/OrderCommandService.kt",
+          "class OrderCommandService {\n    fun place(r: Req): OrderId {\n        return id\n    }\n\n"
+          "    private fun helper() = 1\n}\n")
+    write(f"{base}/kt_cqrs_good/order/service/OrderQueryService.kt",
+          "class OrderQueryService {\n    fun get(id: String): OrderSummary = repo.find(id)\n}\n")
+    write(f"{base}/kt_cqrs_bad_query/order/service/OrderQueryService.kt",
+          "class OrderQueryService {\n    fun get(s: OrderSummary) {\n        repo.save(s)\n    }\n}\n")
+    write(f"{base}/kt_cqrs_bad_command/order/service/OrderCommandService.kt",
+          "class OrderCommandService {\n    fun place(r: Req): List<OrderSummary> {\n        return s\n    }\n}\n")
+    write(f"{base}/kt_cqrs_implicit/order/service/OrderCommandService.kt",
+          "class OrderCommandService {\n    fun place(r: Req) = repo.next()\n}\n")
+
+
+def build_mixed_fixtures(base):
+    for layer, cls in [("controller", "OrderController"), ("service", "OrderService")]:
+        write(f"{base}/mixed_good/order/{layer}/{cls}.java", f"package order.{layer}; public class {cls} {{}}")
+        write(f"{base}/mixed_good/billing/{layer}/Bill{cls[5:]}.kt", f"package billing.{layer}\n\nclass Bill{cls[5:]}\n")
+    write(f"{base}/mixed_bad/order/controller/OrderController.java",
+          "package order.controller; public class OrderController {}")
+    write(f"{base}/mixed_bad/billing/BillController.kt", "package billing\n\nclass BillController\n")
+    write(f"{base}/mixed_bad/billing/BillService.kt", "package billing\n\nclass BillService\n")
+
+
+CASES = [
+    ("layered-good clean", "layered", "good", False),
+    ("flat-package violation", "layered", "flat", True),
+    ("cqrs-good clean", "cqrs", "cqrs_good", False),
+    ("cqrs-bad violation", "cqrs", "cqrs_bad", True),
+    ("py-layered-good clean", "layered", "py_good", False),
+    ("py-flat violation", "layered", "py_flat", True),
+    ("py-cqrs-good clean", "cqrs", "py_good", False),
+    ("py-cqrs-bad violation", "cqrs", "py_cqrs_bad", True),
+    ("kt-layered-good clean", "layered", "kt_good", False),
+    ("kt-flat violation", "layered", "kt_flat", True),
+    ("kt-controller-repository violation", "layered", "kt_controller_repo", True),
+    ("kt-cqrs-good clean", "cqrs", "kt_cqrs_good", False),
+    ("kt-cqrs-query-mutation violation", "cqrs", "kt_cqrs_bad_query", True),
+    ("kt-cqrs-command-returns-read violation", "cqrs", "kt_cqrs_bad_command", True),
+    ("kt-cqrs-implicit-return violation", "cqrs", "kt_cqrs_implicit", True),
+    ("mixed-java-kotlin-good clean", "layered", "mixed_good", False),
+    ("mixed-java-kotlin-flat violation", "layered", "mixed_bad", True),
+]
+
+
 def main():
     print("archlint self-test:")
     with tempfile.TemporaryDirectory() as base:
-        build_fixtures(base)
-        expect("layered-good clean", "layered", f"{base}/good", False)
-        expect("flat-package violation", "layered", f"{base}/flat", True)
-        expect("cqrs-good clean", "cqrs", f"{base}/cqrs_good", False)
-        expect("cqrs-bad violation", "cqrs", f"{base}/cqrs_bad", True)
-        expect("py-layered-good clean", "layered", f"{base}/py_good", False)
-        expect("py-flat violation", "layered", f"{base}/py_flat", True)
-        expect("py-cqrs-good clean", "cqrs", f"{base}/py_good", False)
-        expect("py-cqrs-bad violation", "cqrs", f"{base}/py_cqrs_bad", True)
+        for build in (build_fixtures, build_kotlin_layered_fixtures,
+                      build_kotlin_cqrs_fixtures, build_mixed_fixtures):
+            build(base)
+        for name, mode, folder, want in CASES:
+            expect(name, mode, f"{base}/{folder}", want)
 
     print("RESULT:", "PASS" if not FAILURES else f"FAIL ({FAILURES})")
     return 1 if FAILURES else 0

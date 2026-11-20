@@ -6,9 +6,11 @@ does not depend on the agent (or model size) remembering them.
 
 Modes:
   layered  Each layer is its own package/folder; inbound adapter must not
-           reference a repository directly (Java *Controller, Python router/).
+           reference a repository directly (Java/Kotlin *Controller, Python
+           router/).
   cqrs     Query side has no side effects; command methods do not return
-           read-shaped types (Response/Summary/Dto/View/ReadModel).
+           read-shaped types (Response/Summary/Dto/View/ReadModel); a public
+           Kotlin command function declares its return type.
 
 Usage:
   archlint.py <layered|cqrs> <root> [<root> ...]
@@ -20,13 +22,20 @@ import os
 import re
 import sys
 
-JAVA_LAYER_SUFFIX = {"Controller": "controller", "Service": "service", "Repository": "repository"}
+JVM_LAYER_SUFFIX = {"Controller": "controller", "Service": "service", "Repository": "repository"}
+JVM_EXTENSIONS = (".java", ".kt")
 PY_LAYER_FOLDERS = {"router", "service", "repository", "domain", "readmodel"}
 PY_LAYER_FILE = re.compile(r"(router|service|repository)", re.I)
 MUTATING = re.compile(r"(\b(save|delete|update|insert|persist|store|remove)\s*\()|\.(save|delete)\s*\(")
 READ_SHAPED = re.compile(r"[A-Za-z0-9_\[\],\s]*(Response|Summary|Dto|DTO|View|ReadModel)\b")
 JAVA_METHOD = re.compile(r"public\s+([A-Za-z0-9_<>]+)\s+([A-Za-z0-9_]+)\s*\(([^)]*)\)")
 PY_RETURN = re.compile(r"def\s+\w+\s*\([^)]*\)\s*->\s*([^:\n]+)")
+KOTLIN_FUN = re.compile(
+    r"^[ \t]*((?:[a-z]+[ \t]+)*)fun[ \t]+([A-Za-z0-9_]+)[ \t]*\(([^)]*)\)"
+    r"[ \t]*(?::[ \t]*([^={\n]+?))?[ \t]*(=|\{|$)",
+    re.M,
+)
+KOTLIN_HIDDEN = {"private", "internal", "protected"}
 
 
 def _read(path):
@@ -34,10 +43,10 @@ def _read(path):
         return fh.read()
 
 
-def java_files(root):
+def jvm_files(root):
     for d, _, fs in os.walk(root):
         for f in fs:
-            if f.endswith(".java"):
+            if f.endswith(JVM_EXTENSIONS):
                 yield os.path.join(d, f)
 
 
@@ -48,9 +57,9 @@ def python_files(root):
                 yield os.path.join(d, f)
 
 
-def java_suffix(fname):
-    base = fname[:-5]
-    for suf in JAVA_LAYER_SUFFIX:
+def jvm_suffix(fname):
+    base = os.path.splitext(fname)[0]
+    for suf in JVM_LAYER_SUFFIX:
         if base.endswith(suf):
             return suf
     return None
@@ -64,21 +73,21 @@ def py_layer_tag(path, root):
     return match.group(1).lower() if match else None
 
 
-def check_layered_java(root):
+def check_layered_jvm(root):
     v, by_dir = [], {}
-    for path in java_files(root):
-        suf = java_suffix(os.path.basename(path))
+    for path in jvm_files(root):
+        suf = jvm_suffix(os.path.basename(path))
         if suf:
             by_dir.setdefault(os.path.dirname(path), set()).add(suf)
     for d, sufs in by_dir.items():
         if len(sufs) >= 2:
             v.append(f"L1 flat-package: {os.path.relpath(d, root)} mixes layers {sorted(sufs)} in one folder")
-    for path in java_files(root):
-        suf = java_suffix(os.path.basename(path))
-        if suf and os.path.basename(os.path.dirname(path)) != JAVA_LAYER_SUFFIX[suf]:
-            v.append(f"L1 misplaced: {os.path.relpath(path, root)} should be under {JAVA_LAYER_SUFFIX[suf]}/")
-    for path in java_files(root):
-        if os.path.basename(path).endswith("Controller.java") and re.search(r"\bRepository\b", _read(path)):
+    for path in jvm_files(root):
+        suf = jvm_suffix(os.path.basename(path))
+        if suf and os.path.basename(os.path.dirname(path)) != JVM_LAYER_SUFFIX[suf]:
+            v.append(f"L1 misplaced: {os.path.relpath(path, root)} should be under {JVM_LAYER_SUFFIX[suf]}/")
+    for path in jvm_files(root):
+        if jvm_suffix(os.path.basename(path)) == "Controller" and re.search(r"\bRepository\b", _read(path)):
             v.append(f"L2 controller->repository: {os.path.relpath(path, root)} references a Repository directly")
     return v
 
@@ -104,17 +113,33 @@ def check_layered_python(root):
     return v
 
 
-def check_cqrs_java(root):
+def _java_command_violations(rel, txt):
+    return [f"C2 command-returns-read: {rel}::{mname} returns read-shaped '{ret}'"
+            for ret, mname, _args in JAVA_METHOD.findall(txt) if READ_SHAPED.match(ret)]
+
+
+def _kotlin_command_violations(rel, txt):
     v = []
-    for path in java_files(root):
-        name = os.path.basename(path)
-        txt = _read(path)
-        if name.endswith(("QueryService.java", "QueryController.java")) and MUTATING.search(txt):
-            v.append(f"C1 query-mutation: {os.path.relpath(path, root)} contains a mutating operation")
-        if name.endswith("CommandService.java"):
-            for ret, mname, _args in JAVA_METHOD.findall(txt):
-                if READ_SHAPED.match(ret):
-                    v.append(f"C2 command-returns-read: {os.path.relpath(path, root)}::{mname} returns read-shaped '{ret}'")
+    for mods, mname, _args, ret, term in KOTLIN_FUN.findall(txt):
+        if KOTLIN_HIDDEN & set(mods.split()):
+            continue
+        if not ret and term == "=":
+            v.append(f"C2 command-implicit-return: {rel}::{mname} has an expression body without a declared return type")
+        elif ret and READ_SHAPED.search(ret):
+            v.append(f"C2 command-returns-read: {rel}::{mname} returns read-shaped '{ret.strip()}'")
+    return v
+
+
+def check_cqrs_jvm(root):
+    v = []
+    for path in jvm_files(root):
+        base, ext = os.path.splitext(os.path.basename(path))
+        rel, txt = os.path.relpath(path, root), _read(path)
+        if base.endswith(("QueryService", "QueryController")) and MUTATING.search(txt):
+            v.append(f"C1 query-mutation: {rel} contains a mutating operation")
+        if base.endswith("CommandService"):
+            check = _kotlin_command_violations if ext == ".kt" else _java_command_violations
+            v += check(rel, txt)
     return v
 
 
@@ -134,8 +159,8 @@ def check_cqrs_python(root):
 
 def lint(mode, root):
     violations = []
-    if any(True for _ in java_files(root)):
-        violations += check_layered_java(root) if mode == "layered" else check_cqrs_java(root)
+    if any(True for _ in jvm_files(root)):
+        violations += check_layered_jvm(root) if mode == "layered" else check_cqrs_jvm(root)
     if any(True for _ in python_files(root)):
         violations += check_layered_python(root) if mode == "layered" else check_cqrs_python(root)
     return violations

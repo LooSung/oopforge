@@ -4,7 +4,7 @@ Per-file detectors:
   - FILE_TOO_LONG                 code file > 300 lines
   - SKILL_FILE_TOO_LONG           skills/**/*.md > 200 lines
   - DOMAIN_FRAMEWORK_IMPORT       a file under a `domain/` folder imports a framework
-  - METHOD_TOO_LONG               Python/Java method > 20 lines
+  - METHOD_TOO_LONG               Python/Java/Kotlin method > 20 lines
   - PUBLIC_MUTABLE_DOMAIN_FIELD   public field on a mutable domain dataclass
   - ARCHLINT_CONTROLLER_REPOSITORY presentation imports a repository directly
 
@@ -16,7 +16,7 @@ from __future__ import annotations
 from types import ModuleType
 from typing import List, Optional
 
-from . import lang_java, lang_python
+from . import lang_java, lang_kotlin, lang_python
 from .method_length import scan_methods
 from .model import (
     ARCHLINT_CONTROLLER_REPOSITORY,
@@ -35,7 +35,7 @@ FILE_LIMIT = 300
 SKILL_LIMIT = 200
 METHOD_LIMIT = 20
 
-_LANGUAGES = (lang_java, lang_python)
+_LANGUAGES = (lang_java, lang_kotlin, lang_python)
 
 
 def _language(path: str) -> Optional[ModuleType]:

@@ -40,6 +40,7 @@ _RULES = (
     ("L2 router->repository", ARCHLINT_CONTROLLER_REPOSITORY),
     ("C1 query-mutation", ARCHLINT_QUERY_MUTATION),
     ("C2 command-returns-read", ARCHLINT_COMMAND_RETURNS_READ),
+    ("C2 command-implicit-return", ARCHLINT_COMMAND_RETURNS_READ),
 )
 
 
@@ -55,8 +56,8 @@ def _walk(root: str, catalog: RuleCatalog):
 def select_modes(root: str, catalog: RuleCatalog) -> List[str]:
     modes: List[str] = []
     suffixes = (
-        "CommandService.java", "command_service.py",
-        "QueryService.java", "query_service.py",
+        "CommandService.java", "CommandService.kt", "command_service.py",
+        "QueryService.java", "QueryService.kt", "query_service.py",
     )
     layered = cqrs = False
     for _, dirnames, filenames in _walk(root, catalog):

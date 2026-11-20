@@ -1,4 +1,4 @@
-"""Shared stdlib-only Python and Java method span scanner."""
+"""Shared stdlib-only Python, Java, and Kotlin method span scanner."""
 from __future__ import annotations
 
 import ast
@@ -52,6 +52,13 @@ _JAVA_METHOD = re.compile(
     r"\((?P<params>[^;{}]*)\)\s*(?:throws\s+[^{]+)?\{"
 )
 _JAVA_CONTROL = {"if", "for", "while", "switch", "catch", "try", "do"}
+_KOTLIN_FUN = re.compile(
+    r"(?m)^(?P<indent>[ \t]*)(?:@[\w.:]+(?:\([^)]*\))?\s+)*"
+    r"(?:(?:public|protected|private|internal|override|open|final|abstract|"
+    r"suspend|inline|operator|infix|tailrec|external)\s+)*"
+    r"fun\s+(?:<[^>]+>\s*)?(?:[\w.<>?]+\.)?(?P<name>[A-Za-z_]\w*)\s*\("
+)
+_KOTLIN_BODY = re.compile(r"[ \t]*(?::[ \t]*[^={\n]+?)?[ \t]*([={])")
 _JAVA_NOISE = re.compile(
     r"//[^\n]*|/\*.*?\*/|\"(?:\\.|[^\"\\])*\"|'(?:\\.|[^'\\])*'",
     re.DOTALL,
@@ -105,9 +112,65 @@ def _java_methods(content: str) -> list[MethodSpan]:
     return methods
 
 
+def _matching_paren(content: str, opening: int) -> int | None:
+    depth = 0
+    for index in range(opening, len(content)):
+        depth += {"(": 1, ")": -1}.get(content[index], 0)
+        if depth == 0:
+            return index
+    return None
+
+
+def _expression_end(lines: list[str], first: int, indent: int) -> int:
+    """An expression body ends before the next line at the same or lower indent.
+
+    A closing bracket at the function's own indent still belongs to it.
+    """
+    end = first
+    for number in range(first + 1, len(lines) + 1):
+        line = lines[number - 1]
+        depth = len(line) - len(line.lstrip())
+        if not line.strip() or depth > indent:
+            end = number if line.strip() else end
+            continue
+        if depth == indent and line.lstrip()[0] in ")]}":
+            end = number
+            continue
+        break
+    return end
+
+
+def _kotlin_span_end(clean: str, lines: list[str], body: re.Match, indent: int) -> int | None:
+    if body.group(1) == "{":
+        closing = _matching_brace(clean, body.end() - 1)
+        return None if closing is None else clean.count("\n", 0, closing) + 1
+    return _expression_end(lines, clean.count("\n", 0, body.end()) + 1, indent)
+
+
+def _kotlin_methods(content: str) -> list[MethodSpan]:
+    clean = _strip_java_noise(content)
+    lines = clean.splitlines()
+    methods: list[MethodSpan] = []
+    for match in _KOTLIN_FUN.finditer(clean):
+        closing = _matching_paren(clean, match.end() - 1)
+        body = None if closing is None else _KOTLIN_BODY.match(clean, closing + 1)
+        if body is None:
+            continue
+        end = _kotlin_span_end(clean, lines, body, len(match.group("indent")))
+        if end is None:
+            continue
+        params = clean[match.end():closing]
+        arity = len([part for part in params.split(",") if part.strip()])
+        start = clean.count("\n", 0, match.start()) + 1
+        methods.append(MethodSpan(f"{match.group('name')}/{arity}", start, end))
+    return methods
+
+
 def scan_methods(path: str, content: str) -> list[MethodSpan]:
     if path.endswith(".py"):
         return _python_methods(content)
     if path.endswith(".java"):
         return _java_methods(content)
+    if path.endswith(".kt"):
+        return _kotlin_methods(content)
     return []

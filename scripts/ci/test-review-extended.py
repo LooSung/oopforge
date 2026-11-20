@@ -128,6 +128,42 @@ def test_correction_delivery():
     check("summary asks the agent to correct", "Agent correction" in delivery.summary_markdown(report))
 
 
+KOTLIN_DOMAIN = (
+    "package x.domain\n\nimport org.springframework.stereotype.Component\n\n"
+    "class Order(var total: Int, val id: String, private var hidden: Int) {\n"
+    "    var status: String = \"new\"\n"
+    "    var guarded: Int = 0\n        private set\n"
+    "    private var secret = 1\n"
+    "    fun pay() {\n        var local = 1\n        listOf(1).forEach { var inLambda = it }\n    }\n"
+    "}\n"
+)
+
+
+def _rules(files):
+    return {(v.rule_id, v.subject_key.rsplit(":", 1)[-1]) for v in scan(files, RuleCatalog.defaults())}
+
+
+def test_kotlin_detectors():
+    found = _rules({"src/x/domain/Order.kt": KOTLIN_DOMAIN})
+    fields = {name for rule, name in found if rule == PUBLIC_MUTABLE_DOMAIN_FIELD}
+    check("kotlin constructor var is public mutable", "total" in fields)
+    check("kotlin body var without private set is public mutable", "status" in fields)
+    check("kotlin private set / private var / locals are not reported",
+          not fields & {"guarded", "hidden", "secret", "local", "inLambda"})
+    check("kotlin domain framework import reported",
+          any(rule == "DOMAIN_FRAMEWORK_IMPORT" for rule, _ in found))
+    presentation = _rules({"src/x/presentation/Api.kt": "import x.repository.OrderRepository\n"})
+    check("kotlin presentation repository import reported",
+          any(rule == ARCHLINT_CONTROLLER_REPOSITORY for rule, _ in presentation))
+    block = "class S {\n    fun run(): Int {\n" + "        val x = 1\n" * 25 + "        return 1\n    }\n}\n"
+    expr = "class S {\n    fun run(): Int =\n" + "        1 +\n" * 25 + "            1\n\n    fun next() = 2\n}\n"
+    long_keys = {v.subject_key for v in scan({"src/x/app/Block.kt": block, "src/x/app/Expr.kt": expr},
+                                             RuleCatalog.defaults()) if v.rule_id == "METHOD_TOO_LONG"}
+    check("kotlin long block body reported", "src/x/app/Block.kt::run/0" in long_keys)
+    check("kotlin long expression body reported, short one not",
+          "src/x/app/Expr.kt::run/0" in long_keys and "src/x/app/Expr.kt::next/0" not in long_keys)
+
+
 def main():
     print("extended domain-review self-test:")
     test_public_mutable_python()
@@ -135,6 +171,7 @@ def main():
     test_file_level_admission()
     test_archlint_parse_and_modes()
     test_correction_delivery()
+    test_kotlin_detectors()
     print("RESULT:", "PASS" if not FAILURES else f"FAIL ({FAILURES})")
     return 1 if FAILURES else 0
 
