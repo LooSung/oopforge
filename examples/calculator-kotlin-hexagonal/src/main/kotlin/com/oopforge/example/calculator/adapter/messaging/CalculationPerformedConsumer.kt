@@ -11,9 +11,17 @@ class CalculationPerformedConsumer : OutboxConsumer {
 
     @Synchronized
     override fun consume(message: OutboxMessage) {
-        TODO("Implement stage")
+        val payload = payloadOf(message)
+        if (message.id in processedMessageIds) {
+            return
+        }
+        effects.add(payload)
+        processedMessageIds.add(message.id)
     }
 
     @Synchronized
-    fun effects(): List<CalculationPerformedV1> = TODO("Implement stage")
+    fun effects(): List<CalculationPerformedV1> = effects.toList()
+
+    private fun payloadOf(message: OutboxMessage): CalculationPerformedV1 =
+        requireNotNull(message.payload as? CalculationPerformedV1) { "unsupported outbox payload" }
 }

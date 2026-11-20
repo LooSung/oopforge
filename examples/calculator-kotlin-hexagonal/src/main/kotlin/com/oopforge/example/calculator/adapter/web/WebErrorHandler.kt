@@ -18,19 +18,23 @@ internal class WebErrorHandler {
         InvalidWebRequestException::class,
     )
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    fun invalidRequest(): ApiError = TODO("Implement stage")
+    fun invalidRequest(): ApiError = ApiError("invalid_request", "The request is invalid.")
 
     @ExceptionHandler(IdempotencyConflictException::class)
     @ResponseStatus(HttpStatus.CONFLICT)
-    fun idempotencyConflict(): ApiError = TODO("Implement stage")
+    fun idempotencyConflict(): ApiError =
+        ApiError("idempotency_conflict", "The idempotency key was already used for a different request.")
 
     @ExceptionHandler(IllegalArgumentException::class)
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-    fun domainError(): ApiError = TODO("Implement stage")
+    fun domainError(): ApiError = ApiError("calculation_rejected", "The calculation could not be performed.")
 
     @ExceptionHandler(Exception::class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    fun unexpectedFailure(): ApiError = TODO("Implement stage")
+    fun unexpectedFailure(): ApiError {
+        LOGGER.error("Unexpected calculation request failure")
+        return ApiError("internal_error", "The request could not be completed.")
+    }
 
     private companion object {
         val LOGGER: Logger = LoggerFactory.getLogger(WebErrorHandler::class.java)

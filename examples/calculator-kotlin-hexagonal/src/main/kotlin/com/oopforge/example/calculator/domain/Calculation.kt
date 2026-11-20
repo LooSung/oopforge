@@ -9,10 +9,22 @@ class Calculation private constructor(
 ) {
     private val events: MutableList<DomainEvent> = mutableListOf()
 
-    fun popEvents(): List<DomainEvent> = TODO("Implement stage")
+    fun popEvents(): List<DomainEvent> {
+        val published = events.toList()
+        events.clear()
+        return published
+    }
+
+    private fun record(event: DomainEvent) {
+        events.add(event)
+    }
 
     companion object {
-        fun perform(id: CalculationId, operandA: Double, operator: Operator, operandB: Double): Calculation =
-            TODO("Implement stage")
+        fun perform(id: CalculationId, operandA: Double, operator: Operator, operandB: Double): Calculation {
+            val result = operator.apply(operandA, operandB)
+            val calculation = Calculation(id, operandA, operator, operandB, result)
+            calculation.record(CalculationPerformed(id, result))
+            return calculation
+        }
     }
 }

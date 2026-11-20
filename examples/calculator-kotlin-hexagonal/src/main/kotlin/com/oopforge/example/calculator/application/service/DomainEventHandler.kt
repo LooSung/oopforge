@@ -9,6 +9,6 @@ interface DomainEventHandler<T : DomainEvent> {
     fun handle(event: T)
 
     fun handleEvent(event: DomainEvent) {
-        TODO("Implement stage")
+        handle(eventType().cast(event))
     }
 }

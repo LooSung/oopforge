@@ -8,6 +8,12 @@ class SynchronousDomainEventDispatcher(handlers: List<DomainEventHandler<*>>) : 
     private val handlers: List<DomainEventHandler<*>> = handlers.toList()
 
     override fun dispatch(events: List<DomainEvent>) {
-        TODO("Implement stage")
+        events.forEach { dispatch(it) }
+    }
+
+    private fun dispatch(event: DomainEvent) {
+        handlers
+            .filter { it.eventType().isInstance(event) }
+            .forEach { it.handleEvent(event) }
     }
 }

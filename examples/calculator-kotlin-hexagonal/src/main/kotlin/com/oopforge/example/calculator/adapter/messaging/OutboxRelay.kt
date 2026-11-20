@@ -1,6 +1,7 @@
 package com.oopforge.example.calculator.adapter.messaging
 
 import com.oopforge.example.calculator.application.required.OutboxPort
+import java.time.Instant
 
 class OutboxRelay(
     private val outbox: OutboxPort,
@@ -8,6 +9,9 @@ class OutboxRelay(
 ) {
 
     fun relay() {
-        TODO("Implement stage")
+        for (message in outbox.unpublished()) {
+            consumer.consume(message)
+            outbox.markPublished(message.id, Instant.now())
+        }
     }
 }

@@ -18,5 +18,5 @@ class CalculatorController internal constructor(private val handler: IdempotentC
     fun calculate(
         @Valid @RequestBody request: CalculateRequest,
         @RequestHeader(value = "Idempotency-Key", required = false) idempotencyKey: String?,
-    ): CalculationResponse = TODO("Implement stage")
+    ): CalculationResponse = handler.handle(request, idempotencyKey)
 }

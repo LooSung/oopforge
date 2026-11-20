@@ -13,7 +13,38 @@ internal class IdempotencyStore {
         key: String?,
         request: NormalizedRequest,
         operation: () -> CalculationResponse,
-    ): CalculationResponse = TODO("Implement stage")
+    ): CalculationResponse {
+        if (key == null) {
+            return operation()
+        }
+        validate(key)
+        return synchronized(locks.computeIfAbsent(key) { Any() }) {
+            executeLocked(key, request, operation)
+        }
+    }
+
+    private fun executeLocked(
+        key: String,
+        request: NormalizedRequest,
+        operation: () -> CalculationResponse,
+    ): CalculationResponse {
+        val stored = results[key]
+        if (stored == null) {
+            val response = operation()
+            results[key] = StoredResult(request, response)
+            return response
+        }
+        if (stored.request != request) {
+            throw IdempotencyConflictException()
+        }
+        return stored.response
+    }
+
+    private fun validate(key: String) {
+        if (key.all(Character::isWhitespace) || key.length > MAX_KEY_LENGTH) {
+            throw InvalidWebRequestException()
+        }
+    }
 
     private data class StoredResult(val request: NormalizedRequest, val response: CalculationResponse)
 

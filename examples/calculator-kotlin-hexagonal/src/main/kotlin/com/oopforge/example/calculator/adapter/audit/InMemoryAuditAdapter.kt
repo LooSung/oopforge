@@ -11,10 +11,17 @@ class InMemoryAuditAdapter {
     private val entries = CopyOnWriteArrayList<AuditEntry>()
 
     fun record(correlationId: String, action: String, outcome: String) {
-        TODO("Implement stage")
+        val entry = AuditEntry(correlationId, action, outcome)
+        entries.add(entry)
+        LOGGER.info(
+            "audit correlationId={} action={} outcome={}",
+            entry.correlationId,
+            entry.action,
+            entry.outcome,
+        )
     }
 
-    fun entries(): List<AuditEntry> = TODO("Implement stage")
+    fun entries(): List<AuditEntry> = entries.toList()
 
     data class AuditEntry(val correlationId: String, val action: String, val outcome: String)
 

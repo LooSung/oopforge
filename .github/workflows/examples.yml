@@ -54,6 +54,7 @@ jobs:
       matrix:
         dir:
           - examples/calculator-kotlin-layered
+          - examples/calculator-kotlin-hexagonal
           - examples/calculator-kotlin-hexagonal-cqrs
     steps:
       - name: Checkout

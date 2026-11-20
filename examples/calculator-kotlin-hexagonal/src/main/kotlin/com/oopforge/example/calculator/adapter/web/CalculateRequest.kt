@@ -11,5 +11,7 @@ data class CalculateRequest(
 ) {
 
     @AssertTrue(message = "operands must be finite")
-    fun hasFiniteOperands(): Boolean = TODO("Implement stage")
+    fun hasFiniteOperands(): Boolean = isFinite(operandA) && isFinite(operandB)
+
+    private fun isFinite(value: Double?): Boolean = value == null || value.isFinite()
 }

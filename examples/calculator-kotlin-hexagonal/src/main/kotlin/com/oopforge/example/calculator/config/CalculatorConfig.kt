@@ -8,7 +8,9 @@ import com.oopforge.example.calculator.application.required.CalculationRepositor
 import com.oopforge.example.calculator.application.required.DomainEventDispatcher
 import com.oopforge.example.calculator.application.required.OutboxPort
 import com.oopforge.example.calculator.application.required.TransactionRunner
+import com.oopforge.example.calculator.application.service.CalculateService
 import com.oopforge.example.calculator.application.service.CalculationPerformedHandler
+import com.oopforge.example.calculator.application.service.SynchronousDomainEventDispatcher
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
@@ -16,24 +18,27 @@ import org.springframework.context.annotation.Configuration
 class CalculatorConfig {
 
     @Bean
-    fun transactionalAdapter(): InMemoryTransactionalAdapter = TODO("Implement stage")
+    fun transactionalAdapter(): InMemoryTransactionalAdapter = InMemoryTransactionalAdapter()
 
     @Bean
-    fun calculationPerformedHandler(outbox: OutboxPort): CalculationPerformedHandler = TODO("Implement stage")
+    fun calculationPerformedHandler(outbox: OutboxPort): CalculationPerformedHandler =
+        CalculationPerformedHandler(outbox)
 
     @Bean
-    fun domainEventDispatcher(handler: CalculationPerformedHandler): DomainEventDispatcher = TODO("Implement stage")
+    fun domainEventDispatcher(handler: CalculationPerformedHandler): DomainEventDispatcher =
+        SynchronousDomainEventDispatcher(listOf(handler))
 
     @Bean
     fun calculate(
         calculationRepository: CalculationRepository,
         transactionRunner: TransactionRunner,
         eventDispatcher: DomainEventDispatcher,
-    ): Calculate = TODO("Implement stage")
+    ): Calculate = CalculateService(calculationRepository, transactionRunner, eventDispatcher)
 
     @Bean
-    fun calculationPerformedConsumer(): CalculationPerformedConsumer = TODO("Implement stage")
+    fun calculationPerformedConsumer(): CalculationPerformedConsumer = CalculationPerformedConsumer()
 
     @Bean
-    fun outboxRelay(outbox: OutboxPort, consumer: CalculationPerformedConsumer): OutboxRelay = TODO("Implement stage")
+    fun outboxRelay(outbox: OutboxPort, consumer: CalculationPerformedConsumer): OutboxRelay =
+        OutboxRelay(outbox, consumer)
 }
