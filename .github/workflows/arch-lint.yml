@@ -33,6 +33,10 @@ jobs:
           python3 scripts/ci/archlint.py layered \
             examples/calculator-kotlin-layered/src/main/kotlin/com/oopforge/example/layered/calculator
 
+      - name: Enforce layered layout on the layered TypeScript Next.js example
+        run: |
+          python3 scripts/ci/archlint.py layered examples/calculator-typescript-next-layered/src
+
       - name: Enforce layered layout on the layered Python example
         run: |
           python3 scripts/ci/archlint.py layered \
