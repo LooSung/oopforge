@@ -28,6 +28,11 @@ jobs:
           python3 scripts/ci/archlint.py layered \
             examples/calculator-java-layered/src/main/java/com/oopforge/example/layered/calculator
 
+      - name: Enforce layered layout on the layered Kotlin example
+        run: |
+          python3 scripts/ci/archlint.py layered \
+            examples/calculator-kotlin-layered/src/main/kotlin/com/oopforge/example/layered/calculator
+
       - name: Enforce layered layout on the layered Python example
         run: |
           python3 scripts/ci/archlint.py layered \

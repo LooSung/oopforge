@@ -8,7 +8,9 @@ class Calculation private constructor(
     val result: Double,
 ) {
     companion object {
-        fun perform(id: CalculationId, operandA: Double, operator: Operator, operandB: Double): Calculation =
-            TODO("Implement stage")
+        fun perform(id: CalculationId, operandA: Double, operator: Operator, operandB: Double): Calculation {
+            val result = operator.apply(operandA, operandB)
+            return Calculation(id, operandA, operator, operandB, result)
+        }
     }
 }

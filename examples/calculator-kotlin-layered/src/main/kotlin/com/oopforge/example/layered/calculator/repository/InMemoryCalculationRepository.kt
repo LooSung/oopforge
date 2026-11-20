@@ -11,8 +11,8 @@ class InMemoryCalculationRepository : CalculationRepository {
     private val store = ConcurrentHashMap<CalculationId, Calculation>()
 
     override fun save(calculation: Calculation) {
-        TODO("Implement stage")
+        store[calculation.id] = calculation
     }
 
-    override fun findById(id: CalculationId): Calculation? = TODO("Implement stage")
+    override fun findById(id: CalculationId): Calculation? = store[id]
 }

@@ -3,3 +3,9 @@ springdoc:
     path: /v3/api-docs
   swagger-ui:
     path: /swagger-ui
+spring:
+  jackson:
+    deserialization:
+      # Kotlin `Double` compiles to a JVM primitive, so without this Jackson
+      # fills a missing or null operand with 0.0 despite the non-null type.
+      fail-on-null-for-primitives: true

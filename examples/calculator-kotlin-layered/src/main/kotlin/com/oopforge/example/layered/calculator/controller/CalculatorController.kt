@@ -20,5 +20,19 @@ class CalculatorController(private val calculatorService: CalculatorService) {
     @Operation(summary = "Perform a calculation")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun calculate(@RequestBody request: CalculateRequest): CalculationResponse = TODO("Implement stage")
+    fun calculate(@RequestBody request: CalculateRequest): CalculationResponse {
+        val command = CalculatorService.CalculateCommand(
+            request.operandA,
+            request.operator,
+            request.operandB,
+        )
+        val result = calculatorService.calculate(command)
+        return CalculationResponse(
+            result.calculationId,
+            result.operandA,
+            result.operator.name.lowercase(),
+            result.operandB,
+            result.result,
+        )
+    }
 }
