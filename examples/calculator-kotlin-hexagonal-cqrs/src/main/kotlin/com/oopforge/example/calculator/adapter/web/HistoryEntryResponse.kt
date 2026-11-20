@@ -11,6 +11,13 @@ data class HistoryEntryResponse(
     val performedAt: String,
 ) {
     companion object {
-        fun from(summary: HistorySummary): HistoryEntryResponse = TODO("Implement stage")
+        fun from(summary: HistorySummary): HistoryEntryResponse = HistoryEntryResponse(
+            summary.calculationId,
+            summary.operandA,
+            summary.operandB,
+            summary.operator,
+            summary.result,
+            summary.performedAt.toString(),
+        )
     }
 }

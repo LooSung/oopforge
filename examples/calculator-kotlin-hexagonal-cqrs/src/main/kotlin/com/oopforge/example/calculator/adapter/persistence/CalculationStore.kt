@@ -17,12 +17,12 @@ class CalculationStore {
     private val history = CopyOnWriteArrayList<HistorySummary>()
 
     fun putCalculation(calculation: Calculation) {
-        TODO("Implement stage")
+        calculations[calculation.id] = calculation
     }
 
     fun appendHistory(summary: HistorySummary) {
-        TODO("Implement stage")
+        history.add(summary)
     }
 
-    fun historySnapshot(): List<HistorySummary> = TODO("Implement stage")
+    fun historySnapshot(): List<HistorySummary> = history.toList()
 }

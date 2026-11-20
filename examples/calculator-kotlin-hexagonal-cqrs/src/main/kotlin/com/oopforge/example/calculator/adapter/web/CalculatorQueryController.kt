@@ -1,6 +1,7 @@
 package com.oopforge.example.calculator.adapter.web
 
 import com.oopforge.example.calculator.application.query.CalculationHistory
+import com.oopforge.example.calculator.domain.CalculationId
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -13,9 +14,14 @@ import org.springframework.web.bind.annotation.RestController
 class CalculatorQueryController(private val history: CalculationHistory) {
 
     @GetMapping("/history")
-    fun listHistory(@RequestParam(defaultValue = "20") limit: Int): HistoryListResponse = TODO("Implement stage")
+    fun listHistory(@RequestParam(defaultValue = "20") limit: Int): HistoryListResponse {
+        val items = history.listRecent(limit).map { HistoryEntryResponse.from(it) }
+        return HistoryListResponse(items)
+    }
 
     @GetMapping("/{calculationId}")
     fun getCalculation(@PathVariable calculationId: String): ResponseEntity<HistoryEntryResponse> =
-        TODO("Implement stage")
+        history.findById(CalculationId.of(calculationId))
+            ?.let { ResponseEntity.ok(HistoryEntryResponse.from(it)) }
+            ?: ResponseEntity.notFound().build()
 }

@@ -15,6 +15,13 @@ data class HistorySummary(
     val performedAt: Instant,
 ) {
     companion object {
-        fun from(calculation: Calculation): HistorySummary = TODO("Implement stage")
+        fun from(calculation: Calculation): HistorySummary = HistorySummary(
+            calculation.id.value.toString(),
+            calculation.operandA,
+            calculation.operandB,
+            calculation.operator.name.lowercase(),
+            calculation.result,
+            calculation.performedAt,
+        )
     }
 }

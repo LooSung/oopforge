@@ -1,6 +1,7 @@
 package com.oopforge.example.calculator.adapter.persistence
 
 import com.oopforge.example.calculator.application.command.CalculationRepository
+import com.oopforge.example.calculator.application.query.HistorySummary
 import com.oopforge.example.calculator.domain.Calculation
 
 /**
@@ -9,6 +10,7 @@ import com.oopforge.example.calculator.domain.Calculation
 class InMemoryCalculationRepository(private val store: CalculationStore) : CalculationRepository {
 
     override fun save(calculation: Calculation) {
-        TODO("Implement stage")
+        store.putCalculation(calculation)
+        store.appendHistory(HistorySummary.from(calculation))
     }
 }

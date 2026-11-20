@@ -44,6 +44,8 @@ jobs:
             examples/calculator-python-hexagonal-cqrs/app
           python3 scripts/ci/archlint.py cqrs \
             examples/calculator-java-hexagonal-cqrs/src/main/java/com/oopforge/example/calculator
+          python3 scripts/ci/archlint.py cqrs \
+            examples/calculator-kotlin-hexagonal-cqrs/src/main/kotlin/com/oopforge/example/calculator
 
       # Second enforcement layer: the industry-standard import-linter on top of
       # the fast stdlib archlint, proving boundaries with a real off-the-shelf tool.

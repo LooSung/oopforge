@@ -7,7 +7,7 @@ import com.oopforge.example.calculator.domain.CalculationId
  */
 class HistoryQueryService(private val queryRepository: HistoryQueryRepository) : CalculationHistory {
 
-    override fun listRecent(limit: Int): List<HistorySummary> = TODO("Implement stage")
+    override fun listRecent(limit: Int): List<HistorySummary> = queryRepository.listRecent(limit)
 
-    override fun findById(calculationId: CalculationId): HistorySummary? = TODO("Implement stage")
+    override fun findById(calculationId: CalculationId): HistorySummary? = queryRepository.findById(calculationId)
 }

@@ -9,7 +9,13 @@ import com.oopforge.example.calculator.domain.CalculationId
  */
 class InMemoryHistoryQueryRepository(private val store: CalculationStore) : HistoryQueryRepository {
 
-    override fun listRecent(limit: Int): List<HistorySummary> = TODO("Implement stage")
+    override fun listRecent(limit: Int): List<HistorySummary> {
+        require(limit > 0) { "limit must be positive" }
+        return store.historySnapshot().takeLast(limit).reversed()
+    }
 
-    override fun findById(calculationId: CalculationId): HistorySummary? = TODO("Implement stage")
+    override fun findById(calculationId: CalculationId): HistorySummary? {
+        val target = calculationId.value.toString()
+        return store.historySnapshot().lastOrNull { it.calculationId == target }
+    }
 }

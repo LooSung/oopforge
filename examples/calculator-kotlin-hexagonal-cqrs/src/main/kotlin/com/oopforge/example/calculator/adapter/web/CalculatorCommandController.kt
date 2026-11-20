@@ -14,5 +14,13 @@ class CalculatorCommandController(private val calculate: Calculate) {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun calculate(@RequestBody request: CalculateRequest): CalculationCreatedResponse = TODO("Implement stage")
+    fun calculate(@RequestBody request: CalculateRequest): CalculationCreatedResponse {
+        val command = Calculate.CalculateCommand(
+            request.operandA,
+            request.operator,
+            request.operandB,
+        )
+        val id = calculate.handle(command)
+        return CalculationCreatedResponse(id.value.toString())
+    }
 }
