@@ -1,8 +1,12 @@
 # Experimental Kotlin Spring and TypeScript Next.js stacks — 2026-11-20
 
 - Candidate: branch `feat/kotlin-spring` (references at `2db9fdb`, plus the
-  skills and docs commit that adds this record). Not yet run on GitHub
-  Actions.
+  skills and docs commit that adds this record), released as v1.13.0.
+- GitHub Actions on pull request #5 at `1e279f2`: Lint, Arch Lint, Domain
+  Review, and Harness Packaging pass; Examples run `44697546239` passes all
+  twelve jobs (Java, Kotlin, Python, and TypeScript × three references). GitHub
+  had disabled Examples for inactivity; it was re-enabled and dispatched on the
+  branch.
 - Machine: macOS, JDK 21.0.7 (Temurin), Node 24.22.1, npm 11.19.1, Claude Code
   2.1.311. CI pins Node 22 for the TypeScript job.
 - Toolchains: Kotlin Gradle plugin 2.4.21, Spring Boot 3.5.14, Gradle 8.12;
@@ -63,5 +67,5 @@
 | Same: business rules behind Next.js route handlers | `typescript-next-layered`/`-hexagonal`, experimental |
 | Same: NestJS order API | Not supported; points to the supported stacks |
 
-Not run: Codex CLI and Cursor Agent CLI live probes, a FuseForge connected run
-with a Kotlin or Next.js backend, and GitHub Actions on the branch.
+Not run: Codex CLI and Cursor Agent CLI live probes, and a FuseForge connected
+run with a Kotlin or Next.js backend.
