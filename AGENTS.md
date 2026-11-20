@@ -28,7 +28,7 @@ Sister packs: [Compforge](https://github.com/LooSung/compforge) (frontend) and
 | `skills/stability.json` | Skill maturity, explained in `docs/reference/skill-stability.md` |
 | `commands/` | **Generated** from the skill sources by `scripts/ci/build-commands.py` |
 | `.claude-plugin/`, `.codex-plugin/`, `.cursor-plugin/` | Harness packaging only; `.claude-plugin/marketplace.json` is the `forge` catalog of all three packs, kept identical across the three repositories except for which entry is `./` |
-| `examples/` | Six runnable calculators: Java/Python × layered, hexagonal, hexagonal-CQRS |
+| `examples/` | Twelve runnable calculators: Java, Python, and experimental Kotlin and TypeScript Next.js × layered, hexagonal, hexagonal-CQRS |
 | `templates/github/` | Reusable domain review for target projects |
 | `scripts/setup/`, `scripts/ci/` | Install lifecycle, CI checks, and `archlint.py` |
 | `docs/` | Human docs, indexed by `docs/README.md` |

@@ -1,7 +1,7 @@
 {
     "name": "oopforge",
     "version": "1.12.0",
-    "description": "DDD와 클린 아키텍처를 신봉하는 OOP 개발 방법론 팩. Java + Python 양손잡이.",
+    "description": "DDD와 클린 아키텍처를 신봉하는 OOP 개발 방법론 팩. Java + Python, 실험적으로 Kotlin과 Next.js TypeScript 서버 코드.",
     "author": {
         "name": "Mr.Louis",
         "url": "https://github.com/LooSung"
@@ -15,7 +15,10 @@
         "hexagonal",
         "oop",
         "java",
+        "kotlin",
         "python",
+        "typescript",
+        "nextjs",
         "korean",
         "methodology"
     ],

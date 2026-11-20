@@ -101,7 +101,7 @@ If the work grows past these limits, say so and switch to the standard path.
 When the intent is execution but a decisive input is empty (language, architecture, persistence, history/query = whether CQRS, supported operations/edge cases), resolve it once before code — do not interrogate; propose defaults.
 
 1. Identify the missing decision dimensions.
-2. **Language and architecture must pass the `skills/lang/backend-stack.md` scope gate.** If unspecified, steer to a supported stack (Java-Spring/Python-FastAPI); for an unsupported stack (JS/TS, etc.) state that OOPforge does not apply (plain build only if insisted).
+2. **Language and architecture must pass the `skills/lang/backend-stack.md` scope gate.** If unspecified, steer to a stack it lists; for an unsupported stack state that OOPforge does not apply (plain build only if insisted).
 3. For items you can set safely, **state the default** and proceed (e.g., in-memory, layered, four arithmetic operations).
 4. Ask only the 1–2 questions that actually change the result (architecture/scope) (e.g., "Do you need history/queries? -> add CQRS").
 5. You may offer the `examples/` calculator family (layered/hexagonal/+CQRS) as a reference menu.

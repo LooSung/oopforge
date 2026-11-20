@@ -6,7 +6,8 @@
 
 > **AI는 기능을 만든다. OOPforge는 구조를 지킨다.**
 
-OOPforge는 **Java Spring** 또는 **Python FastAPI** 백엔드에서 일하는 코딩
+OOPforge는 **Java Spring** 또는 **Python FastAPI** 백엔드(실험적으로 Kotlin Spring,
+Next.js 앱의 TypeScript 서버 코드 포함)에서 일하는 코딩
 에이전트용 스킬 팩이다. 에이전트가 비즈니스 로직을 쓰기 전에 도메인 모델,
 유스케이스 경계, 포트를 먼저 정하게 하고, 결과를 측정 가능한 하드 룰로
 검사한다. 하드 룰은 God Service와 도메인 계층의 프레임워크 코드를 금지한다.
@@ -20,7 +21,7 @@ OOPforge는 **Java Spring** 또는 **Python FastAPI** 백엔드에서 일하는 
 | 팩 | 대상 | 스택 |
 |---|---|---|
 | [Compforge](https://github.com/LooSung/compforge) | 프론트엔드 | TypeScript + React |
-| **OOPforge** (이 저장소) | 백엔드 | Java Spring · Python FastAPI |
+| **OOPforge** (이 저장소) | 백엔드 | Java Spring · Python FastAPI · Kotlin Spring·TypeScript Next.js (실험적) |
 | [FuseForge](https://github.com/LooSung/fuseforge) | 두 쪽에 걸친 기능 하나 | Compforge + OOPforge 조율 (실험적) |
 
 각 팩은 단독으로 쓸 수 있다. Claude Code에서는 `forge` 마켓플레이스 하나로 셋 다 받을 수 있다.
@@ -93,7 +94,8 @@ bash -c "$(curl -fsSL https://raw.githubusercontent.com/LooSung/oopforge/main/sc
    300줄, 메서드당 20줄, 도메인 계층 프레임워크 import 0, 트랜잭션당 애그리거트 하나.
 
 스택: `java-spring-layered`, `java-spring-hexagonal`, `python-fastapi-layered`,
-`python-fastapi-clean`. 스켈레톤에는 OpenAPI/Swagger UI가 포함된다. 도메인
+`python-fastapi-clean`, 실험적으로 `kotlin-spring-layered`, `kotlin-spring-hexagonal`,
+`typescript-next-layered`, `typescript-next-hexagonal`. 스켈레톤에는 OpenAPI/Swagger UI가 포함된다. 도메인
 이벤트와 outbox는 기본이고, Production Readiness는 배포 요청에서만 켠다.
 
 ### Before → after
@@ -133,7 +135,7 @@ calc.popEvents();
 ## 더 보기
 
 - [도서 대출 워크스루](docs/guides/library-loan/README.ko.md): Discovery → Test 단계별 튜토리얼
-- [예제](examples/README.md): 실행 가능한 계산기 6종 (Java/Python × layered, hexagonal, hexagonal-CQRS)
+- [예제](examples/README.md): 실행 가능한 계산기 12종 (Java, Python, 실험적 Kotlin·TypeScript Next.js × layered, hexagonal, hexagonal-CQRS)
 - 설정: [Claude Code](docs/setup/claude-code.md) · [Codex](docs/setup/codex.md) ·
   [Cursor](docs/setup/cursor.md) · [설치·업데이트·제거](docs/setup/install.md)
 - [지원 범위](docs/reference/support-scope.md) ·

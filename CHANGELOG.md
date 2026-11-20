@@ -6,6 +6,19 @@
 
 ## [Unreleased]
 
+실험적 스택 두 개: Kotlin Spring, Next.js 앱의 TypeScript 서버 코드.
+
+### Added
+
+- 실험적 스택 `kotlin-spring-layered`, `kotlin-spring-hexagonal`(+ CQRS). Java 레퍼런스와 같은 툴체인(Spring Boot 3.5, Gradle 8.12, JDK 21)에 Kotlin 2.4.21. 계산기 3종(`calculator-kotlin-*`)은 Java 테스트를 1:1로 옮겼고 ArchUnit이 그대로 돈다. `lang/kotlin-spring.md`는 하드룰의 Kotlin 형태를 정한다: 도메인은 `val`만, private 생성자 `data class`에는 `@ConsistentCopyVisibility`(없으면 `copy()`가 팩토리를 우회한다), 검증 어노테이션은 `@field:`(Kotlin 2.0.21에서는 붙이지 않으면 조용히 무시된다), `Double` 같은 원시 타입은 누락 필드가 0이 되므로 `fail-on-null-for-primitives`로 막는다.
+- 실험적 스택 `typescript-next-layered`, `typescript-next-hexagonal`(+ CQRS): Next.js App Router 앱 안의 `src/server/` 도메인·애플리케이션 코드. `src/app/`의 route 파일은 핸들러를 다시 내보내는 한 줄이고, server action은 OpenAPI 대상이 아닌 내부 RPC다. 계산기 3종(`calculator-typescript-next-*`)은 Compforge `todo-react-next`와 같은 툴체인이며 zod 경계, `/v3/api-docs`, ESLint `import/no-restricted-paths` 존을 갖는다. 규칙은 `lang/typescript-next.md`, 존 템플릿은 `skeleton/lint-enforcement-typescript.md`. Next.js 페이지·컴포넌트는 Compforge 몫이다.
+- `archlint.py`와 도메인 리뷰가 `.kt`, `.ts`를 검사한다. 지금까지 Kotlin·TypeScript만 있는 루트는 검사 없이 통과했다. finding ID는 그대로다. Kotlin·TypeScript command service의 공개 함수가 반환 타입을 선언하지 않으면 C2로 보고한다. `.tsx`는 Compforge 영역이라 보지 않는다.
+
+### Changed
+
+- 고정된 ref를 v1.13 이상으로 올린 대상 프로젝트는 `.kt`, `.ts` 파일에도 도메인 리뷰 지적을 받는다. 리뷰는 여전히 job을 실패시키지 않는다.
+- 스택 목록은 `lang/backend-stack.md` 한 곳에만 둔다. Craft 범위 게이트, Review, 한국어 방법론은 목록을 복사하지 않고 그 파일을 가리킨다.
+
 ## [1.12.0] - 2026-11-19
 
 주석 규율(쓰기·읽기), Review의 `Next` 명령.

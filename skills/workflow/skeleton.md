@@ -44,7 +44,7 @@ Skeleton does not invent a layout itself.
 - **No logic such as `if`, `for`**
 - **No database schema definitions** — defer to the Implement stage
 - **No layer violations** — the domain imports no other layer
-- **Do not ignore the backend layout** — prefer `skills/skeleton/backend-skeleton.md` for the Java/Python base structure.
+- **Do not ignore the backend layout** — prefer `skills/skeleton/backend-skeleton.md` for each stack's base structure.
 
 ## Next step
 After user approval -> `workflow-implement` (per use case)

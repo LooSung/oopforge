@@ -20,7 +20,7 @@
     {
       "name": "oopforge",
       "source": "./",
-      "description": "Java Spring and Python FastAPI backends with OOP/DDD modeling, layered or hexagonal architecture, and CQRS.",
+      "description": "Java Spring and Python FastAPI backends, plus experimental Kotlin Spring and Next.js TypeScript server code, with OOP/DDD modeling, layered or hexagonal architecture, and CQRS.",
       "homepage": "https://github.com/LooSung/oopforge"
     },
     {

@@ -173,7 +173,7 @@ diff only.
 - Never post to a pull request without an explicit request in this turn.
 - Never report a finding without the line that proves it.
 - Never present an unrun check as passed.
-- Never widen OOPforge beyond Java Spring and Python FastAPI.
+- Never widen OOPforge beyond the stacks in `skills/lang/backend-stack.md`.
 
 ## Completion
 

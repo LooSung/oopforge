@@ -1,13 +1,13 @@
 ---
 name: backend-skeleton
 description: Skeleton rules for creating the standard package structure and empty types for the chosen backend stack.
-tags: [backend, skeleton, java, python]
+tags: [backend, skeleton, java, kotlin, python, typescript]
 stability: stable
 ---
 
 # Backend Skeleton
 
-Contents: When to use · Common rules · Java Spring · Python FastAPI · Self-check (right after the skeleton, required) · Prohibited
+Contents: When to use · Common rules · Java Spring · Kotlin Spring · Python FastAPI · TypeScript Next.js · Self-check (right after the skeleton, required) · Prohibited
 
 ## When to use
 
@@ -57,6 +57,13 @@ src/main/java/com/example/order/
 The Java API exposes `/swagger-ui` or `/v3/api-docs` via `springdoc-openapi`.
 If JPA is needed, separate the domain model from the JPA entity and convert with a mapper in the adapter.
 
+## Kotlin Spring (experimental)
+
+Same package layout as Java Spring, under `src/main/kotlin/` and
+`src/test/kotlin/`. Apply `skills/lang/kotlin-spring.md`: one top-level type per
+file named after it, `val`-only domain state, and `TODO()` bodies in the
+skeleton.
+
 ## Python FastAPI
 
 Apply `skills/lang/python-pydantic.md` to API schemas and the Python build:
@@ -92,6 +99,26 @@ app/
 FastAPI generates OpenAPI by default. Specify `docs_url`, `openapi_url`, tags, response model, and error schema.
 By default, separate SQLAlchemy models from domain objects.
 
+## TypeScript Next.js (experimental)
+
+Apply `skills/lang/typescript-next.md`. Every layer lives under `src/server/`;
+route files under `src/app/` only re-export a handler.
+
+```text
+src/server/calculator/
+├── controller/    calculatorController.ts   # route handler body (no repository import)
+├── service/       calculatorService.ts
+├── repository/    calculationRepository.ts
+└── domain/        calculation.ts
+src/server/core/dependencies.ts              # wiring, imports 'server-only'
+src/app/api/v1/calculations/route.ts         # export { POST } from '.../controller/...'
+tests/server/calculator/...                  # mirrors src/server
+```
+
+Hexagonal uses the Java names (`domain/ application/ adapter/ config/`) under
+`src/server/calculator/`. The skeleton leaves `throw new Error('not implemented')`
+bodies.
+
 ## Self-check (right after the skeleton, required)
 
 Right after creating the structure, print the directory tree and verify and report the following yourself. Do not move to the next stage until it passes.
@@ -124,7 +151,7 @@ order/
 
 ## Prohibited
 
-- Do not write method bodies. Leave `UnsupportedOperationException` or `NotImplementedError`.
+- Do not write method bodies. Leave `UnsupportedOperationException`, `TODO()`, `NotImplementedError`, or `throw new Error('not implemented')`.
 - Do not cram all business rules into the service just because you chose layered.
 - Do not create empty adapters or needless interfaces just because you chose hexagonal/clean.
 - Do not let the controller/router call the repository directly.

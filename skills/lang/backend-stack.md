@@ -1,7 +1,7 @@
 ---
 name: backend-stack
-description: Choose one stack — layered or hexagonal/clean — for a Java Spring or Python FastAPI backend.
-tags: [backend, stack, java, python]
+description: Choose one stack — layered or hexagonal/clean — for a Java Spring, Python FastAPI, or experimental Kotlin Spring or TypeScript Next.js backend.
+tags: [backend, stack, java, kotlin, python, typescript]
 stability: stable
 ---
 
@@ -21,6 +21,14 @@ Structure creation is handled by `skills/skeleton/backend-skeleton.md`.
 | `java-spring-hexagonal` | hexagonal (domain/application/adapter) |
 | `python-fastapi-layered` | 3-tier (Router/Service/Repository) |
 | `python-fastapi-clean` | clean (domain/application/infrastructure/presentation) |
+| `kotlin-spring-layered` | experimental: 3-tier, Kotlin |
+| `kotlin-spring-hexagonal` | experimental: hexagonal, Kotlin |
+| `typescript-next-layered` | experimental: 3-tier under `src/server/`, Next.js route handlers |
+| `typescript-next-hexagonal` | experimental: hexagonal under `src/server/`, Next.js route handlers |
+
+Experimental stacks are outside the 1.x compatibility promise: say so when
+offering one, and never pick one for the user. Language rules live in
+`lang/kotlin-spring.md`, `lang/typescript-next.md`, and `lang/python-pydantic.md`.
 
 ## Selection criteria
 
@@ -35,15 +43,19 @@ Default recommendation: 2 domains or fewer + few adapters -> layered. Otherwise 
 
 ## Stack scope gate (pass first)
 
-OOPforge supports **only Java Spring and Python FastAPI** backends. If a new build request leaves the language undecided or implies another stack, handle it before code.
+OOPforge supports **Java Spring and Python FastAPI** backends, plus experimental
+**Kotlin Spring** and **TypeScript Next.js** server code (`src/server/`, route
+handlers, server actions inside a Next.js App Router app). If a new build
+request leaves the language undecided or implies another stack, handle it
+before code.
 
-- **Language unspecified**: do not pick arbitrarily; present only the supported stacks (Java/Python) and let the user choose.
-- **Implies an unsupported stack** (JavaScript/TypeScript, frontend, mobile, shell/CLI, etc.): clearly state that OOPforge **cannot be applied** to that stack.
+- **Language unspecified**: do not pick arbitrarily; offer Java Spring and Python FastAPI, mention the two experimental stacks, and let the user choose.
+- **Implies an unsupported stack** (JavaScript/TypeScript outside Next.js such as NestJS or Express, frontend UI, mobile, shell/CLI, etc.): clearly state that OOPforge **cannot be applied** to that stack. Next.js pages, components, and client state belong to Compforge.
 - If the user still insists on that stack: proceed only as a **plain (non-OOPforge) build** without OOPforge discipline (skeleton/hard rules), and state that it is outside OOPforge scope.
 
 ## Decision procedure
 
-1. Fix the language via the scope gate above (Java Spring or Python FastAPI).
+1. Fix the language via the scope gate above.
 2. Pick layered or hexagonal/clean using the criteria above.
 3. If ambiguous, ask the user "3-tier (layered) or hexagonal/clean?".
 4. Pass one chosen stack identifier to the next step.
@@ -56,6 +68,7 @@ OOPforge supports **only Java Spring and Python FastAPI** backends. If a new bui
 ## OpenAPI default policy
 
 - Every backend stack must expose OpenAPI/Swagger directly in the dev environment.
+- TypeScript Next.js: route handlers expose OpenAPI; server actions are internal RPC and are exempt (`lang/typescript-next.md`).
 - Follow `skills/skeleton/backend-skeleton.md` for concrete tooling and folder structure.
 
 ## Prohibited
@@ -63,4 +76,4 @@ OOPforge supports **only Java Spring and Python FastAPI** backends. If a new bui
 - Do not create folder structure or empty types before the stack is decided.
 - Do not mix multiple stacks in one project.
 - Do not force hexagonal/clean as the default without justification.
-- Do not apply the OOPforge skeleton/hard rules to an unsupported stack (JS/TS, etc.). State that it does not apply first.
+- Do not apply the OOPforge skeleton/hard rules to an unsupported stack (non-Next.js JS/TS, etc.). State that it does not apply first.

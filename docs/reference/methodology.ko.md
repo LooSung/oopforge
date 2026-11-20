@@ -13,7 +13,7 @@
 OOPforge는 **백엔드 OOP/DDD에 수직 특화된 방법론 + 아키텍처 강제(fitness function) 팩**이다.
 범용 코딩 에이전트가 아니라, 그 위에 얹혀 **구조를 기본값으로 만드는 하네스**다.
 
-- 대상 스택: **Java(Spring) / Python(FastAPI)** 백엔드.
+- 대상 스택: **Java(Spring) / Python(FastAPI)** 백엔드. 실험적으로 Kotlin(Spring)과 Next.js 앱의 TypeScript 서버 코드(`src/server/`, route handler, server action).
 - 푸는 문제: 제약이 없으면 AI 에이전트가 레이어/도메인 경계를 무너뜨린다(God Service, anemic domain).
   명시적 제약(스킬 + 하드룰 + CI 강제 + 휴먼 체크포인트)으로 위반과 재작업을
   줄이는 것이 목표다. 현재 공개 proof는 제한된 조건의 초기 결과이며 일반
@@ -55,7 +55,7 @@ Discovery → Design → Delivery Plan → Skeleton → Implement → Test
 
 1. 요청을 분류해 **가장 작은 실행 경로**를 고른다.
 2. 결정이 비어 있으면(언어·아키텍처·영속성·CQRS 여부 등) **모호성 해소**로 채운다 —
-   심문하지 않고 기본값을 제시하고, 언어·아키텍처는 스택 게이트(Java-Spring/Python-FastAPI)를 거친다.
+   심문하지 않고 기본값을 제시하고, 언어·아키텍처는 스택 게이트(`lang/backend-stack.md`)를 거친다.
 3. 비즈니스 로직 전에 **OOP Contract**(Use Case, Aggregate Root, 불변식, 상태 전이, 포트, 트랜잭션 경계)를 채운다.
 4. 구현·테스트 후 **하드룰**을 검증하고 완료 보고를 남긴다.
 

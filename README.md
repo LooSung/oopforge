@@ -7,7 +7,8 @@
 > **AI ships the feature. OOPforge keeps the architecture.**
 
 OOPforge is a skill pack for coding agents working on **Java Spring** or
-**Python FastAPI** backends. Before your agent writes business logic, it names
+**Python FastAPI** backends, with experimental support for Kotlin Spring and for
+TypeScript server code in a Next.js app. Before your agent writes business logic, it names
 the domain model, the use-case boundary, and the ports. Then it checks the result
 against measurable Hard Rules, which forbid God Services and framework code in
 the domain.
@@ -21,7 +22,7 @@ Works with **Claude Code**, **Codex CLI**, and **Cursor Agent CLI**.
 | Pack | For | Stack |
 |---|---|---|
 | [Compforge](https://github.com/LooSung/compforge) | Frontend | TypeScript + React |
-| **OOPforge** (this repo) | Backend | Java Spring · Python FastAPI |
+| **OOPforge** (this repo) | Backend | Java Spring · Python FastAPI · Kotlin Spring and TypeScript Next.js (experimental) |
 | [FuseForge](https://github.com/LooSung/fuseforge) | One feature across both | Coordinates Compforge + OOPforge (experimental) |
 
 Each pack works on its own. In Claude Code, the `forge` marketplace offers all three.
@@ -95,7 +96,9 @@ Not sure which one? Use `craft`. It picks the smallest path.
    the domain, one Aggregate per transaction.
 
 Stacks: `java-spring-layered`, `java-spring-hexagonal`, `python-fastapi-layered`,
-and `python-fastapi-clean`. Skeletons include OpenAPI/Swagger UI. Domain Events
+and `python-fastapi-clean`; experimental `kotlin-spring-layered`,
+`kotlin-spring-hexagonal`, `typescript-next-layered`, and
+`typescript-next-hexagonal`. Skeletons include OpenAPI/Swagger UI. Domain Events
 and the outbox are core; Production Readiness is opt-in for deployment requests.
 
 ### Before → after
@@ -135,7 +138,7 @@ Blocking gates are opt-in; see the
 ## Learn more
 
 - [Library loan walkthrough](docs/guides/library-loan/README.md): Discovery → Test, step by step
-- [Examples](examples/README.md): six runnable calculators (Java/Python × layered, hexagonal, hexagonal-CQRS)
+- [Examples](examples/README.md): twelve runnable calculators (Java, Python, and experimental Kotlin and TypeScript Next.js × layered, hexagonal, hexagonal-CQRS)
 - Setup: [Claude Code](docs/setup/claude-code.md) · [Codex](docs/setup/codex.md) ·
   [Cursor](docs/setup/cursor.md) · [Install, update, remove](docs/setup/install.md)
 - [Support scope](docs/reference/support-scope.md) ·

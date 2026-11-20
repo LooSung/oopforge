@@ -28,13 +28,16 @@
     "skills/workflow/test.md"
   ],
   "experimental": [
-    "skills/workflow/crucible.md",
     "skills/antipatterns/anemic-domain.md",
     "skills/antipatterns/controller-fat.md",
     "skills/antipatterns/flat-package.md",
     "skills/antipatterns/god-aggregate.md",
     "skills/antipatterns/repository-with-business-logic.md",
+    "skills/lang/kotlin-spring.md",
+    "skills/lang/typescript-next.md",
+    "skills/skeleton/lint-enforcement-typescript.md",
     "skills/workflow/consult.md",
+    "skills/workflow/crucible.md",
     "skills/workflow/jira-card.md",
     "skills/workflow/jira-children.md",
     "skills/workflow/review.md"

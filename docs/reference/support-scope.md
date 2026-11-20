@@ -12,7 +12,21 @@ guide for a skill pack, not a hosted-service SLA.
 - Domain modeling, use-case and transaction boundaries, Domain Events,
   transactional outbox, and opt-in Production Readiness.
 
-The six calculator projects are executable references, not production
+## Experimental backend scope
+
+These stacks have runnable layered, hexagonal, and hexagonal CQRS references,
+`archlint.py` and domain-review coverage, and a second standard tool, but sit
+outside the 1.x compatibility promise until promoted
+([evidence](../verification/kotlin-typescript-stacks-2026-11-20.md)):
+
+- Kotlin with Spring (`lang/kotlin-spring.md`), checked with ArchUnit.
+- TypeScript server code inside a Next.js App Router app — `src/server/`,
+  route handlers, server actions (`lang/typescript-next.md`), checked with
+  ESLint `import/no-restricted-paths` zones. Next.js pages, components, and
+  client state belong to Compforge; NestJS, Express, and other Node backends
+  are not supported.
+
+The calculator projects are executable references, not production
 frameworks. Their in-memory persistence, outbox, idempotency, and audit adapters
 must be replaced by durable shared infrastructure for multi-instance deployment.
 
