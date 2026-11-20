@@ -1,0 +1,30 @@
+{
+  "name": "calculator-typescript-next-hexagonal-cqrs",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "lint": "eslint src tests",
+    "test": "vitest run",
+    "check": "npm run lint && tsc --noEmit && npm run test && next build"
+  },
+  "dependencies": {
+    "@asteasolutions/zod-to-openapi": "^9.1.0",
+    "next": "^15.3.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "server-only": "^0.0.1",
+    "zod": "^4.6.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.0",
+    "@types/react": "^19.1.0",
+    "eslint": "^9.29.0",
+    "eslint-plugin-import": "^2.31.0",
+    "typescript": "~5.8.3",
+    "typescript-eslint": "^8.34.0",
+    "vitest": "^3.2.0"
+  }
+}
