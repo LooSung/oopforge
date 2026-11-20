@@ -108,6 +108,7 @@ jobs:
       matrix:
         dir:
           - examples/calculator-typescript-next-layered
+          - examples/calculator-typescript-next-hexagonal
           - examples/calculator-typescript-next-hexagonal-cqrs
     steps:
       - name: Checkout
