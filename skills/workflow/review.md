@@ -33,8 +33,8 @@ that existed before this change is not a finding; mention at most one under
 **Not checked** when it blocks understanding the change.
 
 Frontend files in the diff are outside OOPforge. Name them in one line and
-point to Compforge review; do not judge them. OOPforge covers Java Spring and
-Python FastAPI backends (`lang/backend-stack.md`).
+point to Compforge review; do not judge them. OOPforge covers the stacks listed
+in `lang/backend-stack.md`, experimental ones included.
 
 ## Read before judging
 
