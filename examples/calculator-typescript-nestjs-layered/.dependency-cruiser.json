@@ -1,0 +1,38 @@
+{
+  "forbidden": [
+    {
+      "name": "domain-isolation",
+      "comment": "domain/ imports nothing outside domain/: no framework, no other layer.",
+      "severity": "error",
+      "from": { "path": "^src/[^/]+/domain/" },
+      "to": { "pathNot": "^src/[^/]+/domain/", "dependencyTypesNot": ["core"] }
+    },
+    {
+      "name": "controller-no-repository",
+      "comment": "A controller goes through the service, never straight to a repository.",
+      "severity": "error",
+      "from": { "path": "^src/[^/]+/controller/" },
+      "to": { "path": "^src/[^/]+/repository/" }
+    },
+    {
+      "name": "service-downward-only",
+      "comment": "A service never imports a controller.",
+      "severity": "error",
+      "from": { "path": "^src/[^/]+/service/" },
+      "to": { "path": "^src/[^/]+/controller/" }
+    },
+    {
+      "name": "repository-downward-only",
+      "comment": "A repository imports only the domain.",
+      "severity": "error",
+      "from": { "path": "^src/[^/]+/repository/" },
+      "to": { "path": "^src/[^/]+/(controller|service)/" }
+    }
+  ],
+  "options": {
+    "doNotFollow": { "path": "node_modules" },
+    "exclude": { "path": "\\.spec\\.ts$" },
+    "tsConfig": { "fileName": "tsconfig.json" },
+    "tsPreCompilationDeps": true
+  }
+}
