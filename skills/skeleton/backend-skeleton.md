@@ -7,7 +7,7 @@ stability: stable
 
 # Backend Skeleton
 
-Contents: When to use · Common rules · Java Spring · Kotlin Spring · Python FastAPI · TypeScript Next.js · Self-check (right after the skeleton, required) · Prohibited
+Contents: When to use · Common rules · Java Spring · Kotlin Spring · Python FastAPI · Self-check (right after the skeleton, required) · Prohibited
 
 ## When to use
 
@@ -98,26 +98,6 @@ app/
 
 FastAPI generates OpenAPI by default. Specify `docs_url`, `openapi_url`, tags, response model, and error schema.
 By default, separate SQLAlchemy models from domain objects.
-
-## TypeScript Next.js (experimental)
-
-Apply `skills/lang/typescript-next.md`. Every layer lives under `src/server/`;
-route files under `src/app/` only re-export a handler.
-
-```text
-src/server/calculator/
-├── controller/    calculatorController.ts   # route handler body (no repository import)
-├── service/       calculatorService.ts
-├── repository/    calculationRepository.ts
-└── domain/        calculation.ts
-src/server/core/dependencies.ts              # wiring, imports 'server-only'
-src/app/api/v1/calculations/route.ts         # export { POST } from '.../controller/...'
-tests/server/calculator/...                  # mirrors src/server
-```
-
-Hexagonal uses the Java names (`domain/ application/ adapter/ config/`) under
-`src/server/calculator/`. The skeleton leaves `throw new Error('not implemented')`
-bodies.
 
 ## Self-check (right after the skeleton, required)
 

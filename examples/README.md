@@ -13,9 +13,6 @@ One domain — a **calculator with history** — implemented across architecture
 | [calculator-kotlin-layered](calculator-kotlin-layered/) | Spring Boot, Kotlin (experimental) | 3-tier (controller / service / repository) |
 | [calculator-kotlin-hexagonal](calculator-kotlin-hexagonal/) | Spring Boot, Kotlin (experimental) | hexagonal (ports & adapters) |
 | [calculator-kotlin-hexagonal-cqrs](calculator-kotlin-hexagonal-cqrs/) | Spring Boot, Kotlin (experimental) | hexagonal **+ CQRS** overlay |
-| [calculator-typescript-next-layered](calculator-typescript-next-layered/) | Next.js server code (experimental) | 3-tier under `src/server/` |
-| [calculator-typescript-next-hexagonal](calculator-typescript-next-hexagonal/) | Next.js server code (experimental) | hexagonal under `src/server/`, plus a server action |
-| [calculator-typescript-next-hexagonal-cqrs](calculator-typescript-next-hexagonal-cqrs/) | Next.js server code (experimental) | hexagonal **+ CQRS** overlay |
 
 ## How to read them
 
@@ -48,7 +45,6 @@ One domain — a **calculator with history** — implemented across architecture
 
 for r in layered hexagonal hexagonal-cqrs; do
   (cd examples/calculator-kotlin-$r && ./gradlew test --no-daemon)
-  (cd examples/calculator-typescript-next-$r && npm ci && npm run check)
 done
 ```
 
@@ -58,9 +54,7 @@ done
 - import-linter checks both plain Python layered and hexagonal dependency
   boundaries. For the hexagonal example this means domain independence,
   application independence, and no presentation-to-infrastructure import.
-- Gradle tests run ArchUnit for the Java and Kotlin examples; ESLint
-  `import/no-restricted-paths` zones play that role for the TypeScript Next.js
-  examples (`npm run check` = lint, tsc, Vitest, next build).
+- Gradle tests run ArchUnit for the Java and Kotlin examples.
 - Gradle tests run ArchUnit for both plain Java layered and hexagonal examples.
   The hexagonal checks keep the domain framework-free and the application
   independent of adapters.

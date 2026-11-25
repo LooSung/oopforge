@@ -33,10 +33,6 @@ jobs:
           python3 scripts/ci/archlint.py layered \
             examples/calculator-kotlin-layered/src/main/kotlin/com/oopforge/example/layered/calculator
 
-      - name: Enforce layered layout on the layered TypeScript Next.js example
-        run: |
-          python3 scripts/ci/archlint.py layered examples/calculator-typescript-next-layered/src
-
       - name: Enforce layered layout on the layered TypeScript NestJS example
         run: |
           python3 scripts/ci/archlint.py layered examples/calculator-typescript-nestjs-layered/src
@@ -54,7 +50,6 @@ jobs:
             examples/calculator-java-hexagonal-cqrs/src/main/java/com/oopforge/example/calculator
           python3 scripts/ci/archlint.py cqrs \
             examples/calculator-kotlin-hexagonal-cqrs/src/main/kotlin/com/oopforge/example/calculator
-          python3 scripts/ci/archlint.py cqrs examples/calculator-typescript-next-hexagonal-cqrs/src
           python3 scripts/ci/archlint.py cqrs examples/calculator-typescript-nestjs-hexagonal-cqrs/src
 
       # Second enforcement layer: the industry-standard import-linter on top of

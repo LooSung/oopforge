@@ -6,6 +6,10 @@
 
 ## [Unreleased]
 
+### Removed
+
+- 실험적 스택 `typescript-next-layered`, `typescript-next-hexagonal`(+ CQRS)을 뺐다(v1.13.0에서 추가). Next.js 앱은 route handler와 server action까지 Compforge 몫이고, 비즈니스 규칙은 OOPforge가 지원하는 별도 백엔드에 둔다. 계산기 3종(`calculator-typescript-next-*`), `lang/typescript-next.md`, Next.js용 ESLint 존 스킬, archlint의 `route.ts` 규칙이 함께 빠졌다. 실험적 스택이라 1.x 호환 약속 밖이다. `.ts` 검사는 남는다.
+
 ## [1.14.0] - 2026-11-25
 
 대상 코드를 좁게 읽는 Startup 규칙.

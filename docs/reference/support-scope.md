@@ -16,15 +16,13 @@ guide for a skill pack, not a hosted-service SLA.
 
 These stacks have runnable layered, hexagonal, and hexagonal CQRS references,
 `archlint.py` and domain-review coverage, and a second standard tool, but sit
-outside the 1.x compatibility promise until promoted
-([evidence](../verification/kotlin-typescript-stacks-2026-11-20.md)):
+outside the 1.x compatibility promise until promoted:
 
-- Kotlin with Spring (`lang/kotlin-spring.md`), checked with ArchUnit.
-- TypeScript server code inside a Next.js App Router app — `src/server/`,
-  route handlers, server actions (`lang/typescript-next.md`), checked with
-  ESLint `import/no-restricted-paths` zones. Next.js pages, components, and
-  client state belong to Compforge; NestJS, Express, and other Node backends
-  are not supported.
+- Kotlin with Spring (`lang/kotlin-spring.md`), checked with ArchUnit
+  ([evidence](../verification/kotlin-typescript-stacks-2026-11-20.md)).
+
+No JavaScript or TypeScript backend is supported. A Next.js app — pages,
+components, route handlers, server actions — belongs to Compforge.
 
 The calculator projects are executable references, not production
 frameworks. Their in-memory persistence, outbox, idempotency, and audit adapters

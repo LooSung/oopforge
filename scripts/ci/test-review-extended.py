@@ -177,7 +177,7 @@ TS_DOMAIN = (
 
 
 def test_typescript_detectors():
-    found = _rules({"src/server/x/domain/order.ts": TS_DOMAIN, "src/ui/Widget.tsx": "import 'next/link';\n" * 301})
+    found = _rules({"src/order/domain/order.ts": TS_DOMAIN, "src/ui/Widget.tsx": "import 'react';\n" * 301})
     fields = {name for rule, name in found if rule == PUBLIC_MUTABLE_DOMAIN_FIELD}
     check("ts public, decorated, and constructor fields are mutable", {"total", "amount", "owner"} <= fields)
     check("ts readonly / private / #private / locals are not reported",

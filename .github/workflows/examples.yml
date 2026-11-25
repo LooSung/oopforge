@@ -107,9 +107,6 @@ jobs:
       fail-fast: false
       matrix:
         dir:
-          - examples/calculator-typescript-next-layered
-          - examples/calculator-typescript-next-hexagonal
-          - examples/calculator-typescript-next-hexagonal-cqrs
           - examples/calculator-typescript-nestjs-layered
           - examples/calculator-typescript-nestjs-hexagonal
           - examples/calculator-typescript-nestjs-hexagonal-cqrs
