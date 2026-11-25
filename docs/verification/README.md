@@ -21,6 +21,10 @@ activation probes on the installed copies.
 records the probes, references, enforcement fixtures, and live routing checks
 behind the experimental Kotlin Spring and TypeScript Next.js stacks.
 
+[`nestjs-stack-2026-11-25.md`](nestjs-stack-2026-11-25.md) records the probes,
+references, enforcement fixtures, and live routing checks behind the
+experimental TypeScript NestJS stack, and the removal of the Next.js stack.
+
 [`evals-2026-11-16.md`](evals-2026-11-16.md) records `claude plugin eval` with and
 without the plugin, plus Haiku and Sonnet, for v1.8.0, including the plugin
 load-path defect it found.

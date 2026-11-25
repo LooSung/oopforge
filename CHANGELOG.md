@@ -6,6 +6,16 @@
 
 ## [Unreleased]
 
+TypeScript 백엔드는 NestJS로: 실험적 NestJS 스택을 넣고 Next.js 서버 코드 스택을 뺐다.
+
+### Added
+
+- 실험적 스택 `typescript-nestjs-layered`, `typescript-nestjs-hexagonal`(+ CQRS). `nest new --strict`가 만드는 NestJS 12 구성(ESM, TypeScript 6, Vitest 4, oxlint)에 Zod 4, `@nestjs/swagger`, dependency-cruiser를 더했다. 계산기 3종(`calculator-typescript-nestjs-*`)은 Java 테스트를 옮겼고, 경계 규칙은 dependency-cruiser, 코드 수준 하드룰은 oxlint가 맡는다. `lang/typescript-nestjs.md`는 기능 모듈 안의 레이어 폴더, abstract class 포트(Nest는 런타임 토큰으로 주입하고 interface는 런타임에 없다), Zod `@Body({ schema })` 경계, NestJS CLI가 함께 까는 공식 에이전트 스킬과의 역할 분담을 정한다. `skeleton/lint-enforcement-typescript.md`는 dependency-cruiser·oxlint 템플릿으로 다시 썼다. `tsPreCompilationDeps: true`가 없으면 `import type`으로 가져온 repository가 경계를 통과한다.
+
+### Changed
+
+- `archlint.py`가 NestJS 구조를 읽는다. `*.spec.ts`·e2e spec·`dist/`는 건너뛰고, CQRS 역할은 `place-order-command.service.ts` 같은 kebab-case 이름에서도 읽는다. 도메인 리뷰는 `domain/`의 `@nestjs/*`, `class-validator`, `class-transformer` import와 데코레이터가 붙은 public 필드를 보고한다. 고정된 ref를 올린 대상 프로젝트는 이 지적을 새로 받을 수 있다. Java·Kotlin·Python 결과는 그대로다.
+
 ### Removed
 
 - 실험적 스택 `typescript-next-layered`, `typescript-next-hexagonal`(+ CQRS)을 뺐다(v1.13.0에서 추가). Next.js 앱은 route handler와 server action까지 Compforge 몫이고, 비즈니스 규칙은 OOPforge가 지원하는 별도 백엔드에 둔다. 계산기 3종(`calculator-typescript-next-*`), `lang/typescript-next.md`, Next.js용 ESLint 존 스킬, archlint의 `route.ts` 규칙이 함께 빠졌다. 실험적 스택이라 1.x 호환 약속 밖이다. `.ts` 검사는 남는다.

@@ -7,7 +7,7 @@ stability: stable
 
 # Backend Skeleton
 
-Contents: When to use · Common rules · Java Spring · Kotlin Spring · Python FastAPI · Self-check (right after the skeleton, required) · Prohibited
+Contents: When to use · Common rules · Java Spring · Kotlin Spring · Python FastAPI · TypeScript NestJS · Self-check (right after the skeleton, required) · Prohibited
 
 ## When to use
 
@@ -98,6 +98,27 @@ app/
 
 FastAPI generates OpenAPI by default. Specify `docs_url`, `openapi_url`, tags, response model, and error schema.
 By default, separate SQLAlchemy models from domain objects.
+
+## TypeScript NestJS (experimental)
+
+Apply `skills/lang/typescript-nestjs.md`. Start from `nest new --strict`, then
+move each feature module's files into layer folders.
+
+```text
+src/calculator/
+├── calculator.module.ts          # composition: binds ports to adapters
+├── controller/  calculator.controller.ts · calculate.request.ts (zod)
+├── service/     calculator.service.ts (+ .spec.ts)
+├── repository/  calculation.repository.ts (abstract port) · in-memory-...repository.ts
+└── domain/      calculation.ts (+ .spec.ts)
+src/configure-app.ts              # validation pipe + /v3/api-docs, shared with e2e tests
+test/calculator.e2e-spec.ts       # Supertest through AppModule
+```
+
+Hexagonal uses the Java names (`domain/ application/ adapter/`) inside the
+feature module. The skeleton leaves `throw new Error('not implemented')` bodies.
+Copy `.dependency-cruiser.json` and `.oxlintrc.json` from the matching
+reference (`skeleton/lint-enforcement-typescript.md`).
 
 ## Self-check (right after the skeleton, required)
 

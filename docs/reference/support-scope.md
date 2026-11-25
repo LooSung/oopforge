@@ -20,9 +20,13 @@ outside the 1.x compatibility promise until promoted:
 
 - Kotlin with Spring (`lang/kotlin-spring.md`), checked with ArchUnit
   ([evidence](../verification/kotlin-typescript-stacks-2026-11-20.md)).
+- TypeScript with NestJS (`lang/typescript-nestjs.md`), checked with
+  dependency-cruiser and oxlint
+  ([evidence](../verification/nestjs-stack-2026-11-25.md)).
 
-No JavaScript or TypeScript backend is supported. A Next.js app — pages,
-components, route handlers, server actions — belongs to Compforge.
+Other JavaScript and TypeScript backends (Express, plain Node) are not
+supported. A Next.js app — pages, components, route handlers, server
+actions — belongs to Compforge.
 
 The calculator projects are executable references, not production
 frameworks. Their in-memory persistence, outbox, idempotency, and audit adapters

@@ -117,6 +117,7 @@ Run `pip install -e ".[dev]" && lint-imports`.
 Add the test dependency; architecture rules then run inside `./gradlew test`.
 The same rules work for Kotlin Spring: ArchUnit reads Kotlin bytecode, and the
 Kotlin references port each `ArchitectureTest` to `src/test/kotlin/`.
+TypeScript NestJS uses dependency-cruiser and oxlint instead: `lint-enforcement-typescript.md`.
 
 ```kotlin
 testImplementation("com.tngtech.archunit:archunit-junit5:1.3.0")

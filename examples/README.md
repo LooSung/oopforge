@@ -13,6 +13,9 @@ One domain — a **calculator with history** — implemented across architecture
 | [calculator-kotlin-layered](calculator-kotlin-layered/) | Spring Boot, Kotlin (experimental) | 3-tier (controller / service / repository) |
 | [calculator-kotlin-hexagonal](calculator-kotlin-hexagonal/) | Spring Boot, Kotlin (experimental) | hexagonal (ports & adapters) |
 | [calculator-kotlin-hexagonal-cqrs](calculator-kotlin-hexagonal-cqrs/) | Spring Boot, Kotlin (experimental) | hexagonal **+ CQRS** overlay |
+| [calculator-typescript-nestjs-layered](calculator-typescript-nestjs-layered/) | NestJS (experimental) | 3-tier folders in the feature module |
+| [calculator-typescript-nestjs-hexagonal](calculator-typescript-nestjs-hexagonal/) | NestJS (experimental) | hexagonal (ports & adapters) |
+| [calculator-typescript-nestjs-hexagonal-cqrs](calculator-typescript-nestjs-hexagonal-cqrs/) | NestJS (experimental) | hexagonal **+ CQRS** overlay |
 
 ## How to read them
 
@@ -45,6 +48,7 @@ One domain — a **calculator with history** — implemented across architecture
 
 for r in layered hexagonal hexagonal-cqrs; do
   (cd examples/calculator-kotlin-$r && ./gradlew test --no-daemon)
+  (cd examples/calculator-typescript-nestjs-$r && npm ci && npm run check)
 done
 ```
 
@@ -54,7 +58,9 @@ done
 - import-linter checks both plain Python layered and hexagonal dependency
   boundaries. For the hexagonal example this means domain independence,
   application independence, and no presentation-to-infrastructure import.
-- Gradle tests run ArchUnit for the Java and Kotlin examples.
+- Gradle tests run ArchUnit for the Java and Kotlin examples; dependency-cruiser
+  and oxlint play that role for the NestJS examples (`npm run check` = lint,
+  tsc, Vitest unit and e2e, nest build).
 - Gradle tests run ArchUnit for both plain Java layered and hexagonal examples.
   The hexagonal checks keep the domain framework-free and the application
   independent of adapters.

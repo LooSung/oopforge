@@ -1,6 +1,6 @@
 ---
 name: oopforge
-description: Guides Java Spring and Python FastAPI backend work, plus experimental Kotlin Spring, with OOP/DDD modeling, layered or hexagonal/clean architecture, and CQRS. Use when building, refactoring, testing, reviewing a diff or pull request, consulting on, or writing one Jira card or the child tasks of one epic or story for a backend service, REST/HTTP API, or business feature in Java, Kotlin, or Python, or for the Craft, Refactor, Consult, Test, Crucible, Review, and Jira workflows.
+description: Guides Java Spring and Python FastAPI backend work, plus experimental Kotlin Spring and TypeScript NestJS, with OOP/DDD modeling, layered or hexagonal/clean architecture, and CQRS. Use when building, refactoring, testing, reviewing a diff or pull request, consulting on, or writing one Jira card or the child tasks of one epic or story for a backend service, REST/HTTP API, or business feature in Java, Kotlin, Python, or NestJS, or for the Craft, Refactor, Consult, Test, Crucible, Review, and Jira workflows.
 license: MIT
 compatibility: Claude Code, Codex CLI, Cursor Agent, and Agent Skills-compatible clients with access to the complete OOPforge pack.
 metadata:
@@ -20,7 +20,7 @@ OOP Contract
 
 Use this skill when the user asks for OOPforge, DDD/OOP modeling, clean or hexagonal architecture, domain-first implementation, or the `/oopforge:craft` prompt — and also for everyday backend build requests in a supported stack (e.g. "make a calculator", "build an order API"), so they are governed instead of free-formed.
 
-**Stack scope:** OOPforge targets **Java Spring** and **Python FastAPI** backends, plus experimental **Kotlin Spring**. If a request leaves the language unspecified, steer the user to a supported stack rather than picking one silently. If it targets an unsupported stack (JavaScript/TypeScript backends, frontend UI, mobile, CLI), tell the user OOPforge does not apply there — a Next.js app belongs to Compforge; only build it as a plain (non-OOPforge) task if the user explicitly insists. See `lang/backend-stack.md`.
+**Stack scope:** OOPforge targets **Java Spring** and **Python FastAPI** backends, plus experimental **Kotlin Spring** and **TypeScript NestJS**. If a request leaves the language unspecified, steer the user to a supported stack rather than picking one silently. If it targets an unsupported stack (other JavaScript/TypeScript backends, frontend UI, mobile, CLI), tell the user OOPforge does not apply there — a Next.js app belongs to Compforge; only build it as a plain (non-OOPforge) task if the user explicitly insists. See `lang/backend-stack.md`.
 
 ## Command Routing
 
@@ -98,8 +98,10 @@ Backend stack and skeleton:
 - Stack selection (layered or hexagonal/clean): `lang/backend-stack.md`
 - Python FastAPI boundary typing and validation: `lang/python-pydantic.md`
 - Kotlin Spring Hard Rule forms (experimental): `lang/kotlin-spring.md`
+- TypeScript NestJS Hard Rule forms (experimental): `lang/typescript-nestjs.md`
 - Package structure / skeleton: `skeleton/backend-skeleton.md`
 - Lint enforcement (architecture tests): `skeleton/lint-enforcement.md`
+- TypeScript NestJS lint enforcement (experimental): `skeleton/lint-enforcement-typescript.md`
 
 Conditional workflow:
 - Testing: `workflow/test.md`

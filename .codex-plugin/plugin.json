@@ -17,6 +17,8 @@
         "java",
         "kotlin",
         "python",
+        "typescript",
+        "nestjs",
         "korean",
         "methodology"
     ],

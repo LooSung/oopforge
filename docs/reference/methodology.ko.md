@@ -13,7 +13,7 @@
 OOPforge는 **백엔드 OOP/DDD에 수직 특화된 방법론 + 아키텍처 강제(fitness function) 팩**이다.
 범용 코딩 에이전트가 아니라, 그 위에 얹혀 **구조를 기본값으로 만드는 하네스**다.
 
-- 대상 스택: **Java(Spring) / Python(FastAPI)** 백엔드. 실험적으로 Kotlin(Spring).
+- 대상 스택: **Java(Spring) / Python(FastAPI)** 백엔드. 실험적으로 Kotlin(Spring)과 TypeScript(NestJS).
 - 푸는 문제: 제약이 없으면 AI 에이전트가 레이어/도메인 경계를 무너뜨린다(God Service, anemic domain).
   명시적 제약(스킬 + 하드룰 + CI 강제 + 휴먼 체크포인트)으로 위반과 재작업을
   줄이는 것이 목표다. 현재 공개 proof는 제한된 조건의 초기 결과이며 일반

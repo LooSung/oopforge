@@ -1,7 +1,7 @@
 ---
 name: backend-stack
-description: Choose one stack — layered or hexagonal/clean — for a Java Spring, Python FastAPI, or experimental Kotlin Spring backend.
-tags: [backend, stack, java, kotlin, python]
+description: Choose one stack — layered or hexagonal/clean — for a Java Spring, Python FastAPI, or experimental Kotlin Spring or TypeScript NestJS backend.
+tags: [backend, stack, java, kotlin, python, typescript, nestjs]
 stability: stable
 ---
 
@@ -23,10 +23,13 @@ Structure creation is handled by `skills/skeleton/backend-skeleton.md`.
 | `python-fastapi-clean` | clean (domain/application/infrastructure/presentation) |
 | `kotlin-spring-layered` | experimental: 3-tier, Kotlin |
 | `kotlin-spring-hexagonal` | experimental: hexagonal, Kotlin |
+| `typescript-nestjs-layered` | experimental: 3-tier folders inside a NestJS feature module |
+| `typescript-nestjs-hexagonal` | experimental: hexagonal inside a NestJS feature module |
 
 Experimental stacks are outside the 1.x compatibility promise: say so when
 offering one, and never pick one for the user. Language rules live in
-`lang/kotlin-spring.md` and `lang/python-pydantic.md`.
+`lang/kotlin-spring.md`, `lang/typescript-nestjs.md`, and
+`lang/python-pydantic.md`.
 
 ## Selection criteria
 
@@ -42,11 +45,11 @@ Default recommendation: 2 domains or fewer + few adapters -> layered. Otherwise 
 ## Stack scope gate (pass first)
 
 OOPforge supports **Java Spring and Python FastAPI** backends, plus experimental
-**Kotlin Spring**. If a new build request leaves the language undecided or
-implies another stack, handle it before code.
+**Kotlin Spring** and **TypeScript NestJS**. If a new build request leaves the
+language undecided or implies another stack, handle it before code.
 
-- **Language unspecified**: do not pick arbitrarily; offer Java Spring and Python FastAPI, mention the experimental stack, and let the user choose.
-- **Implies an unsupported stack** (JavaScript/TypeScript backends such as NestJS or Express, frontend UI, mobile, shell/CLI, etc.): clearly state that OOPforge **cannot be applied** to that stack. A Next.js app — pages, components, route handlers, server actions — belongs to Compforge.
+- **Language unspecified**: do not pick arbitrarily; offer Java Spring and Python FastAPI, mention the two experimental stacks, and let the user choose.
+- **Implies an unsupported stack** (JavaScript/TypeScript backends other than NestJS, such as Express or plain Node, frontend UI, mobile, shell/CLI, etc.): clearly state that OOPforge **cannot be applied** to that stack. A Next.js app — pages, components, route handlers, server actions — belongs to Compforge.
 - If the user still insists on that stack: proceed only as a **plain (non-OOPforge) build** without OOPforge discipline (skeleton/hard rules), and state that it is outside OOPforge scope.
 
 ## Decision procedure
@@ -64,6 +67,7 @@ implies another stack, handle it before code.
 ## OpenAPI default policy
 
 - Every backend stack must expose OpenAPI/Swagger directly in the dev environment.
+- TypeScript NestJS: `@nestjs/swagger` reads the Zod boundary schemas (`lang/typescript-nestjs.md`).
 - Follow `skills/skeleton/backend-skeleton.md` for concrete tooling and folder structure.
 
 ## Prohibited
@@ -71,4 +75,4 @@ implies another stack, handle it before code.
 - Do not create folder structure or empty types before the stack is decided.
 - Do not mix multiple stacks in one project.
 - Do not force hexagonal/clean as the default without justification.
-- Do not apply the OOPforge skeleton/hard rules to an unsupported stack (JavaScript/TypeScript, etc.). State that it does not apply first.
+- Do not apply the OOPforge skeleton/hard rules to an unsupported stack (JavaScript/TypeScript outside NestJS, etc.). State that it does not apply first.
