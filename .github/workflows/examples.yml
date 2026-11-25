@@ -112,6 +112,7 @@ jobs:
           - examples/calculator-typescript-next-hexagonal-cqrs
           - examples/calculator-typescript-nestjs-layered
           - examples/calculator-typescript-nestjs-hexagonal
+          - examples/calculator-typescript-nestjs-hexagonal-cqrs
     steps:
       - name: Checkout
         uses: actions/checkout@v5

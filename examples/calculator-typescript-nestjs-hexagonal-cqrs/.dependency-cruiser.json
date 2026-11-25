@@ -1,0 +1,38 @@
+{
+  "forbidden": [
+    {
+      "name": "domain-isolation",
+      "comment": "domain/ imports nothing outside domain/: no framework, no library, no other layer.",
+      "severity": "error",
+      "from": { "path": "^src/[^/]+/domain/" },
+      "to": { "pathNot": "^src/[^/]+/domain/", "dependencyTypesNot": ["core"] }
+    },
+    {
+      "name": "application-no-adapter",
+      "comment": "The application core never imports an adapter or the composition module.",
+      "severity": "error",
+      "from": { "path": "^src/[^/]+/application/" },
+      "to": { "path": "^src/([^/]+/adapter/|[^/]+/[^/]+\\.module\\.ts$|[^/]+\\.module\\.ts$)" }
+    },
+    {
+      "name": "command-no-query",
+      "comment": "The command side never imports the query side.",
+      "severity": "error",
+      "from": { "path": "^src/[^/]+/application/command/" },
+      "to": { "path": "^src/[^/]+/application/query/" }
+    },
+    {
+      "name": "query-no-command",
+      "comment": "The query side never imports the command side.",
+      "severity": "error",
+      "from": { "path": "^src/[^/]+/application/query/" },
+      "to": { "path": "^src/[^/]+/application/command/" }
+    }
+  ],
+  "options": {
+    "doNotFollow": { "path": "node_modules" },
+    "exclude": { "path": "\\.spec\\.ts$" },
+    "tsConfig": { "fileName": "tsconfig.json" },
+    "tsPreCompilationDeps": true
+  }
+}

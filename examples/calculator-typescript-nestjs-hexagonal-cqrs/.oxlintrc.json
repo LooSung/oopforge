@@ -1,0 +1,23 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "env": {
+    "node": true
+  },
+  "rules": {
+    "max-lines": ["error", { "max": 300 }],
+    "max-lines-per-function": ["error", { "max": 20, "skipBlankLines": true, "skipComments": true }],
+    "typescript/no-explicit-any": "error",
+    "typescript/no-non-null-assertion": "error",
+    "typescript/explicit-module-boundary-types": "error",
+    "typescript/parameter-properties": ["error", { "allow": ["readonly", "private readonly", "protected readonly", "public readonly"] }],
+    "typescript/no-floating-promises": "error"
+  },
+  "overrides": [
+    {
+      "files": ["**/*.spec.ts", "test/**/*.ts"],
+      "rules": {
+        "max-lines-per-function": "off"
+      }
+    }
+  ]
+}

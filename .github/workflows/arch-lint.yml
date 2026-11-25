@@ -55,6 +55,7 @@ jobs:
           python3 scripts/ci/archlint.py cqrs \
             examples/calculator-kotlin-hexagonal-cqrs/src/main/kotlin/com/oopforge/example/calculator
           python3 scripts/ci/archlint.py cqrs examples/calculator-typescript-next-hexagonal-cqrs/src
+          python3 scripts/ci/archlint.py cqrs examples/calculator-typescript-nestjs-hexagonal-cqrs/src
 
       # Second enforcement layer: the industry-standard import-linter on top of
       # the fast stdlib archlint, proving boundaries with a real off-the-shelf tool.
