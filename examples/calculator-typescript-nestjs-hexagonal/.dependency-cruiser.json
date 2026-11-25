@@ -1,0 +1,67 @@
+{
+  "forbidden": [
+    {
+      "name": "domain-isolation",
+      "comment": "domain/ imports nothing outside domain/: no framework, no application or adapter code.",
+      "severity": "error",
+      "from": {
+        "path": "^src/[^/]+/domain/"
+      },
+      "to": {
+        "pathNot": "^src/[^/]+/domain/",
+        "dependencyTypesNot": [
+          "core"
+        ]
+      }
+    },
+    {
+      "name": "application-no-adapter",
+      "comment": "Application depends only on the domain and its own ports; adapters depend on it.",
+      "severity": "error",
+      "from": {
+        "path": "^src/[^/]+/application/"
+      },
+      "to": {
+        "path": "^src/[^/]+/adapter/"
+      }
+    },
+    {
+      "name": "application-no-composition",
+      "comment": "Application never imports the modules or the bootstrap that wire it.",
+      "severity": "error",
+      "from": {
+        "path": "^src/[^/]+/application/"
+      },
+      "to": {
+        "path": [
+          "\\.module\\.ts$",
+          "^src/main\\.ts$",
+          "^src/configure-app\\.ts$"
+        ]
+      }
+    },
+    {
+      "name": "application-no-transport",
+      "comment": "Validation, HTTP, and the OpenAPI document belong to adapter/web.",
+      "severity": "error",
+      "from": {
+        "path": "^src/[^/]+/application/"
+      },
+      "to": {
+        "path": "^node_modules/(zod|express|@nestjs/(swagger|platform-express))/"
+      }
+    }
+  ],
+  "options": {
+    "doNotFollow": {
+      "path": "node_modules"
+    },
+    "exclude": {
+      "path": "\\.spec\\.ts$"
+    },
+    "tsConfig": {
+      "fileName": "tsconfig.json"
+    },
+    "tsPreCompilationDeps": true
+  }
+}
