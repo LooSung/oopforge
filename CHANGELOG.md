@@ -6,6 +6,8 @@
 
 ## [Unreleased]
 
+## [1.15.0] - 2026-11-25
+
 TypeScript 백엔드는 NestJS로: 실험적 NestJS 스택을 넣고 Next.js 서버 코드 스택을 뺐다.
 
 ### Added

@@ -3,6 +3,9 @@
 - Candidate: branch `feat/nestjs` (enforcement `c85c955`, references
   `d37cd42`, `46012db`, `d7da57a`, Next.js removal `772777a`, plus the skills
   and docs commit that adds this record), released as v1.15.0.
+- GitHub Actions on pull request #6 at `b645d1a`: Lint, Arch Lint, Domain
+  Review, and Harness Packaging pass; Examples run `45571377828` passes all
+  twelve jobs, including the three NestJS references on Node 22.
 - Machine: macOS, Node 24.22.1, npm 11.19.1. CI pins Node 22 for the
   TypeScript job.
 - Toolchain (resolved): NestJS 12.6.0, `@nestjs/cli` 12.0.15, TypeScript
@@ -75,8 +78,7 @@ Claude Code 2.1.325.
 The first Express run read the installed v1.14.0 skill under
 `~/.claude/skills/oopforge` instead of the candidate: its conclusion was the
 same, but it offered the removed Next.js stack. The rerun read the candidate.
-An installed copy can shadow `--plugin-dir` for skill reads, so installed
-copies are updated right after the release.
+An installed copy can shadow `--plugin-dir` for skill reads.
 
 Not run: Codex CLI and Cursor Agent CLI live probes, and a FuseForge connected
 run with a NestJS backend.
