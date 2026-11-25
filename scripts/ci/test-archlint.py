@@ -90,31 +90,42 @@ def build_mixed_fixtures(base):
 
 
 def build_typescript_layered_fixtures(base):
-    for layer, f in [("controller", "orderController"), ("service", "orderService"),
-                     ("repository", "orderRepository"), ("domain", "order")]:
-        write(f"{base}/ts_good/src/server/order/{layer}/{f}.ts", "export {};\n")
-    write(f"{base}/ts_good/src/app/api/orders/route.ts",
-          "export { POST } from '../../../server/order/controller/orderController';\n")
-    write(f"{base}/ts_good/node_modules/pkg/aController.ts", "export {};\n")
-    write(f"{base}/ts_good/node_modules/pkg/aService.ts", "export {};\n")
-    write(f"{base}/ts_flat/src/server/order/orderController.ts", "export {};\n")
-    write(f"{base}/ts_flat/src/server/order/orderService.ts", "export {};\n")
-    write(f"{base}/ts_route_repo/src/app/api/orders/route.ts",
-          "import { repo } from '../../../server/order/repository/orderRepository';\n")
+    for layer, f in [("controller", "order.controller"), ("service", "order.service"),
+                     ("repository", "order.repository"), ("domain", "order")]:
+        write(f"{base}/ts_good/src/order/{layer}/{f}.ts", "export {};\n")
+    write(f"{base}/ts_good/src/order/order.module.ts",
+          "import { OrderController } from './controller/order.controller.js';\n"
+          "import { OrderRepository } from './repository/order.repository.js';\n")
+    write(f"{base}/ts_good/src/order/controller/order.controller.spec.ts",
+          "import { OrderRepository } from '../repository/order.repository.js';\n")
+    write(f"{base}/ts_good/test/order.e2e-spec.ts", "export {};\n")
+    for skipped in ("node_modules/pkg", "dist/order"):
+        write(f"{base}/ts_good/{skipped}/a.controller.ts", "export {};\n")
+        write(f"{base}/ts_good/{skipped}/a.service.ts", "export {};\n")
+    write(f"{base}/ts_flat/src/order/order.controller.ts", "export {};\n")
+    write(f"{base}/ts_flat/src/order/order.service.ts", "export {};\n")
+    write(f"{base}/ts_controller_repo/src/order/controller/order.controller.ts",
+          "import { OrderRepository } from '../repository/order.repository.js';\n")
 
 
 def build_typescript_cqrs_fixtures(base):
-    write(f"{base}/ts_cqrs_good/src/server/order/application/command/placeCommandService.ts",
-          "export class PlaceCommandService {\n  place(c: Cmd): OrderId {\n    return id;\n  }\n"
+    cmd = f"{base}/{{}}/src/order/application/command/place-order-command.service.ts"
+    query = f"{base}/{{}}/src/order/application/query/order-query.service.ts"
+    write(cmd.format("ts_cqrs_good"),
+          "export class PlaceOrderCommandService {\n  place(c: Cmd): OrderId {\n    return id;\n  }\n"
           "  private helper() {\n    return 1;\n  }\n}\n")
-    write(f"{base}/ts_cqrs_good/src/server/order/application/query/orderQueryService.ts",
+    write(cmd.format("ts_cqrs_good").replace(".service.ts", ".service.spec.ts"),
+          "function build() {\n  return 1;\n}\n")
+    write(query.format("ts_cqrs_good"),
           "export class OrderQueryService {\n  list(): ReadonlyArray<OrderSummary> {\n    return [];\n  }\n}\n")
-    write(f"{base}/ts_cqrs_bad_query/src/server/order/application/query/orderQueryService.ts",
+    write(query.format("ts_cqrs_bad_query"),
           "export class OrderQueryService {\n  list(): void {\n    this.repo.save(x);\n  }\n}\n")
-    write(f"{base}/ts_cqrs_bad_command/src/server/order/application/command/placeCommandService.ts",
-          "export class PlaceCommandService {\n  place(c: Cmd): Promise<OrderSummary> {\n    return s;\n  }\n}\n")
-    write(f"{base}/ts_cqrs_implicit/src/server/order/application/command/placeCommandService.ts",
-          "export class PlaceCommandService {\n  async place(c: Cmd) {\n    return id;\n  }\n}\n")
+    write(cmd.format("ts_cqrs_bad_command"),
+          "export class PlaceOrderCommandService {\n  place(c: Cmd): Promise<OrderSummary> {\n    return s;\n  }\n}\n")
+    write(cmd.format("ts_cqrs_implicit"),
+          "export class PlaceOrderCommandService {\n  async place(c: Cmd) {\n    return id;\n  }\n}\n")
+    write(f"{base}/ts_cqrs_camel/src/order/application/command/placeOrderCommandService.ts",
+          "export class PlaceOrderCommandService {\n  async place(c: Cmd) {\n    return id;\n  }\n}\n")
 
 
 CASES = [
@@ -135,13 +146,14 @@ CASES = [
     ("kt-cqrs-implicit-return violation", "cqrs", "kt_cqrs_implicit", True),
     ("mixed-java-kotlin-good clean", "layered", "mixed_good", False),
     ("mixed-java-kotlin-flat violation", "layered", "mixed_bad", True),
-    ("ts-layered-good clean (node_modules skipped)", "layered", "ts_good", False),
-    ("ts-flat violation", "layered", "ts_flat", True),
-    ("ts-route-imports-repository violation", "layered", "ts_route_repo", True),
-    ("ts-cqrs-good clean", "cqrs", "ts_cqrs_good", False),
+    ("ts-layered-good clean (module, specs, node_modules, dist skipped)", "layered", "ts_good", False),
+    ("ts-feature-folder flat violation", "layered", "ts_flat", True),
+    ("ts-controller-imports-repository violation", "layered", "ts_controller_repo", True),
+    ("ts-cqrs-good clean (spec skipped)", "cqrs", "ts_cqrs_good", False),
     ("ts-cqrs-query-mutation violation", "cqrs", "ts_cqrs_bad_query", True),
     ("ts-cqrs-command-returns-read violation", "cqrs", "ts_cqrs_bad_command", True),
     ("ts-cqrs-implicit-return violation", "cqrs", "ts_cqrs_implicit", True),
+    ("ts-cqrs-camelCase name still checked", "cqrs", "ts_cqrs_camel", True),
 ]
 
 

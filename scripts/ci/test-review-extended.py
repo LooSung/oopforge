@@ -165,8 +165,10 @@ def test_kotlin_detectors():
 
 
 TS_DOMAIN = (
-    "import { z } from 'zod';\n\n"
-    "export class Order {\n  total = 0;\n  readonly id: string;\n  private secret = 1;\n  #hidden = 2;\n\n"
+    "import { z } from 'zod';\nimport { Injectable } from '@nestjs/common';\n"
+    "import { IsNumber } from 'class-validator';\nimport { Type } from 'class-transformer';\n\n"
+    "export class Order {\n  total = 0;\n  @IsNumber() @Type(() => Number) amount!: number;\n"
+    "  @IsNumber()\n  private hiddenAmount = 0;\n  readonly id: string;\n  private secret = 1;\n  #hidden = 2;\n\n"
     "  private constructor(public owner: string, readonly code: string, private x: number) {\n"
     "    this.id = 'a';\n  }\n\n"
     "  static create(): Order {\n    let local = 1;\n    const label = `class ${local} { total = 1 }`;\n"
@@ -177,10 +179,11 @@ TS_DOMAIN = (
 def test_typescript_detectors():
     found = _rules({"src/server/x/domain/order.ts": TS_DOMAIN, "src/ui/Widget.tsx": "import 'next/link';\n" * 301})
     fields = {name for rule, name in found if rule == PUBLIC_MUTABLE_DOMAIN_FIELD}
-    check("ts public field and public constructor property are mutable", {"total", "owner"} <= fields)
+    check("ts public, decorated, and constructor fields are mutable", {"total", "amount", "owner"} <= fields)
     check("ts readonly / private / #private / locals are not reported",
-          not fields & {"id", "secret", "hidden", "code", "x", "local", "label"})
-    check("ts domain zod import reported", ("DOMAIN_FRAMEWORK_IMPORT", "zod") in found)
+          not fields & {"id", "secret", "hidden", "hiddenAmount", "code", "x", "local", "label"})
+    for pkg in ("zod", "@nestjs/common", "class-validator", "class-transformer"):
+        check(f"ts domain {pkg} import reported", ("DOMAIN_FRAMEWORK_IMPORT", pkg) in found)
     check("tsx files are left to Compforge", not any("Widget.tsx" in name for _, name in found))
     long_fn = "export function run(a: number): number {\n" + "  a += 1;\n" * 25 + "  return a;\n}\n"
     keys = {v.subject_key for v in scan({"src/x/run.ts": long_fn}, RuleCatalog.defaults())}

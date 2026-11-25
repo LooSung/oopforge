@@ -2,8 +2,9 @@
 
 Only `.ts` files are scanned; `.tsx` UI modules belong to Compforge. The
 mutable-field check is a text scan, not a parser. It reports a class field
-that is neither `readonly`, `private`, `protected`, nor `#private`, and a
-`public` constructor parameter property without `readonly`.
+that is neither `readonly`, `private`, `protected`, nor `#private` (leading
+decorators are skipped), and a `public` constructor parameter property without
+`readonly`.
 """
 from __future__ import annotations
 
@@ -16,8 +17,9 @@ EXTENSIONS = (".ts",)
 
 _FROM = r"^\s*import\s+(?:type\s+)?(?:[^'\"]*?\s+from\s+)?['\"]"
 FRAMEWORK_IMPORT = re.compile(
-    _FROM + r"(next|react|react-dom|zod|@prisma/client|drizzle-orm|typeorm|"
-    r"mongoose|sequelize)(?:/[^'\"]*)?['\"]"
+    _FROM + r"(@nestjs/[\w.-]+|class-validator|class-transformer|next|react|"
+    r"react-dom|zod|@prisma/client|drizzle-orm|typeorm|mongoose|sequelize)"
+    r"(?:/[^'\"]*)?['\"]"
 )
 REPOSITORY_IMPORT = re.compile(
     _FROM + r"([^'\"]*repository[^'\"]*)['\"]", re.IGNORECASE
@@ -29,7 +31,8 @@ _NOISE = re.compile(
 )
 _TYPE_HEADER = re.compile(r"\bclass\b")
 _FIELD = re.compile(
-    r"\s*((?:(?:public|private|protected|static|readonly|declare|override|abstract)\s+)*)"
+    r"\s*(?:@[\w$.]+(?:\((?:[^()]|\([^()]*\))*\))?\s+)*"  # decorators, one paren level
+    r"((?:(?:public|private|protected|static|readonly|declare|override|abstract)\s+)*)"
     r"([A-Za-z_$][\w$]*)\s*[?!]?\s*[:=]"
 )
 _CONSTRUCTOR = re.compile(r"\bconstructor\s*\(")

@@ -7,7 +7,7 @@ does not depend on the agent (or model size) remembering them.
 Modes:
   layered  Each layer is its own package/folder; inbound adapter must not
            reference a repository directly (Java/Kotlin *Controller, Python
-           router/, TypeScript controller/ and Next.js route.ts).
+           router/, TypeScript controller/).
   cqrs     Query side has no side effects; command methods do not return
            read-shaped types (Response/Summary/Dto/View/ReadModel); a public
            Kotlin or TypeScript command function declares its return type.
@@ -38,7 +38,8 @@ KOTLIN_FUN = re.compile(
 KOTLIN_HIDDEN = {"private", "internal", "protected"}
 TS_LAYER_FOLDERS = {"controller", "service", "repository", "domain"}
 TS_LAYER_FILE = re.compile(r"(controller|service|repository)", re.I)
-TS_SKIP_DIRS = {"node_modules", ".next"}
+TS_SKIP_DIRS = {"node_modules", "dist"}
+TS_SKIP_SUFFIXES = (".spec.ts", "-spec.ts", ".test.ts", ".d.ts")  # tests, declarations
 TS_REPOSITORY_IMPORT = re.compile(r"""(?:from|import)\s*\(?\s*['"]([^'"]*repository[^'"]*)['"]""", re.I)
 TS_METHOD = re.compile(
     r"^[ \t]*(?:export\s+)?((?:(?:public|private|protected|static|async|override)\s+)*)"
@@ -71,7 +72,7 @@ def ts_files(root):
     for d, dirs, fs in os.walk(root):
         dirs[:] = [x for x in dirs if x not in TS_SKIP_DIRS]
         for f in fs:
-            if f.endswith(".ts") and not f.endswith(".d.ts"):
+            if f.endswith(".ts") and not f.endswith(TS_SKIP_SUFFIXES):
                 yield os.path.join(d, f)
 
 
@@ -182,8 +183,7 @@ def check_layered_ts(root):
         tag, rel = ts_layer_tag(path), os.path.relpath(path, root)
         if tag and os.path.basename(os.path.dirname(path)) != tag:
             v.append(f"L1 misplaced: {rel} should be under {tag}/")
-        inbound = tag == "controller" or os.path.basename(path) == "route.ts"
-        if inbound and TS_REPOSITORY_IMPORT.search(_read(path)):
+        if tag == "controller" and TS_REPOSITORY_IMPORT.search(_read(path)):
             v.append(f"L2 controller->repository: {rel} imports a repository directly")
     return v
 
@@ -201,14 +201,19 @@ def _ts_command_violations(rel, txt):
     return v
 
 
+def ts_role(path):
+    """`orderQueryService.ts` and `order-query.service.ts` both give 'orderqueryservice'."""
+    return re.sub(r"[.\-_]", "", os.path.basename(path)[:-len(".ts")]).lower()
+
+
 def check_cqrs_ts(root):
     v = []
     for path in ts_files(root):
-        base = os.path.splitext(os.path.basename(path))[0]
+        role = ts_role(path)
         rel, txt = os.path.relpath(path, root), _read(path)
-        if base.endswith(("QueryService", "QueryController")) and MUTATING.search(txt):
+        if role.endswith(("queryservice", "querycontroller")) and MUTATING.search(txt):
             v.append(f"C1 query-mutation: {rel} contains a mutating operation")
-        if base.endswith("CommandService"):
+        if role.endswith("commandservice"):
             v += _ts_command_violations(rel, txt)
     return v
 
