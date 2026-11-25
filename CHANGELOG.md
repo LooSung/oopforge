@@ -6,6 +6,14 @@
 
 ## [Unreleased]
 
+## [1.15.1] - 2026-11-25
+
+Review가 실험적 스택을 거절하지 않게 고쳤다.
+
+### Fixed
+
+- `workflow/review.md`가 아직 "OOPforge는 Java Spring과 Python FastAPI 백엔드를 다룬다"고 적고 있어서, Kotlin Spring이나 TypeScript NestJS 백엔드 diff를 범위 밖으로 볼 수 있었다. 이제 `lang/backend-stack.md`의 스택 목록(실험적 스택 포함)을 따른다.
+
 ## [1.15.0] - 2026-11-25
 
 TypeScript 백엔드는 NestJS로: 실험적 NestJS 스택을 넣고 Next.js 서버 코드 스택을 뺐다.
